@@ -1,0 +1,99 @@
+/* Game-specific background colors */
+html.game-1 {
+  background-color: #FF7000;
+}
+
+html.game-2 {
+  background-color: #8E75F8; 
+}
+
+html.game-3 {
+  background-color: #FF5BAF;
+}
+
+html.game-4 {
+  background-color: #FFC400; /* Yellow */
+}
+
+html.game-5 {
+  background-color: #FF5722; /* Deep orange */
+}
+
+html.game-6 {
+  background-color: #00A865; /* Green */
+}
+
+/* Ensure the background color covers the full viewport */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Button Styles */
+.btn {
+  align-items: center;
+  block-size: 3.5rem;
+  border: none;
+  border-radius: 100rem;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.6rem;
+  inline-size: 10rem;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* CTA1 - Orange to White */
+.btn-cta1 {
+  background-color: #FF7000;
+  color: #fff;
+}
+
+.btn-cta1:hover {
+  background-color: #fff;
+  color: #2E2D2C;
+}
+
+/* CTA2 - White to Dark */
+.btn-cta2 {
+  background-color: #fff;
+  color: #FF7000;
+}
+
+.btn-cta2:hover {
+  background-color: #2E2D2C;
+  color: #FF7000;
+}
+
+/* CTA3 - Orange Static */
+.btn-cta3 {
+  background-color: #FF7000;
+  color: #fff;
+}
+
+.btn-cta3:hover {
+  background-color: #FF7000;
+  color: #fff;
+}
+
+/* Restrict app on mobile portrait orientation */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  body::before {
+    content: "Please rotate your device to landscape mode to play the game.";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #FF7000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    pointer-events: all;
+  }
+  body > *:not(style):not(script) {
+    display: none !important;
+  }
+} 

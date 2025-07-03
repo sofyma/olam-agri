@@ -1,0 +1,27 @@
+// Find all game result documents grouped by user
+*[_type == "gameResult"] {
+  _id,
+  user->{_id, displayName, emailAddress},
+  game1,
+  game2,
+  game3,
+  "gameCount": count([game1, game2, game3][!in(null, undefined)])
+} | order(user._id asc)
+
+// Alternative: Find users with multiple documents
+*[_type == "gameResult"] {
+  _id,
+  user->{_id, displayName, emailAddress},
+  game1,
+  game2,
+  game3
+} | group by user._id {
+  "user": user,
+  "documents": [{
+    "_id": _id,
+    "game1": game1,
+    "game2": game2,
+    "game3": game3
+  }],
+  "count": count()
+} | order by count desc 

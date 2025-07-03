@@ -1,0 +1,95 @@
+import { client } from '$lib/sanity';
+import type { User } from '$lib/types/user';
+
+const AUTH_COOKIE_NAME = 'olam_auth';
+
+export class AuthService {
+  static async checkEmail(email: string): Promise<boolean> {
+    const query = `*[_type == "user" && emailAddress == $email][0]`;
+    const user = await client.fetch(query, { email });
+    return !!user;
+  }
+
+  static async login(email: string): Promise<User | null> {
+    const query = `*[_type == "user" && emailAddress == $email][0]`;
+    const user = await client.fetch(query, { email });
+    
+    if (user) {
+      this.setAuthCookie(user);
+      return user;
+    }
+    return null;
+  }
+
+  static async register(userData: {
+    displayName: string;
+    emailAddress: string;
+    country: string;
+    region: string;
+  }): Promise<User> {
+    // Create new user document
+    const doc = {
+      _type: 'user',
+      displayName: userData.displayName,
+      emailAddress: userData.emailAddress,
+      country: userData.country,
+      region: userData.region
+    };
+
+    const user = await client.create(doc);
+    const fullUser = await this.login(user.emailAddress);
+    
+    if (!fullUser) {
+      throw new Error('Failed to create user');
+    }
+    
+    return fullUser;
+  }
+
+
+
+  static isAuthenticated(): boolean {
+    return !!this.getAuthCookie();
+  }
+
+  static logout(): void {
+    localStorage.removeItem(AUTH_COOKIE_NAME);
+  }
+
+  static clearOldAuthData(): void {
+    localStorage.removeItem(AUTH_COOKIE_NAME);
+  }
+
+  private static setAuthCookie(user: User): void {
+    localStorage.setItem(AUTH_COOKIE_NAME, JSON.stringify(user));
+  }
+
+  static getAuthCookie(): User | null {
+    const cookie = localStorage.getItem(AUTH_COOKIE_NAME);
+    if (!cookie) return null;
+    
+    try {
+      const userData = JSON.parse(cookie);
+      
+      // Handle old format (with 'id' instead of '_id')
+      if (userData.id && !userData._id) {
+        console.warn('Found old auth format, user needs to re-authenticate');
+        localStorage.removeItem(AUTH_COOKIE_NAME);
+        return null;
+      }
+      
+      // Ensure we have a valid user object with _id
+      if (userData._id && userData.displayName && userData.emailAddress) {
+        return userData as User;
+      }
+      
+      console.warn('Invalid user data in localStorage, clearing');
+      localStorage.removeItem(AUTH_COOKIE_NAME);
+      return null;
+    } catch (error) {
+      console.error('Error parsing auth cookie:', error);
+      localStorage.removeItem(AUTH_COOKIE_NAME);
+      return null;
+    }
+  }
+} 
