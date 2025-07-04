@@ -40,189 +40,264 @@
   }
 </script>
 
-<div class="game-info-container">
-  <header class="info-header">
-    <div class="header-container">
-      <div class="logo-container">
-        <Game1Logo />
-      </div>
-      <a href="/" class="back-link">← Back to Home</a>
-    </div>
-  </header>
+<div class="container">
+  <header class="header">
+    <div class="wrapper">
+      <div class="row">
+        <div class="column">
+          <Game1Logo />
+        </div>
 
-  <div class="info-content">
-    <div class="game-badge">Unit 6</div>
-    
-    <h1 class="game-title">Only the Fastest Will Reach the Sky</h1>
-    
-    <div class="game-description">
-      <p>
-        Test your speed and reflexes in this exciting challenge! Race against time to answer questions and prove that you have what it takes to reach the sky. Only the fastest and most accurate players will succeed.
-      </p>
-      
-      <h3>What you'll learn:</h3>
-      <ul>
-        <li>Quick decision making</li>
-        <li>Speed and accuracy</li>
-        <li>Time management skills</li>
-        <li>Competitive thinking</li>
-      </ul>
-      
-      <h3>How to play:</h3>
-      <p>
-        Questions will appear on screen and you have limited time to answer them correctly. The faster you answer correctly, the more points you earn. 
-        Be quick but accurate - wrong answers will cost you time and points. Your goal is to reach the highest score possible by being both fast and precise!
-      </p>
-      
-      <div class="game-stats">
-        <div class="stat">
-          <span class="stat-number">10</span>
-          <span class="stat-label">Questions</span>
+        <div class="column">
+          <nav class="navigation">
+            <ul class="navigation-list">
+              <li class="navigation-item">
+                <a class="navigation-link" href="/terms">Terms</a>
+              </li>
+
+              <li class="navigation-item">
+                <a class="navigation-link btn" href="/ranking">Ranking</a>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div class="stat">
-          <span class="stat-number">30</span>
-          <span class="stat-label">Seconds per question</span>
+      </div>
+
+      <h1 class="header-title">Brand Heroes</h1>
+    </div>
+
+    <img class="header-heroes" src="/images/oa-site-small-header-heroes.png" alt="Brand Heroes">
+  </header>
+  
+  <main class="content">
+    <div class="wrapper">
+      <div class="info-container">
+
+        
+        <h2 class="info-title">Only the Fastest Will Reach the Sky</h2>
+        
+        <div class="info-description">
+          <p>
+            Test your speed and brand knowledge in this fast-paced challenge! Answer questions as quickly as possible to climb higher and reach the sky. Only the fastest and most knowledgeable will succeed!
+          </p>
+          
+          <h3>What you'll learn:</h3>
+          <ul>
+            <li>Quick brand knowledge recall</li>
+            <li>Speed and accuracy balance</li>
+            <li>Competitive thinking</li>
+            <li>Brand expertise under pressure</li>
+          </ul>
+          
+          <h3>How to play:</h3>
+          <p>
+            You'll be presented with brand-related questions that you must answer quickly. Each correct answer helps you climb higher towards the sky. 
+            The faster you answer correctly, the more points you earn. But be careful - wrong answers will slow you down. 
+            Can you reach the top and become the fastest Brand Hero?
+          </p>
+          
+          <div class="game-stats">
+            <div class="stat">
+              <span class="stat-number">20</span>
+              <span class="stat-label">Questions</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">1</span>
+              <span class="stat-label">Point per correct answer</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">8</span>
+              <span class="stat-label">Minutes</span>
+            </div>
+          </div>
         </div>
-        <div class="stat">
-          <span class="stat-number">100</span>
-          <span class="stat-label">Max points</span>
+        
+        <div class="cta-section">
+          {#if $game6Availability.isAvailable}
+            <button class="play-button" on:click={handlePlayClick}>
+              let's play
+            </button>
+          {:else}
+            <div class="locked-state">
+              <div class="lock-icon">🔒</div>
+              <h3 class="locked-title">Game Not Available Yet</h3>
+              <p class="locked-text">
+                {#if timeUntilAvailable && timeUntilAvailable > 0}
+                  This game will be available in {formatTimeUntil(timeUntilAvailable)}
+                {:else}
+                  This game is coming soon. Check back later!
+                {/if}
+              </p>
+              <a href="/" class="back-home-button">Back to Home</a>
+            </div>
+          {/if}
         </div>
       </div>
     </div>
-    
-    <div class="cta-section">
-      {#if $game6Availability.isAvailable}
-        <button class="play-button" on:click={handlePlayClick}>
-          let's play
-        </button>
-      {:else}
-        <div class="locked-state">
-          <div class="lock-icon">🔒</div>
-          <h3 class="locked-title">Game Not Available Yet</h3>
-          <p class="locked-text">
-            {#if timeUntilAvailable && timeUntilAvailable > 0}
-              This game will be available in {formatTimeUntil(timeUntilAvailable)}
-            {:else}
-              This game is coming soon. Check back later!
-            {/if}
-          </p>
-          <a href="/" class="back-home-button">Back to Home</a>
-        </div>
-      {/if}
-    </div>
-  </div>
+  </main>
+
+  <footer class="footer">
+    <img class="footer-logo" src="/images/site-footer.jpg" alt="Brand Heroes">
+  </footer>
 </div>
 
 <style lang="scss">
-  .game-info-container {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-block-size: 100vh;
+  .header {
+    background-image: url('/images/oa-site-small-header-background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    block-size: calc(53.5rem * var(--scale-factor));
+    padding-block-start: calc(7rem * var(--scale-factor));
+    position: relative;
+
+    &-heroes {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+    }
+
+    &-title {
+      color: #FFF;
+      font-size: calc(8rem * var(--scale-factor));
+      font-weight: 600;
+      line-height: normal;
+      padding-block-start: calc(1.5rem * var(--scale-factor));
+    }
+
+    :global(.logo path) {
+      fill: #FFF;
+    }
+
+    .wrapper {
+      max-inline-size: calc(142rem * var(--scale-factor));
+      margin-inline: auto;
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .wrapper {
+        padding-inline: calc(2rem * var(--scale-factor));
+      }
+    }
+
+    .row {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .navigation {
+      &-list {
+        align-items: center;
+        display: flex;
+        gap: calc(3rem * var(--scale-factor));
+      }
+
+      &-link {
+        color: #000;
+        font-size: calc(1.8rem * var(--scale-factor));
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+
+    .btn {
+      align-items: center;
+      background-color: #fff;
+      block-size: calc(3.2rem * var(--scale-factor));
+      border-radius: 0 calc(1.5rem * var(--scale-factor));
+      display: flex;
+      inline-size: calc(11.1rem * var(--scale-factor));
+    }
   }
 
-  .info-header {
-    align-items: center;
-    background: white;
-    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    padding: 1.5rem 2rem;
+  .footer {
+    &-logo {
+      inline-size: 100%;
+    }
   }
 
-  .header-container {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-inline-size: 120rem;
-    width: 100%;
+  .content {
+    margin-block-start: calc(-15rem * var(--scale-factor));
+    position: relative;
+    z-index: 1;
+
+    .wrapper {
+      background-color: #FFF;
+      max-inline-size: calc(128rem * var(--scale-factor));
+      margin-inline: auto;
+      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
+    }
   }
 
-  .logo-container :global(.logo) {
-    block-size: 4rem;
-    width: auto;
+  .info-container {
+    max-inline-size: calc(100rem * var(--scale-factor));
+    margin-inline: auto;
+    text-align: center;
   }
 
-  :global(.logo path) {
-    fill: #fff;
-  }
-
-  .back-link {
-    color: #666;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .back-link:hover {
-    color: #00A865;
-  }
-
-  .info-content {
-    margin: 0 auto;
-    max-inline-size: 120rem;
-    padding: 4rem 2rem;
-    width: 100%;
+  .info-title {
+    color: #FF7000;
+    font-size: calc(7.5rem * var(--scale-factor));
+    font-weight: 400;
+    line-height: 125%;
+    margin-block-end: calc(8rem * var(--scale-factor));
+    text-align: center;
   }
 
   .game-badge {
-    background: #00A865;
-    border-radius: 2rem;
+    background: #FF7000;
+    border-radius: calc(2rem * var(--scale-factor));
     color: white;
     display: inline-block;
-    font-size: 0.9rem;
+    font-size: calc(1.1rem * var(--scale-factor));
     font-weight: 600;
-    margin-block-end: 1rem;
-    padding: 0.5rem 1rem;
+    margin-block-end: calc(2rem * var(--scale-factor));
+    padding: calc(0.5rem * var(--scale-factor)) calc(1rem * var(--scale-factor));
   }
 
-  .game-title {
-    color: #333;
-    font-size: 4.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-block-end: 2rem;
-  }
-
-  .game-description {
+  .info-description {
     background: white;
-    border-radius: 1.2rem;
-    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
-    margin-block-end: 3rem;
-    padding: 3rem;
+    border-radius: calc(1.2rem * var(--scale-factor));
+    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
+    margin-block-end: calc(5rem * var(--scale-factor));
+    padding: calc(4rem * var(--scale-factor));
+    text-align: left;
   }
 
-  .game-description p {
+  .info-description p {
     color: #555;
-    font-size: 1.4rem;
+    font-size: calc(1.8rem * var(--scale-factor));
     line-height: 1.7;
-    margin-block-end: 1.5rem;
+    margin-block-end: calc(2rem * var(--scale-factor));
   }
 
-  .game-description h3 {
+  .info-description h3 {
     color: #333;
-    font-size: 1.8rem;
+    font-size: calc(2.2rem * var(--scale-factor));
     font-weight: 600;
-    margin: 2rem 0 1rem 0;
+    margin: calc(3rem * var(--scale-factor)) 0 calc(1.5rem * var(--scale-factor)) 0;
   }
 
-  .game-description ul {
-    margin: 1rem 0 2rem 2rem;
+  .info-description ul {
+    margin: calc(1.5rem * var(--scale-factor)) 0 calc(3rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
   }
 
-  .game-description li {
+  .info-description li {
     color: #555;
-    font-size: 1.3rem;
+    font-size: calc(1.6rem * var(--scale-factor));
     line-height: 1.6;
-    margin-block-end: 0.5rem;
+    margin-block-end: calc(0.8rem * var(--scale-factor));
   }
 
   .game-stats {
     background: #f8f9fa;
-    border-radius: 0.8rem;
+    border-radius: calc(0.8rem * var(--scale-factor));
     display: flex;
     justify-content: space-around;
-    margin: 3rem 0;
-    padding: 2rem;
+    margin: calc(4rem * var(--scale-factor)) 0;
+    padding: calc(3rem * var(--scale-factor));
   }
 
   .stat {
@@ -230,15 +305,15 @@
   }
 
   .stat-number {
-    color: #00A865;
+    color: #FF7000;
     display: block;
-    font-size: 2.5rem;
+    font-size: calc(3rem * var(--scale-factor));
     font-weight: 700;
   }
 
   .stat-label {
     color: #666;
-    font-size: 0.9rem;
+    font-size: calc(1.2rem * var(--scale-factor));
     font-weight: 500;
   }
 
@@ -247,97 +322,64 @@
   }
 
   .play-button {
-    background: #00A865;
+    background: #FF7000;
     border: none;
-    border-radius: 0.8rem;
+    border-radius: calc(0.8rem * var(--scale-factor));
     color: white;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: calc(1.8rem * var(--scale-factor));
     font-weight: 600;
-    padding: 1.5rem 3rem;
+    padding: calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
     text-transform: lowercase;
     transition: background-color 0.2s;
   }
 
   .play-button:hover {
-    background: #008F56;
+    background: #E65A00;
   }
 
   .locked-state {
     background: white;
-    border-radius: 1.2rem;
-    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
-    padding: 4rem 3rem;
+    border-radius: calc(1.2rem * var(--scale-factor));
+    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
+    padding: calc(5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
     text-align: center;
   }
 
   .lock-icon {
-    font-size: 4rem;
-    margin-block-end: 2rem;
+    font-size: calc(5rem * var(--scale-factor));
+    margin-block-end: calc(3rem * var(--scale-factor));
     opacity: 0.7;
   }
 
   .locked-title {
     color: #333;
-    font-size: 2rem;
+    font-size: calc(2.5rem * var(--scale-factor));
     font-weight: 600;
-    margin-block-end: 1rem;
+    margin-block-end: calc(1.5rem * var(--scale-factor));
   }
 
   .locked-text {
     color: #666;
-    font-size: 1.1rem;
+    font-size: calc(1.4rem * var(--scale-factor));
     line-height: 1.6;
-    margin-block-end: 2rem;
+    margin-block-end: calc(3rem * var(--scale-factor));
   }
 
   .back-home-button {
     background: #666;
     border: none;
-    border-radius: 0.8rem;
+    border-radius: calc(0.8rem * var(--scale-factor));
     color: white;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: calc(1.4rem * var(--scale-factor));
     font-weight: 600;
-    padding: 1rem 2rem;
+    padding: calc(1.5rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
     text-decoration: none;
     transition: background-color 0.2s;
   }
 
   .back-home-button:hover {
     background: #555;
-  }
-
-  @media (max-width: 76.8rem) {
-    .info-header {
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
-    }
-
-    .info-content {
-      padding: 2rem 1rem;
-    }
-
-    .game-title {
-      font-size: 3rem;
-    }
-
-    .game-description {
-      padding: 2rem 1.5rem;
-    }
-
-    .game-stats {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .locked-state {
-      padding: 3rem 2rem;
-    }
-
-    .locked-title {
-      font-size: 1.5rem;
-    }
   }
 </style> 
