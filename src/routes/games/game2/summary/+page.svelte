@@ -23,7 +23,7 @@
 </script>
 
 <div class="game-container">
-	<Game2Shape />
+	<img src="/images/game2-summary-shape.png" alt="Shape" class="shape">
 
     <div class="game-summary">
 		<h2 class="title">This is your final score:</h2>
@@ -54,59 +54,56 @@
 		display: grid;
 		place-content: center;
 
-		:global(.shape) {	
-			inset-block-start: -10rem;
-			inset-inline-start: -20rem;
+		.shape {
+			inset-block-start: 0;
+			inset-inline-start: 50%;
 			position: absolute;
-
-			@media(width > 1600px) {
-				inset-block-start: 0;
-			}
+			transform: translateX(-50%);
 		}
 	}
 
 	.game-summary {
-		max-inline-size: 90rem;
+		max-inline-size: calc(90rem * var(--scale-factor));
 		position: relative;
 		z-index: 1;
 	}
 
 	.title {
 		color: #fff;
-		font-size: 7rem;
+		font-size: calc(7rem * var(--scale-factor));
 		font-weight: 600;
 		text-align: center;
 	}
 
 	.results {
 		background-color: #fff;
-		border-radius: 0 3rem;
+		border-radius: 0 calc(3rem * var(--scale-factor));
 		inline-size: 100%;
-		margin-block-start: 3.5rem;
-		padding: 5rem;
+		margin-block-start: calc(3.5rem * var(--scale-factor));
+		padding: calc(5rem * var(--scale-factor));
 		text-align: center;
 		position: relative;
 	}
 
 	.paragraph {
 		color: #000;
-		font-size: 4.5rem;
+		font-size: calc(4.5rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.total-points {
 		color: #8E75F8;
-		font-size: 8rem;
+		font-size: calc(8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.cta {
 		display: flex;
-		gap: 3rem;
+		gap: calc(3rem * var(--scale-factor));
 		justify-content: center;
-		padding-block-start: 7rem;
+		padding-block-start: calc(7rem * var(--scale-factor));
 	}
 
 	.btn {
@@ -115,11 +112,11 @@
 	}
 
 	.finish-small {
-		block-size: 2rem;
+		block-size: calc(2rem * var(--scale-factor));
 		color: #fff;
 		display: block;
-		font-size: 2rem;
-		margin-block-start: 3rem;
+		font-size: calc(2rem * var(--scale-factor));
+		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}
 </style> 

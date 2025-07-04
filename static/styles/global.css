@@ -30,16 +30,67 @@ html, body {
   padding: 0;
 }
 
+/* Responsive scaling using CSS variables */
+html {
+  font-size: 10px; /* Base font size */
+}
+
+:root {
+  --scale-factor: 0.95; /* Default for large screens */
+}
+
+/* Large screens (1920px and above) - minimal scaling */
+@media screen and (min-width: 1920px) {
+  :root {
+    --scale-factor: 0.95;
+  }
+}
+
+/* Medium-large screens (1600px - 1919px) */
+@media screen and (min-width: 1600px) and (max-width: 1919px) {
+  :root {
+    --scale-factor: 0.85;
+  }
+}
+
+/* Medium screens (1440px - 1599px) */
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+  :root {
+    --scale-factor: 0.75;
+  }
+}
+
+/* Medium-small screens (1366px - 1439px) */
+@media screen and (min-width: 1366px) and (max-width: 1439px) {
+  :root {
+    --scale-factor: 0.7;
+  }
+}
+
+/* Small screens (1280px - 1365px) */
+@media screen and (min-width: 1280px) and (max-width: 1365px) {
+  :root {
+    --scale-factor: 0.65;
+  }
+}
+
+/* Very small screens (below 1280px) */
+@media screen and (max-width: 1279px) {
+  :root {
+    --scale-factor: 0.6;
+  }
+}
+
 /* Global Button Styles */
 .btn {
   align-items: center;
-  block-size: 3.5rem;
+  block-size: calc(3.5rem * var(--scale-factor));
   border: none;
-  border-radius: 100rem;
+  border-radius: calc(100rem * var(--scale-factor));
   cursor: pointer;
   display: flex;
-  font-size: 1.6rem;
-  inline-size: 10rem;
+  font-size: calc(1.6rem * var(--scale-factor));
+  inline-size: calc(10rem * var(--scale-factor));
   justify-content: center;
   transition: all 0.3s ease;
 }

@@ -62,7 +62,7 @@
 	}
 
 	.game-summary {
-		max-inline-size: 90rem;
+		max-inline-size: calc(90rem * var(--scale-factor));
 		position: relative;
 		z-index: 1;
 	}
@@ -76,7 +76,7 @@
 	}
 
 	.game6-hero-before-playing {
-        inset-block-start: -10rem;
+        inset-block-start: calc(-15rem * var(--scale-factor));
         inset-inline-start: 55%;
         transform: translateX(-55%);
 		position: absolute;
@@ -85,39 +85,45 @@
 
 	.results {
 		background-color: #fff;
-		border-radius: 0 3rem;
+		border-radius: 0 calc(3rem * var(--scale-factor));
 		inline-size: 100%;
-		margin-block-start: 3.5rem;
-		padding: 24rem 5rem 5rem;
+		margin-block-start: calc(3.5rem * var(--scale-factor));
+		padding: calc(24rem * var(--scale-factor)) calc(5rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
 		text-align: center;
 		position: relative;
 	}
 
+	@media (min-width: 1440px) and (max-width: 1599px) {
+		.results {
+			padding: calc(30rem * var(--scale-factor)) calc(5rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
+		}
+	}
+
 	.paragraph {
 		color: #000;
-		font-size: 4.5rem;
+		font-size: calc(4.5rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.total-points {
 		color: #00A865;
-		font-size: 8rem;
+		font-size: calc(8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 1rem;
+		padding-block-start: calc(1rem * var(--scale-factor));
 	}
 
 	.cta {
 		display: flex;
-		gap: 3rem;
+		gap: calc(3rem * var(--scale-factor));
 		justify-content: center;
-		padding-block-start: 5rem;
+		padding-block-start: calc(5rem * var(--scale-factor));
 	}
 
 	.btn {
 		background-color: #fff;
-		border-radius: 0 1.7rem;
+		border-radius: 0 calc(1.7rem * var(--scale-factor));
 		color: #00A865;
 		font-weight: 600;
 		margin-inline: 0;
@@ -126,10 +132,10 @@
 	.finish-small {
 		color: #fff;
 		display: block;
-		font-size: 2rem;
+		font-size: calc(2rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		margin-block-start: 3rem;
+		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}
 </style> 

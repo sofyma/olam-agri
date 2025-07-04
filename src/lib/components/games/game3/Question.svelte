@@ -125,28 +125,57 @@
 </div>
 
 <style>
+    :root {
+        --scale-factor: 1;
+    }
+
+    @media (width <= 1440px) {
+        :root {
+            --scale-factor: 0.85;
+        }
+    }
+
+    @media (width <= 1200px) {
+        :root {
+            --scale-factor: 0.75;
+        }
+    }
+
+    @media (width <= 1024px) {
+        :root {
+            --scale-factor: 0.65;
+        }
+    }
+
+    @media (width >= 1920px) {
+        :root {
+            --scale-factor: 0.95;
+        }
+    }
+
     .question-counter {
         color: #fff;
         display: block;
-        font-size: 2rem;
-        max-inline-size: 105.2rem;
+        font-size: calc(2rem * var(--scale-factor));
+        max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
-        padding-block-end: 1.5rem;
-        padding-inline-end: 4rem;
+        padding-block-end: calc(1.5rem * var(--scale-factor));
+        padding-inline-end: calc(4rem * var(--scale-factor));
         text-align: end
     }
 
     .question-container {
         background-color: #fff;
-        border-radius: 0 3.5rem;
-        min-block-size: 87.8rem;    
-        max-inline-size: 105.2rem;
+        border-radius: 0 calc(3.5rem * var(--scale-factor));
+        block-size: 100vh;    
+        max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
-        padding-block: 6rem 7rem;
+        padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         position: relative;
         transform: scale(1) translateY(0);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-sizing: border-box;
     }
     
     .question-container.entering {
@@ -155,13 +184,13 @@
     }
 
     .question-header {
-        padding-inline: 6.5rem;
-        margin-block-end: 3rem;
+        padding-inline: calc(6.5rem * var(--scale-factor));
+        margin-block-end: calc(3rem * var(--scale-factor));
     }
 
     .question-title {
         color: #2E2D2C;
-        font-size: 4.6rem;
+        font-size: calc(4.6rem * var(--scale-factor));
         font-weight: 600;
         margin-block-end: 0;
         padding-inline: 0;
@@ -170,30 +199,30 @@
     
     .question-image {
         inline-size: 100%;
-        margin-block-end: 4rem;
-        max-block-size: 46rem;
+        margin-block-end: calc(4rem * var(--scale-factor));
+        max-block-size: calc(36rem * var(--scale-factor));
         object-fit: cover;
     }
     
     .question-options {
-        padding-block-start: 5rem;
-        padding-inline: 9rem;
+        padding-block-start: calc(5rem * var(--scale-factor));
+        padding-inline: calc(9rem * var(--scale-factor));
     }
 
     .options {
         display: inline-flex;   
         flex-direction: column;
-        margin-block-end: 2rem;
+        margin-block-end: calc(2rem * var(--scale-factor));
     }
     
     .option {
         align-items: center;
-        border-radius: 1.5rem;
+        border-radius: calc(1.5rem * var(--scale-factor));
         cursor: pointer;
         display: flex;
-        font-size: 2.2rem;
-        gap: 1rem;
-        padding: 1rem 1.5rem;
+        font-size: calc(2.2rem * var(--scale-factor));
+        gap: calc(1rem * var(--scale-factor));
+        padding: calc(1rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor));
         transition: all 0.2s ease;
         user-select: none;
 
@@ -205,15 +234,15 @@
     
     .option-text {
         color: #2E2D2C;
-        inset-block-start: .3rem;
+        inset-block-start: calc(.3rem * var(--scale-factor));
         position: relative;
     }
 
     input[type="radio"] {
         accent-color: currentColor;
-        block-size: 20px;
+        block-size: calc(20px * var(--scale-factor));
         cursor: pointer;
-        inline-size: 20px;
+        inline-size: calc(20px * var(--scale-factor));
         margin: 0;
     }
     
@@ -225,26 +254,37 @@
     .feedback {
         align-items: center;
         background-color: #fff;
-        border-radius: 3.7rem;
+        border-radius: calc(3.7rem * var(--scale-factor));
         display: flex;
         flex-direction: column;
         inset: 0;
         justify-content: center;
         position: absolute;
         width: 100%;
-        height: 100%;
+        height: 100vh;
+        box-sizing: border-box;
     }
     
     .feedback-content {
         align-items: center;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: calc(2rem * var(--scale-factor));
         justify-content: center;
     }
 
     .feedback-content svg {
-        block-size: 39.6rem;
-        inline-size: 39.6rem;
+        block-size: calc(39.6rem * var(--scale-factor));
+        inline-size: calc(39.6rem * var(--scale-factor));
+    }
+
+    @media (width >= 1920px) {
+        .question-container {
+            block-size: 90vh;
+        }
+        
+        .feedback {
+            height: 90vh;
+        }
     }
 </style> 

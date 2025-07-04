@@ -292,26 +292,26 @@
 
 <style lang="scss">
   .content {
-    margin-block-start: -15rem;
+    margin-block-start: calc(-15rem * var(--scale-factor));
     position: relative;
     z-index: 1;
 
     .wrapper {
       background-color: #FFF;
       margin-inline: auto;
-      max-inline-size: 128rem;
-      padding-block: 5rem 15rem;
+      max-inline-size: calc(128rem * var(--scale-factor));
+      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
     }
   }
 
   .error {
     background-color: #f8d7da;
-    border-radius: 1rem;
+    border-radius: calc(1rem * var(--scale-factor));
     color: #dc3545;
-    font-size: 1.8rem;
+    font-size: calc(1.8rem * var(--scale-factor));
     font-weight: 600;
-    margin-block: 2rem;
-    padding: 2rem;
+    margin-block: calc(2rem * var(--scale-factor));
+    padding: calc(2rem * var(--scale-factor));
     text-align: center;
   }
 
@@ -326,8 +326,8 @@
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: 53.5rem;
-    padding-block-start: 7rem;
+    block-size: calc(53.5rem * var(--scale-factor));
+    padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
     &-heroes {
@@ -339,10 +339,10 @@
 
     &-title {
       color: #FFF;
-      font-size: 8rem;
+      font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: 1.5rem;
+      padding-block-start: calc(1.5rem * var(--scale-factor));
     }
 
     :global(.logo path) {
@@ -351,7 +351,7 @@
 
     .wrapper {
       margin-inline: auto;
-      max-inline-size: 142rem;
+      max-inline-size: calc(142rem * var(--scale-factor));
     }
 
     .row {
@@ -364,12 +364,12 @@
       &-list {
         align-items: center;
         display: flex;
-        gap: 3rem;
+        gap: calc(3rem * var(--scale-factor));
       }
 
       &-link {
         color: #000;
-        font-size: 1.8rem;
+        font-size: calc(1.8rem * var(--scale-factor));
         font-weight: 600;
         line-height: normal;
       }
@@ -378,44 +378,44 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: 3.2rem;
-      border-radius: 0 1.5rem;
+      block-size: calc(3.2rem * var(--scale-factor));
+      border-radius: 0 calc(1.5rem * var(--scale-factor));
       display: flex;
-      inline-size: 11.1rem;
+      inline-size: calc(11.1rem * var(--scale-factor));
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
       .wrapper {
-        padding-inline: 2rem;
+        padding-inline: calc(2rem * var(--scale-factor));
       }
     }
   }
 
   .loading {
     color: #2E2D2C;
-    font-size: 2rem;
+    font-size: calc(2rem * var(--scale-factor));
     font-weight: 600;
-    padding-block: 5rem;
+    padding-block: calc(5rem * var(--scale-factor));
     text-align: center;
   }
 
   .pagination {
     align-items: center;
     display: flex;
-    gap: 1rem;
+    gap: calc(1rem * var(--scale-factor));
     justify-content: center;
-    margin-block-start: 3rem;
+    margin-block-start: calc(3rem * var(--scale-factor));
   }
 
   .pagination-btn {
     background-color: #E6E6E6;
     border: none;
-    border-radius: 1rem;
+    border-radius: calc(1rem * var(--scale-factor));
     color: #2E2D2C;
     cursor: pointer;
-    font-size: 1.4rem;
+    font-size: calc(1.4rem * var(--scale-factor));
     font-weight: 600;
-    padding: 1rem 1.5rem;
+    padding: calc(1rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor));
     transition: all 0.3s ease;
 
     &:hover:not(:disabled) {
@@ -431,19 +431,19 @@
 
   .pagination-info {
     color: #2E2D2C;
-    font-size: 1.6rem;
+    font-size: calc(1.6rem * var(--scale-factor));
     font-weight: 600;
-    margin-inline: 2rem;
+    margin-inline: calc(2rem * var(--scale-factor));
   }
 
   .ranking-container {
-    max-inline-size: 100rem;
+    max-inline-size: calc(100rem * var(--scale-factor));
     margin-inline: auto;
   }
 
   .ranking-section {
-    max-inline-size: 98rem;
-    margin-block-start: 12.5rem;
+    max-inline-size: calc(98rem * var(--scale-factor));
+    margin-block-start: calc(12.5rem * var(--scale-factor));
     margin-inline: auto;
   }
 
@@ -455,16 +455,16 @@
     th, td {
       border-bottom: 1px solid #ccc;
       color: #FF7000;
-      font-size: 3.5rem;
+      font-size: calc(3.5rem * var(--scale-factor));
       font-weight: 600;
-      padding: 2rem;
+      padding: calc(2rem * var(--scale-factor));
       text-align: left;
       vertical-align: top;
     }
 
     th {
       color: #FF7000;
-      font-size: 3.5rem;
+      font-size: calc(3.5rem * var(--scale-factor));
       font-weight: 400;
     }
 
@@ -477,7 +477,7 @@
       font-weight: 700;
       
       &:not(:last-child) {
-        margin-block-end: 0.5rem;
+        margin-block-end: calc(0.5rem * var(--scale-factor));
       }
     }
 
@@ -487,7 +487,7 @@
       text-align: end;
       
       &:not(:last-child) {
-        margin-block-end: 0.5rem;
+        margin-block-end: calc(0.5rem * var(--scale-factor));
       }
     }
 
@@ -500,68 +500,68 @@
 
   .ranking-title {
     color: #FF7000;
-    font-size: 7.5rem;
+    font-size: calc(7.5rem * var(--scale-factor));
     font-weight: 400;
     line-height: 125%;
     text-align: center;
   }
 
   .region-content {
-    padding-block-start: 12.5rem;
+    padding-block-start: calc(12.5rem * var(--scale-factor));
     text-align: center;
   }
 
   .region-tab {
-    border-block-end: .7rem solid transparent;
-    font-size: 2.6rem;
+    border-block-end: calc(0.7rem * var(--scale-factor)) solid transparent;
+    font-size: calc(2.6rem * var(--scale-factor));
     font-weight: 600;
 
     &.active {
-      border-block-end: .7rem solid #FF7000;
+      border-block-end: calc(0.7rem * var(--scale-factor)) solid #FF7000;
     }
   }
 
   .region-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 5rem;
+    gap: calc(5rem * var(--scale-factor));
     justify-content: center;
-    margin-block-start: 5rem;
+    margin-block-start: calc(5rem * var(--scale-factor));
   }
 
   .region-title {
     color: #FF7000;
-    font-size: 7.5rem;
+    font-size: calc(7.5rem * var(--scale-factor));
     font-weight: 400;
-    margin-block-end: 5.5rem;
+    margin-block-end: calc(5.5rem * var(--scale-factor));
   }
 
   .search-container {
     display: flex;
-    margin-block-end: 3rem;
+    margin-block-end: calc(3rem * var(--scale-factor));
     margin-inline: auto;
-    max-inline-size: 43rem;
+    max-inline-size: calc(43rem * var(--scale-factor));
     position: relative;
     text-align: center;
 
     svg {
       inset-block-start: 50%;
-      inset-inline-start: 2rem;
+      inset-inline-start: calc(2rem * var(--scale-factor));
       position: absolute;
       transform: translateY(-50%);
     }
   }
 
   .search-input {
-    border: .2rem solid #999;
-    border-radius: 50rem;
+    border: calc(0.2rem * var(--scale-factor)) solid #999;
+    border-radius: calc(50rem * var(--scale-factor));
     color: #999;
-    font-size: 1.6rem;
+    font-size: calc(1.6rem * var(--scale-factor));
     inline-size: 100%;
-    padding: 1.5rem 2rem 1.5rem 6rem;
+    padding: calc(1.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 
     &:focus {
-      box-shadow: 0 0 0 2px #FF7000;
+      box-shadow: 0 0 0 calc(2px * var(--scale-factor)) #FF7000;
       outline: none;
     }
 
@@ -573,22 +573,22 @@
   .section-title {
     align-items: center;
     background-color: #E6E6E6;
-    block-size: 9rem;
-    border-radius: 0 2.5rem;
+    block-size: calc(9rem * var(--scale-factor));
+    border-radius: 0 calc(2.5rem * var(--scale-factor));
     color: #2E2D2C;
     display: flex;
-    font-size: 4rem;
+    font-size: calc(4rem * var(--scale-factor));
     font-weight: 400;
     justify-content: center;
     line-height: 125%;
     text-align: center;
 
     strong {
-      padding-inline-end: 1.1rem;
+      padding-inline-end: calc(1.1rem * var(--scale-factor));
     }
   }
 
   .table-container {
-    margin-block-end: 3rem;
+    margin-block-end: calc(3rem * var(--scale-factor));
   }
 </style> 

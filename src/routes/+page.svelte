@@ -208,15 +208,15 @@
 
 <style lang="scss">
   .content {
-    margin-block-start: -15rem;
+    margin-block-start: calc(-15rem * var(--scale-factor));
     position: relative;
     z-index: 1;
 
     .wrapper {
       background-color: #FFF;
-      max-inline-size: 128rem;
+      max-inline-size: calc(128rem * var(--scale-factor));
       margin-inline: auto;
-      padding-block: 5rem 15rem;
+      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
     }
   }
 
@@ -362,15 +362,15 @@
   }
 
   .game-card {
-    border-radius: 1.2rem;
-    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
-    padding: 3rem 2rem;
+    border-radius: calc(1.2rem * var(--scale-factor));
+    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
+    padding: calc(3rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
 
     &:hover:not(.locked) {
-      box-shadow: 0 0.8rem 1.2rem rgba(0, 0, 0, 0.15);
-      transform: translateY(-0.4rem);
+      box-shadow: 0 calc(0.8rem * var(--scale-factor)) calc(1.2rem * var(--scale-factor)) rgba(0, 0, 0, 0.15);
+      transform: translateY(calc(-0.4rem * var(--scale-factor)));
     }
 
     &.locked {
@@ -380,32 +380,32 @@
   }
 
   .game-label {
-    border-radius: 2rem;
+    border-radius: calc(2rem * var(--scale-factor));
     display: inline-block;
-    font-size: 1.1rem;
+    font-size: calc(1.1rem * var(--scale-factor));
     font-weight: 600;
-    margin-block-end: 1.5rem;
-    padding: 0.5rem 1rem;
+    margin-block-end: calc(1.5rem * var(--scale-factor));
+    padding: calc(0.5rem * var(--scale-factor)) calc(1rem * var(--scale-factor));
   }
 
   .game-name {
-    font-size: 2.2rem;
+    font-size: calc(2.2rem * var(--scale-factor));
     font-weight: 600;
-    margin-block-end: 2rem;
+    margin-block-end: calc(2rem * var(--scale-factor));
   }
 
   .games-grid {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: calc(3rem * var(--scale-factor));
     margin: 0 auto;
-    max-inline-size: 120rem;
+    max-inline-size: calc(120rem * var(--scale-factor));
   }
 
   .games-row {
     display: grid;
-    gap: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: calc(3rem * var(--scale-factor));
+    grid-template-columns: repeat(auto-fit, minmax(calc(30rem * var(--scale-factor)), 1fr));
   }
 
   .header {
@@ -413,8 +413,8 @@
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: 53.5rem;
-    padding-block-start: 7rem;
+    block-size: calc(53.5rem * var(--scale-factor));
+    padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
     &-heroes {
@@ -426,10 +426,10 @@
 
     &-title {
       color: #FFF;
-      font-size: 8rem;
+      font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: 1.5rem;
+      padding-block-start: calc(1.5rem * var(--scale-factor));
     }
 
     :global(.logo path) {
@@ -437,13 +437,13 @@
     }
 
     .wrapper {
-      max-inline-size: 142rem;
+      max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
       .wrapper {
-        padding-inline: 2rem;
+        padding-inline: calc(2rem * var(--scale-factor));
       }
     }
 
@@ -457,12 +457,12 @@
       &-list {
         align-items: center;
         display: flex;
-        gap: 3rem;
+        gap: calc(3rem * var(--scale-factor));
       }
 
       &-link {
         color: #000;
-        font-size: 1.8rem;
+        font-size: calc(1.8rem * var(--scale-factor));
         font-weight: 600;
         line-height: normal;
       }
@@ -471,30 +471,30 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: 3.2rem;
-      border-radius: 0 1.5rem;
+      block-size: calc(3.2rem * var(--scale-factor));
+      border-radius: 0 calc(1.5rem * var(--scale-factor));
       display: flex;
-      inline-size: 11.1rem;
+      inline-size: calc(11.1rem * var(--scale-factor));
     }
   }
 
   .home-container {
-    max-inline-size: 100rem;
+    max-inline-size: calc(100rem * var(--scale-factor));
     margin-inline: auto;
     text-align: center;
   }
 
   .home-title {
     color: #FF7000;
-    font-size: 7.5rem;
+    font-size: calc(7.5rem * var(--scale-factor));
     font-weight: 400;
     line-height: 125%;
-    margin-block-end: 12rem;
+    margin-block-end: calc(12rem * var(--scale-factor));
     text-align: center;
   }
 
   .lock-icon {
-    font-size: 3rem;
+    font-size: calc(3rem * var(--scale-factor));
     opacity: 0.7;
   }
 
@@ -502,20 +502,20 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: calc(1rem * var(--scale-factor));
   }
 
   .locked-text {
-    font-size: 1.1rem;
+    font-size: calc(1.1rem * var(--scale-factor));
     font-weight: 500;
   }
 
   .cta-button {
-    border-radius: 0.8rem;
+    border-radius: calc(0.8rem * var(--scale-factor));
     display: inline-block;
-    font-size: 1.3rem;
+    font-size: calc(1.3rem * var(--scale-factor));
     font-weight: 600;
-    padding: 1rem 2rem;
+    padding: calc(1rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
     text-decoration: none;
     transition: background-color 0.2s;
   }

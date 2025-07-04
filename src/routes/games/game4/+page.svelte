@@ -127,7 +127,7 @@
 					</div>
 
 					<p class="paragraph">All heroes face the battle between good and evil, with great power comes great responsibility!</p>
-					<p class="paragraph">Now it’s your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.</p>
+					<p class="paragraph">Now it's your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.</p>
 					<p class="paragraph">You'll start with 5 points, but lose 1 for every wrong decision.</p>
 					<p class="paragraph">Ready for the challenge? Hit Start!</p>
 				</div>
@@ -182,7 +182,7 @@
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M0 23.02L38.54 0V46.04L0 23.02Z" fill="white"/>
 						</svg>
  
-						<div style="text-align: end;">Swipe or click if it’s <span>incorrect</span></div>
+						<div style="text-align: end;">Swipe or click if it's <span>incorrect</span></div>
 					</button>
 					
 					<div class="card-container">
@@ -255,7 +255,7 @@
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M0 23.02L38.54 0V46.04L0 23.02Z" fill="white"/>
 						</svg>
 
-						<div style="text-align: start;">Swipe or click if it’s <span>correct</span></div>
+						<div style="text-align: start;">Swipe or click if it's <span>correct</span></div>
 					</button>
 
 					<img src="/images/game4-shape-correct.png" alt="" class="game4-shape game4-shape-correct">
@@ -266,6 +266,34 @@
 </div>
 
 <style lang="scss">
+	:root {
+		--scale-factor: 1;
+	}
+
+	@media (width <= 1440px) {
+		:root {
+			--scale-factor: 0.85;
+		}
+	}
+
+	@media (width <= 1200px) {
+		:root {
+			--scale-factor: 0.75;
+		}
+	}
+
+	@media (width <= 1024px) {
+		:root {
+			--scale-factor: 0.65;
+		}
+	}
+
+	@media (width >= 1920px) {
+		:root {
+			--scale-factor: 0.95;
+		}
+	}
+
 	.game-container {
 		block-size: 100vh;
 		position: relative;
@@ -296,14 +324,14 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding: 2rem;
+		padding: calc(2rem * var(--scale-factor));
 		position: relative;
 	}
 
 	.game-content {
 		align-items: center;
 		display: flex;
-		gap: 3rem;
+		gap: calc(3rem * var(--scale-factor));
 		justify-content: center;
 		width: 100%;
 	}
@@ -314,26 +342,26 @@
 		flex: 0 1 auto;
 		flex-direction: column;
 		position: relative;
-		width: 105.2rem;
+		width: calc(105.2rem * var(--scale-factor));
 	}
 
 	.counter {
 		color: #fff;
-		font-size: 2.2rem;
+		font-size: calc(2.2rem * var(--scale-factor));
 		font-weight: 600;
-		margin-inline-end: 5rem;
-		padding-block-end: 0.5rem;
+		margin-inline-end: calc(5rem * var(--scale-factor));
+		padding-block-end: calc(0.5rem * var(--scale-factor));
 		z-index: 10;
 	}
 
 	.statement-card {
 		background-color: #fff;
-		border-radius: 0 3.5rem;
+		border-radius: 0 calc(3.5rem * var(--scale-factor));
 		cursor: grab;
 		margin-inline: auto;
 		min-block-size: 90vh;
 		opacity: 1;
-		padding-block: 6rem 7rem;
+		padding-block: calc(6rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
 		transform: scale(1) translateY(0);
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -345,13 +373,13 @@
 	}
 
 	.statement-header {
-		margin-block-end: 3rem;
-		padding-inline: 6.5rem;
+		margin-block-end: calc(3rem * var(--scale-factor));
+		padding-inline: calc(6.5rem * var(--scale-factor));
 	}
 
 	.statement-title {
 		color: #FFC400;
-		font-size: 4.6rem;
+		font-size: calc(4.6rem * var(--scale-factor));
 		font-weight: 600;
 		margin-block-end: 0;
 		padding-inline: 0;
@@ -360,8 +388,8 @@
 
 	.statement-image {
 		inline-size: 100%;
-		margin-block-end: 4rem;
-		max-block-size: 46rem;
+		margin-block-end: calc(4rem * var(--scale-factor));
+		max-block-size: calc(46rem * var(--scale-factor));
 		object-fit: cover;
 	}
 
@@ -386,18 +414,18 @@
 		}
 
 		svg {
-			height: 47px;
-			width: 39px;
+			height: calc(47px * var(--scale-factor));
+			width: calc(39px * var(--scale-factor));
 		}
 
 		div {
 			color: #2E2D2C;
-			font-size: 2.4rem;	
+			font-size: calc(2.4rem * var(--scale-factor));	
 			line-height: normal;
-			padding-block-start: 4rem;
+			padding-block-start: calc(4rem * var(--scale-factor));
 
 			span {
-				font-size: 4rem;
+				font-size: calc(4rem * var(--scale-factor));
 				font-weight: 600;
 				display: block;
 			}
@@ -407,7 +435,7 @@
 	.result-panel {
 		align-items: center;
 		background-color: #fff;
-		border-radius: 3.7rem;
+		border-radius: calc(3.7rem * var(--scale-factor));
 		display: flex;
 		inset: 0;
 		justify-content: center;
@@ -423,8 +451,8 @@
 	}
 
 	.result-content svg {
-		block-size: 39.6rem;
-		inline-size: 39.6rem;
+		block-size: calc(39.6rem * var(--scale-factor));
+		inline-size: calc(39.6rem * var(--scale-factor));
 	}
 
 	.game-panel {
@@ -434,12 +462,12 @@
 	.instructions {
 		background-color: #2E2D2C;
 		block-size: 100vh;
-		border-radius: 0 6rem 0 0;
+		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
 		inset-block-start: 0;
 		inset-inline-start: 0;
 		inline-size: calc(100vw - 66.41%);
 		overflow-y: auto;
-		padding: 5rem 6rem 9rem;
+		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
 		transition: transform 0.3s ease-in-out;
 		z-index: 9999;
@@ -459,7 +487,7 @@
 		border: none;
 		color: white;
 		cursor: pointer;
-		padding: 1rem;
+		padding: calc(1rem * var(--scale-factor));
 		position: absolute;
 		z-index: 10000;
 
@@ -469,89 +497,89 @@
 	}
 
 	.close-button {
-		inset-block-start: 2rem;
-		inset-inline-end: 2rem;
+		inset-block-start: calc(2rem * var(--scale-factor));
+		inset-inline-end: calc(2rem * var(--scale-factor));
 
 		svg {
-			block-size: 2.4rem;
-			inline-size: 2.3rem;
+			block-size: calc(2.4rem * var(--scale-factor));
+			inline-size: calc(2.3rem * var(--scale-factor));
 		}
 	}
 
 	.play-button {
-		inset-block-start: 2rem;
-		inset-inline-end: 0;
+		inset-block-start: calc(2rem * var(--scale-factor));
+		inset-inline-end: calc(2rem * var(--scale-factor) - 10px);
 
 		svg {
-			block-size: 3.3rem;
-			inline-size: 2.7rem;
+			block-size: calc(3.3rem * var(--scale-factor));
+			inline-size: calc(2.7rem * var(--scale-factor));
 		}
 	}
 
 	.copy {
 		background-color: #fff;
-		margin-block-start: 6.5rem;
-		padding: 2rem 2rem 4rem;
+		margin-block-start: calc(6.5rem * var(--scale-factor));
+		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		position: relative;
 
 		&-header {
 			align-items: end;
 			display: grid;
-			grid-column-gap: 3rem;
+			grid-column-gap: calc(3rem * var(--scale-factor));
 			grid-template-columns: repeat(2, auto);
 			justify-content: start;
-			margin-block-start: -5rem;
+			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
 
 	.game-id {
 		align-items: center;
 		background-color: #FFC400;
-		block-size: 17rem;
-		border-radius: 0 2rem 0 2rem;
+		block-size: calc(17rem * var(--scale-factor));
+		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
 		color: #2E2D2C;
 		display: flex;
 		flex-direction: column;
-		inline-size: 11rem;
-		padding: 1rem;
+		inline-size: calc(11rem * var(--scale-factor));
+		padding: calc(1rem * var(--scale-factor));
 		text-align: center;
 
 		.text {
-			font-size: 2.8rem;
+			font-size: calc(2.8rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 2.8rem;
+			line-height: calc(2.8rem * var(--scale-factor));
 		}
 
 		.number {
-			font-size: 13.7rem;
+			font-size: calc(13.7rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 13.7rem;
+			line-height: calc(13.7rem * var(--scale-factor));
 		}
 	}
 
 	.title {
 		color: #FFC400;
-		font-size: 6rem;
+		font-size: calc(6rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 2rem;
+		padding-block-start: calc(2rem * var(--scale-factor));
 	}
 
 	.subtitle {
 		color: #FFC400;
-		font-size: 3.7rem;
+		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.paragraph {
 		color: #2E2D2C;
-		font-size: 2.2rem;
-		padding-block-start: 2rem;
+		font-size: calc(2.2rem * var(--scale-factor));
+		padding-block-start: calc(2rem * var(--scale-factor));
 
 		&:first-child {
-			padding-block-start: 2.5rem;
+			padding-block-start: calc(2.5rem * var(--scale-factor));
 		}
 	}
 
@@ -587,7 +615,7 @@
 		block-size: 100vh;
 		color: #fff;
 		display: flex;
-		font-size: 3rem;
+		font-size: calc(3rem * var(--scale-factor));
 		justify-content: center;
 	}
 
@@ -597,22 +625,29 @@
 		cursor: pointer;
 		margin: 0;
 		padding: 0;
+
+		img {
+			width: calc(100% * var(--scale-factor));
+			max-width: calc(800px * var(--scale-factor));
+			height: auto;
+			margin-inline: auto;
+		}
 	}
 
 	.explanation {
 		color: #000;
 		font-weight: 600;
 		line-height: normal;
-		inline-size: 29.5rem;
+		inline-size: calc(29.5rem * var(--scale-factor));
 		margin-inline: auto;
 		text-align: center;
 
 		&-title {
-			font-size: 3rem;
+			font-size: calc(3rem * var(--scale-factor));
 		}
 
 		&-copy {
-			font-size: 1.8rem;
+			font-size: calc(1.8rem * var(--scale-factor));
 		}
 	}
 </style> 

@@ -48,6 +48,34 @@
 </div>
 
 <style lang="scss">
+    :root {
+        --scale-factor: 1;
+    }
+
+    @media (width <= 1440px) {
+        :root {
+            --scale-factor: 0.85;
+        }
+    }
+
+    @media (width <= 1200px) {
+        :root {
+            --scale-factor: 0.75;
+        }
+    }
+
+    @media (width <= 1024px) {
+        :root {
+            --scale-factor: 0.65;
+        }
+    }
+
+    @media (width >= 1920px) {
+        :root {
+            --scale-factor: 0.95;
+        }
+    }
+
     .game-container {
         background-color: #FF5BAF;
         position: relative;
@@ -67,60 +95,60 @@
 
         .title {
             color: #fff;
-            font-size: 7rem;
+            font-size: calc(7rem * var(--scale-factor));
             font-weight: 600;
         }
 
         .results {
             background-color: #fff;
-            border-radius: 3.5rem;
-            inline-size: 90rem;
-            margin-block-start: 3.5rem;
-            padding: 5rem;
+            border-radius: calc(3.5rem * var(--scale-factor));
+            inline-size: calc(90rem * var(--scale-factor));
+            margin-block-start: calc(3.5rem * var(--scale-factor));
+            padding: calc(5rem * var(--scale-factor));
             position: relative;
         }
 
         .paragraph {
             color: #000;
-            font-size: 4.5rem;
+            font-size: calc(4.5rem * var(--scale-factor));
             font-weight: 600;
             line-height: normal;
         }
 
         .total-points {
             color: #FF5BAF;
-            font-size: 8rem;
+            font-size: calc(8rem * var(--scale-factor));
             font-weight: 700;
-            margin-block-start: 2rem;
+            margin-block-start: calc(2rem * var(--scale-factor));
         }
 
         .cta {
-            margin-block-start: 4rem;
+            margin-block-start: calc(4rem * var(--scale-factor));
             display: flex;
-            gap: 2rem;
+            gap: calc(2rem * var(--scale-factor));
             justify-content: center;
         }
 
         .btn {
             background-color: #fff;
             border: none;
-            border-radius: 1.5rem;
+            border-radius: calc(1.5rem * var(--scale-factor));
             color: #FF5BAF;
             cursor: pointer;
-            font-size: 2.2rem;
+            font-size: calc(2.2rem * var(--scale-factor));
             font-weight: 600;
-            padding: 1.5rem 3rem;
+            padding: calc(1.5rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
             text-decoration: none;
             transition: all 0.2s ease;
         }
     }
 
     .finish-small {
-		block-size: 2rem;
+		block-size: calc(2rem * var(--scale-factor));
 		color: #fff;
 		display: block;
-		font-size: 2rem;
-		margin-block-start: 3rem;
+		font-size: calc(2rem * var(--scale-factor));
+		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}
 </style> 

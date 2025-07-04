@@ -87,9 +87,16 @@
 
 <style>
     .game-header-svg {
-        inset-block-start: -10rem;
-        inset-inline-start: -10rem;
+        inset-block-start: calc(-10rem * var(--scale-factor));
+        inset-inline-start: calc(-10rem * var(--scale-factor));
         max-inline-size: none;
         position: relative;
+    }
+
+    /* Adjust hero position for 1440px screens */
+    @media screen and (min-width: 1440px) and (max-width: 1599px) {
+        .game-header-svg {
+            inset-block-start: calc(2rem * var(--scale-factor));
+        }
     }
 </style>

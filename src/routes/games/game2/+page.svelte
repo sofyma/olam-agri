@@ -236,14 +236,14 @@
 	.game-container {
 		position: relative;
 		:global(.shape) {
-			inset-block-start: -10rem;
+			inset-block-start: calc(-10rem * var(--scale-factor));
 			inset-inline-start: 0;
 			position: absolute;
 		}
 	}
 
 	.game-header {
-		padding: 2rem 7rem;
+		padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
 		z-index: 10;
 		text-align: center;
@@ -251,12 +251,12 @@
 
 	.game-header-image {
 		margin-inline: auto;
-		margin-block-start: 5rem;
+		margin-block-start: calc(5rem * var(--scale-factor));
 	}
 
 	.game-header-title {
 		color: #fff;
-		font-size: 4.8rem;
+		font-size: calc(4.8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
@@ -265,7 +265,7 @@
 		block-size: 100vh;
 		display: flex;
 		justify-content: center;
-		padding-block-start: 5rem;
+		padding-block-start: calc(5rem * var(--scale-factor));
 		position: relative;
 		overflow: hidden;
 	}
@@ -293,12 +293,12 @@
 		background-color: rgb(84, 62, 238);
 		border-radius: 50%;
 		color: #fff;
-		width: 15rem;
-		height: 15rem;
+		width: calc(15rem * var(--scale-factor));
+		height: calc(15rem * var(--scale-factor));
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 2rem;
+		padding: calc(2rem * var(--scale-factor));
 		text-align: center;
 		cursor: pointer;
 		pointer-events: all;
@@ -314,14 +314,14 @@
 			background: none;
 			border: none;
 			pointer-events: none;
-			width: 30rem;
-			height: 30rem;
+			width: calc(30rem * var(--scale-factor));
+			height: calc(30rem * var(--scale-factor));
 		}
 	}
 
 	.statement-text {
 		color: #fff;
-		font-size: 1.6rem;
+		font-size: calc(1.6rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: 1.2;
 	}
@@ -347,7 +347,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		font-size: 5rem;
+		font-size: calc(5rem * var(--scale-factor));
 		animation: feedbackPop 0.5s ease-out forwards;
 	}
 
@@ -388,18 +388,18 @@
 	.instructions {
 		background-color: #2E2D2C;
 		block-size: 100vh;
-		border-radius: 0 6rem 0 0;
+		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
 		inline-size: calc(100vw - 66.41%);
 		inset-block-start: 0;
 		inset-inline-start: 0;
 		overflow-y: auto;
-		padding: 5rem 6rem 9rem;
+		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
 		z-index: 9999;
 		transition: transform 0.3s ease-in-out;
 
 		&.closed {
-			transform: translateX(calc(-100% + 5rem));
+			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
 		}
 	}
 
@@ -415,7 +415,7 @@
 		cursor: pointer;
 		position: absolute;
 		z-index: 10000;
-		padding: 1rem;
+		padding: calc(1rem * var(--scale-factor));
 
 		&:hover {
 			opacity: 0.8;
@@ -423,29 +423,29 @@
 	}
 
 	.close-button {
-		inset-block-start: 2rem;
-		inset-inline-end: 2rem;
+		inset-block-start: calc(2rem * var(--scale-factor));
+		inset-inline-end: calc(2rem * var(--scale-factor));
 
 		svg {
-			block-size: 2.4rem;
-			inline-size: 2.3rem;
+			block-size: calc(2.4rem * var(--scale-factor));
+			inline-size: calc(2.3rem * var(--scale-factor));
 		}
 	}
 
 	.play-button {
-		inset-block-start: 2rem;
+		inset-block-start: calc(2rem * var(--scale-factor));
 		inset-inline-end: 0;
 
 		svg {
-			block-size: 3.3rem;
-			inline-size: 2.7rem;
+			block-size: calc(3.3rem * var(--scale-factor));
+			inline-size: calc(2.7rem * var(--scale-factor));
 		}
 	}
 
 	.copy {
 		background-color: #fff;
-		margin-block-start: 6.5rem;
-		padding: 2rem 2rem 4rem;
+		margin-block-start: calc(6.5rem * var(--scale-factor));
+		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		position: relative;
 
 		&-header {
@@ -453,70 +453,74 @@
 			display: grid;
 			justify-content: start;
 			grid-template-columns: repeat(2, auto);
-			grid-column-gap: 3rem;
-			margin-block-start: -5rem;
+			grid-column-gap: calc(3rem * var(--scale-factor));
+			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
 
 	.game-id {
 		align-items: center;
 		background-color: #8E75F8;
-		border-radius: 0 2rem 0 2rem;
-		block-size: 17rem;
+		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+		block-size: calc(17rem * var(--scale-factor));
 		color: #fff;
 		display: flex;
 		flex-direction: column;
-		inline-size: 11rem;
-		padding: 1rem;
+		inline-size: calc(11rem * var(--scale-factor));
+		padding: calc(1rem * var(--scale-factor));
 		text-align: center;
 
 		.text {
-			font-size: 2.8rem;
+			font-size: calc(2.8rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 2.8rem;
+			line-height: calc(2.8rem * var(--scale-factor));
 		}
 
 		.number {
-			font-size: 13.7rem;
+			font-size: calc(13.7rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 13.7rem;
+			line-height: calc(13.7rem * var(--scale-factor));
 		}
 	}
 
 	.title {
 		color: #8E75F8;
-		font-size: 6rem;
+		font-size: calc(6rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 2rem;
+		padding-block-start: calc(2rem * var(--scale-factor));
 	}
 
 	.subtitle {
 		color: #8E75F8;
-		font-size: 3.7rem;
+		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.paragraph {
 		color: #2E2D2C;
-		font-size: 2.2rem;
-		padding-block-start: 2rem;
+		font-size: calc(2.2rem * var(--scale-factor));
+		padding-block-start: calc(2rem * var(--scale-factor));
 
 		&:first-child {
-			padding-block-start: 2.5rem;
+			padding-block-start: calc(2.5rem * var(--scale-factor));
 		}
 	}
 
 	.start-screen {
 		display: flex;
 		justify-content: center;
+		align-items: self-end;
+		block-size: 100vh;
 		inline-size: calc(100vw - (100vw - 66.41%));
 		margin-inline-start: auto;
 
 		&-content {
 			position: relative;
+			transform: scale(var(--scale-factor));
+			transform-origin: center center;
 		}
 	}
 
@@ -530,7 +534,7 @@
 		block-size: 100vh;
 		color: #fff;
 		display: flex;
-		font-size: 3rem;
+		font-size: calc(3rem * var(--scale-factor));
 		justify-content: center;
 	}
 

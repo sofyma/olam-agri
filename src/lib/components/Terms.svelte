@@ -67,8 +67,8 @@
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: 53.5rem;
-    padding-block-start: 7rem;
+    block-size: calc(53.5rem * var(--scale-factor));
+    padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
     &-heroes {
@@ -80,10 +80,10 @@
 
     &-title {
       color: #FFF;
-      font-size: 8rem;
+      font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: 1.5rem;
+      padding-block-start: calc(1.5rem * var(--scale-factor));
     }
 
     :global(.logo path) {
@@ -91,13 +91,13 @@
     }
 
     .wrapper {
-      max-inline-size: 142rem;
+      max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
       .wrapper {
-        padding-inline: 2rem;
+        padding-inline: calc(2rem * var(--scale-factor));
       }
     }
 
@@ -111,12 +111,12 @@
       &-list {
         align-items: center;
         display: flex;
-        gap: 3rem;
+        gap: calc(3rem * var(--scale-factor));
       }
 
       &-link {
         color: #000;
-        font-size: 1.8rem;
+        font-size: calc(1.8rem * var(--scale-factor));
         font-weight: 600;
         line-height: normal;
       }
@@ -125,10 +125,10 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: 3.2rem;
-      border-radius: 0 1.5rem;
+      block-size: calc(3.2rem * var(--scale-factor));
+      border-radius: 0 calc(1.5rem * var(--scale-factor));
       display: flex;
-      inline-size: 11.1rem;
+      inline-size: calc(11.1rem * var(--scale-factor));
     }
   }
 
@@ -139,45 +139,45 @@
   }          
 
   .content {
-    margin-block-start: -15rem;
+    margin-block-start: calc(-15rem * var(--scale-factor));
     position: relative;
     z-index: 1;
 
     .wrapper {
       background-color: #FFF;
-      max-inline-size: 128rem;
+      max-inline-size: calc(128rem * var(--scale-factor));
       margin-inline: auto;
-      padding-block: 5rem 15rem;
+      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
     }
   }
 
   .terms-title {
     color: #FF7000;
-    font-size: 7.5rem;
+    font-size: calc(7.5rem * var(--scale-factor));
     font-weight: 400;
     line-height: 125%;
     text-align: center;
   }
 
   .terms-content {
-    max-inline-size: 80rem;
+    max-inline-size: calc(80rem * var(--scale-factor));
     margin-inline: auto;
-    padding-block-start: 5rem;
+    padding-block-start: calc(5rem * var(--scale-factor));
   }
 
   .terms-subtitle {
     color: #2E2D2C;
-    font-size: 3rem;
+    font-size: calc(3rem * var(--scale-factor));
     font-weight: 600;
     line-height: 125%;
-    margin-block-end: 3rem;
+    margin-block-end: calc(3rem * var(--scale-factor));
   }
 
   .terms-paragraph {
     color: #2E2D2C;
-    font-size: 1.8rem;
+    font-size: calc(1.8rem * var(--scale-factor));
     font-weight: 400;
     line-height: 1.6;
-    margin-block-end: 2rem;
+    margin-block-end: calc(2rem * var(--scale-factor));
   }
 </style> 

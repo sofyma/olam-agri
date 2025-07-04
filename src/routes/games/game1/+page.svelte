@@ -129,7 +129,7 @@
 				</div>
 
 				<div class="start-screen">
-					<div>
+					<div class="start-screen-content">
 						<Game1Hero />
 
 						<div class="vision-queen-container">
@@ -190,7 +190,7 @@
         </div>
 
         {#if currentQuestion}
-					<div style="padding-block: 7rem; padding-inline: 0 7rem;">
+					<div style="padding-block: calc(7rem * var(--scale-factor)); padding-inline: 0 calc(7rem * var(--scale-factor));">
             <Question
                 question={currentQuestion}
                 showFeedback={showFeedback}
@@ -227,13 +227,13 @@
     }
 
 	.game-header {
-		padding: 0 7rem 7rem;
+		padding: 0 calc(7rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
 	}
 
 	.game-header-title {
 		color: #fff;
-		font-size: 4.8rem;
+		font-size: calc(4.8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
@@ -241,9 +241,9 @@
 	
 	.game-header-paragraph {
 		color: #fff;
-		font-size: 2.8rem;
+		font-size: calc(2.8rem * var(--scale-factor));
 		line-height: normal;
-		padding-block-start: 1rem;
+		padding-block-start: calc(1rem * var(--scale-factor));
 	}
 
 	.game-panel {
@@ -253,91 +253,92 @@
 	.game-grid {
 		align-items: end;
 		display: grid;
-		grid-template-columns: 55rem 1fr;
+		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 		position: relative;
 	}
 
 	.game-id {
 		align-items: center;
 		background-color: #FF7000;
-		border-radius: 0 2rem 0 2rem;
-		block-size: 17rem;
+		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+		block-size: calc(17rem * var(--scale-factor));
 		color: #fff;
 		display: flex;
 		flex-direction: column;
-		inline-size: 11rem;
-		padding: 1rem;
+		inline-size: calc(11rem * var(--scale-factor));
+		padding: calc(1rem * var(--scale-factor));
 		text-align: center;
 
 		.text {
-			font-size: 2.8rem;
+			font-size: calc(2.8rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 2.8rem;
+			line-height: calc(2.8rem * var(--scale-factor));
 		}
 
 		.number {
-			font-size: 13.7rem;
+			font-size: calc(13.7rem * var(--scale-factor));
 			font-weight: 600;
-			line-height: 13.7rem
+			line-height: calc(13.7rem * var(--scale-factor))
 		}
 	}
 
 	.title {
 		color: #FF7000;
-		font-size: 6rem;
+		font-size: calc(6rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 2rem;
+		padding-block-start: calc(2rem * var(--scale-factor));
 	}
 
 	.subtitle {
 		color: #FF7000;
-		font-size: 3.7rem;
+		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.paragraph {
 		color: #2E2D2C;
-		font-size: 2.2rem;
-		padding-block-start: 2rem;
+		font-size: calc(2.2rem * var(--scale-factor));
+		line-height: normal;
+		padding-block-start: calc(2rem * var(--scale-factor));
 
 		&:first-child {
-			padding-block-start: 2.5rem
+			padding-block-start: calc(2.5rem * var(--scale-factor))
 		}
 	}
 
 	.copy {
 		background-color: #fff;
-		margin-block-start: 6.5rem;
-		padding: 2rem 2rem 4rem;
+		margin-block-start: calc(6.5rem * var(--scale-factor));
+		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		position: relative;
 
 		&-header {
 			align-items: end;
 			display: grid;
 			grid-template-columns: repeat(2, auto);
-			grid-column-gap: 3rem;
-			margin-block-start: -5rem;
+			grid-column-gap: calc(3rem * var(--scale-factor));
+			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
 
 	.instructions {
 		background-color: #2E2D2C;
 		block-size: 100vh;
-		border-radius: 0 6rem 0 0;
+		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
 		inline-size: calc(100vw - 66.41%);
 		inset-block-start: 0;
 		inset-inline-start: 0;
 		overflow-y: auto;
-		padding: 5rem 6rem 9rem;
+		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
 		z-index: 9999;
 		transition: transform 0.3s ease-in-out;
 
 		&.closed {
-			transform: translateX(calc(-100% + 5rem));
+			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
 		}
 	}
 	
@@ -355,14 +356,19 @@
 		}
 	}
 
+	.start-screen-content {
+		transform: scale(var(--scale-factor));
+		transform-origin: center center;
+	}
+
 	.start {
-		inset-block-end: 12rem;
+		inset-block-end: calc(12rem * var(--scale-factor));
 		inset-inline-end: 0;
 		position: absolute;
 
 		svg {
-			block-size: 39.6rem;
-			inline-size: 39.6rem;
+			block-size: calc(39.6rem * var(--scale-factor));
+			inline-size: calc(39.6rem * var(--scale-factor));
 		}
 	}
 
@@ -379,32 +385,32 @@
 
 		.title {
 			color: #fff;
-			font-size: 7rem;
+			font-size: calc(7rem * var(--scale-factor));
 			font-weight: 600;
 		}
 
 		.results {
 			background-color: #fff;
-			border-radius: 3.5rem;
-			inline-size: 90rem;
-			margin-block-start: 3.5rem;
-			padding: 5rem;
+			border-radius: calc(3.5rem * var(--scale-factor));
+			inline-size: calc(90rem * var(--scale-factor));
+			margin-block-start: calc(3.5rem * var(--scale-factor));
+			padding: calc(5rem * var(--scale-factor));
 		}
 
 		.paragraph {
 			color: #000;
-			font-size: 4.5rem;
+			font-size: calc(4.5rem * var(--scale-factor));
 		}
 
 		.total-points {
 			color: #FF7000;
-			font-size: 8rem;
+			font-size: calc(8rem * var(--scale-factor));
 			font-weight: 600;
 			line-height: normal;
 		}
 
 		.cta {
-			padding-block-start: 7rem;
+			padding-block-start: calc(7rem * var(--scale-factor));
 		}
 	}
 
@@ -413,15 +419,15 @@
 		border: none;
 		color: white;
 		cursor: pointer;
-		inset-block-start: 4rem;
-		inset-inline-end: 4rem;
-		padding: 1rem;
+		inset-block-start: calc(4rem * var(--scale-factor));
+		inset-inline-end: calc(4rem * var(--scale-factor));
+		padding: calc(1rem * var(--scale-factor));
 		position: absolute;
 		z-index: 10000;
 
 		svg {
-			block-size: 2.4rem;
-			inline-size: 2.3rem;
+			block-size: calc(2.4rem * var(--scale-factor));
+			inline-size: calc(2.3rem * var(--scale-factor));
 		}
 
 		&:hover {
@@ -434,15 +440,15 @@
 		border: none;
 		color: white;
 		cursor: pointer;
-		inset-block-start: 3rem;
-    	inset-inline-end: .5rem;
-		padding: 1rem;
+		inset-block-start: calc(3rem * var(--scale-factor));
+    	inset-inline-end: calc(.5rem * var(--scale-factor));
+		padding: calc(1rem * var(--scale-factor));
 		position: absolute;
 		z-index: 10000;
 
 		svg {
-			block-size: 3.3rem;
-			inline-size: 2.7rem;
+			block-size: calc(3.3rem * var(--scale-factor));
+			inline-size: calc(2.7rem * var(--scale-factor));
 		}
 
 		&:hover {
@@ -455,22 +461,22 @@
 	}
 
 	.vision-queen-container {
-		inset-block-end: -11rem;
+		inset-block-end: calc(-11rem * var(--scale-factor));
 		inset-inline-start: 0;
-		max-inline-size: 26rem;
+		max-inline-size: calc(26rem * var(--scale-factor));
 		position: absolute !important;
 	}
 
 	.vision-queen-title {
 		color: #000;
-		font-size: 3rem;
+		font-size: calc(3rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.vision-queen-copy {
 		color: #000;
-		font-size: 1.8rem;
+		font-size: calc(1.8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}

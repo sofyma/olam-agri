@@ -367,18 +367,46 @@
 </div>
 
 <style lang="scss">
+    :root {
+        --scale-factor: 1;
+    }
+
+    @media (width <= 1440px) {
+        :root {
+            --scale-factor: 0.85;
+        }
+    }
+
+    @media (width <= 1200px) {
+        :root {
+            --scale-factor: 0.75;
+        }
+    }
+
+    @media (width <= 1024px) {
+        :root {
+            --scale-factor: 0.65;
+        }
+    }
+
+    @media (width >= 1920px) {
+        :root {
+            --scale-factor: 0.95;
+        }
+    }
+
     .game-container {
         position: relative;
         
         :global(.shape) {
-            inset-block-start: -10rem;
+            inset-block-start: calc(-10rem * var(--scale-factor));
             inset-inline-start: 0;
             position: absolute;
         }
     }
 
     .game-header {
-        padding: 2rem 7rem;
+        padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
         position: relative;
         z-index: 10;
         text-align: center;
@@ -386,28 +414,51 @@
 
     .game-header-image {
         margin-inline: auto;
+        width: calc(100% * var(--scale-factor));
+        max-width: calc(800px * var(--scale-factor));
     }
 
     .game-area {
         display: flex;
         justify-content: center;
-        padding-block-start: 5rem;
+        padding-block-start: calc(5rem * var(--scale-factor));
         position: relative;
     }
 
     .directional-pad {
         background-color: #fff;
-        border-radius: 2rem;
+        border-radius: calc(2rem * var(--scale-factor));
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-block-start: 10rem;
-        padding: 3rem;
+        margin-block-start: calc(10rem * var(--scale-factor));
+        padding: calc(3rem * var(--scale-factor));
     }
 
     .dir-row {
         display: flex;
-        gap: 9rem;
+        gap: calc(9rem * var(--scale-factor));
+    }
+
+    .dir-btn {
+        width: calc(80px * var(--scale-factor));
+        height: calc(80px * var(--scale-factor));
+        border-radius: calc(1rem * var(--scale-factor));
+        border: none;
+        background-color: #f0f0f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+
+        &:active {
+            background-color: #d0d0d0;
+        }
     }
 
     .maze-container {
@@ -415,11 +466,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: calc(2rem * var(--scale-factor));
+        margin-inline-start: -20px;
     }
 
     .maze-svg {
         background: transparent;
+        width: calc(1205px * var(--scale-factor));
+        height: calc(895px * var(--scale-factor));
     }
 
     .ball {
@@ -433,12 +487,12 @@
     .instructions {
         background-color: #2E2D2C;
         block-size: 100vh;
-        border-radius: 0 6rem 0 0;
+        border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
         inline-size: calc(100vw - 66.41%);
         inset-block-start: 0;
         inset-inline-start: 0;
         overflow-y: auto;
-        padding: 5rem 6rem 9rem;
+        padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
         position: fixed;
         z-index: 9999;
         transition: transform 0.3s ease-in-out;
@@ -460,7 +514,7 @@
         cursor: pointer;
         position: absolute;
         z-index: 10000;
-        padding: 1rem;
+        padding: calc(1rem * var(--scale-factor));
 
         &:hover {
             opacity: 0.8;
@@ -468,29 +522,29 @@
     }
 
     .close-button {
-        inset-block-start: 2rem;
-        inset-inline-end: 2rem;
+        inset-block-start: calc(2rem * var(--scale-factor));
+        inset-inline-end: calc(2rem * var(--scale-factor));
 
         svg {
-            block-size: 2.4rem;
-            inline-size: 2.3rem;
+            block-size: calc(2.4rem * var(--scale-factor));
+            inline-size: calc(2.3rem * var(--scale-factor));
         }
     }
 
     .play-button {
-        inset-block-start: 2rem;
+        inset-block-start: calc(2rem * var(--scale-factor));
         inset-inline-end: 0;
 
         svg {
-            block-size: 3.3rem;
-            inline-size: 2.7rem;
+            block-size: calc(3.3rem * var(--scale-factor));
+            inline-size: calc(2.7rem * var(--scale-factor));
         }
     }
 
     .copy {
         background-color: #fff;
-        margin-block-start: 6.5rem;
-        padding: 2rem 2rem 4rem;
+        margin-block-start: calc(6.5rem * var(--scale-factor));
+        padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
         position: relative;
 
         &-header {
@@ -498,59 +552,59 @@
             display: grid;
             justify-content: start;
             grid-template-columns: repeat(2, auto);
-            grid-column-gap: 3rem;
-            margin-block-start: -5rem;
+            grid-column-gap: calc(3rem * var(--scale-factor));
+            margin-block-start: calc(-5rem * var(--scale-factor));
         }
     }
 
     .game-id {
         align-items: center;
         background-color: #FF5BAF;
-        border-radius: 0 2rem 0 2rem;
-        block-size: 17rem;
+        border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+        block-size: calc(17rem * var(--scale-factor));
         color: #fff;
         display: flex;
         flex-direction: column;
-        inline-size: 11rem;
-        padding: 1rem;
+        inline-size: calc(11rem * var(--scale-factor));
+        padding: calc(1rem * var(--scale-factor));
         text-align: center;
 
         .text {
-            font-size: 2.8rem;
+            font-size: calc(2.8rem * var(--scale-factor));
             font-weight: 600;
-            line-height: 2.8rem;
+            line-height: calc(2.8rem * var(--scale-factor));
         }
 
         .number {
-            font-size: 13.7rem;
+            font-size: calc(13.7rem * var(--scale-factor));
             font-weight: 600;
-            line-height: 13.7rem;
+            line-height: calc(13.7rem * var(--scale-factor));
         }
     }
 
     .title {
         color: #FF5BAF;
-        font-size: 6rem;
+        font-size: calc(6rem * var(--scale-factor));
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-        padding-block-start: 2rem;
+        padding-block-start: calc(2rem * var(--scale-factor));
     }
 
     .subtitle {
         color: #FF5BAF;
-        font-size: 3.7rem;
+        font-size: calc(3.7rem * var(--scale-factor));
         font-weight: 600;
         line-height: normal;
     }
 
     .paragraph {
         color: #2E2D2C;
-        font-size: 2.2rem;
-        padding-block-start: 2rem;
+        font-size: calc(2.2rem * var(--scale-factor));
+        padding-block-start: calc(2rem * var(--scale-factor));
 
         &:first-child {
-            padding-block-start: 2.5rem;
+            padding-block-start: calc(2.5rem * var(--scale-factor));
         }
     }
 
@@ -575,7 +629,7 @@
         block-size: 100vh;
         color: #fff;
         display: flex;
-        font-size: 3rem;
+        font-size: calc(3rem * var(--scale-factor));
         justify-content: center;
     }
 
@@ -585,15 +639,21 @@
         padding: 0;
         margin: 0;
         cursor: pointer;
+        transform: scale(var(--scale-factor));
+        transform-origin: center;
     }
 
     .game-start-screen-image {
-        margin-block-start: 5rem;
+        margin-block-start: calc(5rem * var(--scale-factor));
+        width: calc(656px * var(--scale-factor));
+        height: calc(928px * var(--scale-factor));
     }
 
     .arrow {
         display: block;
         margin: auto;
+        width: calc(40px * var(--scale-factor));
+        height: calc(40px * var(--scale-factor));
     }
     .arrow-up {
         transform: rotate(0deg);
@@ -614,19 +674,27 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 91, 175, 0.9);
         z-index: 1000;
     }
 
     .question-container-wrapper {
         position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
         z-index: 1001;
         width: 90%;
-        max-width: 90rem;
-        padding: 0 2rem;
+        max-width: calc(90rem * var(--scale-factor));
+        padding: 0 calc(2rem * var(--scale-factor));
+        transform: translateY(-50%) scale(var(--scale-factor));
+        transform-origin: center;
+    }
+
+    @media (width >= 1920px) {
+        .question-container-wrapper {
+            top: 55%;
+        }
     }
 
     .finish {

@@ -65,6 +65,34 @@
 </div>
 
 <style lang="scss">
+	:root {
+		--scale-factor: 1;
+	}
+
+	@media (max-width: 1439px) {
+		:root {
+			--scale-factor: 0.85;
+		}
+	}
+
+	@media (max-width: 1279px) {
+		:root {
+			--scale-factor: 0.75;
+		}
+	}
+
+	@media (max-width: 1023px) {
+		:root {
+			--scale-factor: 0.65;
+		}
+	}
+
+	@media (max-width: 767px) {
+		:root {
+			--scale-factor: 0.55;
+		}
+	}
+
 	.game-container {
 		block-size: 100vh;
 		display: grid;
@@ -72,7 +100,7 @@
 	}
 
 	.game-summary {
-		max-inline-size: 90rem;
+		max-inline-size: calc(90rem * var(--scale-factor));
 		position: relative;
 		z-index: 1;
 	}
@@ -94,46 +122,46 @@
 
 	.title {
 		color: #fff;
-		font-size: 7rem;
+		font-size: calc(7rem * var(--scale-factor));
 		font-weight: 600;
 		text-align: center;
 	}
 
 	.results {
 		background-color: #fff;
-		border-radius: 0 3rem;
+		border-radius: 0 calc(3rem * var(--scale-factor));
 		inline-size: 100%;
-		margin-block-start: 3.5rem;
-		padding: 5rem;
+		margin-block-start: calc(3.5rem * var(--scale-factor));
+		padding: calc(5rem * var(--scale-factor));
 		text-align: center;
 		position: relative;
 	}
 
 	.paragraph {
 		color: #000;
-		font-size: 4.5rem;
+		font-size: calc(4.5rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.total-points {
 		color: #FFC400;
-		font-size: 8rem;
+		font-size: calc(8rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 1rem;
+		padding-block-start: calc(1rem * var(--scale-factor));
 	}
 
 	.cta {
 		display: flex;
-		gap: 3rem;
+		gap: calc(3rem * var(--scale-factor));
 		justify-content: center;
-		padding-block-start: 5rem;
+		padding-block-start: calc(5rem * var(--scale-factor));
 	}
 
 	.btn {
 		background-color: #fff;
-		border-radius: 0 1.7rem;
+		border-radius: 0 calc(1.7rem * var(--scale-factor));
 		color: #2E2D2C;
 		font-weight: 600;
 		margin-inline: 0;
@@ -142,10 +170,10 @@
 	.finish-small {
 		color: #fff;
 		display: block;
-		font-size: 2rem;
+		font-size: calc(2rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		margin-block-start: 3rem;
+		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}
 </style> 

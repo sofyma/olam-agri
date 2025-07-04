@@ -189,8 +189,8 @@
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: 53.5rem;
-    padding-block-start: 7rem;
+    block-size: calc(53.5rem * var(--scale-factor));
+    padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
     &-heroes {
@@ -202,10 +202,10 @@
 
     &-title {
       color: #FFF;
-      font-size: 8rem;
+      font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: 1.5rem;
+      padding-block-start: calc(1.5rem * var(--scale-factor));
     }
 
     :global(.logo path) {
@@ -213,13 +213,13 @@
     }
 
     .wrapper {
-      max-inline-size: 142rem;
+      max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
       .wrapper {
-        padding-inline: 2rem;
+        padding-inline: calc(2rem * var(--scale-factor));
       }
     }
 
@@ -233,12 +233,12 @@
       &-list {
         align-items: center;
         display: flex;
-        gap: 3rem;
+        gap: calc(3rem * var(--scale-factor));
       }
 
       &-link {
         color: #000;
-        font-size: 1.8rem;
+        font-size: calc(1.8rem * var(--scale-factor));
         font-weight: 600;
         line-height: normal;
       }
@@ -247,10 +247,10 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: 3.2rem;
-      border-radius: 0 1.5rem;
+      block-size: calc(3.2rem * var(--scale-factor));
+      border-radius: 0 calc(1.5rem * var(--scale-factor));
       display: flex;
-      inline-size: 11.1rem;
+      inline-size: calc(11.1rem * var(--scale-factor));
     }
   }
 
@@ -261,42 +261,42 @@
   }          
 
   .auth-form {
-    max-inline-size: 48rem;
+    max-inline-size: calc(48rem * var(--scale-factor));
     margin-inline: auto;
-    padding-block-start: 7rem;
+    padding-block-start: calc(7rem * var(--scale-factor));
   }
 
   .auth-button {
     align-items: center;
     background-color: #FF7000;
-    block-size: 4.4rem;
-    border-radius: 0 1.7rem;
+    block-size: calc(4.4rem * var(--scale-factor));
+    border-radius: 0 calc(1.7rem * var(--scale-factor));
     color: #fff;
     display: flex;
-    font-size: 2rem;
+    font-size: calc(2rem * var(--scale-factor));
     font-weight: 600;
-    inline-size: 10.7rem;
+    inline-size: calc(10.7rem * var(--scale-factor));
     justify-content: center;
-    margin-block-start: 5rem;
+    margin-block-start: calc(5rem * var(--scale-factor));
     margin-inline: auto;
   }
 
   .content {
-    margin-block-start: -15rem;
+    margin-block-start: calc(-15rem * var(--scale-factor));
     position: relative;
     z-index: 1;
 
     .wrapper {
       background-color: #FFF;
-      max-inline-size: 128rem;
+      max-inline-size: calc(128rem * var(--scale-factor));
       margin-inline: auto;
-      padding-block: 5rem 15rem;
+      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
     }
   }
 
   .auth-title {
     color: #FF7000;
-    font-size: 7.5rem;
+    font-size: calc(7.5rem * var(--scale-factor));
     font-weight: 400;
     line-height: 125%;
     text-align: center;
@@ -305,8 +305,8 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
-    margin-block-start: 3rem;
+    gap: calc(0.5rem * var(--scale-factor));
+    margin-block-start: calc(3rem * var(--scale-factor));
 
     &:first-child {
       margin-block-start: 0;
@@ -314,19 +314,19 @@
 
     .auth-label {
       color: #2E2D2C;
-      font-size: 1.4rem;
+      font-size: calc(1.4rem * var(--scale-factor));
       font-weight: 600;
     }
 
     .auth-input {
       background-color: #E6E6E6;
-      block-size: 4rem;
+      block-size: calc(4rem * var(--scale-factor));
       border: 0;
       display: block;
-      font-size: 1.4rem;
+      font-size: calc(1.4rem * var(--scale-factor));
       font-weight: 600;
       inline-size: 100%;
-      padding-inline: 2rem;
+      padding-inline: calc(2rem * var(--scale-factor));
 
       &:focus {
         outline: 0;
@@ -339,32 +339,32 @@
 
     .email-error {
       color: #FF3000;
-      font-size: 1.4rem;
+      font-size: calc(1.4rem * var(--scale-factor));
       font-style: normal;
       font-weight: 600;
       line-height: 125%;
-      margin-top: 0.5rem;
+      margin-top: calc(0.5rem * var(--scale-factor));
     }
   }
 
   .paragraph {
     color: #2E2D2C;
-    font-size: 1.8rem;
+    font-size: calc(1.8rem * var(--scale-factor));
     font-weight: 600;
     line-height: normal;
-    padding-block-start: 7rem;
+    padding-block-start: calc(7rem * var(--scale-factor));
     text-align: center;
 
     &-1 {
       color: #2E2D2C;
-      font-size: 2rem;
+      font-size: calc(2rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
       text-align: center;
-      padding-block-start: 2rem;
+      padding-block-start: calc(2rem * var(--scale-factor));
 
       &--1 {
-        padding-block-start: 15rem;
+        padding-block-start: calc(15rem * var(--scale-factor));
       }
     }
 
