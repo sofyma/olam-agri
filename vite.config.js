@@ -7,5 +7,8 @@ export default defineConfig({
 		fs: {
 			allow: ['..']
 		}
+	},
+	esbuild: {
+		drop: ['console', 'debugger']
 	}
 });
