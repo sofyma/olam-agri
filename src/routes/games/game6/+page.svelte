@@ -454,7 +454,7 @@
 
 	.play-button {
 		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: 0;
+		inset-inline-end: .3rem;
 
 		svg {
 			block-size: calc(3.3rem * var(--scale-factor));
