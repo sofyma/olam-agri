@@ -116,18 +116,12 @@
                         <path d="M254.576 0.240967H141.424C63.5938 0.240967 0.5 63.3348 0.5 141.165V254.317C0.5 332.147 63.5938 395.241 141.424 395.241H254.576C332.406 395.241 395.5 332.147 395.5 254.317V141.165C395.5 63.3348 332.406 0.240967 254.576 0.240967Z" fill="#00A865"/>
                         <path d="M104.675 208.195L159.922 263.442L291.322 132.042" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
-                    {#if questionType === 'brand'}
-                        <span class="points">+1 Point</span>
-                    {/if}
                 {:else}
                     <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M254.576 0.23999H141.424C63.5938 0.23999 0.5 63.3338 0.5 141.164V254.316C0.5 332.146 63.5938 395.24 141.424 395.24H254.576C332.406 395.24 395.5 332.146 395.5 254.316V141.164C395.5 63.3338 332.406 0.23999 254.576 0.23999Z" fill="#FF3000"/>
                         <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
                         <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
-                    {#if questionType === 'place'}
-                        <span class="points">-1 Point</span>
-                    {/if}
                 {/if}
             </div>
         </div>
@@ -262,12 +256,5 @@
     .feedback-content svg {
         block-size: calc(39.6rem * var(--scale-factor));
         inline-size: calc(39.6rem * var(--scale-factor));
-    }
-
-    .points {
-        color: #2E2D2C;
-        font-size: calc(9.1rem * var(--scale-factor));
-        font-weight: 600;
-        padding-block-start: calc(3.5rem * var(--scale-factor));
     }
 </style> 
