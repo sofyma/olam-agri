@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { game3Availability } from '$lib/stores/gameAvailabilityStore';
-    import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { game3Availability } from '$lib/stores/gameAvailabilityStore';
+  import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+  import { authStore } from '$lib/stores/authStore';
 
     let timeUntilAvailable: number | null = null;
 
@@ -44,9 +45,15 @@
     <header class="header">
         <div class="wrapper">
             <div class="row">
-                <div class="column">
-                    <Game1Logo />
-                </div>
+                        <div class="column">
+          {#if $authStore.isAuthenticated}
+            <a href="/" class="logo-link">
+              <Game1Logo />
+            </a>
+          {:else}
+            <Game1Logo />
+          {/if}
+        </div>
 
                 <div class="column">
                     <nav class="navigation">
@@ -166,9 +173,19 @@
             padding-block-start: calc(1.5rem * var(--scale-factor));
         }
 
-        :global(.logo path) {
-            fill: #FFF;
-        }
+            :global(.logo path) {
+      fill: #FFF;
+    }
+
+    .logo-link {
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
 
         .wrapper {
             max-inline-size: calc(142rem * var(--scale-factor));

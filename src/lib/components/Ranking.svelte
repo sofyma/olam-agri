@@ -5,6 +5,7 @@
   import type { CombinedRankingEntry, RegionRankingEntry, TopBrandHeroesEntry } from '$lib/services/rankingService';
   import Game1Logo from './svgs/Game1Logo.svelte';
   import { getRegions } from '$lib/utils/countryRegions';
+  import { authStore } from '$lib/stores/authStore';
   
   let topHeroes: TopBrandHeroesEntry[] = [];
   let availableRegions: string[] = [];
@@ -103,7 +104,13 @@
     <div class="wrapper">
       <div class="row">
         <div class="column">
-          <Game1Logo />
+          {#if $authStore.isAuthenticated}
+            <a href="/" class="logo-link">
+              <Game1Logo />
+            </a>
+          {:else}
+            <Game1Logo />
+          {/if}
         </div>
 
         <div class="column">
@@ -347,6 +354,16 @@
 
     :global(.logo path) {
       fill: #FFF;
+    }
+
+    .logo-link {
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     .wrapper {
