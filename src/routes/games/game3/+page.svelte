@@ -698,7 +698,7 @@
     }
 
     .finish {
-        stroke: #00A865 !important;
+        stroke: transparent !important;
         stroke-width: 10 !important;
     }
 </style> 
