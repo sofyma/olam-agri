@@ -134,6 +134,42 @@
 		inset-inline-end: calc(14.5rem * var(--scale-factor));
 		position: absolute;
 	}
+
+	/* Mobile Media Query - Up to 932px */
+	@media (max-width: 932px) {
+		.finish-text p,
+		.finish-text li {
+			font-size: calc(2.5rem * var(--scale-factor));
+		}
+
+		.finish-text ul {
+			margin-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.finish-text p {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.finish-text cite {
+			font-size: calc(2.5rem * var(--scale-factor));
+			margin-block-start: calc(2.5rem * var(--scale-factor));
+			padding: calc(1.5rem * var(--scale-factor));
+		}
+
+		.finish-small {
+			font-size: calc(1.5rem * var(--scale-factor));
+			padding-block-start: calc(1.5rem * var(--scale-factor));
+		}
+
+		.finish-buttons {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.game1-small-hero-finish {
+			width: 70%;
+			height: auto;
+		}
+	}
 </style> 
 
 

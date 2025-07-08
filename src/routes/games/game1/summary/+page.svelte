@@ -95,4 +95,53 @@
 	.btn {
 		margin-inline: auto;
 	}
+
+	/* Mobile Media Query - Up to 932px */
+	@media (max-width: 932px) {
+		/* Add scale system to shape SVG */
+		:global(.shape) {
+			transform: scale(0.6);
+			transform-origin: top left;
+		}
+
+		/* Adjust game summary for mobile */
+		.game-summary {
+			padding: calc(2rem * var(--scale-factor));
+		}
+
+		.game-summary .title {
+			font-size: calc(5rem * var(--scale-factor));
+		}
+
+		.game-summary .results {
+			inline-size: calc(80rem * var(--scale-factor));
+			padding: calc(2rem * var(--scale-factor));
+
+			.paragraph {
+				padding-block-start: 0;
+				margin-block-start: 0;
+			}
+		}
+
+		.game-summary .paragraph {
+			font-size: calc(3.5rem * var(--scale-factor));
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.game-summary .total-points {
+			font-size: calc(6rem * var(--scale-factor));
+		}
+
+		.game-summary .cta {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		/* Adjust small hero summary for mobile */
+		:global(.small-hero-summary) {
+			inset-block-start: calc(4rem * var(--scale-factor));
+			inset-inline-start: calc(6rem * var(--scale-factor));
+			transform: scale(0.7);
+			display: none;
+		}
+	}
 </style> 
