@@ -32,7 +32,7 @@
       // Set first region as default if available
       if (availableRegions.length > 0) {
         selectedRegion = availableRegions[0];
-        regionRankings = await rankingService.getRankingsByRegion(selectedRegion, 2);
+        regionRankings = await rankingService.getRankingsByRegion(selectedRegion, 5);
       }
       
       // Load all rankings for search
@@ -52,7 +52,7 @@
     try {
       selectedRegion = region;
       const rankingService = RankingService.getInstance();
-      regionRankings = await rankingService.getRankingsByRegion(region, 2);
+      regionRankings = await rankingService.getRankingsByRegion(region, 5);
     } catch (err) {
       error = err instanceof Error ? err.message : 'Failed to load region rankings';
     }
@@ -149,7 +149,7 @@
             <h3 class="section-title"><strong>Top</strong> Brand Heroes</h3>
             
             <div class="table-container">
-              <table class="ranking-table">
+              <table class="ranking-table top-heroes-table">
                 <thead>
                   <tr>
                     <th style="text-align: end;">Region</th>
@@ -204,7 +204,7 @@
                 <h4 class="region-title">{selectedRegion}</h4>
                 
                 <div class="table-container">
-                  <table class="ranking-table">
+                  <table class="ranking-table region-table">
                     <thead>
                       <tr>
                         <th style="text-align: end;">Position</th>
@@ -214,7 +214,7 @@
                     </thead>
                     <tbody>
                       {#each regionRankings as entry, i}
-                        <tr>
+                        <tr class:border-after={i === 1}>
                           <td class="position" style="text-align: end;">{i + 1}</td>
                           <td class="player-name" style="color: #2E2D2C;">{entry.user.displayName}</td>
                           <td class="points" style="text-align: end;">{entry.totalScore}</td>
@@ -247,7 +247,7 @@
             
             {#if searchQuery.trim()}
               <div class="table-container">
-                <table class="ranking-table">
+                <table class="ranking-table search-table">
                   <thead>
                     <tr>
                       <th style="text-align: end;">Position</th>
@@ -514,6 +514,70 @@
       color: #FF7000;
       font-weight: 700;
       text-align: center;
+    }
+
+    // Top Brand Heroes table - 32% | 50% | 18%
+    &.top-heroes-table {
+      th:nth-child(1), td:nth-child(1) {
+        width: 32%;
+      }
+      th:nth-child(2), td:nth-child(2) {
+        width: 50%;
+      }
+      th:nth-child(3), td:nth-child(3) {
+        width: 18%;
+      }
+    }
+
+    // Region table - 10% | 80% | 10%
+    &.region-table {
+      th:nth-child(1), td:nth-child(1) {
+        width: 10%;
+      }
+      th:nth-child(2), td:nth-child(2) {
+        width: 80%;
+      }
+      th:nth-child(3), td:nth-child(3) {
+        width: 10%;
+      }
+
+      // Remove all default borders first
+      td {
+        border-bottom: none;
+      }
+
+      // Add border after first 2 users (separator line)
+      tr.border-after td {
+        border-bottom: 2px solid #FF7000 !important;
+      }
+
+      // Add regular borders for rows after the separator
+      tr:nth-child(n+4) td {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+
+    // Search table - same as region table
+    &.search-table {
+      th:nth-child(1), td:nth-child(1) {
+        width: 10%;
+      }
+      th:nth-child(2), td:nth-child(2) {
+        width: 80%;
+      }
+      th:nth-child(3), td:nth-child(3) {
+        width: 10%;
+      }
+
+      // Remove bold text and borders for search results
+      td {
+        font-weight: 400;
+        border-bottom: none;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
     }
   }
 

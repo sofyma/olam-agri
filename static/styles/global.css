@@ -36,13 +36,13 @@ html {
 }
 
 :root {
-  --scale-factor: 0.95; /* Default for large screens */
+  --scale-factor: 1; /* Default for large screens */
 }
 
 /* Large screens (1920px and above) - minimal scaling */
 @media screen and (min-width: 1920px) {
   :root {
-    --scale-factor: 0.95;
+    --scale-factor: 1;
   }
 }
 

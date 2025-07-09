@@ -178,7 +178,7 @@
         </form>
 
         <p class="paragraph">
-          Need help? <br> Contact us at <a href="mailto:brand@olamagri.com">brand@olamagri.com</a>
+          Need help logging in? <br> Contact us at <a href="mailto:brand@olamagri.com" class="email-link">brand@olamagri.com</a>
         </p>
       </div>
     </div>
@@ -386,6 +386,10 @@
 
     a {
       color: #FF7000;
+    }
+
+    .email-link {
+      text-decoration: underline;
     }
   }
 

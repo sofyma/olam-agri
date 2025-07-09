@@ -391,7 +391,7 @@
 
     @media (width >= 1920px) {
         :root {
-            --scale-factor: 0.95;
+            --scale-factor: 1;
         }
     }
 

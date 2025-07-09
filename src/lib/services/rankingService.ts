@@ -283,20 +283,8 @@ export class RankingService {
       });
     });
     
-    // Sort regions by their total score (descending)
-    return groupedRegions.sort((a, b) => {
-      // First sort by region total score (descending)
-      if (b.regionTotalScore !== a.regionTotalScore) {
-        return b.regionTotalScore - a.regionTotalScore;
-      }
-      // If region scores are equal, sort by the best individual player's duration
-      const bestPlayerA = a.topPlayers[0];
-      const bestPlayerB = b.topPlayers[0];
-      if (bestPlayerA && bestPlayerB) {
-        return bestPlayerA.totalDuration - bestPlayerB.totalDuration;
-      }
-      return 0;
-    });
+    // Sort regions alphabetically
+    return groupedRegions.sort((a, b) => a.region.localeCompare(b.region));
   }
 
   // Get all available countries/regions
