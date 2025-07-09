@@ -369,6 +369,8 @@
     .wrapper {
       margin-inline: auto;
       max-inline-size: calc(142rem * var(--scale-factor));
+      position: relative;
+      z-index: 2;
     }
 
     .row {

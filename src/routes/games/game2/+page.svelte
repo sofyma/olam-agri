@@ -545,4 +545,136 @@
 		margin: 0;
 		cursor: pointer;
 	}
+
+	/* Mobile Media Query - Up to 932px */
+	@media (max-width: 932px) {
+		/* 1. Fix left sidebar title and horizontal scroll */
+		.instructions {
+			inline-size: calc(100vw - 66.41%);
+			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+			overflow-x: hidden;
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none; /* Internet Explorer 10+ */
+		}
+
+		.instructions::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
+
+		.title {
+			font-size: calc(4.5rem * var(--scale-factor));
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+		}
+
+		/* 2. Fix sidebar horizontal scroll */
+		.copy {
+			margin-block-start: calc(4rem * var(--scale-factor));
+			padding: calc(1.5rem * var(--scale-factor));
+		}
+
+		.copy-header {
+			grid-template-columns: repeat(2, auto);
+			grid-column-gap: calc(2rem * var(--scale-factor));
+			margin-block-start: calc(-3rem * var(--scale-factor));
+		}
+
+		/* 3. Keep content text size as requested */
+		.paragraph {
+			font-size: calc(2.2rem * var(--scale-factor));
+		}
+
+		/* 4. Fix game header for mobile */
+		.game-header {
+			padding: calc(1rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		}
+
+		.game-header-title {
+			font-size: calc(3.5rem * var(--scale-factor));
+		}
+
+		/* 5. Fix game area for mobile */
+		.game-area {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		/* 6. Adjust start screen for mobile */
+		.start-screen {
+			inline-size: calc(100vw - (100vw - 66.41%));
+			padding: calc(1rem * var(--scale-factor));
+		}
+
+		/* Keep start screen width consistent when sidebar is closed */
+		.sidebar-is-closed .start-screen {
+			inline-size: calc(100vw - (100vw - 66.41%));
+		}
+
+		.start-screen-content {
+			transform-origin: center center;
+		}
+
+		/* Remove vertical scrolling from start screen */
+		.start-screen {
+			overflow-y: hidden;
+		}
+
+		/* 7. Adjust game ID for mobile */
+		.game-id {
+			block-size: calc(12rem * var(--scale-factor));
+			inline-size: calc(8rem * var(--scale-factor));
+		}
+
+		.game-id .text {
+			font-size: calc(2rem * var(--scale-factor));
+			line-height: calc(2rem * var(--scale-factor));
+		}
+
+		.game-id .number {
+			font-size: calc(9rem * var(--scale-factor));
+			line-height: calc(9rem * var(--scale-factor));
+		}
+
+		/* 8. Adjust subtitle for mobile */
+		.subtitle {
+			font-size: calc(2.5rem * var(--scale-factor));
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+		}
+
+		/* 9. Adjust buttons for mobile */
+		.close-button {
+			inset-block-start: calc(1rem * var(--scale-factor));
+			inset-inline-end: calc(2rem * var(--scale-factor));
+		}
+
+		.play-button {
+			inset-block-start: calc(2rem * var(--scale-factor));
+			inset-inline-end: calc(-0.2rem * var(--scale-factor));
+		}
+
+		/* 10. Fix sidebar closed state for mobile */
+		.instructions.closed {
+			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+		}
+
+		/* 11. Adjust bubbles for mobile */
+		.bubble {
+			width: calc(12rem * var(--scale-factor));
+			height: calc(12rem * var(--scale-factor));
+			padding: calc(1.5rem * var(--scale-factor));
+
+			&.exploded {
+				width: calc(25rem * var(--scale-factor));
+				height: calc(25rem * var(--scale-factor));
+			}
+		}
+
+		.statement-text {
+			font-size: calc(1.4rem * var(--scale-factor));
+		}
+
+		.feedback-icon {
+			font-size: calc(4rem * var(--scale-factor));
+		}
+	}
 </style> 

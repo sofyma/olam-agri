@@ -199,7 +199,7 @@
     
     .question-image {
         inline-size: 100%;
-        margin-block-end: calc(4rem * var(--scale-factor));
+        margin-block-end: calc(3rem * var(--scale-factor));
         max-block-size: calc(36rem * var(--scale-factor));
         object-fit: cover;
     }
@@ -285,6 +285,22 @@
         
         .feedback {
             height: 90vh;
+        }
+    }
+
+    /* Mobile Media Query - Up to 932px */
+    @media (max-width: 932px) {
+        .question-container {
+            block-size: auto;
+        }
+        
+        .question-image {
+            max-block-size: calc(26rem * var(--scale-factor));
+            margin-block-end: 0;
+        }
+        
+        .feedback {
+            height: 50rem;
         }
     }
 </style> 

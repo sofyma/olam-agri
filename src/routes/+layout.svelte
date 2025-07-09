@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import AuthGuard from '$lib/components/auth/AuthGuard.svelte';
   import { gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
+  import { isWindows125Zoom } from '$lib/utils/detectZoom';
 
   // Define public routes that don't require authentication
   const publicPaths = ['/login', '/register'];
@@ -12,6 +13,11 @@
   onMount(async () => {
     // Load game availability configuration on app startup
     await gameAvailabilityStore.loadGameConfigs();
+    
+    // Detect Windows 125% zoom and apply fix
+    if (isWindows125Zoom()) {
+      document.documentElement.classList.add('windows-125');
+    }
   });
 
   // Detect game route and set appropriate class

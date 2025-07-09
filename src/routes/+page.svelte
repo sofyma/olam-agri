@@ -455,6 +455,8 @@
     .wrapper {
       max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 1024px) {

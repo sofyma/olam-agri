@@ -644,7 +644,7 @@
     }
 
     .game-start-screen-image {
-        margin-block-start: calc(5rem * var(--scale-factor));
+        margin-block-start: 0;
         width: calc(656px * var(--scale-factor));
         height: calc(928px * var(--scale-factor));
     }
@@ -700,5 +700,157 @@
     .finish {
         stroke: transparent !important;
         stroke-width: 10 !important;
+    }
+
+    /* Mobile Media Query - Up to 932px */
+    @media (max-width: 932px) {
+        /* 1. Fix left sidebar title and horizontal scroll */
+        .instructions {
+            inline-size: calc(100vw - 66.41%);
+            padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+            overflow-x: hidden;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+        .instructions::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .title {
+            font-size: calc(4.5rem * var(--scale-factor));
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* 2. Fix sidebar horizontal scroll */
+        .copy {
+            margin-block-start: calc(4rem * var(--scale-factor));
+            padding: calc(1.5rem * var(--scale-factor));
+        }
+
+        .copy-header {
+            grid-template-columns: repeat(2, auto);
+            grid-column-gap: calc(2rem * var(--scale-factor));
+            margin-block-start: calc(-3rem * var(--scale-factor));
+        }
+
+        /* 3. Keep content text size as requested */
+        .paragraph {
+            font-size: calc(2.2rem * var(--scale-factor));
+        }
+
+        /* 4. Adjust start screen for mobile */
+        .start-screen {
+            inline-size: calc(100vw - (100vw - 66.41%));
+            padding: calc(1rem * var(--scale-factor));
+        }
+
+        /* Keep start screen width consistent when sidebar is closed */
+        .sidebar-is-closed .start-screen {
+            inline-size: calc(100vw - (100vw - 66.41%));
+        }
+
+        .start-screen-content {
+            transform-origin: center center;
+        }
+
+        /* Remove vertical scrolling from start screen */
+        .start-screen {
+            overflow-y: hidden;
+        }
+
+        /* 5. Adjust game ID for mobile */
+        .game-id {
+            block-size: calc(12rem * var(--scale-factor));
+            inline-size: calc(8rem * var(--scale-factor));
+        }
+
+        .game-id .text {
+            font-size: calc(2rem * var(--scale-factor));
+            line-height: calc(2rem * var(--scale-factor));
+        }
+
+        .game-id .number {
+            font-size: calc(9rem * var(--scale-factor));
+            line-height: calc(9rem * var(--scale-factor));
+        }
+
+        /* 6. Adjust subtitle for mobile */
+        .subtitle {
+            font-size: calc(2.5rem * var(--scale-factor));
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* 7. Adjust buttons for mobile */
+        .close-button {
+            inset-block-start: calc(1rem * var(--scale-factor));
+            inset-inline-end: calc(2rem * var(--scale-factor));
+        }
+
+        .play-button {
+            inset-block-start: calc(2rem * var(--scale-factor));
+            inset-inline-end: calc(-0.2rem * var(--scale-factor));
+        }
+
+        /* 8. Fix sidebar closed state for mobile */
+        .instructions.closed {
+            transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+        }
+
+        /* 9. Reset image button transform and adjust SVG for mobile */
+        .image-button {
+            transform: none;
+            transform-origin: unset;
+        }
+
+        .game-start-screen-image {
+            margin-block-start: 0;
+            width: calc(288px * var(--scale-factor));
+            height: calc(432px * var(--scale-factor));
+        }
+
+        /* 10. Adjust question overlay for mobile */
+        .question-container-wrapper {
+            width: 95%;
+            height: 40%;
+            padding: 0 calc(1rem * var(--scale-factor));
+            transform: translateY(-137%) scale(var(--scale-factor));
+        }
+
+        /* 11. Adjust maze SVG for mobile */
+        .maze-svg {
+            height: auto;
+            width: calc(800px * var(--scale-factor));
+        }
+
+        /* 12. Adjust directional pad for mobile */
+        .directional-pad {
+            margin-block-start: 0;
+            padding: calc(2rem * var(--scale-factor));
+        }
+
+        /* 13. Adjust directional buttons for mobile */
+        .dir-btn {
+            width: calc(60px * var(--scale-factor));
+            height: calc(60px * var(--scale-factor));
+        }
+
+        /* 14. Adjust arrow images for mobile */
+        .arrow {
+            width: calc(30px * var(--scale-factor));
+            height: calc(30px * var(--scale-factor));
+        }
+
+        /* 15. Hide game header image on mobile */
+        .game-header-image {
+            display: none;
+        }
+
+        /* 16. Adjust game header padding for mobile */
+        .game-header {
+            padding-block-start: 0;
+        }
     }
 </style> 

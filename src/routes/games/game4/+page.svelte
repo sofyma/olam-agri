@@ -650,4 +650,247 @@
 			font-size: calc(1.8rem * var(--scale-factor));
 		}
 	}
+
+	/* Mobile Media Query - Up to 932px */
+	@media (max-width: 932px) {
+		/* 1. Fix left sidebar title and horizontal scroll */
+		.instructions {
+			inline-size: calc(100vw - 66.41%);
+			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+			overflow-x: hidden;
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none; /* Internet Explorer 10+ */
+		}
+
+		.instructions::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
+
+		.title {
+			font-size: calc(4.5rem * var(--scale-factor));
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+		}
+
+		/* 2. Fix sidebar horizontal scroll */
+		.copy {
+			margin-block-start: calc(4rem * var(--scale-factor));
+			padding: calc(1.5rem * var(--scale-factor));
+		}
+
+		.copy-header {
+			grid-template-columns: repeat(2, auto);
+			grid-column-gap: calc(2rem * var(--scale-factor));
+			margin-block-start: calc(-3rem * var(--scale-factor));
+		}
+
+		/* 3. Keep content text size as requested */
+		.paragraph {
+			font-size: calc(2.2rem * var(--scale-factor));
+		}
+
+		/* 4. Add scale system to shape SVG */
+		:global(.shape) {
+			transform: scale(0.6);
+			transform-origin: top left;
+		}
+
+		/* 5. Fix game header SVG and shape scaling */
+		.game-header {
+			padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		}
+
+		/* Fix game header SVG sizing */
+		.game-header :global(svg) {
+			max-width: 100%;
+			width: 100%;
+			height: calc(30rem * var(--scale-factor));
+			inset-block-start: 0;
+			inset-inline-start: 0;
+		}
+
+		.game-header-title {
+			font-size: calc(3.5rem * var(--scale-factor));
+		}
+
+		.game-header-paragraph {
+			font-size: calc(2.4rem * var(--scale-factor));
+		}
+
+		/* 6. Fix question container positioning and scaling */
+		.game-grid {
+			grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
+			align-items: start;
+			padding: calc(2rem * var(--scale-factor));
+		}
+		
+
+		/* Question wrapper for mobile - reset padding */
+		.question-wrapper {
+			padding-block: 0;
+		}
+
+		/* 7. Adjust start screen for mobile */
+		.start-screen {
+			inline-size: calc(100vw - (100vw - 66.41%));
+			padding: calc(1rem * var(--scale-factor));
+		}
+
+		/* Keep start screen width consistent when sidebar is closed */
+		.sidebar-is-closed .start-screen {
+			inline-size: calc(100vw - (100vw - 66.41%));
+		}
+
+		.start-screen-content {
+			transform-origin: center center;
+		}
+
+		/* Remove vertical scrolling from start screen */
+		.start-screen {
+			overflow-y: hidden;
+		}
+
+		/* Adjust game summary for mobile */
+		.game-summary {
+			padding: calc(2rem * var(--scale-factor));
+		}
+
+		.game-summary .title {
+			font-size: calc(5rem * var(--scale-factor));
+		}
+
+		.game-summary .results {
+			inline-size: calc(80rem * var(--scale-factor));
+			padding: calc(2rem * var(--scale-factor));
+
+			.paragraph {
+				padding-block-start: 0;
+				margin-block-start: 0;
+			}
+		}
+
+		.game-summary .paragraph {
+			font-size: calc(3.5rem * var(--scale-factor));
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.game-summary .total-points {
+			font-size: calc(6rem * var(--scale-factor));
+		}
+
+		.game-summary .cta {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		/* Adjust game ID for mobile */
+		.game-id {
+			block-size: calc(12rem * var(--scale-factor));
+			inline-size: calc(8rem * var(--scale-factor));
+		}
+
+		.game-id .text {
+			font-size: calc(2rem * var(--scale-factor));
+			line-height: calc(2rem * var(--scale-factor));
+		}
+
+		.game-id .number {
+			font-size: calc(9rem * var(--scale-factor));
+			line-height: calc(9rem * var(--scale-factor));
+		}
+
+		/* Adjust subtitle for mobile */
+		.subtitle {
+			font-size: calc(2.5rem * var(--scale-factor));
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+		}
+
+		/* Adjust vision queen container for mobile */
+		// .vision-queen-container {
+		// 	inset-block-end: calc(13rem * var(--scale-factor));
+		// 	max-inline-size: 100%;
+		// }
+
+		// .vision-queen-title {
+		// 	font-size: calc(2.5rem * var(--scale-factor));
+		// }
+
+		// .vision-queen-copy {
+		// 	font-size: calc(2.2rem * var(--scale-factor));
+		// }
+
+		/* Adjust buttons for mobile */
+		.close-button {
+			inset-block-start: calc(1rem * var(--scale-factor));
+			inset-inline-end: calc(2rem * var(--scale-factor));
+		}
+
+		.play-button {
+			inset-block-start: calc(2rem * var(--scale-factor));
+			inset-inline-end: calc(-0.2rem * var(--scale-factor));
+		}
+
+		/* Adjust start button for mobile */
+		// .start {
+		// 	inset-block-start: calc(22rem * var(--scale-factor));
+		// 	inset-inline-end: calc(-2rem * var(--scale-factor));
+		// }
+
+		// .start svg {
+		// 	block-size: calc(30rem * var(--scale-factor));
+		// 	inline-size: calc(30rem * var(--scale-factor));
+		// }
+
+		/* Fix sidebar closed state for mobile */
+		.instructions.closed {
+			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+		}
+
+		/* Adjust small hero summary for mobile */
+		:global(.small-hero-summary) {
+			inset-block-start: calc(4rem * var(--scale-factor));
+			inset-inline-start: calc(6rem * var(--scale-factor));
+			transform: scale(0.7);
+			display: none;
+		}
+
+		.game1-initial-screen-button {
+			background: none;
+			border: none;
+			padding: 0;
+			cursor: pointer;
+		}
+
+		/* Adjust swipe button font size for mobile */
+		.swipe-button div {
+			font-size: calc(2rem * var(--scale-factor));
+		}
+
+		.swipe-button div span {
+			font-size: calc(3.5rem * var(--scale-factor));
+		}
+
+		/* Adjust statement card padding for mobile */
+		.statement-card {
+			padding-block: calc(3rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+			min-block-size: 0;
+		}
+
+		/* Adjust statement image margin for mobile */
+		.statement-image {
+			margin-block-end: 0;
+			max-block-size: calc(26rem * var(--scale-factor));
+		}
+
+		/* Adjust statement header margin for mobile */
+		.statement-header {
+			margin-block-end: calc(3rem * var(--scale-factor));
+		}
+
+		/* Adjust feedback icons size for mobile */
+		.result-content svg {
+			block-size: calc(30rem * var(--scale-factor));
+			inline-size: calc(30rem * var(--scale-factor));
+		}
+	}
 </style> 

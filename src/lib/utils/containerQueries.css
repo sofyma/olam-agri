@@ -1,0 +1,35 @@
+/* Container Queries for better responsive design */
+@container (max-width: 1200px) {
+  .game-container {
+    padding: 1rem;
+  }
+  
+  .game-summary {
+    max-width: 90vw;
+  }
+}
+
+@container (max-width: 800px) {
+  .game-summary {
+    max-width: 95vw;
+  }
+  
+  .title {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+}
+
+/* Better viewport units for Windows scaling */
+.game-container {
+  min-height: 100dvh; /* dynamic viewport height */
+  width: 100dvw; /* dynamic viewport width */
+}
+
+/* Use clamp() for responsive typography */
+.title {
+  font-size: clamp(2.5rem, 4vw, 6rem);
+}
+
+.paragraph {
+  font-size: clamp(1.4rem, 2vw, 2.2rem);
+} 
