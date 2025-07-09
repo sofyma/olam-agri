@@ -5,6 +5,54 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<link rel="stylesheet" href="/styles/global.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<script>
+			// Prevent zooming on iOS devices
+			(function() {
+				// Set viewport meta tag dynamically to ensure it works
+				const viewport = document.querySelector('meta[name=viewport]');
+				if (viewport) {
+					viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+				}
+
+				let lastTouchEnd = 0;
+				const preventZoom = function(e) {
+					const now = (new Date()).getTime();
+					if (now - lastTouchEnd <= 300) {
+						e.preventDefault();
+					}
+					lastTouchEnd = now;
+				};
+
+				// Prevent double-tap zoom
+				document.addEventListener('touchend', preventZoom, false);
+				
+				// Prevent pinch zoom
+				document.addEventListener('gesturestart', function(e) {
+					e.preventDefault();
+				});
+				
+				document.addEventListener('gesturechange', function(e) {
+					e.preventDefault();
+				});
+				
+				document.addEventListener('gestureend', function(e) {
+					e.preventDefault();
+				});
+
+				// Additional iOS zoom prevention
+				document.addEventListener('touchstart', function(e) {
+					if (e.touches.length > 1) {
+						e.preventDefault();
+					}
+				}, { passive: false });
+
+				document.addEventListener('touchmove', function(e) {
+					if (e.touches.length > 1) {
+						e.preventDefault();
+					}
+				}, { passive: false });
+			})();
+		</script>
 		<style>
 			@font-face {
 				font-family: 'Gilroy';
@@ -53,6 +101,9 @@
 				color: #212529;
 				-webkit-font-smoothing: antialiased;
 				-moz-osx-font-smoothing: grayscale;
+				/* Prevent zooming on iOS */
+				-webkit-touch-callout: none;
+				touch-action: manipulation;
 			}
 
 			img, picture, video, canvas, svg {
