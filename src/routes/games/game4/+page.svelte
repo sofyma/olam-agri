@@ -657,6 +657,12 @@
 		position: fixed;
 		transition: transform 0.3s ease-in-out;
 		z-index: 9999;
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+
+		&::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
 
 		&.closed {
 			transform: translateX(calc(-100% + 5rem));
