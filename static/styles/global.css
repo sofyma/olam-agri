@@ -32,7 +32,7 @@ html, body {
 
 /* Responsive scaling using CSS variables */
 html {
-  font-size: 10px; /* Base font size */
+  	font-size: 1rem; /* Base font size */
 }
 
 :root {
@@ -86,7 +86,7 @@ html {
   align-items: center;
   block-size: calc(3.5rem * var(--scale-factor));
   border: none;
-  border-radius: calc(100rem * var(--scale-factor));
+  border-radius: 0rem 1.5rem;
   cursor: pointer;
   display: flex;
   font-size: calc(1.6rem * var(--scale-factor));

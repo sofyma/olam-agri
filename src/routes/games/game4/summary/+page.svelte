@@ -58,7 +58,7 @@
             </button>
         </div>
 
-        <small class="finish-small">Remember, you can try again, but for the competition only <br> your first attempt will count!</small>
+        <small class="finish-small">Remember, you can try again, but for the<br> competition only your first attempt will count!</small>
     </div>
 
 	<img src="/images/game4-shape-correct.png" alt="" class="game4-shape game4-shape-correct">

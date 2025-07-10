@@ -472,7 +472,7 @@
     overflow: hidden;
 
     th, td {
-      border-bottom: 1px solid #ccc;
+      border-bottom: 0.1rem solid #ccc;
       color: #FF7000;
       font-size: calc(3.5rem * var(--scale-factor));
       font-weight: 600;
@@ -548,12 +548,7 @@
 
       // Add border after first 2 users (separator line)
       tr.border-after td {
-        border-bottom: 2px solid #FF7000 !important;
-      }
-
-      // Add regular borders for rows after the separator
-      tr:nth-child(n+4) td {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 0.1rem solid #E6E6E6 !important;
       }
     }
 
@@ -644,7 +639,7 @@
     padding: calc(1.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 
     &:focus {
-      box-shadow: 0 0 0 calc(2px * var(--scale-factor)) #FF7000;
+      box-shadow: 0 0 0 calc(0.2rem * var(--scale-factor)) #FF7000;
       outline: none;
     }
 

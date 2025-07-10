@@ -56,11 +56,15 @@
     
 	function startGame() {
 		showInstructions = false;
+		instructionsClosed = true;
+		instructionsClosedSidebar = true;
 		showWelcome = true;
 	}
 
 	function startQuestions() {
 		showWelcome = false;
+		instructionsClosed = true;
+		instructionsClosedSidebar = true;
 		game6Store.start();
 	}
 
@@ -107,13 +111,25 @@
 							<span class="number">6</span>
 						</div>
 
-						<h2 class="subtitle">Only the Fastest Will Reach the Sky</h2>
+						<h2 class="subtitle">Only the <br> Fastest Will <br> Reach the Sky</h2>
 					</div>
 
 					<p class="paragraph">Mystic Man can see into your mind just by looking into your eyes.</p>
 					<p class="paragraph">He reads your thoughts, senses your past, and predicts your next move.</p>
 					<p class="paragraph">Dare to meet his gaze? Reach the end and earn 5 points.</p>
-					<p class="paragraph">He already knows you’re about to hit Start.</p>
+					<p class="paragraph">He already knows you're about to hit Start.</p>
+				</div>
+
+				<div class="content-check">
+					<div class="content-check-grid">
+						<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
+							Check content
+						</button>
+						<div class="content-check-text">
+							Have you read the related content?<br>
+							You'll do better in the game if you check it first!
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -134,6 +150,54 @@
 		</div>
 
     {:else if showWelcome}
+		<div class="instructions" class:closed={instructionsClosed}>
+			{#if !instructionsClosed}
+				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
+					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
+						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
+					</svg>
+				</button>
+			{:else}
+				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
+					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
+					</svg>
+				</button>
+			{/if}
+
+			<Game1Logo />
+
+			<h1 class="title">Brand Heroes</h1>
+				
+			<div class="copy">
+				<div class="copy-header">
+					<div class="game-id">
+						<span class="text">Game</span>
+						<span class="number">6</span>
+					</div>
+
+					<h2 class="subtitle">The Final Challenge</h2>
+				</div>
+
+				<p class="paragraph">Test your knowledge with multiple choice questions about branding and design!</p>
+				<p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
+				<p class="paragraph">Can you prove you're a brand hero?</p>
+			</div>
+
+			<div class="content-check">
+				<div class="content-check-grid">
+					<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
+						Check content
+					</button>
+					<div class="content-check-text">
+						Have you read the related content?<br>
+						You'll do better in the game if you check it first!
+					</div>
+				</div>
+			</div>
+		</div>
+
         <div class="game-area">
 			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
 
@@ -162,6 +226,54 @@
             <p>Please add some Game 6 questions in your Sanity Studio to play this game.</p>
         </div>
     {:else}
+		<div class="instructions" class:closed={instructionsClosed}>
+			{#if !instructionsClosed}
+				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
+					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
+						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
+					</svg>
+				</button>
+			{:else}
+				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
+					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
+					</svg>
+				</button>
+			{/if}
+
+			<Game1Logo />
+
+			<h1 class="title">Brand Heroes</h1>
+				
+			<div class="copy">
+				<div class="copy-header">
+					<div class="game-id">
+						<span class="text">Game</span>
+						<span class="number">6</span>
+					</div>
+
+					<h2 class="subtitle">The Final Challenge</h2>
+				</div>
+
+				<p class="paragraph">Test your knowledge with multiple choice questions about branding and design!</p>
+				<p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
+				<p class="paragraph">Can you prove you're a brand hero?</p>
+			</div>
+
+			<div class="content-check">
+				<div class="content-check-grid">
+					<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
+						Check content
+					</button>
+					<div class="content-check-text">
+						Have you read the related content?<br>
+						You'll do better in the game if you check it first!
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="game-area">
 			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
 
@@ -278,7 +390,7 @@
 		padding: calc(6rem * var(--scale-factor)) calc(7rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
 		position: relative;
 		width: 100%;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
 	}
 
 	.question-header {
@@ -367,7 +479,7 @@
 		max-inline-size: calc(105.2rem * var(--scale-factor));
 		padding: calc(6rem * var(--scale-factor)) calc(7rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
 		text-align: center;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
 	}
 
 	.welcome-content {
@@ -586,7 +698,7 @@
 
 		img {
 			width: calc(100% * var(--scale-factor));
-			max-width: calc(800px * var(--scale-factor));
+			max-width: calc(80rem * var(--scale-factor));
 			height: auto;
 			margin-inline: auto;
 		}
@@ -609,6 +721,44 @@
 		&-copy {
 			font-size: calc(1.8rem * var(--scale-factor));
 		}
+	}
+
+	/* Content check section */
+	.content-check {
+		padding-block-start: calc(2.7rem * var(--scale-factor));
+	}
+
+	.content-check-grid {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: calc(2rem * var(--scale-factor));
+		align-items: center;
+	}
+
+	.content-check-btn {
+		width: calc(14.6rem * var(--scale-factor));
+		height: calc(3.4rem * var(--scale-factor));
+		border-radius: 0 calc(1.5rem * var(--scale-factor));
+		color: #fff;
+		background-color: #00A865;
+		border: none;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	.content-check-text {
+		color: #FFF;
+		font-family: Gilroy-Regular;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-style: normal;
+		font-weight: 400;
+		line-height: calc(2rem * var(--scale-factor));
 	}
 
 	/* Mobile Media Query - Up to 932px */
@@ -834,7 +984,7 @@
 
 		/* Adjust image button max-width for mobile */
 		.image-button img {
-			max-width: calc(600px * var(--scale-factor));
+			max-width: calc(60rem * var(--scale-factor));
 		}
 
 		/* Adjust subtitle position for mobile */
@@ -846,6 +996,26 @@
 		/* Hide game6 hero before playing on mobile */
 		.game6-hero-before-playing {
 			display: none;
+		}
+
+		/* Content check section mobile adjustments */
+		.content-check {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.content-check-grid {
+			gap: calc(1.5rem * var(--scale-factor));
+		}
+
+		.content-check-btn {
+			width: calc(12rem * var(--scale-factor));
+			height: calc(3rem * var(--scale-factor));
+			font-size: calc(1.2rem * var(--scale-factor));
+		}
+
+		.content-check-text {
+			font-size: calc(1.2rem * var(--scale-factor));
+			line-height: calc(1.6rem * var(--scale-factor));
 		}
 	}
 </style> 

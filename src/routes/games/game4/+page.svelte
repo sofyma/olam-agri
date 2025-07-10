@@ -13,6 +13,14 @@
 	let showResult = false;
 	let resultTimeout: NodeJS.Timeout;
 	let displayIndex = 0; // Track the displayed statement index
+	
+	// Touch/swipe variables
+	let touchStartX = 0;
+	let touchStartY = 0;
+	let touchEndX = 0;
+	let touchEndY = 0;
+	let isMouseDown = false;
+	let isDragging = false;
 
     // Reactive statement to handle navigation when game is complete
     $: if ($game4Store.isComplete && $game4Store.isPlaying) {
@@ -43,6 +51,8 @@
     
 	function startGame() {
 		showInstructions = false;
+		instructionsClosed = true;
+		instructionsClosedSidebar = true;
 		game4Store.start();
 		displayIndex = 0;
 	}
@@ -90,6 +100,85 @@
 			// Navigation is now handled by the reactive statement above
 		}, 1500);
 	}
+
+	function handleTouchStart(event: TouchEvent) {
+		if (showResult || !$game4Store.isPlaying) return;
+		
+		const touch = event.touches[0];
+		touchStartX = touch.clientX;
+		touchStartY = touch.clientY;
+	}
+
+	function handleTouchMove(event: TouchEvent) {
+		if (showResult || !$game4Store.isPlaying) return;
+		
+		// Prevent default to avoid scrolling
+		event.preventDefault();
+		
+		const touch = event.touches[0];
+		touchEndX = touch.clientX;
+		touchEndY = touch.clientY;
+	}
+
+	function handleTouchEnd(event: TouchEvent) {
+		if (showResult || !$game4Store.isPlaying) return;
+		
+		const touch = event.changedTouches[0];
+		touchEndX = touch.clientX;
+		touchEndY = touch.clientY;
+		
+		handleSwipeGesture();
+	}
+
+	function handleSwipeGesture() {
+		const minSwipeDistance = 50; // Minimum distance for a swipe
+		const deltaX = touchEndX - touchStartX;
+		const deltaY = touchEndY - touchStartY;
+		
+		// Check if it's a horizontal swipe (more horizontal than vertical)
+		if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+			if (deltaX > 0) {
+				// Swipe right - correct
+				handleSwipe('right');
+			} else {
+				// Swipe left - incorrect
+				handleSwipe('left');
+			}
+		}
+	}
+
+	function handleMouseDown(event: MouseEvent) {
+		if (showResult || !$game4Store.isPlaying) return;
+		
+		isMouseDown = true;
+		touchStartX = event.clientX;
+		touchStartY = event.clientY;
+	}
+
+	function handleMouseMove(event: MouseEvent) {
+		if (showResult || !$game4Store.isPlaying || !isMouseDown) return;
+		
+		touchEndX = event.clientX;
+		touchEndY = event.clientY;
+		
+		// Check if we're actually dragging (moved more than 5px)
+		const deltaX = Math.abs(touchEndX - touchStartX);
+		const deltaY = Math.abs(touchEndY - touchStartY);
+		if (deltaX > 5 || deltaY > 5) {
+			isDragging = true;
+		}
+	}
+
+	function handleMouseUp(event: MouseEvent) {
+		if (showResult || !$game4Store.isPlaying || !isMouseDown) return;
+		
+		isMouseDown = false;
+		isDragging = false;
+		touchEndX = event.clientX;
+		touchEndY = event.clientY;
+		
+		handleSwipeGesture();
+	}
 </script>
 
 <div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
@@ -114,7 +203,7 @@
 
 				<Game1Logo />
 
-				<h1 class="title">True or False</h1>
+				<h1 class="title">Brand Heroes</h1>
 					
 				<div class="copy">
 					<div class="copy-header">
@@ -123,13 +212,25 @@
 							<span class="number">4</span>
 						</div>
 
-						<h2 class="subtitle">Swipe to Decide!</h2>
+						<h2 class="subtitle">Choose <br> a Side</h2>
 					</div>
 
 					<p class="paragraph">All heroes face the battle between good and evil, with great power comes great responsibility!</p>
 					<p class="paragraph">Now it's your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.</p>
 					<p class="paragraph">You'll start with 5 points, but lose 1 for every wrong decision.</p>
 					<p class="paragraph">Ready for the challenge? Hit Start!</p>
+				</div>
+
+				<div class="content-check">
+					<div class="content-check-grid">
+						<button class="content-check-btn" on:click={() => goto('/games/info/4')}>
+							Check content
+						</button>
+						<div class="content-check-text">
+							Have you read the related content?<br>
+							You'll do better in the game if you check it first!
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -158,7 +259,62 @@
             <p>Please add some Game 4 statements in your Sanity Studio to play this game.</p>
         </div>
     {:else}
-		<div class="game-area">
+		<div class="instructions" class:closed={instructionsClosed}>
+			{#if !instructionsClosed}
+				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
+					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
+						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
+					</svg>
+				</button>
+			{:else}
+				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
+					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
+					</svg>
+				</button>
+			{/if}
+
+			<Game1Logo />
+
+			<h1 class="title">Brand Heroes</h1>
+				
+			<div class="copy">
+				<div class="copy-header">
+					<div class="game-id">
+						<span class="text">Game</span>
+						<span class="number">4</span>
+					</div>
+
+					<h2 class="subtitle">The Layout Challenge</h2>
+				</div>
+
+				<p class="paragraph">Test your knowledge of good layout design! Swipe left for incorrect layouts and right for correct ones.</p>
+				<p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
+				<p class="paragraph">Can you spot the good layouts from the bad ones?</p>
+			</div>
+
+			<div class="content-check">
+				<div class="content-check-grid">
+					<button class="content-check-btn" on:click={() => goto('/games/info/4')}>
+						Check content
+					</button>
+					<div class="content-check-text">
+						Have you read the related content?<br>
+						You'll do better in the game if you check it first!
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="game-area" 
+			on:touchstart={handleTouchStart}
+			on:touchmove={handleTouchMove}
+			on:touchend={handleTouchEnd}
+			on:mousedown={handleMouseDown}
+			on:mousemove={handleMouseMove}
+			on:mouseup={handleMouseUp}
+		>
 			{#if $game4Store.isPlaying && $game4Store.statements[displayIndex]}
 				<div class="game-content">
 
@@ -192,6 +348,7 @@
 						
 						<div 
 							class="statement-card" 
+							class:dragging={isDragging}
 							role="button"
 							tabindex="0"
 							on:keydown={(e) => {
@@ -203,6 +360,12 @@
 									handleSwipe('right');
 								}
 							}}
+							on:touchstart={handleTouchStart}
+							on:touchmove={handleTouchMove}
+							on:touchend={handleTouchEnd}
+							on:mousedown={handleMouseDown}
+							on:mousemove={handleMouseMove}
+							on:mouseup={handleMouseUp}
 						>
 							{#if showResult}
 								<div class="result-panel">
@@ -231,6 +394,8 @@
 								src={$game4Store.statements[displayIndex].image} 
 								alt=""
 								class="statement-image"
+								draggable="false"
+								on:dragstart={(e) => e.preventDefault()}
 								on:error={() => {
 									// Fallback to placeholder if image fails to load
 									$game4Store.statements[displayIndex].image = 'https://via.placeholder.com/600x400/FFC400/FFFFFF?text=Statement+Image';
@@ -326,6 +491,8 @@
 		justify-content: center;
 		padding: calc(2rem * var(--scale-factor));
 		position: relative;
+		touch-action: pan-y; /* Allow vertical scrolling but handle horizontal swipes */
+		user-select: none; /* Prevent text selection during swipes */
 	}
 
 	.game-content {
@@ -366,9 +533,21 @@
 		transform: scale(1) translateY(0);
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		width: 100%;
+		touch-action: pan-y; /* Allow vertical scrolling but handle horizontal swipes */
+		user-select: none; /* Prevent text selection during swipes */
 
 		&:active {
 			cursor: grabbing;
+		}
+
+		&:hover {
+			cursor: grab;
+		}
+
+		&.dragging {
+			cursor: grabbing;
+			transform: scale(0.98) translateY(0);
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 		}
 	}
 
@@ -389,8 +568,15 @@
 	.statement-image {
 		inline-size: 100%;
 		margin-block-end: calc(4rem * var(--scale-factor));
-		max-block-size: calc(46rem * var(--scale-factor));
+		max-block-size: calc(60rem * var(--scale-factor));
 		object-fit: cover;
+		user-select: none;
+		-webkit-user-drag: none;
+		-khtml-user-drag: none;
+		-moz-user-drag: none;
+		-o-user-drag: none;
+		user-drag: none;
+		pointer-events: none; /* This prevents image dragging but still allows parent events */
 	}
 
 	.swipe-button {
@@ -414,8 +600,8 @@
 		}
 
 		svg {
-			height: calc(47px * var(--scale-factor));
-			width: calc(39px * var(--scale-factor));
+			height: calc(4.7rem * var(--scale-factor));
+			width: calc(3.9rem * var(--scale-factor));
 		}
 
 		div {
@@ -508,7 +694,7 @@
 
 	.play-button {
 		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: calc(2rem * var(--scale-factor) - 10px);
+		inset-inline-end: calc(2rem * var(--scale-factor) - 1rem);
 
 		svg {
 			block-size: calc(3.3rem * var(--scale-factor));
@@ -628,7 +814,7 @@
 
 		img {
 			width: calc(100% * var(--scale-factor));
-			max-width: calc(800px * var(--scale-factor));
+			max-width: calc(80rem * var(--scale-factor));
 			height: auto;
 			margin-inline: auto;
 		}
@@ -649,6 +835,44 @@
 		&-copy {
 			font-size: calc(1.8rem * var(--scale-factor));
 		}
+	}
+
+	/* Content check section */
+	.content-check {
+		padding-block-start: calc(2.7rem * var(--scale-factor));
+	}
+
+	.content-check-grid {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: calc(1.5rem * var(--scale-factor));
+		align-items: center;
+	}
+
+	.content-check-btn {
+		width: calc(14.6rem * var(--scale-factor));
+		height: calc(3.4rem * var(--scale-factor));
+		border-radius: 0 calc(1.5rem * var(--scale-factor));
+		color: #2E2D2C;
+		background-color: #FFC400;
+		border: none;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	.content-check-text {
+		color: #FFF;
+		font-family: Gilroy-Regular;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-style: normal;
+		font-weight: 400;
+		line-height: calc(2rem * var(--scale-factor));
 	}
 
 	/* Mobile Media Query - Up to 932px */
@@ -861,6 +1085,44 @@
 			cursor: pointer;
 		}
 
+		/* Content check section */
+		.content-check {
+			padding-block-start: calc(2.7rem * var(--scale-factor));
+		}
+
+		.content-check-grid {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			gap: calc(2rem * var(--scale-factor));
+			align-items: center;
+		}
+
+		.content-check-btn {
+			width: calc(14.6rem * var(--scale-factor));
+			height: calc(3.4rem * var(--scale-factor));
+			border-radius: 0 calc(1.5rem * var(--scale-factor));
+			color: #2E2D2C;
+			background-color: #FFC400;
+			border: none;
+			font-size: calc(1.4rem * var(--scale-factor));
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+
+		.content-check-text {
+			color: #FFF;
+			font-family: Gilroy-Regular;
+			font-size: calc(1.4rem * var(--scale-factor));
+			font-style: normal;
+			font-weight: 400;
+			line-height: calc(2rem * var(--scale-factor));
+		}
+
 		/* Adjust swipe button font size for mobile */
 		.swipe-button div {
 			font-size: calc(2rem * var(--scale-factor));
@@ -891,6 +1153,26 @@
 		.result-content svg {
 			block-size: calc(30rem * var(--scale-factor));
 			inline-size: calc(30rem * var(--scale-factor));
+		}
+
+		/* Content check section mobile adjustments */
+		.content-check {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.content-check-grid {
+			gap: calc(1.5rem * var(--scale-factor));
+		}
+
+		.content-check-btn {
+			width: calc(12rem * var(--scale-factor));
+			height: calc(3rem * var(--scale-factor));
+			font-size: calc(1.2rem * var(--scale-factor));
+		}
+
+		.content-check-text {
+			font-size: calc(1.2rem * var(--scale-factor));
+			line-height: calc(1.6rem * var(--scale-factor));
 		}
 	}
 </style> 

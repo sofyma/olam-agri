@@ -37,7 +37,7 @@
         <img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing">
 
 		<div class="results">
-			<p class="paragraph">Thank you for participating, you've earned.</p>
+			<p class="paragraph">Thank you for participating, you've earned</p>
 			<p class="total-points">{$game6Store.score} points</p>
 		</div>
 
@@ -50,7 +50,7 @@
             </button>
         </div>
 
-        <small class="finish-small">Remember, you can try again, but for the competition only <br> your first attempt will count!</small>
+        <small class="finish-small">Remember, you can try again, but for the<br> competition only your first attempt will count!</small>
     </div>
 </div>
 
@@ -59,6 +59,7 @@
 		block-size: 100vh;
 		display: grid;
 		place-content: center;
+		padding-block-start: calc(10rem * var(--scale-factor));
 	}
 
 	.game-summary {

@@ -105,13 +105,15 @@
 		background-color: #fff;
 		border-radius: calc(3.5rem * var(--scale-factor));
 		color: #FF7000;
-		display: inline-block;
+		display: block;
 		font-size: calc(4rem * var(--scale-factor));
 		font-weight: 600;
 		font-style: normal;
 		line-height: normal;
 		margin-block-start: calc(5rem * var(--scale-factor));
 		padding: calc(3rem * var(--scale-factor));
+		width: fit-content;
+		margin-inline: auto;
 	};
 
 	.finish-small {

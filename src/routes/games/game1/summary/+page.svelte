@@ -23,7 +23,7 @@
 		<h2 class="title">This is your final score:</h2>
 
 		<div class="results">
-			<p class="paragraph">You missed {missedPlaces} places, so your score is now reduced to:</p>
+			<p class="paragraph">You missed {missedPlaces} places, so your score is:</p>
 			<p class="total-points">{totalScore} points</p>
 		</div>
 
@@ -94,6 +94,7 @@
 
 	.btn {
 		margin-inline: auto;
+		border-radius: 0rem 1.5rem;
 	}
 
 	/* Mobile Media Query - Up to 932px */

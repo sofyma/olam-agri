@@ -59,7 +59,7 @@
 <div class="question-container" class:entering={!showFeedback && isEntering}>
     {#if !showFeedback}
         <div class="question-header">
-            <h2 class="question-title">Maze Challenge!</h2>
+            <h2 class="question-title">{question.question}</h2>
         </div>
         
         {#if imageUrl}
@@ -99,7 +99,7 @@
                 on:click={handleSubmit}
                 disabled={!selectedAnswer || isSubmitting}
             >
-                Submit
+                Send    
             </button>
         </div>
     {/if}
@@ -114,7 +114,7 @@
                     </svg>
                 {:else}
                     <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M254.576 0.23999H141.424C63.5938 0.23999 0.5 63.3338 0.5 141.164V254.316C0.5 332.146 63.5938 395.24 141.424 395.24H254.576C332.406 395.24 395.5 332.146 395.5 254.316V141.164C395.5 63.3338 332.406 0.23999 254.576 0.23999Z" fill="#FF3000"/>
+                        <path d="M396 198C396 88.6592 307.341 0 198 0C88.6592 0 0 88.6592 0 198C0 307.341 88.6592 396 198 396C307.341 396 396 307.341 396 198Z" fill="#FF3000"/>
                         <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
                         <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
@@ -189,9 +189,10 @@
     }
 
     .question-title {
-        color: #2E2D2C;
+        color: #FF5BAF;
         font-size: calc(4.6rem * var(--scale-factor));
         font-weight: 600;
+        line-height: normal;
         margin-block-end: 0;
         padding-inline: 0;
         text-align: start;
@@ -199,20 +200,20 @@
     
     .question-image {
         inline-size: 100%;
-        margin-block-end: calc(3rem * var(--scale-factor));
+        margin-block-end: 0;
         max-block-size: calc(36rem * var(--scale-factor));
         object-fit: cover;
     }
     
     .question-options {
-        padding-block-start: calc(5rem * var(--scale-factor));
+        padding-block-start: calc(4rem * var(--scale-factor));
         padding-inline: calc(9rem * var(--scale-factor));
     }
 
     .options {
         display: inline-flex;   
         flex-direction: column;
-        margin-block-end: calc(2rem * var(--scale-factor));
+        margin-block-end: calc(3rem * var(--scale-factor));
     }
     
     .option {
@@ -234,16 +235,26 @@
     
     .option-text {
         color: #2E2D2C;
-        inset-block-start: calc(.3rem * var(--scale-factor));
+        inset-block-start: calc(.1rem * var(--scale-factor));
         position: relative;
     }
 
     input[type="radio"] {
-        accent-color: currentColor;
-        block-size: calc(20px * var(--scale-factor));
+        accent-color: #2E2D2C;
+        block-size: calc(2rem * var(--scale-factor));
         cursor: pointer;
-        inline-size: calc(20px * var(--scale-factor));
+        inline-size: calc(2rem * var(--scale-factor));
         margin: 0;
+        appearance: none;
+        border: 0.2rem solid #ccc;
+        border-radius: 50%;
+        background-color: white;
+        position: relative;
+
+        &:checked {
+            background-color: #2E2D2C;
+            border-color: #2E2D2C;
+        }
     }
     
     .submit-button:disabled {

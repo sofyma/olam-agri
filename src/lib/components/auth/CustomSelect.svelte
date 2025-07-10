@@ -143,8 +143,8 @@
     left: 0;
     right: 0;
     background-color: #E6E6E6;
-    border-top: 1px solid #ccc;
-    max-block-size: 200px;
+    border-top: 0.1rem solid #ccc;
+    max-block-size: 20rem;
     overflow-y: auto;
     z-index: 1000;
   }

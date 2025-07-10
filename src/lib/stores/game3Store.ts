@@ -295,7 +295,7 @@ const createGame3Store = () => {
           checkpoints: [
             {
               id: 1,
-              x: 1065.65,
+              x: 1035.65,
               y: 135.09,
               width: 40,
               height: 40,
@@ -303,7 +303,7 @@ const createGame3Store = () => {
             },
             {
               id: 2,
-              x: 294.39,
+              x: 264.39,
               y: 603.85,
               width: 40,
               height: 40,
@@ -337,7 +337,7 @@ const createGame3Store = () => {
           checkpoints: [
             {
               id: 1,
-              x: 1065.65,
+              x: 1035.65,
               y: 135.09,
               width: 40,
               height: 40,
@@ -345,7 +345,7 @@ const createGame3Store = () => {
             },
             {
               id: 2,
-              x: 294.39,
+              x: 264.39,
               y: 603.85,
               width: 40,
               height: 40,

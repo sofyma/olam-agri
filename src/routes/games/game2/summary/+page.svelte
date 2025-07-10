@@ -44,7 +44,7 @@
             </button>
         </div>
 
-        <small class="finish-small">Remember, you can try again, but for the competition only <br> your first attempt will count!</small>
+        <small class="finish-small">Remember, you can try again, but for the<br> competition only your first attempt will count!</small>
     </div>
 </div>
 
@@ -109,6 +109,7 @@
 	.btn {
 		color: #8E75F8;
 		margin-inline: 0;
+		border-radius: 0 calc(1.7rem * var(--scale-factor));
 	}
 
 	.finish-small {
@@ -116,6 +117,8 @@
 		color: #fff;
 		display: block;
 		font-size: calc(2rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: normal;
 		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}

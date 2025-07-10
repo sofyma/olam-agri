@@ -103,7 +103,7 @@
                 on:click={handleSubmit}
                 disabled={!selectedAnswer || isSubmitting}
             >
-                Submit
+                Send
             </button>
         </div>
     {/if}
@@ -112,15 +112,15 @@
         <div class="feedback">
             <div class="feedback-content">
                 {#if isCorrect}
-                    <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M254.576 0.240967H141.424C63.5938 0.240967 0.5 63.3348 0.5 141.165V254.317C0.5 332.147 63.5938 395.241 141.424 395.241H254.576C332.406 395.241 395.5 332.147 395.5 254.317V141.165C395.5 63.3348 332.406 0.240967 254.576 0.240967Z" fill="#00A865"/>
-                        <path d="M104.675 208.195L159.922 263.442L291.322 132.042" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
+                        <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
                 {:else}
-                    <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M254.576 0.23999H141.424C63.5938 0.23999 0.5 63.3338 0.5 141.164V254.316C0.5 332.146 63.5938 395.24 141.424 395.24H254.576C332.406 395.24 395.5 332.146 395.5 254.316V141.164C395.5 63.3338 332.406 0.23999 254.576 0.23999Z" fill="#FF3000"/>
-                        <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
-                        <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#FF3000"/>
+                        <path d="M145.68 274.32L274.32 145.68" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                        <path d="M145.68 145.68L274.32 274.32" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
                     </svg>
                 {/if}
             </div>
@@ -142,7 +142,7 @@
 
     .question-container {
         background-color: #fff;
-        border-radius: calc(3.7rem * var(--scale-factor));  
+        border-radius: 0 calc(3.5rem * var(--scale-factor));  
         block-size: calc(90rem * var(--scale-factor));    
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
@@ -164,7 +164,7 @@
     }
 
     .question-title {
-        color: #2E2D2C;
+        color: #FF7000;
         font-size: calc(4.6rem * var(--scale-factor));
         font-weight: 600;
         margin-block-end: 0;
@@ -209,18 +209,32 @@
     
     .option-text {
         color: #2E2D2C;
-        inset-block-start: calc(.3rem * var(--scale-factor));
+        inset-block-start: calc(.1rem * var(--scale-factor));
         position: relative;
     }
 
     input[type="radio"] {
-        accent-color: currentColor;
-        block-size: calc(20px * var(--scale-factor));
+        accent-color: #2E2D2C;
+        block-size: calc(2rem * var(--scale-factor));
         cursor: pointer;
-        inline-size: calc(20px * var(--scale-factor));
+        inline-size: calc(2rem * var(--scale-factor));
         margin: 0;
+        appearance: none;
+        border: 0.2rem solid #ccc;
+        border-radius: 50%;
+        background-color: white;
+        position: relative;
+
+        &:checked {
+            background-color: #2E2D2C;
+            border-color: #2E2D2C;
+        }
     }
     
+    .submit-button {
+        border-radius: 0 calc(1.7rem * var(--scale-factor));
+    }
+
     .submit-button:disabled {
         background-color: #ccc;
         cursor: not-allowed;

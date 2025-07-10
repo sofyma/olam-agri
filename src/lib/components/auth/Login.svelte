@@ -280,7 +280,7 @@
     color: #dc3545;
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: 0.4rem;
     background-color: #f8d7da;
   }
 </style> 

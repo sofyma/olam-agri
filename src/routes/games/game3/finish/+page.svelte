@@ -186,7 +186,7 @@
         transition: all 0.2s ease;
 
         &:hover {
-            transform: translateY(-2px);
+            transform: translateY(-0.2rem);
         }
     }
 

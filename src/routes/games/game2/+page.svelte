@@ -40,6 +40,8 @@
     
 	function startGame() {
 		showInstructions = false;
+		instructionsClosed = true;
+		instructionsClosedSidebar = true;
 		game2Store.start();
 		activeBubbles = [];
 		spawnBubble(0);
@@ -159,6 +161,18 @@
 						<p class="paragraph">Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.</p>
 						<p class="paragraph">Think fast! You've only 5 seconds to decide on each one.</p>
 					</div>
+
+					<div class="content-check">
+						<div class="content-check-grid">
+							<button class="content-check-btn" on:click={() => goto('/games/info/2')}>
+								Check content
+							</button>
+							<div class="content-check-text">
+								Have you read the related content?<br>
+								You'll do better in the game if you check it first!
+							</div>
+						</div>
+					</div>
 				</div>
 
 
@@ -184,6 +198,55 @@
             <p>Please add some Game 2 statements in your Sanity Studio to play this game.</p>
         </div>
     {:else}
+		<div class="instructions" class:closed={instructionsClosed}>
+			{#if !instructionsClosed}
+				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
+					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
+						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
+					</svg>
+				</button>
+			{:else}
+				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
+					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
+					</svg>
+				</button>
+			{/if}
+
+			<Game1Logo />
+
+			<h1 class="title">Brand Heroes</h1>
+				
+			<div class="copy">
+				<div class="copy-header">
+					<div class="game-id">
+						<span class="text">Game</span>
+						<span class="number">2</span>
+					</div>
+
+					<h2 class="subtitle">Under Attack!</h2>
+				</div>
+
+				<p class="paragraph">Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.</p>
+				<p class="paragraph">Stop the lies about our brand name and logo, but let the truths pass through.</p>
+				<p class="paragraph">Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.</p>
+				<p class="paragraph">Think fast! You've only 5 seconds to decide on each one.</p>
+			</div>
+
+			<div class="content-check">
+				<div class="content-check-grid">
+					<button class="content-check-btn" on:click={() => goto('/games/info/2')}>
+						Check content
+					</button>
+					<div class="content-check-text">
+						Have you read the related content?<br>
+						You'll do better in the game if you check it first!
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="game-area">
 			<div class="game-header">
 				<h2 class="game-header-title">Click on the lies to destroy them!</h2>
@@ -216,9 +279,20 @@
 								<div class="explosion-container" class:timeout={bubble.isTimeout}>
 									<Explosion />
 									{#if bubble.showFeedback}
-										<span class="feedback-icon">
-											{bubble.isCorrect ? '✅' : '❌'}
-										</span>
+										<div class="feedback-icon">
+											{#if bubble.isCorrect}
+												<svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
+													<path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+												</svg>
+											{:else}
+												<svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#FF3000"/>
+													<path d="M145.68 274.32L274.32 145.68" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+													<path d="M145.68 145.68L274.32 274.32" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+												</svg>
+											{/if}
+										</div>
 									{/if}
 								</div>
 							{:else}
@@ -347,8 +421,14 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		font-size: calc(5rem * var(--scale-factor));
+		width: calc(5rem * var(--scale-factor));
+		height: calc(5rem * var(--scale-factor));
 		animation: feedbackPop 0.5s ease-out forwards;
+
+		svg {
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 	@keyframes pop {
@@ -497,6 +577,9 @@
 		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
+		max-width: calc(20rem * var(--scale-factor));
+		word-wrap: break-word;
+		overflow-wrap: break-word;
 	}
 
 	.paragraph {
@@ -544,6 +627,44 @@
 		padding: 0;
 		margin: 0;
 		cursor: pointer;
+	}
+
+	/* Content check section */
+	.content-check {
+		padding-block-start: calc(2.7rem * var(--scale-factor));
+	}
+
+	.content-check-grid {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: calc(2rem * var(--scale-factor));
+		align-items: center;
+	}
+
+	.content-check-btn {
+		width: calc(14.6rem * var(--scale-factor));
+		height: calc(3.4rem * var(--scale-factor));
+		border-radius: 0 calc(1.5rem * var(--scale-factor));
+		color: #fff;
+		background-color: #8E75F8;
+		border: none;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	.content-check-text {
+		color: #FFF;
+		font-family: Gilroy-Regular;
+		font-size: calc(1.4rem * var(--scale-factor));
+		font-style: normal;
+		font-weight: 400;
+		line-height: calc(2rem * var(--scale-factor));
 	}
 
 	/* Mobile Media Query - Up to 932px */
@@ -637,6 +758,7 @@
 		/* 8. Adjust subtitle for mobile */
 		.subtitle {
 			font-size: calc(2.5rem * var(--scale-factor));
+			max-width: calc(15rem * var(--scale-factor));
 			word-wrap: break-word;
 			overflow-wrap: break-word;
 		}
@@ -674,7 +796,28 @@
 		}
 
 		.feedback-icon {
-			font-size: calc(4rem * var(--scale-factor));
+			width: calc(4rem * var(--scale-factor));
+			height: calc(4rem * var(--scale-factor));
+		}
+
+		/* Content check section mobile adjustments */
+		.content-check {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.content-check-grid {
+			gap: calc(1.5rem * var(--scale-factor));
+		}
+
+		.content-check-btn {
+			width: calc(12rem * var(--scale-factor));
+			height: calc(3rem * var(--scale-factor));
+			font-size: calc(1.2rem * var(--scale-factor));
+		}
+
+		.content-check-text {
+			font-size: calc(1.2rem * var(--scale-factor));
+			line-height: calc(1.6rem * var(--scale-factor));
 		}
 	}
 </style> 

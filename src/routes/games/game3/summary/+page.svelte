@@ -43,7 +43,7 @@
             </button>
         </div>
 
-        <small class="finish-small">Remember, you can try again, but for the competition only <br> your first attempt will count!</small>      
+        <small class="finish-small">Remember, you can try again, but for the<br> competition only your first attempt will count!</small>      
     </div>
 </div>
 
@@ -101,7 +101,7 @@
 
         .results {
             background-color: #fff;
-            border-radius: calc(3.5rem * var(--scale-factor));
+            border-radius: 0px 30px;
             inline-size: calc(90rem * var(--scale-factor));
             margin-block-start: calc(3.5rem * var(--scale-factor));
             padding: calc(5rem * var(--scale-factor));
@@ -132,7 +132,6 @@
         .btn {
             background-color: #fff;
             border: none;
-            border-radius: calc(1.5rem * var(--scale-factor));
             color: #FF5BAF;
             cursor: pointer;
             font-size: calc(2.2rem * var(--scale-factor));
@@ -148,6 +147,8 @@
 		color: #fff;
 		display: block;
 		font-size: calc(2rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: normal;
 		margin-block-start: calc(3rem * var(--scale-factor));
 		text-align: center;
 	}
