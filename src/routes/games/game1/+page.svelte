@@ -570,7 +570,6 @@
 
 	.content-check-text {
 		color: #FFF;
-		font-family: Gilroy-Regular;
 		font-size: calc(1.4rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 400;
