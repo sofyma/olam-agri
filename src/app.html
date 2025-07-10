@@ -4,15 +4,34 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<link rel="stylesheet" href="/styles/global.css">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no" />
 		<script>
 			// Prevent zooming on iOS devices
 			(function() {
-				// Set viewport meta tag dynamically to ensure it works
+				// Set viewport meta tag dynamically based on screen width
 				const viewport = document.querySelector('meta[name=viewport]');
 				if (viewport) {
-					viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+					const screenWidth = window.innerWidth;
+					
+					// Apply zoom out only for resolutions between mobile (932px) and 1600px
+					if (screenWidth > 932 && screenWidth <= 1600) {
+						viewport.setAttribute('content', 'width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=no');
+					} else {
+						viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+					}
 				}
+
+				// Handle window resize
+				window.addEventListener('resize', function() {
+					const newScreenWidth = window.innerWidth;
+					if (viewport) {
+						if (newScreenWidth > 932 && newScreenWidth <= 1600) {
+							viewport.setAttribute('content', 'width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=no');
+						} else {
+							viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+						}
+					}
+				});
 
 				let lastTouchEnd = 0;
 				const preventZoom = function(e) {
