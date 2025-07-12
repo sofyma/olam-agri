@@ -183,13 +183,13 @@
 			}
 
 			/* Windows 125% zoom fix */
-			.windows-125 {
-				--scale-factor: 0.8;
+			.window125 {
+				transform: scale(0.8);
+				transform-origin: top left;
 			}
 
-			.windows-125 body {
-				overflow-x: hidden;
-				padding-bottom: 2vh;
+			.window125 .instructions {
+				position: static !important;
 			}
 		</style>
 		<title>Olam Agri Games</title>

@@ -16,7 +16,7 @@
     
     // Detect Windows 125% zoom and apply fix
     if (isWindows125Zoom()) {
-      document.documentElement.classList.add('windows-125');
+      document.documentElement.classList.add('window125');
     }
   });
 

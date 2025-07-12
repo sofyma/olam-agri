@@ -582,6 +582,47 @@
 		line-height: calc(2rem * var(--scale-factor));
 	}
 
+	/* Windows 125% specific styles */
+	:global(.window125) .game-container {
+		display: flex;
+		align-items: flex-start;
+	}
+
+	:global(.window125) .instructions {
+		position: static !important;
+		inline-size: calc(100vw - 66.41%);
+		block-size: 100vh;
+		flex-shrink: 0;
+	}
+
+	:global(.window125) .start-screen {
+		inline-size: calc(100vw - (100vw - 66.41%));
+		margin-inline-start: auto;
+		flex-shrink: 0;
+	}
+
+	:global(.window125) .game-panel {
+		display: flex;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	:global(.window125) .sidebar-is-closed .start-screen {
+		inline-size: 100%;
+		margin-inline-start: 0;
+	}
+
+	:global(.window125) .game-grid {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	:global(.window125) .sidebar-is-closed .game-grid {
+		display: grid;
+		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
+	}
+
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
 		/* 1. Fix left sidebar title and horizontal scroll */
