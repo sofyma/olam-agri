@@ -117,7 +117,7 @@ html {
   color: #FF7000;
 }
 
-/* CTA3 - Orange Static */
+/* CTA3 - Orange Static (default) */
 .btn-cta3 {
   background-color: #FF7000;
   color: #fff;
@@ -126,6 +126,17 @@ html {
 .btn-cta3:hover {
   background-color: #FF7000;
   color: #fff;
+}
+
+/* Game 3 specific - Pink CTA3 */
+html.game-3 .btn-cta3 {
+  background-color: #FF5BAF !important;
+  color: #fff !important;
+}
+
+html.game-3 .btn-cta3:hover {
+  background-color: #FF5BAF !important;
+  color: #fff !important;
 }
 
 /* Restrict app on mobile portrait orientation */
