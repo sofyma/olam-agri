@@ -214,7 +214,7 @@
                     </thead>
                     <tbody>
                       {#each regionRankings as entry, i}
-                        <tr class:border-after={i === 1}>
+                        <tr class:border-after={i === 1} class:top-two={i < 2} class:next-three={i >= 2 && i < 5}>
                           <td class="position" style="text-align: end;">{i + 1}</td>
                           <td class="player-name" style="color: #2E2D2C;">{entry.user.displayName}</td>
                           <td class="points" style="text-align: end;">{entry.totalScore}</td>
@@ -549,6 +549,13 @@
       // Add border after first 2 users (separator line)
       tr.border-after td {
         border-bottom: 0.1rem solid #E6E6E6 !important;
+      }
+
+      // Make next three users (positions 3-5) have regular font weight
+      tr.next-three {
+        .position, .player-name, .points {
+          font-weight: 400;
+        }
       }
     }
 
