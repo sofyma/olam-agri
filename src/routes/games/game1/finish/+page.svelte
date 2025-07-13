@@ -81,6 +81,10 @@
 		z-index: 1;
 	}
 
+	.finish-text {
+		width: 80%;
+	}
+
 	.finish-text p,
 	.finish-text li {
 		color: #000;
