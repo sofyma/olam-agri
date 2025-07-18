@@ -16,7 +16,7 @@ html.game-4 {
 }
 
 html.game-5 {
-  background-color: #FF5722; /* Deep orange */
+  background-color: #00B2E7; /* Blue */
 }
 
 html.game-6 {
@@ -136,6 +136,17 @@ html.game-3 .btn-cta3 {
 
 html.game-3 .btn-cta3:hover {
   background-color: #FF5BAF !important;
+  color: #fff !important;
+}
+
+/* Game 5 specific - Blue CTA3 */
+html.game-5 .btn-cta3 {
+  background-color: #00B2E7 !important;
+  color: #fff !important;
+}
+
+html.game-5 .btn-cta3:hover {
+  background-color: #00B2E7 !important;
   color: #fff !important;
 }
 

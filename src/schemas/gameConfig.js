@@ -14,6 +14,7 @@ export default {
           { title: 'Game 2: Under Attack!', value: 'game2' },
           { title: 'Game 3: Brain Over Brawn', value: 'game3' },
           { title: 'Game 4: Choose a Side', value: 'game4' },
+          { title: 'Game 5: Only the Fastest Will Reach the Sky', value: 'game5' },
           { title: 'Game 6: Only the Fastest Will Reach the Sky', value: 'game6' }
         ]
       },
@@ -52,6 +53,7 @@ export default {
         'game2': 'Game 2: Under Attack!',
         'game3': 'Game 3: Brain Over Brawn',
         'game4': 'Game 4: Choose a Side',
+        'game5': 'Game 5: Only the Fastest Will Reach the Sky',
         'game6': 'Game 6: Only the Fastest Will Reach the Sky'
       };
       

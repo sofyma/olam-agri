@@ -2,13 +2,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { authStore } from '$lib/stores/authStore';
-  import { gameAvailabilityStore, game1Availability, game2Availability, game3Availability, game4Availability, game6Availability } from '$lib/stores/gameAvailabilityStore';
+  import { gameAvailabilityStore, game1Availability, game2Availability, game3Availability, game4Availability, game5Availability, game6Availability } from '$lib/stores/gameAvailabilityStore';
   import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
 
   let timeUntilGame1: number | null = null;
   let timeUntilGame2: number | null = null;
   let timeUntilGame3: number | null = null;
   let timeUntilGame4: number | null = null;
+  let timeUntilGame5: number | null = null;
   let timeUntilGame6: number | null = null;
 
   onMount(() => {
@@ -21,6 +22,7 @@
       timeUntilGame2 = gameAvailabilityStore.getTimeUntilAvailable('game2');
       timeUntilGame3 = gameAvailabilityStore.getTimeUntilAvailable('game3');
       timeUntilGame4 = gameAvailabilityStore.getTimeUntilAvailable('game4');
+      timeUntilGame5 = gameAvailabilityStore.getTimeUntilAvailable('game5');
       timeUntilGame6 = gameAvailabilityStore.getTimeUntilAvailable('game6');
     }, 60000);
 
@@ -29,6 +31,7 @@
     timeUntilGame2 = gameAvailabilityStore.getTimeUntilAvailable('game2');
     timeUntilGame3 = gameAvailabilityStore.getTimeUntilAvailable('game3');
     timeUntilGame4 = gameAvailabilityStore.getTimeUntilAvailable('game4');
+    timeUntilGame5 = gameAvailabilityStore.getTimeUntilAvailable('game5');
     timeUntilGame6 = gameAvailabilityStore.getTimeUntilAvailable('game6');
 
     return () => {
@@ -181,10 +184,31 @@
               {/if}
             </div>
 
+            <!-- Game 5 Card -->
+            <div class="game-card game5-card" class:locked={!$game5Availability.isAvailable}>
+              <div class="game-label game5-label">Unit 5</div>
+              <h3 class="game-name">Only the Fastest Will Reach the Sky</h3>
+              
+              {#if $game5Availability.isAvailable}
+                <a href="/games/info/5" class="cta-button game5-button">let's do it</a>
+              {:else}
+                <div class="locked-state">
+                  <div class="lock-icon">🔒</div>
+                  <p class="locked-text">
+                    {#if timeUntilGame5}
+                      Available in {formatTimeUntil(timeUntilGame5)}
+                    {:else}
+                      Coming Soon
+                    {/if}
+                  </p>
+                </div>
+              {/if}
+            </div>
+
             <!-- Game 6 Card -->
             <div class="game-card game6-card" class:locked={!$game6Availability.isAvailable}>
               <div class="game-label game6-label">Unit 6</div>
-              <h3 class="game-name">Only the Fastest Will Reach the Sky</h3>
+              <h3 class="game-name">The Final Challenge</h3>
               
               {#if $game6Availability.isAvailable}
                 <a href="/games/info/6" class="cta-button game6-button">let's do it</a>
@@ -337,6 +361,33 @@
 
     &:hover {
       background: #1a1a1a;
+    }
+  }
+
+  // Game 5 - Blue
+  .game5-card {
+    background: #00B2E7;
+    
+    .game-name {
+      color: white;
+    }
+    
+    .locked-text {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .game5-label {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .game5-button {
+    background: white;
+    color: #00B2E7;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.9);
     }
   }
 

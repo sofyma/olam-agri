@@ -42,19 +42,19 @@ const createGameAvailabilityStore = () => {
       }
     },
 
-    isGameAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): boolean {
+    isGameAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): boolean {
       return service.isGameAvailable(gameId);
     },
 
-    getGameConfig(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): GameConfig | null {
+    getGameConfig(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): GameConfig | null {
       return service.getGameConfig(gameId);
     },
 
-    getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): Date | null {
+    getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
       return service.getAvailableFromDate(gameId);
     },
 
-    getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): number | null {
+    getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): number | null {
       return service.getTimeUntilAvailable(gameId);
     },
 
@@ -110,6 +110,17 @@ export const game4Availability = derived(
     return {
       isAvailable: service.isGameAvailable('game4'),
       config: $store.gameConfigs.find(config => config.gameId === 'game4') || null
+    };
+  }
+);
+
+export const game5Availability = derived(
+  gameAvailabilityStore,
+  ($store) => {
+    const service = GameAvailabilityService.getInstance();
+    return {
+      isAvailable: service.isGameAvailable('game5'),
+      config: $store.gameConfigs.find(config => config.gameId === 'game5') || null
     };
   }
 );

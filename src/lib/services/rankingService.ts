@@ -27,6 +27,7 @@ export interface CombinedRankingEntry {
   game2Score: number;
   game3Score: number;
   game4Score: number;
+  game5Score: number;
   game6Score: number;
   totalDuration: number; // Total time spent playing all games in milliseconds
   lastPlayed: string;
@@ -40,6 +41,7 @@ export interface RegionRankingEntry {
   game2Score: number;
   game3Score: number;
   game4Score: number;
+  game5Score: number;
   game6Score: number;
   totalDuration: number; // Total time spent playing all games in milliseconds
   lastPlayed: string;
@@ -122,6 +124,7 @@ export class RankingService {
       game2,
       game3,
       game4,
+      game5,
       game6
     }`;
     
@@ -135,8 +138,9 @@ export class RankingService {
         const game2Score = r.game2?.score || 0;
         const game3Score = r.game3?.score || 0;
         const game4Score = r.game4?.score || 0;
+        const game5Score = r.game5?.score || 0;
         const game6Score = r.game6?.score || 0;
-        const totalScore = game1Score + game2Score + game3Score + game4Score + game6Score;
+        const totalScore = game1Score + game2Score + game3Score + game4Score + game5Score + game6Score;
         const lastPlayed = r.game4?.completedAt || r.game3?.completedAt || r.game2?.completedAt || r.game1?.completedAt || '';
         
         // Calculate earliest start time across all games for tiebreak
@@ -145,6 +149,7 @@ export class RankingService {
           r.game2?.startedAt,
           r.game3?.startedAt,
           r.game4?.startedAt,
+          r.game5?.startedAt,
           r.game6?.startedAt
         ].filter(time => time); // Remove undefined values
         
@@ -160,6 +165,7 @@ export class RankingService {
         let game2Duration = 0;
         let game3Duration = 0;
         let game4Duration = 0;
+        let game5Duration = 0;
         
         // Game 1 duration with precision logging
         if (r.game1?.startedAt && r.game1?.completedAt) {
@@ -221,6 +227,21 @@ export class RankingService {
           });
         }
         
+        // Game 5 duration with precision logging
+        if (r.game5?.startedAt && r.game5?.completedAt) {
+          const game5DurationData = this.calculateDuration(r.game5.startedAt, r.game5.completedAt);
+          game5Duration = game5DurationData.durationMs;
+          totalDuration += game5Duration;
+          
+          // Debug logging for precision verification
+          console.log(`Game 5 Duration for ${r.user.displayName}:`, {
+            start: r.game5.startedAt,
+            end: r.game5.completedAt,
+            durationMs: game5Duration,
+            durationSec: game5DurationData.durationSec.toFixed(3)
+          });
+        }
+        
         return {
           user: r.user,
           totalScore,
@@ -228,6 +249,7 @@ export class RankingService {
           game2Score,
           game3Score,
           game4Score,
+          game5Score,
           game6Score,
           totalDuration,
           lastPlayed,
@@ -317,6 +339,7 @@ export class RankingService {
       game2,
       game3,
       game4,
+      game5,
       game6
     }`;
     
@@ -330,8 +353,9 @@ export class RankingService {
         const game2Score = r.game2?.score || 0;
         const game3Score = r.game3?.score || 0;
         const game4Score = r.game4?.score || 0;
+        const game5Score = r.game5?.score || 0;
         const game6Score = r.game6?.score || 0;
-        const totalScore = game1Score + game2Score + game3Score + game4Score + game6Score;
+        const totalScore = game1Score + game2Score + game3Score + game4Score + game5Score + game6Score;
         const lastPlayed = r.game4?.completedAt || r.game3?.completedAt || r.game2?.completedAt || r.game1?.completedAt || '';
         
         // Calculate earliest start time across all games for tiebreak
@@ -340,6 +364,7 @@ export class RankingService {
           r.game2?.startedAt,
           r.game3?.startedAt,
           r.game4?.startedAt,
+          r.game5?.startedAt,
           r.game6?.startedAt
         ].filter(time => time); // Remove undefined values
         
@@ -364,6 +389,9 @@ export class RankingService {
         if (r.game4?.startedAt && r.game4?.completedAt) {
           totalDuration += this.calculateDuration(r.game4.startedAt, r.game4.completedAt).durationMs;
         }
+        if (r.game5?.startedAt && r.game5?.completedAt) {
+          totalDuration += this.calculateDuration(r.game5.startedAt, r.game5.completedAt).durationMs;
+        }
         
         return {
           user: r.user,
@@ -372,6 +400,7 @@ export class RankingService {
           game2Score,
           game3Score,
           game4Score,
+          game5Score,
           game6Score,
           totalDuration,
           lastPlayed,
@@ -928,6 +957,94 @@ export class RankingService {
       console.log('Game 6 result saved successfully');
     } catch (error) {
       console.error('Error saving Game 6 result:', error);
+      throw error;
+    }
+  }
+
+  public async saveGame5Result(
+    userId: string,
+    gameId: number,
+    score: number,
+    timeSpent: number,
+    attempts: number,
+    startedAt: string,
+    completedAt: string,
+    finalAnswer: string,
+    answers: Array<{
+      answer: string;
+      isCorrect: boolean;
+      attemptTime: Date;
+      timeSpent: number;
+    }>
+  ): Promise<void> {
+    try {
+      // Check if this user already has a Game 5 result (first attempt only)
+      const existingGame5Result = await client.fetch(
+        `*[_type == "gameResult" && user._ref == $userId && game5 != null][0]`,
+        { userId }
+      );
+
+      if (existingGame5Result) {
+        console.log('Skipping save - user already has a Game 5 result (first attempt only)');
+        return;
+      }
+
+      // Check if this user already has a game result document
+      const existingResult = await client.fetch(
+        `*[_type == "gameResult" && user._ref == $userId][0]`,
+        { userId }
+      );
+
+      if (existingResult) {
+        console.log('Updating existing game result with Game 5 data:', existingResult._id);
+        // Update existing document with game5 data
+        await client.patch(existingResult._id)
+          .set({
+            game5: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              timeSpent,
+              attempts,
+              finalAnswer,
+              answers: answers.map((answer, index) => ({
+                _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+                answer: answer.answer,
+                isCorrect: answer.isCorrect,
+                attemptTime: answer.attemptTime,
+                timeSpent: answer.timeSpent
+              }))
+            }
+          })
+          .commit();
+      } else {
+        console.log('Creating new game result document with Game 5 data');
+        // Create new document with game5 data
+        await client.create({
+          _type: 'gameResult',
+          user: { _type: 'reference', _ref: userId },
+          game5: {
+            score,
+            gameId,
+            startedAt,
+            completedAt,
+            timeSpent,
+            attempts,
+            finalAnswer,
+            answers: answers.map((answer, index) => ({
+              _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+              answer: answer.answer,
+              isCorrect: answer.isCorrect,
+              attemptTime: answer.attemptTime,
+              timeSpent: answer.timeSpent
+            }))
+          }
+        });
+      }
+      console.log('Game 5 result saved successfully');
+    } catch (error) {
+      console.error('Error saving Game 5 result:', error);
       throw error;
     }
   }

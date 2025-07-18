@@ -2,7 +2,7 @@ import { client } from '$lib/sanity';
 
 export interface GameConfig {
   _id: string;
-  gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6';
+  gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6';
   isActive: boolean;
   availableFrom: string;
   availableUntil?: string;
@@ -45,7 +45,7 @@ export class GameAvailabilityService {
     }
   }
 
-  public isGameAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): boolean {
+  public isGameAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): boolean {
     const config = this.gameConfigs.get(gameId);
     
     if (!config) {
@@ -77,16 +77,16 @@ export class GameAvailabilityService {
     return true;
   }
 
-  public getGameConfig(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): GameConfig | null {
+  public getGameConfig(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): GameConfig | null {
     return this.gameConfigs.get(gameId) || null;
   }
 
-  public getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): Date | null {
+  public getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
     const config = this.gameConfigs.get(gameId);
     return config ? new Date(config.availableFrom) : null;
   }
 
-  public getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game6'): number | null {
+  public getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): number | null {
     const config = this.gameConfigs.get(gameId);
     if (!config || config.isActive) return null;
 

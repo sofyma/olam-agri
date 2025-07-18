@@ -262,6 +262,69 @@ export default {
       ]
     },
     {
+      name: 'game5',
+      title: 'Game 5 Result',
+      type: 'object',
+      fields: [
+        {
+          name: 'score',
+          title: 'Score',
+          type: 'number',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'gameId',
+          title: 'Game ID',
+          type: 'number',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'startedAt',
+          title: 'Started At',
+          type: 'datetime',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'completedAt',
+          title: 'Completed At',
+          type: 'datetime',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'timeSpent',
+          title: 'Time Spent (milliseconds)',
+          type: 'number',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'attempts',
+          title: 'Number of Attempts',
+          type: 'number',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'finalAnswer',
+          title: 'Final Answer',
+          type: 'string',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'answers',
+          title: 'Answers',
+          type: 'array',
+          of: [{
+            type: 'object',
+            fields: [
+              { name: 'answer', title: 'User Answer', type: 'string' },
+              { name: 'isCorrect', title: 'Is Correct', type: 'boolean' },
+              { name: 'attemptTime', title: 'Attempt Time', type: 'datetime' },
+              { name: 'timeSpent', title: 'Time Spent at Attempt', type: 'number' }
+            ]
+          }]
+        }
+      ]
+    },
+    {
       name: 'game6',
       title: 'Game 6 Result',
       type: 'object',
