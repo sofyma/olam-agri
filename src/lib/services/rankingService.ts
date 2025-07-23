@@ -594,20 +594,28 @@ export class RankingService {
     // Only save if this is the first attempt
     if (!existingResult) {
       const totalScore = brandScore + placeScore;
-      await client.create({
-        _type: 'gameResult',
-        user: { _type: 'reference', _ref: userId },
-        game1: {
-          brandScore,
-          placeScore,
-          score: totalScore,
-          gameId,
-          startedAt,
-          completedAt: new Date().toISOString(),
-          brandAnswers,
-          placeAnswers
-        }
+      const result = await fetch('/api/submit-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _type: 'gameResult',
+          user: { _type: 'reference', _ref: userId },
+          game1: {
+            brandScore,
+            placeScore,
+            score: totalScore,
+            gameId,
+            startedAt,
+            completedAt: new Date().toISOString(),
+            brandAnswers,
+            placeAnswers
+          }
+        })
       });
+      const data = await result.json();
+      if (!result.ok || !data.success) {
+        throw new Error(data.error || 'Failed to save game result');
+      }
     } else {
       console.log('Skipping save - not first attempt');
     }
@@ -683,19 +691,27 @@ export class RankingService {
       } else {
         console.log('Creating new game result document with Game 2 data');
         // Create new document with game2 data (game1 will be empty)
-        await client.create({
-          _type: 'gameResult',
-          user: { _type: 'reference', _ref: userId },
-          game2: {
-            score,
-            gameId,
-            startedAt,
-            completedAt,
-            destroyedLies,
-            destroyedTruths,
-            answers
-          }
+        const result = await fetch('/api/submit-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _type: 'gameResult',
+            user: { _type: 'reference', _ref: userId },
+            game2: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              destroyedLies,
+              destroyedTruths,
+              answers
+            }
+          })
         });
+        const data = await result.json();
+        if (!result.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save game 2 result');
+        }
       }
       console.log('Game 2 result saved successfully');
     } catch (error) {
@@ -765,27 +781,35 @@ export class RankingService {
       } else {
         console.log('Creating new game result document with Game 3 data');
         // Create new document with game3 data (game1 and game2 will be empty)
-        await client.create({
-          _type: 'gameResult',
-          user: { _type: 'reference', _ref: userId },
-          game3: {
-            score,
-            gameId,
-            startedAt,
-            completedAt,
-            answers: answers.map((answer, index) => ({
-              _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
-              questionId: answer.questionNumber.toString(),
-              question: answer.question,
-              userAnswer: answer.userAnswer,
-              correctAnswer: answer.correctAnswer,
-              isCorrect: answer.isCorrect,
-              questionNumber: answer.questionNumber,
-              answerTime: new Date().toISOString()
-            })),
-            checkpointsReached
-          }
+        const result = await fetch('/api/submit-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _type: 'gameResult',
+            user: { _type: 'reference', _ref: userId },
+            game3: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              answers: answers.map((answer, index) => ({
+                _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+                questionId: answer.questionNumber.toString(),
+                question: answer.question,
+                userAnswer: answer.userAnswer,
+                correctAnswer: answer.correctAnswer,
+                isCorrect: answer.isCorrect,
+                questionNumber: answer.questionNumber,
+                answerTime: new Date().toISOString()
+              })),
+              checkpointsReached
+            }
+          })
         });
+        const data = await result.json();
+        if (!result.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save game 3 result');
+        }
       }
       console.log('Game 3 result saved successfully');
     } catch (error) {
@@ -850,27 +874,35 @@ export class RankingService {
       } else {
         console.log('Creating new game result document with Game 4 data');
         // Create new document with game4 data (game1, game2, and game3 will be empty)
-        await client.create({
-          _type: 'gameResult',
-          user: { _type: 'reference', _ref: userId },
-          game4: {
-            score,
-            gameId,
-            startedAt,
-            completedAt,
-            correctSwipes,
-            incorrectSwipes,
-            answers: answers.map((answer, index) => ({
-              _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
-              statementId: answer.statementId,
-              image: answer.image,
-              isTrue: answer.isTrue,
-              swipedDirection: answer.swipedDirection,
-              isCorrect: answer.isCorrect,
-              answerTime: answer.answerTime
-            }))
-          }
+        const result = await fetch('/api/submit-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _type: 'gameResult',
+            user: { _type: 'reference', _ref: userId },
+            game4: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              correctSwipes,
+              incorrectSwipes,
+              answers: answers.map((answer, index) => ({
+                _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+                statementId: answer.statementId,
+                image: answer.image,
+                isTrue: answer.isTrue,
+                swipedDirection: answer.swipedDirection,
+                isCorrect: answer.isCorrect,
+                answerTime: answer.answerTime
+              }))
+            }
+          })
         });
+        const data = await result.json();
+        if (!result.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save game 4 result');
+        }
       }
       console.log('Game 4 result saved successfully');
     } catch (error) {
@@ -933,26 +965,34 @@ export class RankingService {
       } else {
         console.log('Creating new game result document with Game 6 data');
         // Create new document with game6 data (game1, game2, game3, and game4 will be empty)
-        await client.create({
-          _type: 'gameResult',
-          user: { _type: 'reference', _ref: userId },
-          game6: {
-            score,
-            gameId,
-            startedAt,
-            completedAt,
-            totalQuestions,
-            answers: answers.map((answer, index) => ({
-              _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
-              questionId: answer.questionId,
-              question: answer.question,
-              optionA: answer.optionA,
-              optionB: answer.optionB,
-              selectedOption: answer.selectedOption,
-              answerTime: answer.answerTime
-            }))
-          }
+        const result = await fetch('/api/submit-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _type: 'gameResult',
+            user: { _type: 'reference', _ref: userId },
+            game6: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              totalQuestions,
+              answers: answers.map((answer, index) => ({
+                _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+                questionId: answer.questionId,
+                question: answer.question,
+                optionA: answer.optionA,
+                optionB: answer.optionB,
+                selectedOption: answer.selectedOption,
+                answerTime: answer.answerTime
+              }))
+            }
+          })
         });
+        const data = await result.json();
+        if (!result.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save game 6 result');
+        }
       }
       console.log('Game 6 result saved successfully');
     } catch (error) {
@@ -1021,26 +1061,34 @@ export class RankingService {
       } else {
         console.log('Creating new game result document with Game 5 data');
         // Create new document with game5 data
-        await client.create({
-          _type: 'gameResult',
-          user: { _type: 'reference', _ref: userId },
-          game5: {
-            score,
-            gameId,
-            startedAt,
-            completedAt,
-            timeSpent,
-            attempts,
-            finalAnswer,
-            answers: answers.map((answer, index) => ({
-              _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
-              answer: answer.answer,
-              isCorrect: answer.isCorrect,
-              attemptTime: answer.attemptTime,
-              timeSpent: answer.timeSpent
-            }))
-          }
+        const result = await fetch('/api/submit-result', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            _type: 'gameResult',
+            user: { _type: 'reference', _ref: userId },
+            game5: {
+              score,
+              gameId,
+              startedAt,
+              completedAt,
+              timeSpent,
+              attempts,
+              finalAnswer,
+              answers: answers.map((answer, index) => ({
+                _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
+                answer: answer.answer,
+                isCorrect: answer.isCorrect,
+                attemptTime: answer.attemptTime,
+                timeSpent: answer.timeSpent
+              }))
+            }
+          })
         });
+        const data = await result.json();
+        if (!result.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save game 5 result');
+        }
       }
       console.log('Game 5 result saved successfully');
     } catch (error) {

@@ -27,22 +27,21 @@ export class AuthService {
     country: string;
     region: string;
   }): Promise<User> {
-    // Create new user document
-    const doc = {
-      _type: 'user',
-      displayName: userData.displayName,
-      emailAddress: userData.emailAddress,
-      country: userData.country,
-      region: userData.region
-    };
-
-    const user = await client.create(doc);
+    // Create new user document via API route
+    const response = await fetch('/api/register-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || 'Failed to create user');
+    }
+    const user = result.result;
     const fullUser = await this.login(user.emailAddress);
-    
     if (!fullUser) {
       throw new Error('Failed to create user');
     }
-    
     return fullUser;
   }
 
