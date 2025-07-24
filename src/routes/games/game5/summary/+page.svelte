@@ -1,216 +1,255 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { game5Store } from '$lib/stores/game5Store';
-    import { Game5Service } from '$lib/services/game5Service';
-    import { onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { game5Store } from '$lib/stores/game5Store';
+	import Game5Logo from '$lib/components/svgs/Game5Logo.svelte';
 
-    let gameService = Game5Service.getInstance();
-    let formattedTime = '';
-    let score = 0;
+	onMount(() => {
+		console.log('Game 5 Summary page loaded, checking store state:', {
+			isComplete: $game5Store.isComplete,
+			timeSpent: $game5Store.timeSpent,
+			attempts: $game5Store.attempts
+		});
+		
+		// Add a small delay to ensure store state is properly loaded
+		setTimeout(() => {
+			console.log('After delay - isComplete:', $game5Store.isComplete);
+			if (!$game5Store.isComplete) {
+				console.log('Redirecting back to game because isComplete is false');
+				goto('/games/game5');
+			}
+		}, 200);
+	});
 
-    onMount(() => {
-        const state = $game5Store;
-        if (state.isComplete && state.timeSpent > 0) {
-            formattedTime = gameService.formatTime(state.timeSpent);
-            score = gameService.getPoints();
-        } else {
-            // If somehow we're here without completion, redirect to game
-            goto('/games/game5');
-        }
-    });
+	function formatTime(milliseconds: number): string {
+		const totalSeconds = Math.floor(milliseconds / 1000);
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = totalSeconds % 60;
+		return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+	}
 
-    onDestroy(() => {
-        game5Store.cleanup();
-    });
+	function handleReplay() {
+		game5Store.reset();
+		game5Store.initialize();
+		goto('/games/game5');
+	}
 
-    function handleReplay() {
-        game5Store.reset();
-        goto('/games/game5');
-    }
+	function handleFinish() {
+		goto('/ranking');
+	}
 
-    function handleFinish() {
-        game5Store.cleanup();
-        goto('/ranking');
-    }
+	$: formattedTime = formatTime($game5Store.timeSpent);
 </script>
 
-<div class="summary-container">
-    <div class="summary-content">
-        <div class="success-icon">
-            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="35" fill="#00B2E7" stroke="#fff" stroke-width="4"/>
-                <path d="M25 40L35 50L55 30" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
+<div class="game-container">
+	<div class="game5-logo-left">
+		<Game5Logo />
+	</div>
 
-        <h1 class="title">Correct!</h1>
-        
-        <div class="results">
-            <p class="score-text">You've earned 5 points.</p>
-            <p class="time-text">Your registered time has been:</p>
-            <div class="time-display">{formattedTime}</div>
-        </div>
+    <div class="game-summary">
+		<h2 class="title">Correct</h2>
 
-        <div class="actions">
-            <button class="btn btn-cta2" on:click={handleReplay}>
+		<div class="results">
+			<p class="paragraph">You've earned 5 points.</p>
+			<p class="paragraph">Your registered time has been:</p>
+			<p class="total-time">{formattedTime}</p>
+		</div>
+
+        <div class="cta">
+            <button class="btn" on:click={handleReplay}>
                 Replay
             </button>
-            <button class="btn btn-cta1" on:click={handleFinish}>
+            <button class="btn" on:click={handleFinish}>
                 Finish
             </button>
         </div>
+
+        <small class="finish-small">Remember, you can try again, but for the<br> competition only your first attempt will count!</small>
     </div>
+
+	<div class="game5-logo-right">
+		<Game5Logo />
+	</div>
 </div>
 
 <style lang="scss">
-    .summary-container {
-        background-color: #00B2E7;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: calc(2rem * var(--scale-factor));
-    }
+	:root {
+		--scale-factor: 1;
+	}
 
-    .summary-content {
-        background-color: #fff;
-        border-radius: calc(2rem * var(--scale-factor));
-        padding: calc(4rem * var(--scale-factor));
-        text-align: center;
-        max-width: calc(60rem * var(--scale-factor));
-        width: 100%;
-        box-shadow: 0 calc(1rem * var(--scale-factor)) calc(3rem * var(--scale-factor)) rgba(0, 0, 0, 0.2);
-    }
+	@media (max-width: 1439px) {
+		:root {
+			--scale-factor: 0.85;
+		}
+	}
 
-    .success-icon {
-        margin-bottom: calc(2rem * var(--scale-factor));
-        
-        svg {
-            width: calc(8rem * var(--scale-factor));
-            height: calc(8rem * var(--scale-factor));
-        }
-    }
+	@media (max-width: 1279px) {
+		:root {
+			--scale-factor: 0.75;
+		}
+	}
 
-    .title {
-        color: #00B2E7;
-        font-size: calc(4rem * var(--scale-factor));
-        font-weight: 700;
-        margin-bottom: calc(3rem * var(--scale-factor));
-    }
+	@media (max-width: 1023px) {
+		:root {
+			--scale-factor: 0.65;
+		}
+	}
 
-    .results {
-        background-color: #f8f9fa;
-        border-radius: calc(1.5rem * var(--scale-factor));
-        padding: calc(3rem * var(--scale-factor));
-        margin-bottom: calc(3rem * var(--scale-factor));
-        text-align: center;
-    }
+	@media (max-width: 767px) {
+		:root {
+			--scale-factor: 0.55;
+		}
 
-    .score-text {
-        color: #2E2D2C;
-        font-size: calc(2.4rem * var(--scale-factor));
-        font-weight: 600;
-        margin-bottom: calc(2rem * var(--scale-factor));
-    }
+		.game-container {
+			background-size: calc(100% * var(--scale-factor)) auto;
+		}
+	}
 
-    .time-text {
-        color: #2E2D2C;
-        font-size: calc(2rem * var(--scale-factor));
-        margin-bottom: calc(1rem * var(--scale-factor));
-    }
+	.game-container {
+		background-color: #00B2E7;
+		background-image: url('/images/game5-summary.png');
+		background-position: center bottom;
+		background-size: 100% auto;
+		background-repeat: no-repeat;
+		block-size: 100vh;
+		display: grid;
+		place-content: center;
+		position: relative;
+	}
 
-    .time-display {
-        color: #00B2E7;
-        font-size: calc(4rem * var(--scale-factor));
-        font-weight: 700;
-        font-family: monospace;
-        background-color: #fff;
-        padding: calc(1rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
-        border-radius: calc(1rem * var(--scale-factor));
-        display: inline-block;
-        border: calc(0.2rem * var(--scale-factor)) solid #00B2E7;
-    }
+	.game-summary {
+		max-inline-size: calc(90rem * var(--scale-factor));
+		position: relative;
+		z-index: 1;
+	}
 
-    .actions {
-        display: flex;
-        gap: calc(2rem * var(--scale-factor));
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+	.game5-logo-left {
+		inset-block-start: 50%;
+		inset-inline-start: 0;
+		position: absolute;
+		transform: translateY(-50%);
+		z-index: -1;
+	}
 
-    .btn {
-        align-items: center;
-        block-size: calc(3.5rem * var(--scale-factor));
-        border: none;
-        border-radius: 0rem 1.5rem;
-        cursor: pointer;
-        display: flex;
-        font-size: calc(1.6rem * var(--scale-factor));
-        inline-size: calc(12rem * var(--scale-factor));
-        justify-content: center;
-        transition: all 0.3s ease;
-        font-weight: 600;
-    }
+	.game5-logo-right {
+		inset-block-start: 50%;
+		inset-inline-end: 0;
+		position: absolute;
+		transform: translateY(-50%);
+		z-index: -1;
+	}
 
-    .btn-cta1 {
-        background-color: #00B2E7;
-        color: #fff;
-        
-        &:hover {
-            background-color: #0099cc;
-        }
-    }
+	.title {
+		color: #fff;
+		font-size: calc(7rem * var(--scale-factor));
+		font-weight: 600;
+		text-align: center;
+	}
 
-    .btn-cta2 {
-        background-color: #fff;
-        color: #00B2E7;
-        border: calc(0.2rem * var(--scale-factor)) solid #00B2E7;
-        
-        &:hover {
-            background-color: #00B2E7;
-            color: #fff;
-        }
-    }
+	.results {
+		background-color: #fff;
+		border-radius: 0 calc(3rem * var(--scale-factor));
+		inline-size: 100%;
+		margin-block-start: calc(3.5rem * var(--scale-factor));
+		padding: calc(5rem * var(--scale-factor));
+		text-align: center;
+		position: relative;
+	}
 
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-        .summary-container {
-            padding: calc(1rem * var(--scale-factor));
-        }
+	.paragraph {
+		color: #000;
+		font-size: calc(4.5rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: normal;
+	}
 
-        .summary-content {
-            padding: calc(2rem * var(--scale-factor));
-        }
+	.total-time {
+		color: #00B2E7;
+		font-size: calc(8rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: normal;
+		padding-block-start: calc(1rem * var(--scale-factor));
+	}
 
-        .title {
-            font-size: calc(3rem * var(--scale-factor));
-        }
+	.cta {
+		display: flex;
+		gap: calc(3rem * var(--scale-factor));
+		justify-content: center;
+		padding-block-start: calc(5rem * var(--scale-factor));
+	}
 
-        .results {
-            padding: calc(2rem * var(--scale-factor));
-        }
+	.btn {
+		background-color: #fff;
+		border-radius: 0 calc(1.7rem * var(--scale-factor));
+		color: #00B2E7;
+		font-weight: 600;
+		margin-inline: 0;
+		padding: calc(1.5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		font-size: calc(2rem * var(--scale-factor));
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
 
-        .score-text {
-            font-size: calc(2rem * var(--scale-factor));
-        }
+		&:hover {
+			background-color: #f0f0f0;
+		}
+	}
 
-        .time-text {
-            font-size: calc(1.8rem * var(--scale-factor));
-        }
+	.finish-small {
+		color: #fff;
+		display: block;
+		font-size: calc(2rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: normal;
+		margin-block-start: calc(3rem * var(--scale-factor));
+		text-align: center;
+	}
 
-        .time-display {
-            font-size: calc(3rem * var(--scale-factor));
-        }
+	/* Mobile Media Query - Up to 932px */
+	@media (max-width: 932px) {
+		/* Adjust game summary for mobile */
+		.game-summary {
+			padding: calc(2rem * var(--scale-factor));
+		}
 
-        .actions {
-            flex-direction: column;
-            align-items: center;
-        }
+		.game-summary .title {
+			font-size: calc(5rem * var(--scale-factor));
+		}
 
-        .btn {
-            width: 100%;
-            max-width: calc(20rem * var(--scale-factor));
-        }
-    }
+		.game-summary .results {
+			inline-size: calc(80rem * var(--scale-factor));
+			padding: calc(2rem * var(--scale-factor));
+
+			.paragraph {
+				padding-block-start: 0;
+				margin-block-start: 0;
+			}
+		}
+
+		.game-summary .paragraph {
+			font-size: calc(3.5rem * var(--scale-factor));
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		.game-summary .total-time {
+			font-size: calc(6rem * var(--scale-factor));
+		}
+
+		.game-summary .cta {
+			padding-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		/* Adjust finish small text for mobile */
+		.finish-small {
+			font-size: calc(1.5rem * var(--scale-factor));
+			margin-block-start: calc(2rem * var(--scale-factor));
+		}
+
+		/* Adjust Game5Logo components for mobile */
+		:global(.game5-logo-left),
+		:global(.game5-logo-right) {
+			transform: scale(0.7);
+			transform-origin: center center;
+		}
+	}
 </style> 

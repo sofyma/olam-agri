@@ -29,6 +29,12 @@ const createGame5Store = () => {
         // Save to localStorage every 5 seconds
         localStorage.setItem('game5_timer', currentTime.toString());
         localStorage.setItem('game5_startTime', state.startTime.toISOString());
+        
+        console.log('Game 5: Timer saved to localStorage', {
+          currentTime,
+          timeSpent: currentTime,
+          startTime: state.startTime.toISOString()
+        });
       }
       return state;
     });
@@ -97,19 +103,51 @@ const createGame5Store = () => {
     },
 
     start: () => {
-      const startTime = new Date();
-      set({
-        isStarted: true,
-        isComplete: false,
-        startTime,
-        endTime: null,
-        timeSpent: 0,
-        attempts: 0,
-        isCorrect: false,
-        isLoading: false,
-        error: null,
-        allAnswers: []
-      });
+      // Check if there's a saved timer state
+      const savedTimer = localStorage.getItem('game5_timer');
+      const savedStartTime = localStorage.getItem('game5_startTime');
+      
+      if (savedTimer && savedStartTime) {
+        // Resume from saved state
+        const startTime = new Date(savedStartTime);
+        const timeSpent = parseInt(savedTimer);
+        
+        console.log('Game 5: Resuming from saved timer state', {
+          savedTimer,
+          savedStartTime,
+          timeSpent,
+          startTime
+        });
+        
+        set({
+          isStarted: true,
+          isComplete: false,
+          startTime,
+          endTime: null,
+          timeSpent,
+          attempts: 0,
+          isCorrect: false,
+          isLoading: false,
+          error: null,
+          allAnswers: []
+        });
+      } else {
+        // Start new game
+        const startTime = new Date();
+        console.log('Game 5: Starting new game');
+        set({
+          isStarted: true,
+          isComplete: false,
+          startTime,
+          endTime: null,
+          timeSpent: 0,
+          attempts: 0,
+          isCorrect: false,
+          isLoading: false,
+          error: null,
+          allAnswers: []
+        });
+      }
       
       startTimer();
     },

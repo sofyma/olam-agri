@@ -4,7 +4,6 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<link rel="stylesheet" href="/styles/global.css">
-		<meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no" />
 		<script>
 			// Prevent zooming on iOS devices
 			(function() {
@@ -72,6 +71,23 @@
 				}, { passive: false });
 			})();
 		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    (() => {
+      // Only run on Windows desktop
+      const isWindows = navigator.platform.startsWith('Win');
+      if (!isWindows) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const html = document.documentElement;
+
+      if (dpr >= 1.45 && dpr < 1.55) {
+        html.classList.add('windows-scale-150');
+      } else if (dpr >= 1.20 && dpr < 1.30) {
+        html.classList.add('windows-scale-125');
+      }
+    })();
+    </script>
 		<style>
 			@font-face {
 				font-family: 'Gilroy';

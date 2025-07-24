@@ -170,3 +170,10 @@ html.game-5 .btn-cta3:hover {
     display: none !important;
   }
 } 
+
+html.windows-scale-150 {
+  font-size: 80%;
+}
+html.windows-scale-125 {
+  font-size: 90%;
+} 

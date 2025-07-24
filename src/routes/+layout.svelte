@@ -10,14 +10,57 @@
   const publicPaths = ['/login', '/register'];
   $: isPublicRoute = publicPaths.includes($page?.url?.pathname || '/');
 
-  onMount(async () => {
+  let needsWindows125Viewport = false;
+  onMount(() => {
+    if (isWindows125Zoom()) {
+      needsWindows125Viewport = true;
+    }
+  });
+
+  // Function to calculate and set scale factor based on viewport width
+  function updateScaleFactor() {
+    if (typeof window === 'undefined') return;
+    
+    const width = window.innerWidth;
+    let scaleFactor = 1; // Default for large screens
+    
+    if (width >= 1920) {
+      scaleFactor = 1;
+    } else if (width >= 1600) {
+      scaleFactor = 0.85;
+    } else if (width >= 1440) {
+      scaleFactor = 0.75;
+    } else if (width >= 1366) {
+      scaleFactor = 0.7;
+    } else if (width >= 1280) {
+      scaleFactor = 0.65;
+    } else {
+      scaleFactor = 0.6;
+    }
+    
+    document.documentElement.style.setProperty('--scale-factor', scaleFactor.toString());
+    console.log(`Scale factor updated: ${scaleFactor} for width: ${width}px`);
+  }
+
+  onMount(() => {
     // Load game availability configuration on app startup
-    await gameAvailabilityStore.loadGameConfigs();
+    gameAvailabilityStore.loadGameConfigs();
     
     // Detect Windows 125% zoom and apply fix
     if (isWindows125Zoom()) {
       document.documentElement.classList.add('window125');
     }
+    
+    // Set initial scale factor
+    updateScaleFactor();
+    
+    // Update scale factor on window resize
+    window.addEventListener('resize', updateScaleFactor);
+    
+    // Cleanup on destroy
+    return () => {
+      window.removeEventListener('resize', updateScaleFactor);
+    };
   });
 
   // Detect game route and set appropriate class
@@ -38,9 +81,21 @@
       if (gameClass) {
         document.documentElement.classList.add(gameClass);
       }
+      
+      // Update scale factor on route change (fixes SPA navigation issue)
+      // Use setTimeout to ensure DOM is fully updated
+      setTimeout(updateScaleFactor, 0);
     }
   }
 </script>
+
+<svelte:head>
+  {#if needsWindows125Viewport}
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no">
+  {:else}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  {/if}
+</svelte:head>
 
 <AuthGuard publicRoute={isPublicRoute}>
   <slot />

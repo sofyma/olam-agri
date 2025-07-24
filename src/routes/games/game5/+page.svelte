@@ -16,11 +16,9 @@
     let userAnswer = '';
     let feedbackMessage = '';
     let isCorrectAnswer = false;
-    let showSuccessScreen = false;
     let attempts = 0;
     
     const gameService = Game5Service.getInstance();
-    const CORRECT_ANSWER = "We're Olam Agri";
     
     onMount(async () => {
         try {
@@ -31,6 +29,21 @@
             }
 
 			game5Store.initialize();
+            
+			// Check if there's a saved timer state - if so, skip instructions and go directly to game
+			const savedTimer = localStorage.getItem('game5_timer');
+			const savedStartTime = localStorage.getItem('game5_startTime');
+			
+			if (savedTimer && savedStartTime) {
+				console.log('Game 5 Page: Resuming from saved timer state, skipping instructions');
+				showInstructions = false;
+				instructionsClosed = true;
+				instructionsClosedSidebar = true;
+				game5Store.start(); // This will now resume from saved state
+			} else {
+				console.log('Game 5 Page: No saved timer state, showing instructions');
+			}
+			
             isLoading = false;
         } catch (err) {
             error = err instanceof Error ? err.message : 'Failed to load game content';
@@ -59,9 +72,7 @@
 		instructionsClosedSidebar = false;
 	}
 
-	$: if ($game5Store.isComplete) {
-		showSuccessScreen = true;
-	}
+
     
     function formatTime(milliseconds: number): string {
         const totalSeconds = Math.floor(milliseconds / 1000);
@@ -74,26 +85,24 @@
         if (!userAnswer.trim()) return;
         
         attempts++;
-        const isCorrect = userAnswer.trim() === CORRECT_ANSWER;
+        const isCorrect = gameService.validateAnswer(userAnswer.trim());
         isCorrectAnswer = isCorrect;
+        
+
         
         if (isCorrect) {
             feedbackMessage = 'Correct! You found the answer!';
             game5Store.submitAnswer(userAnswer.trim());
-            showSuccessScreen = true;
+            // Redirect to summary page instead of showing success screen
+            goto('/games/game5/summary');
         } else {
             feedbackMessage = 'Wrong answer!\nPlease try again';
-            // Clear feedback after 3 seconds
-            setTimeout(() => {
-                feedbackMessage = '';
-            }, 3000);
         }
         
         userAnswer = ''; // Clear input after submission
     }
 
     function replayGame() {
-        showSuccessScreen = false;
         userAnswer = '';
         feedbackMessage = '';
         isCorrectAnswer = false;
@@ -112,7 +121,7 @@
     }
 </script>
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:playing={!showInstructions} class:sidebar-is-closed={instructionsClosedSidebar}>
         
 	{#if showInstructions}
 		<div class="game-panel">
@@ -232,109 +241,78 @@
 			</div>
 		</div>
 
-		{#if showSuccessScreen}
-			<div class="success-screen">
-				<div class="success-container">
-					<h2 class="success-title">Congratulations!</h2>
-					<p class="success-message">You found the answer in {$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}!</p>
-					<div class="success-score">
-						<span class="score-label">Score:</span>
-						<span class="score-value">5 points</span>
-					</div>
-					<div class="success-buttons">
-						<button class="replay-button" on:click={replayGame}>
-							Replay
-						</button>
-						<button class="finish-button" on:click={finishGame}>
-							Finish
-						</button>
-					</div>
-				</div>
+		<div class="game-grid">
+			<div class="game-hero-column">
+				<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image">
 			</div>
-		{:else}
-			<div class="game-grid">
-				<div class="game-hero-column">
-					<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image">
+			
+			<div class="game-content-column">
+				<div class="timer">
+					{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
 				</div>
 				
-				<div class="game-content-column">
-					<div class="timer">
-						{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
-					</div>
+				<div class="game-container-white">
+					<h2 class="game-title">Follow the steps to find the answer</h2>
+					<p class="game-description"><strong>Important:</strong> Read carefully all the steps before doing anything!</p>
 					
-					<div class="game-container-white">
-						<h2 class="game-title">Follow the steps to find the answer</h2>
-						<p class="game-description"><strong>Important:</strong> Read carefully all the steps before doing anything!</p>
-						
-						<ol class="steps-list">
-							<li>Click <a href="https://olamagri.workvivo.com/" target="_blank" rel="noopener noreferrer">this link</a> to visit The Loop</li>
-							<li>Find your way to the <span class="highlight">Brand Hub</span></li>
-							<li>Click on the Brand Guidelines and open <span class="highlight">PDF #1</span></li>
-							<li>Go to <span class="highlight">page 4</span></li>
-							<li>Find the <span class="highlight">words in orange</span></li>
-							<li><span class="highlight">Type them below</span> exactly as they appear</li>
-						</ol>
-						
-						<div class="input-section">
-							<div class="input-container">
-								<input
-									bind:value={userAnswer}
-									class="answer-input"
-									disabled={showSuccessScreen}
-									on:keydown={(e) => e.key === 'Enter' && !showSuccessScreen && submitAnswer()}
-									placeholder="Answer"
-									type="text"
-								/>
-								{#if feedbackMessage}
-									<div class="result-message {isCorrectAnswer ? 'correct' : 'incorrect'}">
-										{feedbackMessage}
-									</div>
-								{/if}
-							</div>
-							<button
-								class="send-button"
-								disabled={showSuccessScreen || !userAnswer.trim()}
-								on:click={submitAnswer}
-								type="button"
-							>
-								Send
-							</button>
+					<ol class="steps-list">
+						<li>Click <a href="https://olamagri.workvivo.com/" target="_blank" rel="noopener noreferrer">this link</a> to visit The Loop</li>
+						<li>Find your way to the <span class="highlight">Brand Hub</span></li>
+						<li>Click on the Brand Guidelines and open <span class="highlight">PDF #1</span></li>
+						<li>Go to <span class="highlight">page 4</span></li>
+						<li>Find the <span class="highlight">words in orange</span></li>
+						<li><span class="highlight">Type them below</span> exactly as they appear</li>
+					</ol>
+					
+					<div class="input-section">
+						<div class="input-container">
+							<input
+								bind:value={userAnswer}
+								class="answer-input"
+								on:keydown={(e) => e.key === 'Enter' && submitAnswer()}
+								placeholder="Answer"
+								type="text"
+							/>
+							{#if feedbackMessage}
+								<div class="result-message {isCorrectAnswer ? 'correct' : 'incorrect'}">
+									{feedbackMessage}
+								</div>
+							{/if}
 						</div>
+						<button
+							class="send-button"
+							disabled={!userAnswer.trim()}
+							on:click={submitAnswer}
+							type="button"
+						>
+							Send
+						</button>
 					</div>
 				</div>
 			</div>
-		{/if}
+		</div>
 	{/if}
 </div>
 
 <style lang="scss">
-    .game-container {
+	.game-container {
 		background-color: #00B2E7;
-		position: relative;
-    }
-
-	.game-header {
-		padding: 0 calc(7rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
+		background-image: url('/images/j5-start.png');
+		background-position: center bottom;
+		background-size: 100% auto;
+		background-repeat: no-repeat;
 		position: relative;
 	}
-
-	.game-header-title {
-		color: #fff;
-		font-size: calc(4.8rem * var(--scale-factor));
-		font-weight: 600;
-		line-height: normal;
-	}
-
-	
-	.game-header-paragraph {
-		color: #fff;
-		font-size: calc(2.8rem * var(--scale-factor));
-		line-height: normal;
-		padding-block-start: calc(1rem * var(--scale-factor));
+	.game-container.playing {
+		background-image: url('/images/game5-summary.png');
 	}
 
 	.game-panel {
 		position: relative;
+		background-image: url('/images/j5-start.png');
+		background-position: bottom center;
+		background-size: 100% auto;
+		background-repeat: no-repeat;
 	}
 
 	.game-grid {
@@ -491,7 +469,7 @@
 		align-items: center;
 		background: #00B2E7;
 		border: none;
-		border-radius: 0 calc(3.5rem * var(--scale-factor));
+		border-radius: 0 calc(1.7rem * var(--scale-factor));
 		block-size: calc(4.4rem * var(--scale-factor));
 		color: #FFF;
 		cursor: pointer;
@@ -513,18 +491,6 @@
 		&:disabled {
 			background: #CCC;
 			cursor: not-allowed;
-		}
-	}
-
-	.feedback-message {
-		color: #FF3000;
-		font-size: calc(2.2rem * var(--scale-factor));
-		font-weight: 400;
-		line-height: normal;
-		text-align: center;
-
-		&.correct {
-			color: #00A865;
 		}
 	}
 
@@ -582,6 +548,7 @@
 
 	.game5-initial-screen-image {
 		object-fit: cover;
+		visibility: hidden;
 	}
 
 	.copy {
@@ -692,11 +659,6 @@
 		inline-size: 100%;
 	}
 
-	.question-wrapper {
-		padding-block: calc(7rem * var(--scale-factor));
-		padding-inline: 0 calc(7rem * var(--scale-factor));
-	}
-
 	/* Content check section */
 	.content-check {
 		padding-block-start: calc(2.7rem * var(--scale-factor));
@@ -747,338 +709,189 @@
 		color: #ff6b6b;
 	}
 
-	.success-screen {
-		align-items: center;
-		block-size: 100vh;
-		display: flex;
-		justify-content: center;
-		position: relative;
-	}
 
-	.success-container {
-		align-items: center;
-		background: #FFF;
-		border-radius: calc(3.5rem * var(--scale-factor));
-		display: flex;
-		flex-direction: column;
-		gap: calc(3rem * var(--scale-factor));
-		inline-size: calc(60rem * var(--scale-factor));
-		padding: calc(5rem * var(--scale-factor));
-		text-align: center;
-	}
 
-	.success-title {
-		color: #00B2E7;
-		font-size: calc(4.5rem * var(--scale-factor));
-		font-weight: 600;
-		line-height: normal;
-	}
-
-	.success-message {
-		color: #2E2D2C;
-		font-size: calc(2.2rem * var(--scale-factor));
-		font-weight: 400;
-		line-height: normal;
-	}
-
-	.success-score {
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		gap: calc(1rem * var(--scale-factor));
-	}
-
-	.score-label {
-		color: #2E2D2C;
-		font-size: calc(2rem * var(--scale-factor));
-		font-weight: 400;
-	}
-
-	.score-value {
-		color: #00B2E7;
-		font-size: calc(3.5rem * var(--scale-factor));
-		font-weight: 600;
-	}
-
-	.success-buttons {
-		display: flex;
-		gap: calc(2rem * var(--scale-factor));
-		margin-block-start: calc(2rem * var(--scale-factor));
-	}
-
-	.replay-button, .finish-button {
-		background-color: #00B2E7;
-		border: none;
-		border-radius: 0 calc(1.7rem * var(--scale-factor));
-		color: #fff;
-		cursor: pointer;
-		font-size: calc(2rem * var(--scale-factor));
-		font-weight: 600;
-		padding: calc(1.5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		transition: background-color 0.3s ease;
-
-		&:hover {
-			background-color: #0088B3;
-		}
-	}
-
-	.finish-button {
-		background-color: #2E2D2C;
-
-		&:hover {
-			background-color: #1a1a1a;
-		}
-	}
-
-	/* Mobile Media Query - Up to 932px */
+	/* Unite all mobile overrides into a single media query */
 	@media (max-width: 932px) {
-		/* 1. Fix left sidebar title and horizontal scroll */
+		/* Sidebar and instructions */
 		.instructions {
 			inline-size: calc(100vw - 66.41%);
 			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 			overflow-x: hidden;
-			scrollbar-width: none; /* Firefox */
-			-ms-overflow-style: none; /* Internet Explorer 10+ */
+			scrollbar-width: none;
+			-ms-overflow-style: none;
 		}
-
 		.instructions::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
+			display: none;
 		}
-
+		.instructions.closed {
+			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+		}
 		.title {
 			font-size: calc(4.5rem * var(--scale-factor));
 			word-wrap: break-word;
 			overflow-wrap: break-word;
 		}
-
-		/* 2. Fix sidebar horizontal scroll */
+		.subtitle {
+			font-size: calc(2.5rem * var(--scale-factor));
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			line-height: calc(2.5rem * var(--scale-factor));
+		}
+		.paragraph {
+			font-size: calc(2.2rem * var(--scale-factor));
+		}
 		.copy {
 			margin-block-start: calc(4rem * var(--scale-factor));
 			padding: calc(1.5rem * var(--scale-factor));
 		}
-
 		.copy-header {
 			grid-template-columns: repeat(2, auto);
 			grid-column-gap: calc(2rem * var(--scale-factor));
 			margin-block-start: calc(-3rem * var(--scale-factor));
 		}
 
-		/* 3. Keep content text size as requested */
-		.paragraph {
-			font-size: calc(2.2rem * var(--scale-factor));
-		}
-
-		/* 4. Fix game header SVG and shape scaling */
-		.game-header {
-			padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		}
-
-		.game-header-title {
-			font-size: calc(3.5rem * var(--scale-factor));
-		}
-
-		.game-header-paragraph {
-			font-size: calc(2.4rem * var(--scale-factor));
-		}
-
-		/* 5. Fix question container positioning and scaling */
+		/* Game grid and columns */
 		.game-grid {
-			grid-template-columns: 1fr;
-			align-items: start;
-			padding: calc(2rem * var(--scale-factor));
+			grid-template-columns: 1fr 1fr;
+			gap: calc(1.2rem * var(--scale-factor));
+			align-items: center;
+			padding: calc(1rem * var(--scale-factor));
+			padding-inline: calc(1rem * var(--scale-factor));
 		}
-
-		.game-hero-column {
-			order: 2;
-		}
-
 		.game-hero-image {
-			max-inline-size: calc(30rem * var(--scale-factor));
+			width: 80%;
 		}
-
+		.game-hero-column {
+			width: auto;
+			max-width: none;
+		}
+		// .game-hero-column {
+		// 	/* No width or max-width, let it fill the grid cell */
+		// }
 		.game-content-column {
-			order: 1;
+			/* No width restriction, fills grid cell */
 			gap: calc(2rem * var(--scale-factor));
 		}
 
+		/* Timer and game white container */
 		.timer {
-			font-size: calc(8rem * var(--scale-factor));
-			margin-inline-start: calc(1rem * var(--scale-factor));
+			font-size: calc(6.4rem * var(--scale-factor));
 		}
-
 		.game-container-white {
 			block-size: auto;
 			inline-size: 100%;
-			padding: calc(3rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
+			width: 90%;
+			padding: calc(3.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
 		}
-
-		.game-title {
-			font-size: calc(3rem * var(--scale-factor));
+		.game-container-white .game-title {
+			font-size: calc(2.4rem * var(--scale-factor));
 			margin-block-start: calc(1rem * var(--scale-factor));
 		}
-
-		.game-description {
-			font-size: calc(1.8rem * var(--scale-factor));
+		.game-container-white .game-description {
+			font-size: calc(1.44rem * var(--scale-factor));
 			margin-block-start: calc(1rem * var(--scale-factor));
 		}
-
-		.steps-list {
-			font-size: calc(2.2rem * var(--scale-factor));
-			line-height: calc(3rem * var(--scale-factor));
+		.game-container-white .steps-list {
+			font-size: calc(1.76rem * var(--scale-factor));
+			line-height: calc(2.4rem * var(--scale-factor));
 			margin-block-start: calc(1rem * var(--scale-factor));
-
-			.highlight {
-				/* No underline for highlights */
-			}
-
-			a {
-				text-decoration-thickness: calc(0.1rem * var(--scale-factor));
-			}
 		}
-
+		.game-container-white .answer-input {
+			font-size: calc(1.28rem * var(--scale-factor));
+			/* No inline-size here, inherit from desktop */
+		}
+		.game-container-white .send-button {
+			font-size: calc(1.44rem * var(--scale-factor));
+			inline-size: calc(12rem * var(--scale-factor));
+			padding: calc(1rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+		}
+		.game-container-white .result-message {
+			font-size: calc(1.28rem * var(--scale-factor));
+			margin-block-start: calc(1rem * var(--scale-factor));
+			padding: calc(1rem * var(--scale-factor));
+			border-radius: calc(0.5rem * var(--scale-factor));
+		}
 		.input-section {
 			align-items: flex-start;
 			margin-block-start: calc(1.5rem * var(--scale-factor));
 		}
-
-		.answer-input {
-			font-size: calc(1.6rem * var(--scale-factor));
+		.input-container {
 			inline-size: 100%;
 		}
 
-		.send-button {
-			font-size: calc(1.8rem * var(--scale-factor));
-			inline-size: calc(12rem * var(--scale-factor));
-			padding: calc(1rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+		/* Background images for mobile */
+		.game-container {
+			background-size: calc(100% * var(--scale-factor)) auto;
+		}
+		.game-panel {
+			background-size: calc(100% * var(--scale-factor)) auto;
+		}
+		.game-container.playing {
+			background-size: calc(100% * var(--scale-factor)) auto;
 		}
 
-		.feedback-message {
-			font-size: calc(1.8rem * var(--scale-factor));
-		}
-		
-
-		/* Question wrapper for mobile - reset padding */
-		.question-wrapper {
-			padding-block: 0;
-		}
-
-		/* 6. Adjust start screen for mobile */
+		/* Start screen and sidebar closed state */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 			padding: calc(1rem * var(--scale-factor));
+			overflow-y: hidden;
 		}
-
-		/* Keep start screen width consistent when sidebar is closed */
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
-
 		.start-screen-content {
 			transform-origin: center center;
 		}
 
-		/* Remove vertical scrolling from start screen */
-		.start-screen {
-			overflow-y: hidden;
-		}
-
-		/* Adjust game ID for mobile */
+		/* Game ID and content check section */
 		.game-id {
 			block-size: calc(12rem * var(--scale-factor));
 			inline-size: calc(8rem * var(--scale-factor));
 		}
-
 		.game-id .text {
 			font-size: calc(2rem * var(--scale-factor));
 			line-height: calc(2rem * var(--scale-factor));
 		}
-
 		.game-id .number {
 			font-size: calc(9rem * var(--scale-factor));
 			line-height: calc(9rem * var(--scale-factor));
 		}
-
-		/* Adjust subtitle for mobile */
-		.subtitle {
-			font-size: calc(2.5rem * var(--scale-factor));
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-		}
-
-		/* Content check section */
 		.content-check {
 			padding-block-start: calc(2rem * var(--scale-factor));
 		}
-
 		.content-check-grid {
 			gap: calc(1.5rem * var(--scale-factor));
 		}
-
 		.content-check-btn {
 			width: calc(12rem * var(--scale-factor));
 			height: calc(3rem * var(--scale-factor));
 			font-size: calc(1.2rem * var(--scale-factor));
 		}
-
 		.content-check-text {
 			font-size: calc(1.2rem * var(--scale-factor));
 			line-height: calc(1.6rem * var(--scale-factor));
 		}
 
-		/* Adjust buttons for mobile */
+		/* Buttons for mobile */
 		.close-button {
 			inset-block-start: calc(1rem * var(--scale-factor));
 			inset-inline-end: calc(2rem * var(--scale-factor));
 		}
-
 		.play-button {
 			inset-block-start: calc(2rem * var(--scale-factor));
 			inset-inline-end: calc(-0.2rem * var(--scale-factor));
 		}
 
-		/* Fix sidebar closed state for mobile */
-		.instructions.closed {
-			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-		}
-
+		/* Initial screen button */
 		.game5-initial-screen-button {
 			background: none;
 			border: none;
 			padding: 0;
 			cursor: pointer;
 		}
-
-		.success-container {
-			inline-size: 90%;
-			padding: calc(3rem * var(--scale-factor));
-		}
-
-		.success-title {
-			font-size: calc(3rem * var(--scale-factor));
-		}
-
-		.success-message {
-			font-size: calc(1.8rem * var(--scale-factor));
-		}
-
-		.score-label {
-			font-size: calc(1.6rem * var(--scale-factor));
-		}
-
-		.score-value {
-			font-size: calc(2.5rem * var(--scale-factor));
-		}
-
-		.success-buttons {
-			flex-direction: column;
-			gap: calc(1rem * var(--scale-factor));
-		}
-
-		.replay-button, .finish-button {
-			font-size: calc(1.8rem * var(--scale-factor));
-			padding: calc(1rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
-		}
 	}
+
 </style>
 
 

@@ -31,7 +31,7 @@ export interface CombinedRankingEntry {
   game6Score: number;
   totalDuration: number; // Total time spent playing all games in milliseconds
   lastPlayed: string;
-  earliestStartTime: string; // Earliest start time across all games for tiebreak
+  earliestStartTime: string; // Earliest start time across all games (legacy, not used for tiebreak)
 }
 
 export interface RegionRankingEntry {
@@ -45,7 +45,7 @@ export interface RegionRankingEntry {
   game6Score: number;
   totalDuration: number; // Total time spent playing all games in milliseconds
   lastPlayed: string;
-  earliestStartTime: string; // Earliest start time across all games for tiebreak
+  earliestStartTime: string; // Earliest start time across all games (legacy, not used for tiebreak)
 }
 
 export interface TopBrandHeroesEntry {
@@ -278,18 +278,18 @@ export class RankingService {
         if (b.totalScore !== a.totalScore) {
           return b.totalScore - a.totalScore;
         }
-        // If scores are equal, sort by earliest start time (who played first wins)
+        // If scores are equal, sort by total duration (who completed games faster wins)
         // Enhanced tiebreak with millisecond precision
-        const startTimeDiff = new Date(a.earliestStartTime).getTime() - new Date(b.earliestStartTime).getTime();
+        const durationDiff = a.totalDuration - b.totalDuration;
         console.log(`Tiebreak for ${region}: ${a.user.displayName} vs ${b.user.displayName}`, {
           scoreA: a.totalScore,
           scoreB: b.totalScore,
-          earliestStartA: a.earliestStartTime,
-          earliestStartB: b.earliestStartTime,
-          startTimeDiff,
-          startTimeDiffMs: startTimeDiff
+          durationA: a.totalDuration,
+          durationB: b.totalDuration,
+          durationDiff,
+          durationDiffMs: durationDiff
         });
-        return startTimeDiff;
+        return durationDiff;
       });
       
       // Take top 2 from this region
@@ -408,13 +408,13 @@ export class RankingService {
         };
       });
     
-    // Sort by total score (descending), then by earliest start time (ascending) for tiebreaks
+    // Sort by total score (descending), then by total duration (ascending) for tiebreaks
     return combinedResults.sort((a: RegionRankingEntry, b: RegionRankingEntry) => {
       if (b.totalScore !== a.totalScore) {
         return b.totalScore - a.totalScore;
       }
-      // Tiebreak: who played first (earliest start time wins)
-      return new Date(a.earliestStartTime).getTime() - new Date(b.earliestStartTime).getTime();
+      // Tiebreak: who completed games faster (lower total duration wins)
+      return a.totalDuration - b.totalDuration;
     });
   }
 
@@ -435,6 +435,7 @@ export class RankingService {
       game2,
       game3,
       game4,
+      game5,
       game6
     }`;
     
@@ -448,8 +449,9 @@ export class RankingService {
         const game2Score = r.game2?.score || 0;
         const game3Score = r.game3?.score || 0;
         const game4Score = r.game4?.score || 0;
+        const game5Score = r.game5?.score || 0;
         const game6Score = r.game6?.score || 0;
-        const totalScore = game1Score + game2Score + game3Score + game4Score + game6Score;
+        const totalScore = game1Score + game2Score + game3Score + game4Score + game5Score + game6Score;
         const lastPlayed = r.game4?.completedAt || r.game3?.completedAt || r.game2?.completedAt || r.game1?.completedAt || '';
         
         // Calculate earliest start time across all games for tiebreak
@@ -458,6 +460,7 @@ export class RankingService {
           r.game2?.startedAt,
           r.game3?.startedAt,
           r.game4?.startedAt,
+          r.game5?.startedAt,
           r.game6?.startedAt
         ].filter(time => time);
         const earliestStartTime = startTimes.length > 0
@@ -530,6 +533,21 @@ export class RankingService {
           });
         }
         
+        // Game 5 duration with precision logging
+        if (r.game5?.startedAt && r.game5?.completedAt) {
+          const game5DurationData = this.calculateDuration(r.game5.startedAt, r.game5.completedAt);
+          const game5Duration = game5DurationData.durationMs;
+          totalDuration += game5Duration;
+          
+          // Debug logging for precision verification
+          console.log(`Game 5 Duration for ${r.user.displayName} (${region}):`, {
+            start: r.game5.startedAt,
+            end: r.game5.completedAt,
+            durationMs: game5Duration,
+            durationSec: game5DurationData.durationSec.toFixed(3)
+          });
+        }
+        
         return {
           user: r.user,
           totalScore,
@@ -537,6 +555,7 @@ export class RankingService {
           game2Score,
           game3Score,
           game4Score,
+          game5Score,
           game6Score,
           totalDuration,
           lastPlayed,
@@ -549,8 +568,8 @@ export class RankingService {
         if (b.totalScore !== a.totalScore) {
           return b.totalScore - a.totalScore;
         }
-        // Tiebreak: who played first (earliest start time wins)
-        return new Date(a.earliestStartTime).getTime() - new Date(b.earliestStartTime).getTime();
+        // Tiebreak: who completed games faster (lower total duration wins)
+        return a.totalDuration - b.totalDuration;
       })
       .slice(0, limit);
     
