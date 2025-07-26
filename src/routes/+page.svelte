@@ -4,6 +4,7 @@
   import { authStore } from '$lib/stores/authStore';
   import { gameAvailabilityStore, game1Availability, game2Availability, game3Availability, game4Availability, game5Availability, game6Availability } from '$lib/stores/gameAvailabilityStore';
   import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+  import Footer from '$lib/components/Footer.svelte';
 
   let timeUntilGame1: number | null = null;
   let timeUntilGame2: number | null = null;
@@ -55,10 +56,10 @@
 
   function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): string {
     const config = gameAvailabilityStore.getGameConfig(gameId);
-    if (!config || !config.availableFrom) return 'Coming Soon';
+    if (!config || !config.availableUntil) return 'Coming Soon';
     
     try {
-      const date = new Date(config.availableFrom);
+      const date = new Date(config.availableUntil);
       if (isNaN(date.getTime())) return 'Coming Soon';
       
       const month = date.toLocaleDateString('en-US', { month: 'short' });
@@ -331,11 +332,31 @@
         </div>
       </div>
     </section>
+
+    <!-- Sixth Section - Brand Defender -->
+    <section class="brand-defender-section">
+      <img src="/images/group-126.png" alt="Brand Defender" class="brand-defender-hero-image">
+      
+      <div class="brand-defender-container">
+        <h2 class="brand-defender-title">But wait, there's more!</h2>
+        
+        <div class="brand-defender-content">
+          <div class="brand-defender-image-column">
+            <img src="/images/badge-brand-defender-400.png" alt="Brand Defender Badge" class="brand-defender-badge">
+          </div>
+          <div class="brand-defender-text-column">
+            <p class="brand-defender-paragraph">
+              <strong>Everyone who completes all the games</strong> will be considered a Brand Defender and will receive the honorary <strong>Brand Defender badge</strong> in The Loop, even if they are not in the top 3 of the region.
+            </p>
+          </div>
+        </div>
+        
+        <h3 class="brand-defender-cta-title">Become a Brand Hero.<br>Protect what makes us unique!</h3>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer">
-    <img class="footer-logo" src="/images/site-footer.jpg" alt="Brand Heroes">
-  </footer>
+  <Footer />
 </div>
 
 <style lang="scss">
@@ -343,18 +364,12 @@
     position: relative;
     z-index: 1;
 
-    .wrapper {
-      background-color: #FFF;
-      max-inline-size: calc(128rem * var(--scale-factor));
-      margin-inline: auto;
-      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
-    }
-  }
-
-  .footer {
-    &-logo {
-      inline-size: 100%;
-    }
+    // .wrapper {
+    //   background-color: #FFF;
+    //   max-inline-size: calc(128rem * var(--scale-factor));
+    //   margin-inline: auto;
+    //   padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
+    // }
   }
 
   .header {
@@ -379,7 +394,21 @@
         opacity: 0.8;
       }
     }
+
+    .wrapper {
+      max-inline-size: calc(142rem * var(--scale-factor));
+      margin-inline: auto;
+      padding-inline: 0;
+    }
+
+    @media (max-width: 932px) {
+      .wrapper {
+        padding-inline: 2rem;
+      }
+    }
   }
+
+
 
   .hero-section {
     padding-block: calc(12rem * var(--scale-factor));
@@ -521,22 +550,6 @@
     margin: 0;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .navigation {
     &-list {
       align-items: center;
@@ -661,6 +674,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game1-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -673,10 +691,6 @@
     color: #FF7000 !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   // Game 2 - Purple
@@ -700,6 +714,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game2-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -712,10 +731,6 @@
     color: #8E75F8 !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   // Game 3 - Pink
@@ -739,6 +754,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game3-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -751,10 +771,6 @@
     color: #FF5BAF !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   // Game 4 - Blue
@@ -778,6 +794,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game4-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -790,10 +811,6 @@
     color: #FFD700 !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   // Game 5 - Blue
@@ -817,6 +834,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game5-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -829,10 +851,6 @@
     color: #00B2E7 !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   // Game 6 - Green
@@ -856,6 +874,11 @@
       .game-name {
         color: #2E2D2C;
       }
+
+      .game6-button {
+        background: #2E2D2C !important;
+        color: #FF7000 !important;
+      }
     }
   }
 
@@ -868,10 +891,6 @@
     color: #00A865 !important;
     font-weight: 600 !important;
     inline-size: calc(12.4rem * var(--scale-factor)) !important;
-
-    &:hover {
-      background: #f5f5f5;
-    }
   }
 
   .game-label {
@@ -909,9 +928,9 @@
     justify-content: center;
   }
 
-  .locked-state {
-    text-align: center;
-  }
+  // .locked-state {
+  //   text-align: center;
+  // }
 
   .lock-icon {
     width: calc(2.2rem * var(--scale-factor));
@@ -971,7 +990,7 @@
     color: #FF7000;
     font-size: calc(6rem * var(--scale-factor));
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 125%;
     margin-block-end: calc(3rem * var(--scale-factor));
   }
@@ -1030,5 +1049,118 @@
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
+  }
+
+  .brand-defender-section {
+    padding-block-end: calc(10rem * var(--scale-factor));
+    padding-block-start: 0;
+  }
+
+  .brand-defender-container {
+    max-inline-size: calc(98rem * var(--scale-factor));
+    margin-inline: auto;
+    padding-inline: calc(2rem * var(--scale-factor));
+  }
+
+  .brand-defender-hero-image {
+    inline-size: 100%;
+    height: auto;
+  }
+
+  .brand-defender-title {
+    color: #FF7000;
+    font-size: calc(4rem * var(--scale-factor));
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+    padding-block-start: calc(17.5rem * var(--scale-factor));
+  }
+
+  .brand-defender-content {
+    align-items: center;
+    display: flex;
+    gap: calc(3.6rem * var(--scale-factor));
+    padding-block-start: calc(3.5rem * var(--scale-factor));
+  }
+
+  .brand-defender-image-column {
+    flex-shrink: 0;
+  }
+
+  .brand-defender-badge {
+    inline-size: 100%;
+    height: auto;
+  }
+
+  .brand-defender-text-column {
+    flex: 1;
+  }
+
+  .brand-defender-paragraph {
+    color: #000;
+    font-size: calc(2.4rem * var(--scale-factor));
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  .brand-defender-cta-title {
+    color: #FF7000;
+    font-size: calc(6rem * var(--scale-factor));
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+    padding-block-start: calc(18.5rem * var(--scale-factor));
+  }
+
+  /* Mobile Media Query - Up to 932px */
+  @media (max-width: 932px) {
+    .logo-link {
+      inline-size: 80%;
+    }
+
+    .hero-section {
+      padding-inline: 2rem;
+    }
+
+    .map-section {
+      padding-inline: 2rem;
+    }
+
+    .info-section {
+      padding-inline: 2rem;
+    }
+
+    .games-section {
+      padding-inline: 2rem;
+    }
+
+    .hero-reward-section {
+      padding-inline: 2rem;
+    }
+
+    .brand-defender-container {
+      padding-inline: 2rem;
+    }
+
+    .games-row {
+      display: flex;
+      flex-direction: column;
+      gap: calc(3rem * var(--scale-factor));
+    }
+
+    .game-card {
+      inline-size: 100%;
+      max-inline-size: 100%;
+      margin-inline: auto;
+    }
+
+    .games-grid {
+      gap: calc(3rem * var(--scale-factor));
+    }
   }
 </style>

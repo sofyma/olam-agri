@@ -150,9 +150,14 @@ html.game-5 .btn-cta3:hover {
   color: #fff !important;
 }
 
-/* Restrict app on mobile portrait orientation */
+/* Restrict games on mobile portrait orientation */
 @media screen and (orientation: portrait) and (max-width: 768px) {
-  body::before {
+  html.game-1 body::before,
+  html.game-2 body::before,
+  html.game-3 body::before,
+  html.game-4 body::before,
+  html.game-5 body::before,
+  html.game-6 body::before {
     content: "Please rotate your device to landscape mode to play the game.";
     position: fixed;
     top: 0;
@@ -165,8 +170,15 @@ html.game-5 .btn-cta3:hover {
     align-items: center;
     justify-content: center;    
     pointer-events: all;
+    z-index: 9999;
   }
-  body > *:not(style):not(script) {
+  
+  html.game-1 body > *:not(style):not(script),
+  html.game-2 body > *:not(style):not(script),
+  html.game-3 body > *:not(style):not(script),
+  html.game-4 body > *:not(style):not(script),
+  html.game-5 body > *:not(style):not(script),
+  html.game-6 body > *:not(style):not(script) {
     display: none !important;
   }
 } 

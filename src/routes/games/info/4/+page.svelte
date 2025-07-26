@@ -1,401 +1,335 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { game4Availability } from '$lib/stores/gameAvailabilityStore';
-  import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
-  import { authStore } from '$lib/stores/authStore';
-
-  let timeUntilAvailable: number | null = null;
-
-  onMount(async () => {
-    // Check if game is available
-    if (!$game4Availability.isAvailable) {
-      // Calculate time until available
-      const availableFrom = $game4Availability.config?.availableFrom;
-      if (availableFrom) {
-        const now = new Date();
-        const availableDate = new Date(availableFrom);
-        timeUntilAvailable = availableDate.getTime() - now.getTime();
-      }
-    }
-  });
-
-  function formatTimeUntil(milliseconds: number): string {
-    const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((milliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-    
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ${hours}h`;
-    } else if (hours > 0) {
-      return `${hours}h ${minutes}m`;
-    } else {
-      return `${minutes}m`;
-    }
-  }
-
-  function handlePlayClick() {
-    if ($game4Availability.isAvailable) {
-      goto('/games/game4');
-    }
-  }
+  import GameInfoHeader from '$lib/components/GameInfoHeader.svelte';
+  import PlaySection from '$lib/components/PlaySection.svelte';
+  import Footer from '$lib/components/Footer.svelte';
 </script>
 
-<div class="container">
-  <header class="header">
-    <div class="wrapper">
-      <div class="row">
-        <div class="column">
-          {#if $authStore.isAuthenticated}
-            <a href="/" class="logo-link">
-              <Game1Logo />
-            </a>
-          {:else}
-            <Game1Logo />
-          {/if}
-        </div>
+<GameInfoHeader />
 
-        <div class="column">
-          <nav class="navigation">
-            <ul class="navigation-list">
-              <li class="navigation-item">
-                <a class="navigation-link" href="/terms">Terms</a>
-              </li>
-
-              <li class="navigation-item">
-                <a class="navigation-link btn" href="/ranking">Ranking</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <h1 class="header-title">Brand Heroes</h1>
-    </div>
-
-    <img class="header-heroes" src="/images/oa-site-small-header-heroes.png" alt="Brand Heroes">
-  </header>
-  
-  <main class="content">
-    <div class="wrapper">
-      <div class="info-container">
-
+<main class="content">
+  <div class="game4-info__indicator"><span class="game4-info__indicator-number">4</span></div>
+  <div class="wrapper">
+    <div class="content-wrapper">
+      <h1 class="game4-info__main-title">The Brand<br />in Use</h1>
+      <section class="game4-info__section">
+        <p class="game4-info__section-paragraph">Everything we create reflects who we are.</p>
+        <p class="game4-info__section-paragraph">That's why it's essential to stay aligned, using the right elements in the right way, both internally and externally.</p>
+        <h2 class="game4-info__section-title">How we sound matters</h2>
+        <p class="game4-info__section-paragraph">Make it easy for our audience to take in valuable information.</p>
+        <img class="game4-info__image" src="/images/content-4_1.png" alt="How we sound matters">
+        <hr class="game4-info__divider" />
+        <h2 class="game4-info__section-title">Use the official templates</h2>
+        <p class="game4-info__section-paragraph">Always start from the available ones:</p>
+        <ul class="game4-info__list">
+          <li><span class="game4-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Presentations</li>
+          <li><span class="game4-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Stationery</li>
+          <li><span class="game4-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Marketing collaterals…</li>
+        </ul>
+        <img class="game4-info__image" src="/images/content-4_2.png" alt="Official templates">
+        <hr class="game4-info__divider" />
+        <h2 class="game4-info__section-title">When designing, simple rules to keep in mind</h2>
+        <img class="game4-info__image" src="/images/content-4_3.png" alt="Design rules">
+        <hr class="game4-info__divider" />
+        <h2 class="game4-info__section-title">Enhance designs with brand-aligned visual elements</h2>
         
-        <h2 class="info-title">Choose a Side</h2>
-        
-        <div class="info-description">
-          <p>
-            Test your brand knowledge with a series of true or false questions! Make quick decisions and prove your expertise in our brand guidelines, values, and company information.
-          </p>
-          
-          <h3>What you'll learn:</h3>
-          <ul>
-            <li>Brand guideline knowledge</li>
-            <li>Company values understanding</li>
-            <li>Quick decision making</li>
-            <li>Brand identity awareness</li>
-          </ul>
-          
-          <h3>How to play:</h3>
-          <p>
-            You'll be presented with statements about our brand, company, and values. For each statement, you must quickly decide if it's true or false. 
-            Choose the correct side to earn points and demonstrate your brand knowledge. The faster you answer correctly, the more points you earn!
-          </p>
-          
-          <div class="game-stats">
-            <div class="stat">
-              <span class="stat-number">10</span>
-              <span class="stat-label">Questions</span>
+        <div class="game4-info__visual-elements">
+          <div class="game4-info__element-row">
+            <div class="game4-info__element-text">
+              <p class="game4-info__element-title">Curved Device</p>
+              <p class="game4-info__element-description">Use with images of people, products, and places, as well as applying only colour.</p>
             </div>
-            <div class="stat">
-              <span class="stat-number">1</span>
-              <span class="stat-label">Point per correct answer</span>
+            <div class="game4-info__element-image">
+              <img src="/images/content-4_4.png" alt="Curved Device">
             </div>
-            <div class="stat">
-              <span class="stat-number">5</span>
-              <span class="stat-label">Minutes</span>
+          </div>
+          
+          <div class="game4-info__element-row">
+            <div class="game4-info__element-image">
+              <img src="/images/content-4_5.png" alt="Leaf Device">
+            </div>
+            <div class="game4-info__element-text">
+              <p class="game4-info__element-title">Leaf Device</p>
+              <p class="game4-info__element-description">Use as well with images of people, products, and places, or with colour only, when the Curved Device is restrictive or has already been applied.</p>
+            </div>
+          </div>
+          
+          <div class="game4-info__element-row">
+            <div class="game4-info__element-text">
+              <p class="game4-info__element-title">Full Bleed Imagery</p>
+              <p class="game4-info__element-description">Use when devices feel limiting or for bold impact with the image.</p>
+            </div>
+            <div class="game4-info__element-image">
+              <img src="/images/content-4_6.png" alt="Full Bleed Imagery">
             </div>
           </div>
         </div>
         
-        <div class="cta-section">
-          {#if $game4Availability.isAvailable}
-            <button class="play-button" on:click={handlePlayClick}>
-              let's play
-            </button>
-          {:else}
-            <div class="locked-state">
-              <div class="lock-icon">🔒</div>
-              <h3 class="locked-title">Game Not Available Yet</h3>
-              <p class="locked-text">
-                {#if timeUntilAvailable && timeUntilAvailable > 0}
-                  This game will be available in {formatTimeUntil(timeUntilAvailable)}
-                {:else}
-                  This game is coming soon. Check back later!
-                {/if}
-              </p>
-              <a href="/" class="back-home-button">Back to Home</a>
-            </div>
-          {/if}
-        </div>
-      </div>
+        <p class="game4-info__section-paragraph game4-info__section-paragraph--bold">Follow the Brand Guidelines to apply these visual elements and download them only from the <a href="https://olamagri.workvivo.com/" target="_blank" class="game4-info__brand-hub-link">Brand Hub</a>.</p>
+      </section>
+      <PlaySection imageSrc="/images/content-play-4.png" gameLink="/games/game4" color="#FFB800" />
     </div>
-  </main>
-
-  <footer class="footer">
-    <img class="footer-logo" src="/images/site-footer.jpg" alt="Brand Heroes">
-  </footer>
-</div>
+  </div>
+</main>
+<Footer />
 
 <style lang="scss">
-  .header {
-    background-image: url('/images/oa-site-small-header-background.jpg');
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    block-size: calc(53.5rem * var(--scale-factor));
-    padding-block-start: calc(7rem * var(--scale-factor));
-    position: relative;
+.content {
+  margin-block-start: calc(-15rem * var(--scale-factor));
+  position: relative;
+  z-index: 1;
 
-    &-heroes {
-      position: absolute;
-      inset-block-end: 0;
-      inset-inline-start: 50%;
-      transform: translateX(-50%);
-    }
-
-    &-title {
-      color: #FFF;
-      font-size: calc(8rem * var(--scale-factor));
-      font-weight: 600;
-      line-height: normal;
-      padding-block-start: calc(1.5rem * var(--scale-factor));
-    }
-
-    :global(.logo path) {
-      fill: #FFF;
-    }
-
-    .logo-link {
-      text-decoration: none;
-      display: inline-block;
-      transition: opacity 0.2s ease;
-
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-
-    .wrapper {
-      max-inline-size: calc(142rem * var(--scale-factor));
-      margin-inline: auto;
-    }
-
-    @media (max-width: 1024px) {
-      .wrapper {
-        padding-inline: calc(2rem * var(--scale-factor));
-      }
-    }
-
-    .row {
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .navigation {
-      &-list {
-        align-items: center;
-        display: flex;
-        gap: calc(3rem * var(--scale-factor));
-      }
-
-      &-link {
-        color: #000;
-        font-size: calc(1.8rem * var(--scale-factor));
-        font-weight: 600;
-        line-height: normal;
-      }
-    }
-
-    .btn {
-      align-items: center;
-      background-color: #fff;
-      block-size: calc(3.2rem * var(--scale-factor));
-      border-radius: 0 calc(1.5rem * var(--scale-factor));
-      display: flex;
-      inline-size: calc(11.1rem * var(--scale-factor));
-    }
-  }
-
-  .footer {
-    &-logo {
-      inline-size: 100%;
-    }
-  }
-
-  .content {
-    margin-block-start: calc(-15rem * var(--scale-factor));
-    position: relative;
-    z-index: 1;
-
-    .wrapper {
-      background-color: #FFF;
-      max-inline-size: calc(128rem * var(--scale-factor));
-      margin-inline: auto;
-      padding-block: calc(5rem * var(--scale-factor)) calc(15rem * var(--scale-factor));
-    }
-  }
-
-  .info-container {
-    max-inline-size: calc(100rem * var(--scale-factor));
+  .wrapper {
+    background-color: #FFF;
+    max-inline-size: calc(128rem * var(--scale-factor));
     margin-inline: auto;
-    text-align: center;
+    padding-block: calc(5rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
   }
 
-  .info-title {
-    color: #FF7000;
-    font-size: calc(7.5rem * var(--scale-factor));
-    font-weight: 400;
-    line-height: 125%;
-    margin-block-end: calc(8rem * var(--scale-factor));
-    text-align: center;
+  .content-wrapper {
+    inline-size: 100%;
+    margin-inline: auto;
+    max-inline-size: calc(98rem * var(--scale-factor));
   }
+}
 
-  .game-badge {
-    background: #FF7000;
-    border-radius: calc(2rem * var(--scale-factor));
-    color: white;
-    display: inline-block;
-    font-size: calc(1.1rem * var(--scale-factor));
+.game4-info__indicator {
+  inline-size: calc(10.5rem * var(--scale-factor));
+  block-size: calc(10.5rem * var(--scale-factor));
+  border-radius: 0 calc(2.5rem * var(--scale-factor));
+  background: #FFB800;
+  color: #FFF;
+  text-align: center;
+  font-size: calc(9rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset-block-start: calc(-5.25rem * var(--scale-factor));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  flex-direction: column;
+}
+
+.game4-info__indicator-number {
+  font-size: calc(9rem * var(--scale-factor));
+  line-height: 125%;
+  position: relative;
+  top: calc(0.5rem * var(--scale-factor));
+}
+
+.game4-info__main-title {
+  color: #FFB800;
+  text-align: center;
+  font-size: calc(7.5rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+  padding-block-start: calc(3rem * var(--scale-factor));
+}
+
+.game4-info__section {
+  display: flex;
+  flex-direction: column;
+  padding-block-end: 0;
+}
+
+.game4-info__section-title {
+  color: #FFB800;
+  font-size: calc(4rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+}
+
+.game4-info__section-title:first-of-type {
+  padding-block-start: calc(5.2rem * var(--scale-factor));
+}
+
+.game4-info__section-paragraph {
+  color: #2E2D2C;
+  font-size: calc(2.4rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+  margin-block: 0;
+}
+
+.game4-info__section-paragraph--bold {
+  font-weight: 600;
+}
+
+.game4-info__section-paragraph:first-of-type {
+  padding-block-start: calc(8rem * var(--scale-factor));
+}
+
+.game4-info__section-paragraph:nth-of-type(2) {
+  padding-block-start: calc(2rem * var(--scale-factor));
+}
+
+.game4-info__section-paragraph:nth-of-type(3) {
+  padding-block-start: calc(2rem * var(--scale-factor));
+}
+
+.game4-info__section-paragraph:nth-of-type(4) {
+  padding-block-start: calc(2rem * var(--scale-factor));
+}
+
+.game4-info__image {
+  inline-size: 100%;
+  block-size: auto;
+  display: block;
+}
+
+.game4-info__image:first-of-type {
+  margin-block-start: calc(6.6rem * var(--scale-factor));
+}
+
+.game4-info__image:last-of-type {
+  margin-block-start: calc(6.1rem * var(--scale-factor));
+}
+
+.game4-info__image:nth-of-type(2) {
+  margin-block-start: calc(6.1rem * var(--scale-factor));
+}
+
+.game4-info__bold-text {
+  font-weight: 600;
+  display: inline-flex;
+  gap: calc(1.2rem * var(--scale-factor));
+}
+
+.game4-info__divider {
+  background: #999;
+  block-size: calc(0.2rem * var(--scale-factor));
+  border: none;
+  inline-size: 100%;
+  margin-block: calc(8rem * var(--scale-factor));
+}
+
+.game4-info__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.5rem * var(--scale-factor));
+  align-items: flex-start;
+  padding-block-start: calc(2rem * var(--scale-factor));
+}
+
+.game4-info__list li {
+  color: #2E2D2C;
+  font-size: calc(2.4rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+  display: flex;
+  align-items: center;
+  gap: calc(1.2rem * var(--scale-factor));
+}
+
+.game4-info__list-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game4-info__brand-hub-link {
+  color: #FF7000;
+  text-decoration: underline;
+}
+
+.game4-info__visual-elements {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6rem * var(--scale-factor));
+  margin-block-start: calc(8rem * var(--scale-factor));
+  margin-block-end: calc(5rem * var(--scale-factor));
+}
+
+.game4-info__element-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(3.6rem * var(--scale-factor));
+  align-items: center;
+}
+
+.game4-info__element-row--reversed {
+  direction: rtl;
+  
+  > * {
+    direction: ltr;
+  }
+}
+
+.game4-info__element-text {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.5rem * var(--scale-factor));
+}
+
+.game4-info__element-title {
+  color: #2E2D2C;
+  font-size: calc(2.4rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  margin: 0;
+}
+
+.game4-info__element-description {
+  color: #2E2D2C;
+  font-size: calc(2.4rem * var(--scale-factor));
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+  margin: 0;
+}
+
+.game4-info__element-image img {
+  inline-size: 100%;
+  block-size: auto;
+  display: block;
+}
+
+@media (max-width: 932px) {
+  .content {
+    margin-block-start: 0;
+  }
+  .game4-info__main-title {
+    padding-block-start: 0;
+  }
+  .wrapper {
+    padding-inline: calc(2rem * var(--scale-factor));
+  }
+  .game4-info__indicator {
+    inline-size: calc(7rem * var(--scale-factor));
+    block-size: calc(7rem * var(--scale-factor));
+    font-size: calc(5.5rem * var(--scale-factor));
     font-weight: 600;
-    margin-block-end: calc(2rem * var(--scale-factor));
-    padding: calc(0.5rem * var(--scale-factor)) calc(1rem * var(--scale-factor));
+    position: static;
+    transform: none;
+    inset-block-start: auto;
+    inset-inline-start: auto;
+    margin-inline: auto;
+    margin-block-start: calc(5rem * var(--scale-factor));
   }
-
-  .info-description {
-    background: white;
-    border-radius: calc(1.2rem * var(--scale-factor));
-    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
-    margin-block-end: calc(5rem * var(--scale-factor));
-    padding: calc(4rem * var(--scale-factor));
-    text-align: left;
+  .game4-info__indicator-number {
+    font-size: calc(5.5rem * var(--scale-factor));
   }
-
-  .info-description p {
-    color: #555;
-    font-size: calc(1.8rem * var(--scale-factor));
-    line-height: 1.7;
-    margin-block-end: calc(2rem * var(--scale-factor));
+  .game4-info__image {
+    max-inline-size: 100%;
   }
-
-  .info-description h3 {
-    color: #333;
-    font-size: calc(2.2rem * var(--scale-factor));
-    font-weight: 600;
-    margin: calc(3rem * var(--scale-factor)) 0 calc(1.5rem * var(--scale-factor)) 0;
+  .game4-info__element-row {
+    grid-template-columns: 1fr;
+    gap: calc(2rem * var(--scale-factor));
   }
-
-  .info-description ul {
-    margin: calc(1.5rem * var(--scale-factor)) 0 calc(3rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
+  .game4-info__element-row--reversed {
+    direction: ltr;
   }
-
-  .info-description li {
-    color: #555;
-    font-size: calc(1.6rem * var(--scale-factor));
-    line-height: 1.6;
-    margin-block-end: calc(0.8rem * var(--scale-factor));
-  }
-
-  .game-stats {
-    background: #f8f9fa;
-    border-radius: calc(0.8rem * var(--scale-factor));
-    display: flex;
-    justify-content: space-around;
-    margin: calc(4rem * var(--scale-factor)) 0;
-    padding: calc(3rem * var(--scale-factor));
-  }
-
-  .stat {
-    text-align: center;
-  }
-
-  .stat-number {
-    color: #FF7000;
-    display: block;
-    font-size: calc(3rem * var(--scale-factor));
-    font-weight: 700;
-  }
-
-  .stat-label {
-    color: #666;
-    font-size: calc(1.2rem * var(--scale-factor));
-    font-weight: 500;
-  }
-
-  .cta-section {
-    text-align: center;
-  }
-
-  .play-button {
-    background: #FF7000;
-    border: none;
-    border-radius: calc(0.8rem * var(--scale-factor));
-    color: white;
-    cursor: pointer;
-    font-size: calc(1.8rem * var(--scale-factor));
-    font-weight: 600;
-    padding: calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-    text-transform: lowercase;
-    transition: background-color 0.2s;
-  }
-
-  .play-button:hover {
-    background: #E65A00;
-  }
-
-  .locked-state {
-    background: white;
-    border-radius: calc(1.2rem * var(--scale-factor));
-    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
-    padding: calc(5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-    text-align: center;
-  }
-
-  .lock-icon {
-    font-size: calc(5rem * var(--scale-factor));
-    margin-block-end: calc(3rem * var(--scale-factor));
-    opacity: 0.7;
-  }
-
-  .locked-title {
-    color: #333;
-    font-size: calc(2.5rem * var(--scale-factor));
-    font-weight: 600;
-    margin-block-end: calc(1.5rem * var(--scale-factor));
-  }
-
-  .locked-text {
-    color: #666;
-    font-size: calc(1.4rem * var(--scale-factor));
-    line-height: 1.6;
-    margin-block-end: calc(3rem * var(--scale-factor));
-  }
-
-  .back-home-button {
-    background: #666;
-    border: none;
-    border-radius: calc(0.8rem * var(--scale-factor));
-    color: white;
-    cursor: pointer;
-    font-size: calc(1.4rem * var(--scale-factor));
-    font-weight: 600;
-    padding: calc(1.5rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-
-  .back-home-button:hover {
-    background: #555;
-  }
+}
 </style> 
