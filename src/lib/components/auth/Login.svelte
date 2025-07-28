@@ -86,10 +86,6 @@
         <h2 class="auth-title">Superheroes, welcome</h2>
         
         <form class="auth-form" on:submit|preventDefault={handleSubmit}>
-          {#if error}
-            <div class="error">{error}</div>
-          {/if}
-      
           <div class="form-group form-group--email">
             <label class="auth-label" for="email">Enter your corporate email</label>
             <input
@@ -107,6 +103,10 @@
         <p class="paragraph">
           Need help logging in? <br> Contact us at <a href="mailto:brand@olamagri.com" class="email-link">brand@olamagri.com</a>
         </p>
+
+        {#if error}
+          <div class="error">{error}</div>
+        {/if}
       </div>
     </div>
   </main>
@@ -290,9 +290,9 @@
 
   .error {
     color: #dc3545;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border-radius: 0.4rem;
-    background-color: #f8d7da;
+    text-align: center;
+    font-size: calc(1.8rem * var(--scale-factor));
+    font-weight: 600;
+    margin-block-start: calc(2rem * var(--scale-factor));
   }
 </style> 
