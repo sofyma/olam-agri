@@ -393,6 +393,11 @@
 		box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
 	}
 
+	/* Windows 125% specific styles */
+	:global(.window125) .question-card {
+		padding-block-end: calc(8rem * var(--scale-factor));
+	}
+
 	.question-header {
 		margin-block-end: calc(4rem * var(--scale-factor));
 		text-align: center;
