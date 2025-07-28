@@ -296,6 +296,11 @@
   display: block;
 }
 
+/* Game 4 info specific - PlaySection top margin */
+:global(.play-section) {
+  margin-block-start: calc(13rem * var(--scale-factor));
+}
+
 @media (max-width: 932px) {
   .content {
     margin-block-start: 0;

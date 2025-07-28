@@ -309,10 +309,6 @@
 
 	.game-panel {
 		position: relative;
-		background-image: url('/images/j5-start.png');
-		background-position: bottom center;
-		background-size: 100% auto;
-		background-repeat: no-repeat;
 	}
 
 	.game-grid {
