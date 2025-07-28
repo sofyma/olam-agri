@@ -481,7 +481,7 @@
         }
 
         &.closed {
-            transform: translateX(calc(-100% + 5rem));
+            transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
         }
     }
 
