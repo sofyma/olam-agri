@@ -3,12 +3,23 @@
 	import { goto } from '$app/navigation';
     import Game1Shape from '$lib/components/svgs/Game1Shape.svelte';
 	import { game1Store } from '$lib/stores/game1Store';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+	let instructionsClosed = true;
 
 	onMount(() => {
 		if (!$game1Store.isComplete) {
 			goto('/games/game1');
 		}
 	});
+
+	function openInstructions() {
+		instructionsClosed = false;
+	}
+
+	function closeInstructions() {
+		instructionsClosed = true;
+	}
 
 	function handleReplay() {
 		game1Store.reset();
@@ -23,19 +34,34 @@
 
 <div class="finish-container">
 	<Game1Shape />
+	
+			<GameInstructions
+			gameNumber={1}
+			gameTitle="Brand Heroes"
+			gameSubtitle="The Super Power of Branding"
+			infoRoute="/games/info/1"
+			bind:instructionsClosed
+			paragraphs={[
+				"We often don't realise how much brands shape our global culture. Do you think that's an exaggeration? Let's find out!",
+				"First, Vision Queen will show you some brands without their names. Will you recognise them?",
+				"Then, she'll test you with images of iconic places around the world.",
+				"Each brand you get right earns you 1 point. For each place you fail to recognise, you'll lose 1 point.",
+				"What do you know better?"
+			]}
+		/>
 
-	<img class="game1-small-hero-finish" width="1056" height="625" src="/images/Game1HeroSmallFinish.png" alt="" />
+	<img class="game1-small-hero-finish" src="/images/heroe-1-3.png" alt="Brand Heroes" />
 
 
 	<div class="finish-content">
 		<div class="finish-text">
-			<p>As you've just experienced, brands have an incredible power over our minds. Without seeing their names, you were still able to recognise many of them and they even trigger a feeling when you think about them.</p>
-			<p>That's the true power of branding: When done well, it sticks with us. It becomes part of how we see the world.</p>
-			<p>Great brands manage to do this because:</p>
+			<p>As you've just seen, brands have a powerful hold on our minds. Even without their names, you recognised many.</p>
+			<p>That’s the true power of branding: when it’s done well, it stays with us and triggers feelings in us.</p>
+			<p>Great brands achieve this because:</p>
 			<ul>
-				<li>- They express a clear and unique identity</li>
-				<li>- They are consistently presented</li>
-				<li>- And they connect with people on an emotional level</li>
+				<li>They have a clear, unique identity</li>
+				<li>They’re shown consistently</li>
+				<li>And they create emotional connections</li>
 			</ul>
 
 			<cite>
@@ -59,13 +85,14 @@
 
 <style lang="scss">
 	.finish-container {
-		align-items: center;
 		background-color: #FF7000;
 		display: flex;
 		justify-content: center;
 		min-block-size: 100vh;
 		overflow: hidden;
 		position: relative;
+		padding-block-start: calc(10rem * var(--scale-factor));
+		padding-block-end: calc(7rem * var(--scale-factor));
 
 		:global(.shape) {
 			inset-block-start: calc(-16rem * var(--scale-factor));
@@ -73,6 +100,8 @@
 			position: absolute;
 		}
 	}
+
+
 
 	.finish-content {
 		margin-inline: auto;
@@ -87,14 +116,15 @@
 
 	.finish-text p,
 	.finish-text li {
-		color: #000;
+		color: #2E2D2C;
 		font-size: calc(3.2rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
 	}
 
 	.finish-text ul {
-		margin-block-start: calc(4rem * var(--scale-factor));
+		list-style: disc;
+		padding-inline-start: 30px;
 	}
 
 	.finish-text p {
@@ -107,8 +137,8 @@
 
 	.finish-text cite {
 		background-color: #fff;
-		border-radius: calc(3.5rem * var(--scale-factor));
-		color: #FF7000;
+		border-radius: 0 calc(3rem * var(--scale-factor));
+		color: #FF5700;
 		display: block;
 		font-size: calc(4rem * var(--scale-factor));
 		font-weight: 600;
@@ -136,13 +166,30 @@
 	}
 
 	.game1-small-hero-finish {
-		inset-block-start: calc(19rem * var(--scale-factor));
+		inset-block-start: calc(10rem * var(--scale-factor));
 		inset-inline-end: calc(14.5rem * var(--scale-factor));
 		position: absolute;
+		max-inline-size: calc(103.5rem * var(--scale-factor));
 	}
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
+		/* Add scale system to shape SVG */
+		:global(.shape) {
+			transform: scale(0.6);
+			transform-origin: top left;
+		}
+
+		/* Adjust finish content for mobile */
+		.finish-content {
+			padding: calc(2rem * var(--scale-factor));
+		}
+
+		.finish-container {
+			padding-block-start: calc(3rem * var(--scale-factor));
+			padding-block-end: calc(2rem * var(--scale-factor));
+		}
+
 		.finish-text p,
 		.finish-text li {
 			font-size: calc(2.5rem * var(--scale-factor));
@@ -160,6 +207,7 @@
 			font-size: calc(2.5rem * var(--scale-factor));
 			margin-block-start: calc(2.5rem * var(--scale-factor));
 			padding: calc(1.5rem * var(--scale-factor));
+			margin-inline: 0;
 		}
 
 		.finish-small {
@@ -171,9 +219,12 @@
 			padding-block-start: calc(2rem * var(--scale-factor));
 		}
 
-		.game1-small-hero-finish {
-			width: 70%;
-			height: auto;
+		/* Adjust small hero summary for mobile */
+		:global(.game1-small-hero-finish) {
+			inset-block-start: calc(4rem * var(--scale-factor));
+			inset-inline-start: calc(6rem * var(--scale-factor));
+			transform: scale(0.7);
+			display: none;
 		}
 	}
 </style> 

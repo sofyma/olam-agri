@@ -3,6 +3,9 @@
     import { goto } from '$app/navigation';
     import { game3Store } from '$lib/stores/game3Store';
     import Game3SummaryHero from '$lib/components/svgs/Game3SummaryHero.svelte';
+    import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+    let instructionsClosed = true;
     
     let finalScore = 0;
     let checkpointsReached = 0;
@@ -24,7 +27,22 @@
     }
 </script>
 
-<div class="game-container">
+<div class="game-container" class:sidebar-is-closed={instructionsClosed}>
+    <GameInstructions
+        gameNumber={3}
+        gameTitle="Brand Heroes"
+        gameSubtitle="Brain Over Brawn"
+        infoRoute="/games/info/3"
+        bind:instructionsClosed
+        primaryColor="#FF5BAF"
+        backgroundColor="#2E2D2C"
+        paragraphs={[
+            "Dr Genius may be tough, but his real power is his brain, he trains it every day!",
+            "Now he challenges you: use the arrow pad to escape the maze, solve hidden challenges, and score up to 11 points in total.",
+            "Let the wits be with you!"
+        ]}
+    />
+
     <div class="game-summary">
         <h2 class="title">Well done!</h2>
 

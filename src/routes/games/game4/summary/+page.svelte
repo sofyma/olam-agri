@@ -4,6 +4,9 @@
 	import { game4Store } from '$lib/stores/game4Store';
 	import Game4SummaryHeroLeft from '$lib/components/svgs/Game4SummaryHeroLeft.svelte';
 	import Game4SummaryHeroRight from '$lib/components/svgs/Game4SummaryHeroRight.svelte';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+	let instructionsClosed = true; // Default to closed
 
 	onMount(() => {
 		console.log('Summary page loaded, checking store state:', {
@@ -34,7 +37,26 @@
 	}
 </script>
 
-<div class="game-container">
+<div class="game-container" class:sidebar-is-closed={instructionsClosed}>
+	<GameInstructions 
+		gameNumber={4}
+		gameTitle="Brand Heroes"
+		gameSubtitle="Choose<br>a Side"
+		infoRoute="/games/info/4"
+		bind:instructionsClosed
+		primaryColor="#FFC400"
+		backgroundColor="#2E2D2C"
+		logoColor="#fff"
+		gameIdTextColor="#2E2D2C"
+		contentCheckBtnTextColor="#2E2D2C"
+		paragraphs={[
+			"All heroes face the battle between good and evil, with great power comes great responsibility!",
+			"Now it's your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.",
+			"You'll start with 5 points, but lose 1 for every wrong decision.",
+			"Ready for the challenge? Hit Start!"
+		]}
+	/>
+
 	<img src="/images/game4-shape-incorrect.png" alt="" class="game4-shape game4-shape-incorrect">
 
     <div class="game-summary">
@@ -97,6 +119,11 @@
 		block-size: 100vh;
 		display: grid;
 		place-content: center;
+	}
+
+	/* Game 4 specific logo styling */
+	:global(.instructions .logo path) {
+		fill: #fff;
 	}
 
 	.game-summary {
@@ -168,7 +195,7 @@
 	}
 
 	.finish-small {
-		color: #fff;
+		color: #000;
 		display: block;
 		font-size: calc(2rem * var(--scale-factor));
 		font-weight: 600;

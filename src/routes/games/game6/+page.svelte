@@ -5,7 +5,7 @@
     import { game6Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import { authStore } from '$lib/stores/authStore';
     import type { Question } from '$lib/types/game6';
-	import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
     
     let showInstructions = true;
 	let instructionsClosed = false;
@@ -73,56 +73,23 @@
 
 <div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
 	
-    {#if showInstructions}
+    	{#if showInstructions}
 		<div class="game-panel">
-			<div class="instructions" class:closed={instructionsClosed}>
-				{#if !instructionsClosed}
-					<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-						<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-							<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-						</svg>
-					</button>
-				{:else}
-					<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-						<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-						</svg>
-					</button>
-				{/if}
-
-				<Game1Logo />
-
-				<h1 class="title">Brand Heroes</h1>
-					
-				<div class="copy">
-					<div class="copy-header">
-						<div class="game-id">
-							<span class="text">Game</span>
-							<span class="number">6</span>
-						</div>
-
-						<h2 class="subtitle">Only the <br> Fastest Will <br> Reach the Sky</h2>
-					</div>
-
-					<p class="paragraph">Mystic Man can see into your mind just by looking into your eyes.</p>
-					<p class="paragraph">He reads your thoughts, senses your past, and predicts your next move.</p>
-					<p class="paragraph">Dare to meet his gaze? Reach the end and earn 5 points.</p>
-					<p class="paragraph">He already knows you're about to hit Start.</p>
-				</div>
-
-				<div class="content-check">
-					<div class="content-check-grid">
-						<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
-							Check content
-						</button>
-						<div class="content-check-text">
-							Have you read the related content?<br>
-							You'll do better in the game if you check it first!
-						</div>
-					</div>
-				</div>
-			</div>
+			<GameInstructions 
+				gameNumber={6}
+				gameTitle="Brand Heroes"
+				gameSubtitle="The Mind <br> Reader"
+				infoRoute="/games/info/6"
+				bind:instructionsClosed
+				primaryColor="#00A865"
+				backgroundColor="#2E2D2C"
+				paragraphs={[
+					"Mystic Man can see into your mind just by looking into your eyes.",
+					"He reads your thoughts, senses your past, and predicts your next move.",
+					"Dare to meet his gaze? Reach the end and earn 10 points.",
+					"He already knows you're about to hit Start."
+				]}
+			/>
 
 			<div class="start-screen">
 				<img src="/images/game6-start-shape.png" alt="Start Game" class="start-screen-shape" />
@@ -135,59 +102,26 @@
 
 				<div class="explanation">
 					<h2 class="explanation-title">Mystic Man</h2>
-					<p class="explanation-copy">Reader of thoughts, keeper of secrets, master of what’s to come. Nothing escapes his mind.</p>
+					<p class="explanation-copy">Reader of thoughts, keeper of secrets, master of what's to come. Nothing escapes his mind.</p>
 				</div>
 			</div>
 		</div>
 
     {:else if showWelcome}
-		<div class="instructions" class:closed={instructionsClosed}>
-			{#if !instructionsClosed}
-				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-					</svg>
-				</button>
-			{:else}
-				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-					</svg>
-				</button>
-			{/if}
-
-			<Game1Logo />
-
-			<h1 class="title">Brand Heroes</h1>
-				
-			<div class="copy">
-				<div class="copy-header">
-					<div class="game-id">
-						<span class="text">Game</span>
-						<span class="number">6</span>
-					</div>
-
-					<h2 class="subtitle">The Final Challenge</h2>
-				</div>
-
-				<p class="paragraph">Test your knowledge with multiple choice questions about branding and design!</p>
-				<p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
-				<p class="paragraph">Can you prove you're a brand hero?</p>
-			</div>
-
-			<div class="content-check">
-				<div class="content-check-grid">
-					<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
-						Check content
-					</button>
-					<div class="content-check-text">
-						Have you read the related content?<br>
-						You'll do better in the game if you check it first!
-					</div>
-				</div>
-			</div>
-		</div>
+		<GameInstructions 
+			gameNumber={6}
+			gameTitle="Brand Heroes"
+			gameSubtitle="The Final Challenge"
+			infoRoute="/games/info/6"
+			bind:instructionsClosed
+			primaryColor="#00A865"
+			backgroundColor="#2E2D2C"
+			paragraphs={[
+				"Test your knowledge with multiple choice questions about branding and design!",
+				"Each correct answer earns you 1 point. Wrong answers cost you 1 point.",
+				"Can you prove you're a brand hero?"
+			]}
+		/>
 
         <div class="game-area">
 			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
@@ -217,53 +151,20 @@
             <p>Please add some Game 6 questions in your Sanity Studio to play this game.</p>
         </div>
     {:else}
-		<div class="instructions" class:closed={instructionsClosed}>
-			{#if !instructionsClosed}
-				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-					</svg>
-				</button>
-			{:else}
-				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-					</svg>
-				</button>
-			{/if}
-
-			<Game1Logo />
-
-			<h1 class="title">Brand Heroes</h1>
-				
-			<div class="copy">
-				<div class="copy-header">
-					<div class="game-id">
-						<span class="text">Game</span>
-						<span class="number">6</span>
-					</div>
-
-					<h2 class="subtitle">The Final Challenge</h2>
-				</div>
-
-				<p class="paragraph">Test your knowledge with multiple choice questions about branding and design!</p>
-				<p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
-				<p class="paragraph">Can you prove you're a brand hero?</p>
-			</div>
-
-			<div class="content-check">
-				<div class="content-check-grid">
-					<button class="content-check-btn" on:click={() => goto('/games/info/6')}>
-						Check content
-					</button>
-					<div class="content-check-text">
-						Have you read the related content?<br>
-						You'll do better in the game if you check it first!
-					</div>
-				</div>
-			</div>
-		</div>
+		<GameInstructions 
+			gameNumber={6}
+			gameTitle="Brand Heroes"
+			gameSubtitle="The Final Challenge"
+			infoRoute="/games/info/6"
+			bind:instructionsClosed
+			primaryColor="#00A865"
+			backgroundColor="#2E2D2C"
+			paragraphs={[
+				"Test your knowledge with multiple choice questions about branding and design!",
+				"Each correct answer earns you 1 point. Wrong answers cost you 1 point.",
+				"Can you prove you're a brand hero?"
+			]}
+		/>
 
 		<div class="game-area">
 			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
@@ -513,135 +414,16 @@
 		position: relative;
 	}
 
-	.instructions {
-		background-color: #2E2D2C;
-		block-size: 100vh;
-		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		inline-size: calc(100vw - 66.41%);
-		overflow-y: auto;
-		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
-		position: fixed;
-		transition: transform 0.3s ease-in-out;
-		z-index: 9999;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-
-		&::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
-		}
-
-		&.closed {
-			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
-		}
-	}
-
+	/* Game 6 specific logo styling */
 	:global(.instructions .logo path) {
 		fill: #fff;
 	}
 
-	.close-button,
-	.play-button {
-		background: none;
-		border: none;
-		color: white;
-		cursor: pointer;
-		padding: calc(1rem * var(--scale-factor));
-		position: absolute;
-		z-index: 10000;
 
-		&:hover {
-			opacity: 0.8;
-		}
-	}
 
-	.close-button {
-		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: calc(2rem * var(--scale-factor));
 
-		svg {
-			block-size: calc(2.4rem * var(--scale-factor));
-			inline-size: calc(2.3rem * var(--scale-factor));
-		}
-	}
 
-	.play-button {
-		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: .3rem;
 
-		svg {
-			block-size: calc(3.3rem * var(--scale-factor));
-			inline-size: calc(2.7rem * var(--scale-factor));
-		}
-	}
-
-	.copy {
-		background-color: #fff;
-		margin-block-start: calc(6.5rem * var(--scale-factor));
-		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		position: relative;
-
-		&-header {
-			align-items: end;
-			display: grid;
-			grid-column-gap: calc(3rem * var(--scale-factor));
-			grid-template-columns: repeat(2, auto);
-			justify-content: start;
-			margin-block-start: calc(-5rem * var(--scale-factor));
-		}
-	}
-
-	.game-id {
-		align-items: center;
-		background-color: #00A865;
-		block-size: calc(17rem * var(--scale-factor));
-		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		inline-size: calc(11rem * var(--scale-factor));
-		padding: calc(1rem * var(--scale-factor));
-		text-align: center;
-
-		.text {
-			font-size: calc(2.8rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(2.8rem * var(--scale-factor));
-		}
-
-		.number {
-			font-size: calc(13.7rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(13.7rem * var(--scale-factor));
-		}
-	}
-
-	.title {
-		color: #00A865;
-		font-size: calc(6rem * var(--scale-factor));
-		font-style: normal;
-		font-weight: 600;
-		line-height: normal;
-		padding-block-start: calc(2rem * var(--scale-factor));
-	}
-
-	.subtitle {
-		color: #00A865;
-		font-size: calc(3.7rem * var(--scale-factor));
-		font-weight: 600;
-		line-height: normal;
-	}
-
-	.paragraph {
-		color: #2E2D2C;
-		font-size: calc(2.2rem * var(--scale-factor));
-		padding-block-start: calc(2rem * var(--scale-factor));
-
-		&:first-child {
-			padding-block-start: calc(2.5rem * var(--scale-factor));
-		}
-	}
 
 	.start-screen {
 		display: flex;
@@ -725,42 +507,7 @@
 		}
 	}
 
-	/* Content check section */
-	.content-check {
-		padding-block-start: calc(2.7rem * var(--scale-factor));
-	}
 
-	.content-check-grid {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: calc(2rem * var(--scale-factor));
-		align-items: center;
-	}
-
-	.content-check-btn {
-		width: calc(14.6rem * var(--scale-factor));
-		height: calc(3.4rem * var(--scale-factor));
-		border-radius: 0 calc(1.5rem * var(--scale-factor));
-		color: #fff;
-		background-color: #00A865;
-		border: none;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
-	.content-check-text {
-		color: #FFF;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-style: normal;
-		font-weight: 400;
-		line-height: calc(2rem * var(--scale-factor));
-	}
 
 	/* Windows 125% specific styles */
 	/*
@@ -808,40 +555,40 @@
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
 		/* 1. Fix left sidebar title and horizontal scroll */
-		.instructions {
-			inline-size: calc(100vw - 66.41%);
-			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
-			overflow-x: hidden;
-			scrollbar-width: none; /* Firefox */
-			-ms-overflow-style: none; /* Internet Explorer 10+ */
-		}
+		// .instructions {
+		// 	inline-size: calc(100vw - 66.41%);
+		// 	padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+		// 	overflow-x: hidden;
+		// 	scrollbar-width: none; /* Firefox */
+		// 	-ms-overflow-style: none; /* Internet Explorer 10+ */
+		// }
 
-		.instructions::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
-		}
+		// .instructions::-webkit-scrollbar {
+		// 	display: none; /* Chrome, Safari, Opera */
+		// }
 
-		.title {
-			font-size: calc(4.5rem * var(--scale-factor));
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-		}
+		// .title {
+		// 	font-size: calc(4.5rem * var(--scale-factor));
+		// 	word-wrap: break-word;
+		// 	overflow-wrap: break-word;
+		// }
 
-		/* 2. Fix sidebar horizontal scroll */
-		.copy {
-			margin-block-start: calc(4rem * var(--scale-factor));
-			padding: calc(1.5rem * var(--scale-factor));
-		}
+		// /* 2. Fix sidebar horizontal scroll */
+		// .copy {
+		// 	margin-block-start: calc(4rem * var(--scale-factor));
+		// 	padding: calc(1.5rem * var(--scale-factor));
+		// }
 
-		.copy-header {
-			grid-template-columns: repeat(2, auto);
-			grid-column-gap: calc(2rem * var(--scale-factor));
-			margin-block-start: calc(-3rem * var(--scale-factor));
-		}
+		// .copy-header {
+		// 	grid-template-columns: repeat(2, auto);
+		// 	grid-column-gap: calc(2rem * var(--scale-factor));
+		// 	margin-block-start: calc(-3rem * var(--scale-factor));
+		// }
 
-		/* 3. Keep content text size as requested */
-		.paragraph {
-			font-size: calc(2.2rem * var(--scale-factor));
-		}
+		// /* 3. Keep content text size as requested */
+		// .paragraph {
+		// 	font-size: calc(2.2rem * var(--scale-factor));
+		// }
 
 		/* 4. Add scale system to shape SVG */
 		:global(.shape) {
@@ -850,39 +597,39 @@
 		}
 
 		/* 5. Fix game header SVG and shape scaling */
-		.game-header {
-			padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		}
+		// .game-header {
+		// 	padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		// }
 
-		/* Fix game header SVG sizing */
-		.game-header :global(svg) {
-			max-width: 100%;
-			width: 100%;
-			height: calc(30rem * var(--scale-factor));
-			inset-block-start: 0;
-			inset-inline-start: 0;
-		}
+		// /* Fix game header SVG sizing */
+		// .game-header :global(svg) {
+		// 	max-width: 100%;
+		// 	width: 100%;
+		// 	height: calc(30rem * var(--scale-factor));
+		// 	inset-block-start: 0;
+		// 	inset-inline-start: 0;
+		// }
 
-		.game-header-title {
-			font-size: calc(3.5rem * var(--scale-factor));
-		}
+		// .game-header-title {
+		// 	font-size: calc(3.5rem * var(--scale-factor));
+		// }
 
-		.game-header-paragraph {
-			font-size: calc(2.4rem * var(--scale-factor));
-		}
+		// .game-header-paragraph {
+		// 	font-size: calc(2.4rem * var(--scale-factor));
+		// }
 
-		/* 6. Fix question container positioning and scaling */
-		.game-grid {
-			grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-			align-items: start;
-			padding: calc(2rem * var(--scale-factor));
-		}
+		// /* 6. Fix question container positioning and scaling */
+		// .game-grid {
+		// 	grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
+		// 	align-items: start;
+		// 	padding: calc(2rem * var(--scale-factor));
+		// }
 		
 
 		/* Question wrapper for mobile - reset padding */
-		.question-wrapper {
-			padding-block: 0;
-		}
+		// .question-wrapper {
+		// 	padding-block: 0;
+		// }
 
 		/* 7. Adjust start screen for mobile */
 		.start-screen {
@@ -905,59 +652,59 @@
 		}
 
 		/* Adjust game summary for mobile */
-		.game-summary {
-			padding: calc(2rem * var(--scale-factor));
-		}
+		// .game-summary {
+		// 	padding: calc(2rem * var(--scale-factor));
+		// }
 
-		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
-		}
+		// .game-summary .title {
+		// 	font-size: calc(5rem * var(--scale-factor));
+		// }
 
-		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
-			padding: calc(2rem * var(--scale-factor));
+		// .game-summary .results {
+		// 	inline-size: calc(80rem * var(--scale-factor));
+		// 	padding: calc(2rem * var(--scale-factor));
 
-			.paragraph {
-				padding-block-start: 0;
-				margin-block-start: 0;
-			}
-		}
+		// 	.paragraph {
+		// 		padding-block-start: 0;
+		// 		margin-block-start: 0;
+		// 	}
+		// }
 
-		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
-			padding-block-start: calc(2rem * var(--scale-factor));
-		}
+		// .game-summary .paragraph {
+		// 	font-size: calc(3.5rem * var(--scale-factor));
+		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// }
 
-		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
-		}
+		// .game-summary .total-points {
+		// 	font-size: calc(6rem * var(--scale-factor));
+		// }
 
-		.game-summary .cta {
-			padding-block-start: calc(2rem * var(--scale-factor));
-		}
+		// .game-summary .cta {
+		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// }
 
-		/* Adjust game ID for mobile */
-		.game-id {
-			block-size: calc(12rem * var(--scale-factor));
-			inline-size: calc(8rem * var(--scale-factor));
-		}
+		// /* Adjust game ID for mobile */
+		// .game-id {
+		// 	block-size: calc(12rem * var(--scale-factor));
+		// 	inline-size: calc(8rem * var(--scale-factor));
+		// }
 
-		.game-id .text {
-			font-size: calc(2rem * var(--scale-factor));
-			line-height: calc(2rem * var(--scale-factor));
-		}
+		// .game-id .text {
+		// 	font-size: calc(2rem * var(--scale-factor));
+		// 	line-height: calc(2rem * var(--scale-factor));
+		// }
 
-		.game-id .number {
-			font-size: calc(9rem * var(--scale-factor));
-			line-height: calc(9rem * var(--scale-factor));
-		}
+		// .game-id .number {
+		// 	font-size: calc(9rem * var(--scale-factor));
+		// 	line-height: calc(9rem * var(--scale-factor));
+		// }
 
 		/* Adjust subtitle for mobile */
-		.subtitle {
-			font-size: calc(2.5rem * var(--scale-factor));
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-		}
+		// .subtitle {
+		// 	font-size: calc(2.5rem * var(--scale-factor));
+		// 	word-wrap: break-word;
+		// 	overflow-wrap: break-word;
+		// }
 
 		/* Adjust vision queen container for mobile */
 		// .vision-queen-container {
@@ -974,15 +721,15 @@
 		// }
 
 		/* Adjust buttons for mobile */
-		.close-button {
-			inset-block-start: calc(1rem * var(--scale-factor));
-			inset-inline-end: calc(2rem * var(--scale-factor));
-		}
+		// .close-button {
+		// 	inset-block-start: calc(1rem * var(--scale-factor));
+		// 	inset-inline-end: calc(2rem * var(--scale-factor));
+		// }
 
-		.play-button {
-			inset-block-start: calc(2rem * var(--scale-factor));
-			inset-inline-end: calc(-0.2rem * var(--scale-factor));
-		}
+		// .play-button {
+		// 	inset-block-start: calc(2rem * var(--scale-factor));
+		// 	inset-inline-end: calc(-0.2rem * var(--scale-factor));
+		// }
 
 		/* Adjust start button for mobile */
 		// .start {
@@ -996,9 +743,9 @@
 		// }
 
 		/* Fix sidebar closed state for mobile */
-		.instructions.closed {
-			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-		}
+		// .instructions.closed {
+		// 	transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+		// }
 
 		/* Adjust small hero summary for mobile */
 		:global(.small-hero-summary) {
@@ -1008,12 +755,12 @@
 			display: none;
 		}
 
-		.game1-initial-screen-button {
-			background: none;
-			border: none;
-			padding: 0;
-			cursor: pointer;
-		}
+		// .game1-initial-screen-button {
+		// 	background: none;
+		// 	border: none;
+		// 	padding: 0;
+		// 	cursor: pointer;
+		// }
 
 		/* Adjust image button position for mobile */
 		.image-button {
@@ -1032,10 +779,10 @@
 		}
 
 		/* Adjust subtitle position for mobile */
-		.subtitle {
-			position: relative;
-			inset-block-start: 1rem;
-		}
+		// .subtitle {
+		// 	position: relative;
+		// 	inset-block-start: 1rem;
+		// }
 
 		/* Hide game6 hero before playing on mobile */
 		.game6-hero-before-playing {
@@ -1043,23 +790,23 @@
 		}
 
 		/* Content check section mobile adjustments */
-		.content-check {
-			padding-block-start: calc(2rem * var(--scale-factor));
-		}
+		// .content-check {
+		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// }
 
-		.content-check-grid {
-			gap: calc(1.5rem * var(--scale-factor));
-		}
+		// .content-check-grid {
+		// 	gap: calc(1.5rem * var(--scale-factor));
+		// }
 
-		.content-check-btn {
-			width: calc(12rem * var(--scale-factor));
-			height: calc(3rem * var(--scale-factor));
-			font-size: calc(1.2rem * var(--scale-factor));
-		}
+		// .content-check-btn {
+		// 	width: calc(12rem * var(--scale-factor));
+		// 	height: calc(3rem * var(--scale-factor));
+		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// }
 
-		.content-check-text {
-			font-size: calc(1.2rem * var(--scale-factor));
-			line-height: calc(1.6rem * var(--scale-factor));
-		}
+		// .content-check-text {
+		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// 	line-height: calc(1.6rem * var(--scale-factor));
+		// }
 	}
 </style> 

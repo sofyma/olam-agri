@@ -3,6 +3,9 @@
 	import { goto } from '$app/navigation';
 	import { game5Store } from '$lib/stores/game5Store';
 	import Game5Logo from '$lib/components/svgs/Game5Logo.svelte';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+	let instructionsClosed = true; // Default to closed
 
 	onMount(() => {
 		console.log('Game 5 Summary page loaded, checking store state:', {
@@ -41,7 +44,24 @@
 	$: formattedTime = formatTime($game5Store.timeSpent);
 </script>
 
-<div class="game-container">
+<div class="game-container" class:sidebar-is-closed={instructionsClosed}>
+	<GameInstructions 
+		gameNumber={5}
+		gameTitle="Brand Heroes"
+		gameSubtitle="Only the Fastest Will Reach the Sky"
+		infoRoute="/games/info/5"
+		bind:instructionsClosed
+		primaryColor="#00B2E7"
+		backgroundColor="#2E2D2C"
+		paragraphs={[
+			"Caution!",
+			"This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.",
+			"If you manage to complete the game you'll earn 5 points, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.",
+			"In the next screen, read carefully all the steps before doing anything!",
+			"Are you ready? 3, 2, 1..."
+		]}
+	/>
+
 	<div class="game5-logo-left">
 		<Game5Logo />
 	</div>
@@ -115,6 +135,11 @@
 		display: grid;
 		place-content: center;
 		position: relative;
+	}
+
+	/* Game 5 specific logo styling */
+	:global(.instructions .logo path) {
+		fill: #fff;
 	}
 
 	.game-summary {

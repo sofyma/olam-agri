@@ -20,7 +20,7 @@ const createGame6Store = () => {
   const { subscribe, set, update } = writable<Game6State>({
     questions: [],
     currentQuestionIndex: 0,
-    score: 5, // Fixed score for completing the game
+    score: 10, // Fixed score for completing the game
     isComplete: false,
     isLoading: true,
     error: null,
@@ -40,7 +40,7 @@ const createGame6Store = () => {
       set({
         questions: questions,
         currentQuestionIndex: 0,
-        score: 5,
+        score: 10,
         isComplete: false,
         isLoading: false,
         error: null,

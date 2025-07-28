@@ -2,6 +2,9 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { game6Store } from '$lib/stores/game6Store';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+	let instructionsClosed = true; // Default to closed
 
 	onMount(() => {
 		console.log('Game 6 finish page loaded, checking store state:', {
@@ -30,7 +33,22 @@
 	}
 </script>
 
-<div class="game-container">
+<div class="game-container" class:sidebar-is-closed={instructionsClosed}>
+	<GameInstructions 
+		gameNumber={6}
+		gameTitle="Brand Heroes"
+		gameSubtitle="The Final Challenge"
+		infoRoute="/games/info/6"
+		bind:instructionsClosed
+		primaryColor="#00A865"
+		backgroundColor="#2E2D2C"
+		paragraphs={[
+			"Test your knowledge with multiple choice questions about branding and design!",
+			"Each correct answer earns you 1 point. Wrong answers cost you 1 point.",
+			"Can you prove you're a brand hero?"
+		]}
+	/>
+
     <img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
 
     <div class="game-summary">
@@ -60,6 +78,11 @@
 		display: grid;
 		place-content: center;
 		padding-block-start: calc(10rem * var(--scale-factor));
+	}
+
+	/* Game 6 specific logo styling */
+	:global(.instructions .logo path) {
+		fill: #fff;
 	}
 
 	.game-summary {

@@ -8,7 +8,7 @@
     import type { Question as QuestionType } from '$lib/types/game3';
     import { RankingService } from '$lib/services/rankingService';
     import { getAuth } from '$lib/stores/authStore';
-    import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+    import GameInstructions from '$lib/components/GameInstructions.svelte';
     
     let currentQuestion: QuestionType;
     let showFeedback = false;
@@ -152,53 +152,20 @@
 <div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
     {#if showInstructions}
         <div class="game-panel">
-            <div class="instructions" class:closed={instructionsClosed}>
-                {#if !instructionsClosed}
-                    <button class="close-button" on:click={closeInstructions}>
-                        <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-                            <line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-                        </svg>
-                    </button>
-                {:else}
-                    <button class="play-button" on:click={openInstructions}>
-                        <svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-                        </svg>
-                    </button>
-                {/if}
-
-                <Game1Logo />
-
-                <h1 class="title">Brand Heroes</h1>
-                    
-                <div class="copy">
-                    <div class="copy-header">
-                        <div class="game-id">
-                            <span class="text">Game</span>
-                            <span class="number">3</span>
-                        </div>
-
-                        <h2 class="subtitle">Brain Over <br> Brawn</h2>
-                    </div>
-
-                    <p class="paragraph">Dr Genius may be tough, but his real power is his brain, he trains it every day!</p>
-                    <p class="paragraph">Now he challenges you: use the arrow pad to escape the maze, solve hidden challenges, and score up to 11 points in total.</p>
-                    					<p class="paragraph">Let the wits be with you!</p>
-				</div>
-
-				<div class="content-check">
-					<div class="content-check-grid">
-						<button class="content-check-btn" on:click={() => goto('/games/info/3')}>
-							Check content
-						</button>
-						<div class="content-check-text">
-							Have you read the related content?<br>
-							You'll do better in the game if you check it first!
-						</div>
-					</div>
-				</div>
-            </div>
+            <GameInstructions
+                gameNumber={3}
+                gameTitle="Brand Heroes"
+                gameSubtitle="Brain Over Brawn"
+                infoRoute="/games/info/3"
+                bind:instructionsClosed
+                primaryColor="#FF5BAF"
+                backgroundColor="#2E2D2C"
+                paragraphs={[
+                    "Dr Genius may be tough, but his real power is his brain, he trains it every day!",
+                    "Now he challenges you: use the arrow pad to escape the maze, solve hidden challenges, and score up to 11 points in total.",
+                    "Let the wits be with you!"
+                ]}
+            />
 
             <div class="start-screen">
                 <div class="start-screen-content">
@@ -218,54 +185,21 @@
             <p>Please add some Game 3 questions in your Sanity Studio to play this game.</p>
         </div>
     {:else}
-        <div class="instructions" class:closed={instructionsClosed}>
-            {#if !instructionsClosed}
-                <button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-                    <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-                        <line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-                    </svg>
-                </button>
-            {:else}
-                <button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-                    <svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-                    </svg>
-                </button>
-            {/if}
-
-            <Game1Logo />
-
-            <h1 class="title">Brand Heroes</h1>
-                
-            <div class="copy">
-                <div class="copy-header">
-                    <div class="game-id">
-                        <span class="text">Game</span>
-                        <span class="number">3</span>
-                    </div>
-
-                    <h2 class="subtitle">The Maze of Confusion</h2>
-                </div>
-
-                <p class="paragraph">Mr Confusion has created a maze to confuse us! Navigate through the maze to reach the finish line.</p>
-                <p class="paragraph">Use the directional pad to move the ball. You'll encounter questions along the way.</p>
-                <p class="paragraph">Each correct answer earns you 1 point. Wrong answers cost you 1 point.</p>
-                <p class="paragraph">Can you find your way through the maze?</p>
-            </div>
-
-            <div class="content-check">
-                <div class="content-check-grid">
-                    <button class="content-check-btn" on:click={() => goto('/games/info/3')}>
-                        Check content
-                    </button>
-                    <div class="content-check-text">
-                        Have you read the related content?<br>
-                        You'll do better in the game if you check it first!
-                    </div>
-                </div>
-            </div>
-        </div>
+        <GameInstructions
+            gameNumber={3}
+            gameTitle="Brand Heroes"
+            gameSubtitle="The Maze of Confusion"
+            infoRoute="/games/info/3"
+            bind:instructionsClosed
+            primaryColor="#FF5BAF"
+            backgroundColor="#2E2D2C"
+            paragraphs={[
+                "Mr Confusion has created a maze to confuse us! Navigate through the maze to reach the finish line.",
+                "Use the directional pad to move the ball. You'll encounter questions along the way.",
+                "Each correct answer earns you 1 point. Wrong answers cost you 1 point.",
+                "Can you find your way through the maze?"
+            ]}
+        />
 
         <div class="game-area">
             <div class="game-header">
@@ -464,135 +398,135 @@
         position: relative;
     }
 
-    .instructions {
-        background-color: #2E2D2C;
-        block-size: 100vh;
-        border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
-        inline-size: calc(100vw - 66.41%);
-        inset-block-start: 0;
-        inset-inline-start: 0;
-        overflow-y: auto;
-        padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
-        position: fixed;
-        z-index: 9999;
-        transition: transform 0.3s ease-in-out;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* Internet Explorer 10+ */
+    // .instructions {
+    //     background-color: #2E2D2C;
+    //     block-size: 100vh;
+    //     border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
+    //     inline-size: calc(100vw - 66.41%);
+    //     inset-block-start: 0;
+    //     inset-inline-start: 0;
+    //     overflow-y: auto;
+    //     padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
+    //     position: fixed;
+    //     z-index: 9999;
+    //     transition: transform 0.3s ease-in-out;
+    //     scrollbar-width: none; /* Firefox */
+    //     -ms-overflow-style: none; /* Internet Explorer 10+ */
 
-        &::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
+    //     &::-webkit-scrollbar {
+    //         display: none; /* Chrome, Safari, Opera */
+    //     }
 
-        &.closed {
-            transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
-        }
-    }
+    //     &.closed {
+    //         transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
+    //     }
+    // }
 
     :global(.instructions .logo path) {
         fill: #fff;
     }
 
-    .close-button,
-    .play-button {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        position: absolute;
-        z-index: 10000;
-        padding: calc(1rem * var(--scale-factor));
+    // .close-button,
+    // .play-button {
+    //     background: none;
+    //     border: none;
+    //     color: white;
+    //     cursor: pointer;
+    //     position: absolute;
+    //     z-index: 10000;
+    //     padding: calc(1rem * var(--scale-factor));
 
-        &:hover {
-            opacity: 0.8;
-        }
-    }
+    //     &:hover {
+    //         opacity: 0.8;
+    //     }
+    // }
 
-    .close-button {
-        inset-block-start: calc(2rem * var(--scale-factor));
-        inset-inline-end: calc(2rem * var(--scale-factor));
+    // .close-button {
+    //     inset-block-start: calc(2rem * var(--scale-factor));
+    //     inset-inline-end: calc(2rem * var(--scale-factor));
 
-        svg {
-            block-size: calc(2.4rem * var(--scale-factor));
-            inline-size: calc(2.3rem * var(--scale-factor));
-        }
-    }
+    //     svg {
+    //         block-size: calc(2.4rem * var(--scale-factor));
+    //         inline-size: calc(2.3rem * var(--scale-factor));
+    //     }
+    // }
 
-    .play-button {
-        inset-block-start: calc(2rem * var(--scale-factor));
-        inset-inline-end: .5rem;
+    // .play-button {
+    //     inset-block-start: calc(2rem * var(--scale-factor));
+    //     inset-inline-end: .5rem;
 
-        svg {
-            block-size: calc(3.3rem * var(--scale-factor));
-            inline-size: calc(2.7rem * var(--scale-factor));
-        }
-    }
+    //     svg {
+    //         block-size: calc(3.3rem * var(--scale-factor));
+    //         inline-size: calc(2.7rem * var(--scale-factor));
+    //     }
+    // }
 
-    .copy {
-        background-color: #fff;
-        margin-block-start: calc(6.5rem * var(--scale-factor));
-        padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-        position: relative;
+    // .copy {
+    //     background-color: #fff;
+    //     margin-block-start: calc(6.5rem * var(--scale-factor));
+    //     padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+    //     position: relative;
 
-        &-header {
-            align-items: end;
-            display: grid;
-            justify-content: start;
-            grid-template-columns: repeat(2, auto);
-            grid-column-gap: calc(3rem * var(--scale-factor));
-            margin-block-start: calc(-5rem * var(--scale-factor));
-        }
-    }
+    //     &-header {
+    //         align-items: end;
+    //         display: grid;
+    //         justify-content: start;
+    //         grid-template-columns: repeat(2, auto);
+    //         grid-column-gap: calc(3rem * var(--scale-factor));
+    //         margin-block-start: calc(-5rem * var(--scale-factor));
+    //     }
+    // }
 
-    .game-id {
-        align-items: center;
-        background-color: #FF5BAF;
-        border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
-        block-size: calc(17rem * var(--scale-factor));
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        inline-size: calc(11rem * var(--scale-factor));
-        padding: calc(1rem * var(--scale-factor));
-        text-align: center;
+    // .game-id {
+    //     align-items: center;
+    //     background-color: #FF5BAF;
+    //     border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+    //     block-size: calc(17rem * var(--scale-factor));
+    //     color: #fff;
+    //     display: flex;
+    //     flex-direction: column;
+    //     inline-size: calc(11rem * var(--scale-factor));
+    //     padding: calc(1rem * var(--scale-factor));
+    //     text-align: center;
 
-        .text {
-            font-size: calc(2.8rem * var(--scale-factor));
-            font-weight: 600;
-            line-height: calc(2.8rem * var(--scale-factor));
-        }
+    //     .text {
+    //         font-size: calc(2.8rem * var(--scale-factor));
+    //         font-weight: 600;
+    //         line-height: calc(2.8rem * var(--scale-factor));
+    //     }
 
-        .number {
-            font-size: calc(13.7rem * var(--scale-factor));
-            font-weight: 600;
-            line-height: calc(13.7rem * var(--scale-factor));
-        }
-    }
+    //     .number {
+    //         font-size: calc(13.7rem * var(--scale-factor));
+    //         font-weight: 600;
+    //         line-height: calc(13.7rem * var(--scale-factor));
+    //     }
+    // }
 
-    .title {
-        color: #FF5BAF;
-        font-size: calc(6rem * var(--scale-factor));
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-        padding-block-start: calc(2rem * var(--scale-factor));
-    }
+    // .title {
+    //     color: #FF5BAF;
+    //     font-size: calc(6rem * var(--scale-factor));
+    //     font-style: normal;
+    //     font-weight: 600;
+    //     line-height: normal;
+    //     padding-block-start: calc(2rem * var(--scale-factor));
+    // }
 
-    .subtitle {
-        color: #FF5BAF;
-        font-size: calc(3.7rem * var(--scale-factor));
-        font-weight: 600;
-        line-height: normal;
-    }
+    // .subtitle {
+    //     color: #FF5BAF;
+    //     font-size: calc(3.7rem * var(--scale-factor));
+    //     font-weight: 600;
+    //     line-height: normal;
+    // }
 
-    .paragraph {
-        color: #2E2D2C;
-        font-size: calc(2.2rem * var(--scale-factor));
-        padding-block-start: calc(2rem * var(--scale-factor));
+    // .paragraph {
+    //     color: #2E2D2C;
+    //     font-size: calc(2.2rem * var(--scale-factor));
+    //     padding-block-start: calc(2rem * var(--scale-factor));
 
-        &:first-child {
-            padding-block-start: calc(2.5rem * var(--scale-factor));
-        }
-    }
+    //     &:first-child {
+    //         padding-block-start: calc(2.5rem * var(--scale-factor));
+    //     }
+    // }
 
     .start-screen {
         display: flex;
@@ -687,41 +621,41 @@
     }
 
     /* Content check section */
-    .content-check {
-        padding-block-start: calc(2.7rem * var(--scale-factor));
-    }
+    // .content-check {
+    //     padding-block-start: calc(2.7rem * var(--scale-factor));
+    // }
 
-    .content-check-grid {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: calc(2rem * var(--scale-factor));
-        align-items: center;
-    }
+    // .content-check-grid {
+    //     display: grid;
+    //     grid-template-columns: auto 1fr;
+    //     gap: calc(2rem * var(--scale-factor));
+    //     align-items: center;
+    // }
 
-    .content-check-btn {
-        width: calc(14.6rem * var(--scale-factor));
-        height: calc(3.4rem * var(--scale-factor));
-        border-radius: 0 calc(1.5rem * var(--scale-factor));
-        color: #fff;
-        background-color: #FF5BAF;
-        border: none;
-        font-size: calc(1.4rem * var(--scale-factor));
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    // .content-check-btn {
+    //     width: calc(14.6rem * var(--scale-factor));
+    //     height: calc(3.4rem * var(--scale-factor));
+    //     border-radius: 0 calc(1.5rem * var(--scale-factor));
+    //     color: #fff;
+    //     background-color: #FF5BAF;
+    //     border: none;
+    //     font-size: calc(1.4rem * var(--scale-factor));
+    //     font-weight: 600;
+    //     cursor: pointer;
+    //     transition: all 0.3s ease;
 
-        &:hover {
-            opacity: 0.8;
-        }
-    }
+    //     &:hover {
+    //         opacity: 0.8;
+    //     }
+    // }
 
-    	.content-check-text {
-		color: #FFF;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-style: normal;
-		font-weight: 400;
-		line-height: calc(2rem * var(--scale-factor));
-	}
+    // 	.content-check-text {
+	// 	color: #FFF;
+	// 	font-size: calc(1.4rem * var(--scale-factor));
+	// 	font-style: normal;
+	// 	font-weight: 400;
+	// 	line-height: calc(2rem * var(--scale-factor));
+	// }
 
 	/* Windows 125% specific styles */
 	/*
@@ -769,40 +703,40 @@
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         /* 1. Fix left sidebar title and horizontal scroll */
-        .instructions {
-            inline-size: calc(100vw - 66.41%);
-            padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
-            overflow-x: hidden;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* Internet Explorer 10+ */
-        }
+        // .instructions {
+        //     inline-size: calc(100vw - 66.41%);
+        //     padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+        //     overflow-x: hidden;
+        //     scrollbar-width: none; /* Firefox */
+        //     -ms-overflow-style: none; /* Internet Explorer 10+ */
+        // }
 
-        .instructions::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
+        // .instructions::-webkit-scrollbar {
+        //     display: none; /* Chrome, Safari, Opera */
+        // }
 
-        .title {
-            font-size: calc(4.5rem * var(--scale-factor));
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+        // .title {
+        //     font-size: calc(4.5rem * var(--scale-factor));
+        //     word-wrap: break-word;
+        //     overflow-wrap: break-word;
+        // }
 
         /* 2. Fix sidebar horizontal scroll */
-        .copy {
-            margin-block-start: calc(4rem * var(--scale-factor));
-            padding: calc(1.5rem * var(--scale-factor));
-        }
+        // .copy {
+        //     margin-block-start: calc(4rem * var(--scale-factor));
+        //     padding: calc(1.5rem * var(--scale-factor));
+        // }
 
-        .copy-header {
-            grid-template-columns: repeat(2, auto);
-            grid-column-gap: calc(2rem * var(--scale-factor));
-            margin-block-start: calc(-3rem * var(--scale-factor));
-        }
+        // .copy-header {
+        //     grid-template-columns: repeat(2, auto);
+        //     grid-column-gap: calc(2rem * var(--scale-factor));
+        //     margin-block-start: calc(-3rem * var(--scale-factor));
+        // }
 
         /* 3. Keep content text size as requested */
-        .paragraph {
-            font-size: calc(2.2rem * var(--scale-factor));
-        }
+        // .paragraph {
+        //     font-size: calc(2.2rem * var(--scale-factor));
+        // }
 
         /* 4. Adjust start screen for mobile */
         .start-screen {
@@ -825,43 +759,43 @@
         }
 
         /* 5. Adjust game ID for mobile */
-        .game-id {
-            block-size: calc(12rem * var(--scale-factor));
-            inline-size: calc(8rem * var(--scale-factor));
-        }
+        // .game-id {
+        //     block-size: calc(12rem * var(--scale-factor));
+        //     inline-size: calc(8rem * var(--scale-factor));
+        // }
 
-        .game-id .text {
-            font-size: calc(2rem * var(--scale-factor));
-            line-height: calc(2rem * var(--scale-factor));
-        }
+        // .game-id .text {
+        //     font-size: calc(2rem * var(--scale-factor));
+        //     line-height: calc(2rem * var(--scale-factor));
+        // }
 
-        .game-id .number {
-            font-size: calc(9rem * var(--scale-factor));
-            line-height: calc(9rem * var(--scale-factor));
-        }
+        // .game-id .number {
+        //     font-size: calc(9rem * var(--scale-factor));
+        //     line-height: calc(9rem * var(--scale-factor));
+        // }
 
         /* 6. Adjust subtitle for mobile */
-        .subtitle {
-            font-size: calc(2.5rem * var(--scale-factor));
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+        // .subtitle {
+        //     font-size: calc(2.5rem * var(--scale-factor));
+        //     word-wrap: break-word;
+        //     overflow-wrap: break-word;
+        // }
 
         /* 7. Adjust buttons for mobile */
-        .close-button {
-            inset-block-start: calc(1rem * var(--scale-factor));
-            inset-inline-end: calc(2rem * var(--scale-factor));
-        }
+        // .close-button {
+        //     inset-block-start: calc(1rem * var(--scale-factor));
+        //     inset-inline-end: calc(2rem * var(--scale-factor));
+        // }
 
-        .play-button {
-            inset-block-start: calc(2rem * var(--scale-factor));
-            inset-inline-end: calc(-0.2rem * var(--scale-factor));
-        }
+        // .play-button {
+        //     inset-block-start: calc(2rem * var(--scale-factor));
+        //     inset-inline-end: calc(-0.2rem * var(--scale-factor));
+        // }
 
         /* 8. Fix sidebar closed state for mobile */
-        .instructions.closed {
-            transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-        }
+        // .instructions.closed {
+        //     transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+        // }
 
         /* 9. Reset image button transform and adjust SVG for mobile */
         .image-button {
@@ -912,23 +846,23 @@
 		}
 
 		/* Content check section mobile adjustments */
-		.content-check {
-			padding-block-start: calc(2rem * var(--scale-factor));
-		}
+		// .content-check {
+		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// }
 
-		.content-check-grid {
-			gap: calc(1.5rem * var(--scale-factor));
-		}
+		// .content-check-grid {
+		// 	gap: calc(1.5rem * var(--scale-factor));
+		// }
 
-		.content-check-btn {
-			width: calc(12rem * var(--scale-factor));
-			height: calc(3rem * var(--scale-factor));
-			font-size: calc(1.2rem * var(--scale-factor));
-		}
+		// .content-check-btn {
+		// 	width: calc(12rem * var(--scale-factor));
+		// 	height: calc(3rem * var(--scale-factor));
+		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// }
 
-		.content-check-text {
-			font-size: calc(1.2rem * var(--scale-factor));
-			line-height: calc(1.6rem * var(--scale-factor));
-		}
+		// .content-check-text {
+		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// 	line-height: calc(1.6rem * var(--scale-factor));
+		// }
 	}
 </style> 

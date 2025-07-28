@@ -19,6 +19,12 @@
     return emailRegex.test(email);
   }
 
+  function validateAllowedDomain(email: string): boolean {
+    const allowedDomains = ['cotontchad.com', 'nsct.tg', 'olamagri.com'];
+    const domain = email.split('@')[1];
+    return allowedDomains.includes(domain);
+  }
+
   async function handleSubmit() {
     error = '';
     
@@ -29,6 +35,11 @@
 
     if (!validateEmail(email)) {
       error = 'Please enter a valid email address (e.g., name@company.com)';
+      return;
+    }
+
+    if (!validateAllowedDomain(email)) {
+      error = 'Please enter a valid email address';
       return;
     }
 
@@ -88,13 +99,19 @@
         <form class="auth-form" on:submit|preventDefault={handleSubmit}>
           <div class="form-group form-group--email">
             <label class="auth-label" for="email">Enter your corporate email</label>
-            <input
-              class="auth-input"
-              type="email"
-              id="email"
-              bind:value={email}
-              required
-            />
+            <div class="input-wrapper">
+              <input
+                class="auth-input"
+                class:error={error}
+                type="email"
+                id="email"
+                bind:value={email}
+                required
+              />
+              {#if error}
+                <div class="error-message">{error}</div>
+              {/if}
+            </div>
           </div>
       
           <button type="submit" class="auth-button">Send</button>
@@ -103,10 +120,6 @@
         <p class="paragraph">
           Need help logging in? <br> Contact us at <a href="mailto:brand@olamagri.com" class="email-link">brand@olamagri.com</a>
         </p>
-
-        {#if error}
-          <div class="error">{error}</div>
-        {/if}
       </div>
     </div>
   </main>
@@ -253,6 +266,15 @@
       line-height: 125%;
     }
 
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      inline-size: 100%;
+      max-inline-size: calc(48rem * var(--scale-factor));
+      margin-inline: auto;
+    }
+
     .auth-input {
       background-color: #E6E6E6;
       block-size: calc(6rem * var(--scale-factor));
@@ -261,13 +283,26 @@
       font-size: calc(2rem * var(--scale-factor));
       font-weight: 600;
       inline-size: 100%;
-      max-inline-size: calc(48rem * var(--scale-factor));
-      margin-inline: auto;
       padding-inline: calc(2rem * var(--scale-factor));
 
       &:focus {
         outline: 0;
       }
+
+      &.error {
+        background: rgba(255, 48, 0, 0.30);
+      }
+    }
+
+    .error-message {
+      color: #FF3000;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 125%;
+      padding-block-start: .5rem;
+      text-align: left;
+      inline-size: 100%;
     }
   }
 
@@ -288,11 +323,5 @@
     }
   }
 
-  .error {
-    color: #dc3545;
-    text-align: center;
-    font-size: calc(1.8rem * var(--scale-factor));
-    font-weight: 600;
-    margin-block-start: calc(2rem * var(--scale-factor));
-  }
+
 </style> 

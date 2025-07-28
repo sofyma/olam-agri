@@ -5,7 +5,7 @@
     import { game5Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import { Game5Service } from '$lib/services/game5Service';
     import Question from '$lib/components/games/game5/Question.svelte';
-    import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
+    import GameInstructions from '$lib/components/GameInstructions.svelte';
     import { onDestroy } from 'svelte';
     
     let isLoading = true;
@@ -65,15 +65,7 @@
 		game5Store.start();
 	}
 
-	function closeInstructions() {
-		instructionsClosed = true;
-		instructionsClosedSidebar = true;
-	}
 
-	function openInstructions() {
-		instructionsClosed = false;
-		instructionsClosedSidebar = false;
-	}
 
 
     
@@ -128,55 +120,24 @@
         
 	{#if showInstructions}
 		<div class="game-panel">
-			<div class="instructions" class:closed={instructionsClosed}>
-				{#if !instructionsClosed}
-					<button class="close-button" on:click={closeInstructions}>
-						<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-							<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-						</svg>
-					</button>
-				{:else}
-					<button class="play-button" on:click={openInstructions}>
-						<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-						</svg>
-					</button>
-				{/if}
+			<GameInstructions 
+				gameNumber={5}
+				gameTitle="Brand Heroes"
+				gameSubtitle="Only the Fastest Will Reach the Sky"
+				infoRoute="/games/info/5"
+				bind:instructionsClosed
+				primaryColor="#00B2E7"
+				backgroundColor="#2E2D2C"
+				paragraphs={[
+					"Caution!",
+					"This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.",
+					"If you manage to complete the game you'll earn 1 point, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.",
+					"In the next screen, read carefully all the steps before doing anything!",
+					"Are you ready? 3, 2, 1..."
+				]}
+			>
 
-				<Game1Logo />
-
-				<h1 class="title">Brand Heroes</h1>
-					
-				<div class="copy">
-					<div class="copy-header">
-						<div class="game-id">
-							<span class="text">Game</span>
-							<span class="number">5</span>
-						</div>
-
-						<h2 class="subtitle">Only the Fastest Will Reach the Sky</h2>
-					</div>
-
-					<p class="paragraph">Caution!</p>
-					<p class="paragraph">This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.</p>
-					<p class="paragraph">If you manage to complete the game you'll earn 1 point, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.</p>
-					<p class="paragraph">In the next screen, read carefully all the steps before doing anything!</p>
-					<p class="paragraph">Are you ready? 3, 2, 1...</p>
-				</div>
-
-				<div class="content-check">
-					<div class="content-check-grid">
-						<button class="content-check-btn" on:click={() => goto('/games/info/5')}>
-							Check content
-						</button>
-						<div class="content-check-text">
-							Have you read the related content?<br>
-							You'll do better in the game if you check it first!
-						</div>
-					</div>
-				</div>
-			</div>
+			</GameInstructions>
 
 			<div class="start-screen">
 				<div class="start-screen-content">
@@ -194,55 +155,22 @@
 		<div class="error">{$game5Store.error}</div>
 
 	{:else if !$game5Store.isComplete}
-		<div class="instructions" class:closed={instructionsClosed}>
-			{#if !instructionsClosed}
-				<button class="close-button" on:click={closeInstructions}>
-					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-					</svg>
-				</button>
-			{:else}
-				<button class="play-button" on:click={openInstructions}>
-					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-					</svg>
-				</button>
-			{/if}
-
-			<Game1Logo />
-
-			<h1 class="title">Brand Heroes</h1>
-				
-			<div class="copy">
-				<div class="copy-header">
-					<div class="game-id">
-						<span class="text">Game</span>
-						<span class="number">5</span>
-					</div>
-
-					<h2 class="subtitle">Only the Fastest Will Reach the Sky</h2>
-				</div>
-
-				<p class="paragraph">Caution!</p>
-				<p class="paragraph">This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.</p>
-				<p class="paragraph">If you manage to complete the game you'll earn 5 points, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.</p>
-				<p class="paragraph">In the next screen, read carefully all the steps before doing anything!</p>
-				<p class="paragraph">Are you ready? 3, 2, 1...</p>
-			</div>
-
-			<div class="content-check">
-				<div class="content-check-grid">
-					<button class="content-check-btn" on:click={() => goto('/games/info/5')}>
-						Check content
-					</button>
-					<div class="content-check-text">
-						Have you read the related content?<br>
-						You'll do better in the game if you check it first!
-					</div>
-				</div>
-			</div>
-		</div>
+		<GameInstructions 
+			gameNumber={5}
+			gameTitle="Brand Heroes"
+			gameSubtitle="Only the Fastest Will Reach the Sky"
+			infoRoute="/games/info/5"
+			bind:instructionsClosed
+			primaryColor="#00B2E7"
+			backgroundColor="#2E2D2C"
+			paragraphs={[
+				"Caution!",
+				"This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.",
+				"If you manage to complete the game you'll earn 5 points, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.",
+				"In the next screen, read carefully all the steps before doing anything!",
+				"Are you ready? 3, 2, 1..."
+			]}
+		/>
 
 		<div class="game-grid">
 			<div class="game-hero-column">
@@ -317,6 +245,11 @@
 
 	.game-panel {
 		position: relative;
+	}
+
+	/* Game 5 specific logo styling */
+	:global(.instructions .logo path) {
+		fill: #fff;
 	}
 
 	.game-grid {
@@ -497,105 +430,79 @@
 		}
 	}
 
-	.game-id {
-		align-items: center;
-		background-color: #00B2E7;
-		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
-		block-size: calc(17rem * var(--scale-factor));
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		inline-size: calc(11rem * var(--scale-factor));
-		padding: calc(1rem * var(--scale-factor));
-		text-align: center;
+	// .game-id {
+	// 	align-items: center;
+	// 	background-color: #00B2E7;
+	// 	border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+	// 	block-size: calc(17rem * var(--scale-factor));
+	// 	color: #fff;
+	// 	display: flex;
+	// 	flex-direction: column;
+	// 	inline-size: calc(11rem * var(--scale-factor));
+	// 	padding: calc(1rem * var(--scale-factor));
+	// 	text-align: center;
 
-		.text {
-			font-size: calc(2.8rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(2.8rem * var(--scale-factor));
-		}
+	// 	.text {
+	// 		font-size: calc(2.8rem * var(--scale-factor));
+	// 		font-weight: 600;
+	// 		line-height: calc(2.8rem * var(--scale-factor));
+	// 	}
 
-		.number {
-			font-size: calc(13.7rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(13.7rem * var(--scale-factor))
-		}
-	}
+	// 	.number {
+	// 		font-size: calc(13.7rem * var(--scale-factor));
+	// 		font-weight: 600;
+	// 		line-height: calc(13.7rem * var(--scale-factor))
+	// 	}
+	// }
 
-	.title {
-		color: #00B2E7;
-		font-size: calc(6rem * var(--scale-factor));
-		font-style: normal;
-		font-weight: 600;
-		line-height: normal;
-		padding-block-start: calc(2rem * var(--scale-factor));
-	}
+	// .title {
+	// 	color: #00B2E7;
+	// 	font-size: calc(6rem * var(--scale-factor));
+	// 	font-style: normal;
+	// 	font-weight: 600;
+	// 	line-height: normal;
+	// 	padding-block-start: calc(2rem * var(--scale-factor));
+	// }
 
-	.subtitle {
-		color: #00B2E7;
-		font-size: calc(3.7rem * var(--scale-factor));
-		font-weight: 600;
-		line-height: normal;
-	}
+	// .subtitle {
+	// 	color: #00B2E7;
+	// 	font-size: calc(3.7rem * var(--scale-factor));
+	// 	font-weight: 600;
+	// 	line-height: normal;
+	// }
 
-	.paragraph {
-		color: #2E2D2C;
-		font-size: calc(2.2rem * var(--scale-factor));
-		line-height: normal;
-		padding-block-start: calc(2rem * var(--scale-factor));
+	// .paragraph {
+	// 	color: #2E2D2C;
+	// 	font-size: calc(2.2rem * var(--scale-factor));
+	// 	line-height: normal;
+	// 	padding-block-start: calc(2rem * var(--scale-factor));
 
-		&:first-child {
-			padding-block-start: calc(2.5rem * var(--scale-factor))
-		}
-	}
+	// 	&:first-child {
+	// 		padding-block-start: calc(2.5rem * var(--scale-factor))
+	// 	}
+	// }
 
 	.game5-initial-screen-image {
 		object-fit: cover;
 		visibility: hidden;
 	}
 
-	.copy {
-		background-color: #fff;
-		margin-block-start: calc(6.5rem * var(--scale-factor));
-		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		position: relative;
+	// .copy {
+	// 	background-color: #fff;
+	// 	margin-block-start: calc(6.5rem * var(--scale-factor));
+	// 	padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+	// 	position: relative;
 
-		&-header {
-			align-items: end;
-			display: grid;
-			grid-template-columns: repeat(2, auto);
-			grid-column-gap: calc(3rem * var(--scale-factor));
-			margin-block-start: calc(-5rem * var(--scale-factor));
-		}
-	}
+	// 	&-header {
+	// 		align-items: end;
+	// 		display: grid;
+	// 		grid-template-columns: repeat(2, auto);
+	// 		grid-column-gap: calc(3rem * var(--scale-factor));
+	// 		margin-block-start: calc(-5rem * var(--scale-factor));
+	// 	}
+	// }
 
-	.instructions {
-		background-color: #2E2D2C;
-		block-size: 100vh;
-		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
-		inline-size: calc(100vw - 66.41%);
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		overflow-y: auto;
-		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
-		position: fixed;
-		z-index: 9999;
-		transition: transform 0.3s ease-in-out;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
 
-		&::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
-		}
-
-		&.closed {
-			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
-		}
-	}
-
-	:global(.instructions .logo path) {
-		fill: #fff;
-	}
 	
 	.start-screen {
 		align-items: center;
@@ -616,88 +523,13 @@
 		transform-origin: center center;
 	}
 
-	.close-button {
-		background: none;
-		border: none;
-		color: white;
-		cursor: pointer;
-		inset-block-start: calc(4rem * var(--scale-factor));
-		inset-inline-end: calc(4rem * var(--scale-factor));
-		padding: calc(1rem * var(--scale-factor));
-		position: absolute;
-		z-index: 10000;
 
-		svg {
-			block-size: calc(2.4rem * var(--scale-factor));
-			inline-size: calc(2.3rem * var(--scale-factor));
-		}
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
-	.play-button {
-		background: none;
-		border: none;
-		color: white;
-		cursor: pointer;
-		inset-block-start: calc(3rem * var(--scale-factor));
-    	inset-inline-end: calc(.5rem * var(--scale-factor));
-		padding: calc(1rem * var(--scale-factor));
-		position: absolute;
-		z-index: 10000;
-
-		svg {
-			block-size: calc(3.3rem * var(--scale-factor));
-			inline-size: calc(2.7rem * var(--scale-factor));
-		}
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
 
 	.sidebar-is-closed .start-screen {
 		inline-size: 100%;
 	}
 
-	/* Content check section */
-	.content-check {
-		padding-block-start: calc(2.7rem * var(--scale-factor));
-	}
 
-	.content-check-grid {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: calc(2rem * var(--scale-factor));
-		align-items: center;
-	}
-
-	.content-check-btn {
-		width: calc(14.6rem * var(--scale-factor));
-		height: calc(3.4rem * var(--scale-factor));
-		border-radius: 0 calc(1.5rem * var(--scale-factor));
-		color: #fff;
-		background-color: #00B2E7;
-		border: none;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
-	.content-check-text {
-		color: #FFF;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-style: normal;
-		font-weight: 400;
-		line-height: calc(2rem * var(--scale-factor));
-	}
 
 	.loading, .error {
 		display: flex;
@@ -716,43 +548,6 @@
 
 	/* Unite all mobile overrides into a single media query */
 	@media (max-width: 932px) {
-		/* Sidebar and instructions */
-		.instructions {
-			inline-size: calc(100vw - 66.41%);
-			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
-			overflow-x: hidden;
-			scrollbar-width: none;
-			-ms-overflow-style: none;
-		}
-		.instructions::-webkit-scrollbar {
-			display: none;
-		}
-		.instructions.closed {
-			transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
-		}
-		.title {
-			font-size: calc(4.5rem * var(--scale-factor));
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-		}
-		.subtitle {
-			font-size: calc(2.5rem * var(--scale-factor));
-			word-wrap: break-word;
-			overflow-wrap: break-word;
-			line-height: calc(2.5rem * var(--scale-factor));
-		}
-		.paragraph {
-			font-size: calc(2.2rem * var(--scale-factor));
-		}
-		.copy {
-			margin-block-start: calc(4rem * var(--scale-factor));
-			padding: calc(1.5rem * var(--scale-factor));
-		}
-		.copy-header {
-			grid-template-columns: repeat(2, auto);
-			grid-column-gap: calc(2rem * var(--scale-factor));
-			margin-block-start: calc(-3rem * var(--scale-factor));
-		}
 
 		/* Game grid and columns */
 		.game-grid {
@@ -847,44 +642,7 @@
 			transform-origin: center center;
 		}
 
-		/* Game ID and content check section */
-		.game-id {
-			block-size: calc(12rem * var(--scale-factor));
-			inline-size: calc(8rem * var(--scale-factor));
-		}
-		.game-id .text {
-			font-size: calc(2rem * var(--scale-factor));
-			line-height: calc(2rem * var(--scale-factor));
-		}
-		.game-id .number {
-			font-size: calc(9rem * var(--scale-factor));
-			line-height: calc(9rem * var(--scale-factor));
-		}
-		.content-check {
-			padding-block-start: calc(2rem * var(--scale-factor));
-		}
-		.content-check-grid {
-			gap: calc(1.5rem * var(--scale-factor));
-		}
-		.content-check-btn {
-			width: calc(12rem * var(--scale-factor));
-			height: calc(3rem * var(--scale-factor));
-			font-size: calc(1.2rem * var(--scale-factor));
-		}
-		.content-check-text {
-			font-size: calc(1.2rem * var(--scale-factor));
-			line-height: calc(1.6rem * var(--scale-factor));
-		}
 
-		/* Buttons for mobile */
-		.close-button {
-			inset-block-start: calc(1rem * var(--scale-factor));
-			inset-inline-end: calc(2rem * var(--scale-factor));
-		}
-		.play-button {
-			inset-block-start: calc(2rem * var(--scale-factor));
-			inset-inline-end: calc(-0.2rem * var(--scale-factor));
-		}
 
 		/* Initial screen button */
 		.game5-initial-screen-button {

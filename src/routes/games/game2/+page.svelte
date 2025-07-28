@@ -4,8 +4,8 @@
     import { game2Store } from '$lib/stores/game2Store';
     import { game2Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import type { Statement } from '$lib/types/game2';
-	import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
 	import Explosion from '$lib/components/svgs/Explosion.svelte';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
     
 	type Bubble = Statement & {
 		index: number;
@@ -129,54 +129,21 @@
         
     {#if showInstructions}
 			<div class="game-panel">
-				<div class="instructions" class:closed={instructionsClosed}>
-					{#if !instructionsClosed}
-						<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-							<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-								<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-							</svg>
-						</button>
-					{:else}
-						<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-							<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-							</svg>
-						</button>
-					{/if}
-
-					<Game1Logo />
-
-					<h1 class="title">Brand Heroes</h1>
-						
-					<div class="copy">
-						<div class="copy-header">
-							<div class="game-id">
-								<span class="text">Game</span>
-								<span class="number">2</span>
-							</div>
-
-							<h2 class="subtitle">Under Attack!</h2>
-						</div>
-
-						<p class="paragraph">Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.</p>
-						<p class="paragraph">Stop the lies about our brand name and logo, but let the truths pass through.</p>
-						<p class="paragraph">Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.</p>
-						<p class="paragraph">Think fast! You've only 5 seconds to decide on each one.</p>
-					</div>
-
-					<div class="content-check">
-						<div class="content-check-grid">
-							<button class="content-check-btn" on:click={() => goto('/games/info/2')}>
-								Check content
-							</button>
-							<div class="content-check-text">
-								Have you read the related content?<br>
-								You'll do better in the game if you check it first!
-							</div>
-						</div>
-					</div>
-				</div>
+				<GameInstructions
+					gameNumber={2}
+					gameTitle="Brand Heroes"
+					gameSubtitle="Under Attack!"
+					infoRoute="/games/info/2"
+					bind:instructionsClosed
+					primaryColor="#8E75F8"
+					backgroundColor="#2E2D2C"
+					paragraphs={[
+						"Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.",
+						"Stop the lies about our brand name and logo, but let the truths pass through.",
+						"Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.",
+						"Think fast! You've only 5 seconds to decide on each one."
+					]}
+				/>
 
 
 				<div class="start-screen">
@@ -201,54 +168,21 @@
             <p>Please add some Game 2 statements in your Sanity Studio to play this game.</p>
         </div>
     {:else}
-		<div class="instructions" class:closed={instructionsClosed}>
-			{#if !instructionsClosed}
-				<button class="close-button" on:click={() => { instructionsClosed = true; instructionsClosedSidebar = true; }}>
-					<svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<line x1="0.353553" y1="0.646447" x2="22.3536" y2="22.6464" stroke="white"/>
-						<line x1="22.3536" y1="1.35355" x2="0.353554" y2="23.3536" stroke="white"/>
-					</svg>
-				</button>
-			{:else}
-				<button class="play-button" on:click={() => { instructionsClosed = false; instructionsClosedSidebar = false; }}>
-					<svg width="27" height="33" viewBox="0 0 27 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M27 16.5L0.749998 32.5215L0.75 0.47853L27 16.5Z" fill="white"/>
-					</svg>
-				</button>
-			{/if}
-
-			<Game1Logo />
-
-			<h1 class="title">Brand Heroes</h1>
-				
-			<div class="copy">
-				<div class="copy-header">
-					<div class="game-id">
-						<span class="text">Game</span>
-						<span class="number">2</span>
-					</div>
-
-					<h2 class="subtitle">Under Attack!</h2>
-				</div>
-
-				<p class="paragraph">Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.</p>
-				<p class="paragraph">Stop the lies about our brand name and logo, but let the truths pass through.</p>
-				<p class="paragraph">Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.</p>
-				<p class="paragraph">Think fast! You've only 5 seconds to decide on each one.</p>
-			</div>
-
-			<div class="content-check">
-				<div class="content-check-grid">
-					<button class="content-check-btn" on:click={() => goto('/games/info/2')}>
-						Check content
-					</button>
-					<div class="content-check-text">
-						Have you read the related content?<br>
-						You'll do better in the game if you check it first!
-					</div>
-				</div>
-			</div>
-		</div>
+		<GameInstructions
+			gameNumber={2}
+			gameTitle="Brand Heroes"
+			gameSubtitle="Under Attack!"
+			infoRoute="/games/info/2"
+			bind:instructionsClosed
+			primaryColor="#8E75F8"
+			backgroundColor="#2E2D2C"
+			paragraphs={[
+				"Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.",
+				"Stop the lies about our brand name and logo, but let the truths pass through.",
+				"Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.",
+				"Think fast! You've only 5 seconds to decide on each one."
+			]}
+		/>
 
 		<div class="game-area">
 			<div class="game-header">
@@ -547,30 +481,7 @@
 		}
 	}
 
-	.game-id {
-		align-items: center;
-		background-color: #8E75F8;
-		border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
-		block-size: calc(17rem * var(--scale-factor));
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		inline-size: calc(11rem * var(--scale-factor));
-		padding: calc(1rem * var(--scale-factor));
-		text-align: center;
 
-		.text {
-			font-size: calc(2.8rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(2.8rem * var(--scale-factor));
-		}
-
-		.number {
-			font-size: calc(13.7rem * var(--scale-factor));
-			font-weight: 600;
-			line-height: calc(13.7rem * var(--scale-factor));
-		}
-	}
 
 	.title {
 		color: #8E75F8;
@@ -796,15 +707,15 @@
 			inline-size: calc(8rem * var(--scale-factor));
 		}
 
-		.game-id .text {
-			font-size: calc(2rem * var(--scale-factor));
-			line-height: calc(2rem * var(--scale-factor));
-		}
+		// .game-id .text {
+		// 	font-size: calc(2rem * var(--scale-factor));
+		// 	line-height: calc(2rem * var(--scale-factor));
+		// }
 
-		.game-id .number {
-			font-size: calc(9rem * var(--scale-factor));
-			line-height: calc(9rem * var(--scale-factor));
-		}
+		// .game-id .number {
+		// 	font-size: calc(9rem * var(--scale-factor));
+		// 	line-height: calc(9rem * var(--scale-factor));
+		// }
 
 		/* 8. Adjust subtitle for mobile */
 		.subtitle {

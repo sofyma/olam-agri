@@ -4,6 +4,13 @@
 	import { game2Store } from '$lib/stores/game2Store';
     import Game2Shape from '$lib/components/svgs/Game2Shape.svelte';
 	import Game2SummaryHero from '$lib/components/svgs/Game2SummaryHero.svelte';
+	import GameInstructions from '$lib/components/GameInstructions.svelte';
+
+	let instructionsClosed = true;
+
+	// Calculate additional game statistics
+	$: passedTruths = $game2Store.answers.filter(answer => !answer.userClicked && answer.isTrue).length;
+	$: slippedLies = $game2Store.answers.filter(answer => !answer.userClicked && !answer.isTrue).length;
 
 	onMount(() => {
 		if (!$game2Store.isComplete) {
@@ -22,14 +29,30 @@
 	}
 </script>
 
-<div class="game-container">
+<div class="game-container" class:sidebar-is-closed={instructionsClosed}>
 	<img src="/images/game2-summary-shape.png" alt="Shape" class="shape">
+
+	<GameInstructions
+		gameNumber={2}
+		gameTitle="Brand Heroes"
+		gameSubtitle="Under Attack!"
+		infoRoute="/games/info/2"
+		bind:instructionsClosed
+		primaryColor="#8E75F8"
+		backgroundColor="#2E2D2C"
+		paragraphs={[
+			"Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.",
+			"Stop the lies about our brand name and logo, but let the truths pass through.",
+			"Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.",
+			"Think fast! You've only 5 seconds to decide on each one."
+		]}
+	/>
 
     <div class="game-summary">
 		<h2 class="title">This is your final score:</h2>
 
 		<div class="results">
-			<p class="paragraph">Congratulations, you destroyed {$game2Store.destroyedLies} lies. However, you also destroyed {$game2Store.destroyedTruths} truths. This gives you a total of:</p>
+			<p class="paragraph">Congratulations! You destroyed {$game2Store.destroyedLies} lies (+{$game2Store.destroyedLies}) and {$game2Store.destroyedTruths} truth{$game2Store.destroyedTruths !== 1 ? 's' : ''} (−{$game2Store.destroyedTruths}). You also let {passedTruths} truth{passedTruths !== 1 ? 's' : ''} pass (+{passedTruths}) and {slippedLies} lie{slippedLies !== 1 ? 's' : ''} slip through (−{slippedLies}). This gives you a total of:</p>
 			<p class="total-points">{$game2Store.score} points</p>
 
 			<Game2SummaryHero />
