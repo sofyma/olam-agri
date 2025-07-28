@@ -665,7 +665,7 @@
 		}
 
 		&.closed {
-			transform: translateX(calc(-100% + 5rem));
+			transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
 		}
 	}
 
@@ -1115,7 +1115,7 @@
 
 		/* Fix sidebar closed state for mobile */
 		.instructions.closed {
-			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+			transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
 		}
 
 		/* Adjust small hero summary for mobile */

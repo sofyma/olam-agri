@@ -725,7 +725,7 @@
 			display: none;
 		}
 		.instructions.closed {
-			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+			transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
 		}
 		.title {
 			font-size: calc(4.5rem * var(--scale-factor));
