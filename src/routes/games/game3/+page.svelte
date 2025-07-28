@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import { game3Store } from '$lib/stores/game3Store';
-    import { game3Availability } from '$lib/stores/gameAvailabilityStore';
+    import { game3Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import { Game3Service } from '$lib/services/game3Service';
     import Question from '$lib/components/games/game3/Question.svelte';
     import type { Question as QuestionType } from '$lib/types/game3';
@@ -24,15 +24,18 @@
     
     const gameService = Game3Service.getInstance();
     
-    onMount(async () => {
+        onMount(async () => {
         try {
+            // Load game configs if not already loaded
+            await gameAvailabilityStore.loadGameConfigs();
+            
             // Check if game is available
             if (!$game3Availability.isAvailable) {
                 goto('/games/info/3');
                 return;
             }
 
-            game3Store.initialize();
+			game3Store.initialize();
             await gameService.loadQuestions();
             isLoading = false;
         } catch (err) {

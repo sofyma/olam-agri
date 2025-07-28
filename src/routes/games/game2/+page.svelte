@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
     import { game2Store } from '$lib/stores/game2Store';
-    import { game2Availability } from '$lib/stores/gameAvailabilityStore';
+    import { game2Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import type { Statement } from '$lib/types/game2';
 	import Game1Logo from '$lib/components/svgs/Game1Logo.svelte';
 	import Explosion from '$lib/components/svgs/Explosion.svelte';
@@ -25,6 +25,9 @@
 	const pathOrder = [1, 2, 4, 2, 3, 1, 3, 1, 2, 4];
 
     onMount(async () => {
+        // Load game configs if not already loaded
+        await gameAvailabilityStore.loadGameConfigs();
+        
         // Check if game is available
         if (!$game2Availability.isAvailable) {
             goto('/games/info/2');

@@ -34,17 +34,8 @@
         // Load game configs first to ensure availability is up to date
         await gameAvailabilityStore.loadGameConfigs();
         
-        // Check availability directly from the service
-        const isAvailable = gameAvailabilityStore.isGameAvailable('game6');
-        
-        console.log('Game 6 availability check:', {
-            isAvailable,
-            derivedIsAvailable: $game6Availability.isAvailable,
-            config: $game6Availability.config
-        });
-        
         // Check if game is available
-        if (!isAvailable) {
+        if (!$game6Availability.isAvailable) {
             console.log('Game 6 not available, redirecting to info page');
             goto('/games/info/6');
             return;

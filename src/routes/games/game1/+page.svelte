@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
     import { game1Store } from '$lib/stores/game1Store';
-    import { game1Availability } from '$lib/stores/gameAvailabilityStore';
+    import { game1Availability, gameAvailabilityStore } from '$lib/stores/gameAvailabilityStore';
     import { Game1Service } from '$lib/services/game1Service';
     import Question from '$lib/components/games/game1/Question.svelte';
     import type { Question as QuestionType } from '$lib/types/game1';
@@ -28,6 +28,9 @@
     
     onMount(async () => {
         try {
+            // Load game configs if not already loaded
+            await gameAvailabilityStore.loadGameConfigs();
+            
             // Check if game is available
             if (!$game1Availability.isAvailable) {
                 goto('/games/info/1');
