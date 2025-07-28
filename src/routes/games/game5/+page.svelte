@@ -303,6 +303,11 @@
 		background-repeat: no-repeat;
 		position: relative;
 	}
+
+	/* Windows 125% specific styles */
+	:global(.window125) .game-container {
+		background-size: contain;
+	}
 	.game-container.playing {
 		background-image: url('/images/game5-summary.png');
 	}
