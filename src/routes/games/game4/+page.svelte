@@ -881,6 +881,7 @@
 	}
 
 	/* Windows 125% specific styles */
+	/*
 	:global(.window125) .game-container {
 		display: flex;
 		align-items: flex-start;
@@ -920,6 +921,7 @@
 		display: grid;
 		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 	}
+	*/
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
