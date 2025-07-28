@@ -475,7 +475,6 @@
 		color: #FFF;
 		cursor: pointer;
 		display: flex;
-		font-family: Gilroy-SemiBold;
 		font-size: calc(2rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 400;
