@@ -13,11 +13,22 @@
     }
   }
 
+  function validateEmail(email: string): boolean {
+    // Strong email validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
   async function handleSubmit() {
     error = '';
     
     if (!email) {
       error = 'Please enter your email address';
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      error = 'Please enter a valid email address (e.g., name@company.com)';
       return;
     }
 
@@ -120,6 +131,7 @@
       inset-block-end: 0;
       inset-inline-start: 50%;
       transform: translateX(-50%);
+      max-inline-size: 74rem;
     }
 
     &-title {

@@ -83,6 +83,7 @@
       inset-block-end: 0;
       inset-inline-start: 50%;
       transform: translateX(-50%);
+      max-inline-size: 74rem;
     }
 
     &-title {

@@ -342,6 +342,7 @@
       inset-inline-start: 50%;
       position: absolute;
       transform: translateX(-50%);
+      max-inline-size: 74rem;
     }
 
     &-title {
