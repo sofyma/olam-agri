@@ -34,27 +34,15 @@ adapter: adapter({
 }),
 ```
 
-### **3. Created netlify.toml**
-```toml
-[build]
-  command = "npm run build"
-  publish = "build"
+### **3. Created _redirects file**
+The `@sveltejs/adapter-netlify` automatically handles API routes and uses `_redirects` for SPA routing:
 
-[build.environment]
-  NODE_VERSION = "18"
-
-# Handle SvelteKit API routes
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/entry"
-  status = 200
-
-# Handle SPA routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+**`static/_redirects`:**
 ```
+/*    /index.html   200
+```
+
+**Note**: The adapter automatically handles `/api/*` routes, so no manual redirects are needed.
 
 ## Required Environment Variables
 
