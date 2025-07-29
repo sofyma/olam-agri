@@ -1,7 +1,7 @@
 // @ts-nocheck
 export default {
   name: 'game6',
-  title: 'Game 6: Only the Fastest Will Reach the Sky',
+  title: 'Game 6: The Mind Reader',
   type: 'document',
   fields: [
     {
