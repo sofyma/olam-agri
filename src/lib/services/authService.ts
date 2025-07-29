@@ -27,16 +27,28 @@ export class AuthService {
     country: string;
     region: string;
   }): Promise<User> {
+    console.log('AuthService: Starting registration with data:', userData);
+    console.log('AuthService: Making API call to /api/register-user');
+    
     // Create new user document via API route
     const response = await fetch('/api/register-user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
     });
+    
+    console.log('AuthService: Response status:', response.status);
+    console.log('AuthService: Response headers:', Object.fromEntries(response.headers.entries()));
+    
     const result = await response.json();
+    console.log('AuthService: Response data:', result);
+    
     if (!response.ok || !result.success) {
+      console.error('AuthService: Registration failed:', result.error);
       throw new Error(result.error || 'Failed to create user');
     }
+    
+    console.log('AuthService: Registration successful, user created:', result.result);
     const user = result.result;
     const fullUser = await this.login(user.emailAddress);
     if (!fullUser) {
