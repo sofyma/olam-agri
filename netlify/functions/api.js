@@ -26,9 +26,16 @@ exports.handler = async (event, context) => {
   }
 
   const path = event.path.replace('/.netlify/functions/api', '');
+  
+  console.log('API Function Debug:', {
+    originalPath: event.path,
+    cleanedPath: path,
+    httpMethod: event.httpMethod,
+    body: event.body ? JSON.parse(event.body) : null
+  });
 
   try {
-    if (path === '/register-user' && event.httpMethod === 'POST') {
+    if ((path === '/register-user' || path === '/api/register-user') && event.httpMethod === 'POST') {
       const data = JSON.parse(event.body);
       
       console.log('Register user API called');
@@ -63,7 +70,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    if (path === '/submit-result' && event.httpMethod === 'POST') {
+    if ((path === '/submit-result' || path === '/api/submit-result') && event.httpMethod === 'POST') {
       const data = JSON.parse(event.body);
       
       if (!data || !data._type) {
@@ -83,7 +90,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    if (path === '/test' && event.httpMethod === 'GET') {
+    if ((path === '/test' || path === '/api/test') && event.httpMethod === 'GET') {
       return {
         statusCode: 200,
         headers: { ...headers, 'Content-Type': 'application/json' },
