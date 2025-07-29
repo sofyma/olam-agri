@@ -144,7 +144,7 @@
           <span class="tip-icon">💡</span>
           <p class="tip-text"><strong>Hero Tip:</strong> Set a reminder for Tuesdays!</p>
         </div>
-        <button class="cta-button">Add to calendar</button>
+        <button class="cta-button" style="inline-size: 19rem;">Add to calendar</button>
       </div>
     </section>
 

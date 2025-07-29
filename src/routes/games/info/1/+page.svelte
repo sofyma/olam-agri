@@ -137,7 +137,7 @@
 
 .game1-info__image {
   inline-size: 100%;
-  max-inline-size: calc(48rem * var(--scale-factor));
+  max-inline-size: 100%;
   block-size: auto;
   display: block;
 }
