@@ -10,7 +10,7 @@
     import { getAuth } from '$lib/stores/authStore';
     import GameInstructions from '$lib/components/GameInstructions.svelte';
     
-    let currentQuestion: QuestionType;
+    let currentQuestion: QuestionType | null;
     let showFeedback = false;
     let feedbackState = {
         isCorrect: false,
@@ -82,7 +82,17 @@
         goto('/games/game3/summary');
     }
 
-    $: currentQuestion = $game3Store.questions[$game3Store.currentQuestionIndex];
+    $: currentQuestion = $game3Store.questions[$game3Store.currentQuestionIndex] || null;
+    
+    // Debug logging for current question
+    $: if ($game3Store.showQuestionModal) {
+        console.log('Current question debug:', {
+            currentQuestionOrder: $game3Store.currentQuestionOrder,
+            currentQuestion,
+            availableQuestions: $game3Store.questions.map(q => ({ id: q.id, question: q.question })),
+            showQuestionModal: $game3Store.showQuestionModal
+        });
+    }
     
     // Debug logging for question modal
     $: if ($game3Store.showQuestionModal) {
@@ -283,7 +293,7 @@
                         question={currentQuestion}
                         showFeedback={showFeedback}
                         isCorrect={feedbackState.isCorrect}
-                        currentQuestionNumber={$game3Store.currentQuestionIndex + 1}
+                        currentQuestionNumber={($game3Store.currentQuestionIndex % 5) + 1}
                         totalQuestions={5}
                         on:submit={handleQuestionSubmit}
                     />
@@ -333,7 +343,7 @@
     }
 
     .game-header {
-        padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
+        padding: 2rem calc(7rem * var(--scale-factor));
         position: relative;
         z-index: 10;
         text-align: center;
@@ -354,7 +364,7 @@
 
     .directional-pad {
         background-color: #fff;
-        border-radius: calc(2rem * var(--scale-factor));
+        border-radius: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -368,8 +378,8 @@
     }
 
     .dir-btn {
-        width: calc(8rem * var(--scale-factor));
-        height: calc(8rem * var(--scale-factor));
+        width: 8rem;
+        height: 8rem;
     }
 
     .maze-container {
@@ -377,7 +387,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: calc(2rem * var(--scale-factor));
+        gap: 2rem;
         //margin-inline-start: -2rem;
         inset-block-start: -2rem;
         inset-inline-start: -4rem;
@@ -434,7 +444,7 @@
     //     cursor: pointer;
     //     position: absolute;
     //     z-index: 10000;
-    //     padding: calc(1rem * var(--scale-factor));
+    //     padding: 1rem;
 
     //     &:hover {
     //         opacity: 0.8;
@@ -442,29 +452,29 @@
     // }
 
     // .close-button {
-    //     inset-block-start: calc(2rem * var(--scale-factor));
-    //     inset-inline-end: calc(2rem * var(--scale-factor));
+    //     inset-block-start: 2rem;
+    //     inset-inline-end: 2rem;
 
     //     svg {
-    //         block-size: calc(2.4rem * var(--scale-factor));
-    //         inline-size: calc(2.3rem * var(--scale-factor));
+    //         block-size: 2.4rem;
+    //         inline-size: 2.3rem;
     //     }
     // }
 
     // .play-button {
-    //     inset-block-start: calc(2rem * var(--scale-factor));
+    //     inset-block-start: 2rem;
     //     inset-inline-end: .5rem;
 
     //     svg {
-    //         block-size: calc(3.3rem * var(--scale-factor));
-    //         inline-size: calc(2.7rem * var(--scale-factor));
+    //         block-size: 3.3rem;
+    //         inline-size: 2.7rem;
     //     }
     // }
 
     // .copy {
     //     background-color: #fff;
     //     margin-block-start: calc(6.5rem * var(--scale-factor));
-    //     padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+    //     padding: 2rem 2rem calc(4rem * var(--scale-factor));
     //     position: relative;
 
     //     &-header {
@@ -480,13 +490,13 @@
     // .game-id {
     //     align-items: center;
     //     background-color: #FF5BAF;
-    //     border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+    //     border-radius: 0 2rem 0 2rem;
     //     block-size: calc(17rem * var(--scale-factor));
     //     color: #fff;
     //     display: flex;
     //     flex-direction: column;
-    //     inline-size: calc(11rem * var(--scale-factor));
-    //     padding: calc(1rem * var(--scale-factor));
+    //     inline-size: 11rem;
+    //     padding: 1rem;
     //     text-align: center;
 
     //     .text {
@@ -508,7 +518,7 @@
     //     font-style: normal;
     //     font-weight: 600;
     //     line-height: normal;
-    //     padding-block-start: calc(2rem * var(--scale-factor));
+    //     padding-block-start: 2rem;
     // }
 
     // .subtitle {
@@ -521,7 +531,7 @@
     // .paragraph {
     //     color: #2E2D2C;
     //     font-size: calc(2.2rem * var(--scale-factor));
-    //     padding-block-start: calc(2rem * var(--scale-factor));
+    //     padding-block-start: 2rem;
 
     //     &:first-child {
     //         padding-block-start: calc(2.5rem * var(--scale-factor));
@@ -604,7 +614,7 @@
         z-index: 1001;
         width: 90%;
         max-width: calc(90rem * var(--scale-factor));
-        padding: 0 calc(2rem * var(--scale-factor));
+        padding: 0 2rem;
         transform: translateY(-50%) scale(var(--scale-factor));
         transform-origin: center;
     }
@@ -628,18 +638,18 @@
     // .content-check-grid {
     //     display: grid;
     //     grid-template-columns: auto 1fr;
-    //     gap: calc(2rem * var(--scale-factor));
+    //     gap: 2rem;
     //     align-items: center;
     // }
 
     // .content-check-btn {
-    //     width: calc(14.6rem * var(--scale-factor));
-    //     height: calc(3.4rem * var(--scale-factor));
-    //     border-radius: 0 calc(1.5rem * var(--scale-factor));
+    //     width: 14.6rem;
+    //     height: 3.4rem;
+    //     border-radius: 0 1.5rem;
     //     color: #fff;
     //     background-color: #FF5BAF;
     //     border: none;
-    //     font-size: calc(1.4rem * var(--scale-factor));
+    //     font-size: 1.4rem;
     //     font-weight: 600;
     //     cursor: pointer;
     //     transition: all 0.3s ease;
@@ -651,10 +661,10 @@
 
     // 	.content-check-text {
 	// 	color: #FFF;
-	// 	font-size: calc(1.4rem * var(--scale-factor));
+	// 	font-size: 1.4rem;
 	// 	font-style: normal;
 	// 	font-weight: 400;
-	// 	line-height: calc(2rem * var(--scale-factor));
+	// 	line-height: 2rem;
 	// }
 
 	/* Windows 125% specific styles */
@@ -724,12 +734,12 @@
         /* 2. Fix sidebar horizontal scroll */
         // .copy {
         //     margin-block-start: calc(4rem * var(--scale-factor));
-        //     padding: calc(1.5rem * var(--scale-factor));
+        //     padding: 1.5rem;
         // }
 
         // .copy-header {
         //     grid-template-columns: repeat(2, auto);
-        //     grid-column-gap: calc(2rem * var(--scale-factor));
+        //     grid-column-gap: 2rem;
         //     margin-block-start: calc(-3rem * var(--scale-factor));
         // }
 
@@ -741,7 +751,7 @@
         /* 4. Adjust start screen for mobile */
         .start-screen {
             inline-size: calc(100vw - (100vw - 66.41%));
-            padding: calc(1rem * var(--scale-factor));
+            padding: 1rem;
         }
 
         /* Keep start screen width consistent when sidebar is closed */
@@ -760,13 +770,13 @@
 
         /* 5. Adjust game ID for mobile */
         // .game-id {
-        //     block-size: calc(12rem * var(--scale-factor));
-        //     inline-size: calc(8rem * var(--scale-factor));
+        //     block-size: 12rem;
+        //     inline-size: 8rem;
         // }
 
         // .game-id .text {
-        //     font-size: calc(2rem * var(--scale-factor));
-        //     line-height: calc(2rem * var(--scale-factor));
+        //     font-size: 2rem;
+        //     line-height: 2rem;
         // }
 
         // .game-id .number {
@@ -783,13 +793,13 @@
 
         /* 7. Adjust buttons for mobile */
         // .close-button {
-        //     inset-block-start: calc(1rem * var(--scale-factor));
-        //     inset-inline-end: calc(2rem * var(--scale-factor));
+        //     inset-block-start: 1rem;
+        //     inset-inline-end: 2rem;
         // }
 
         // .play-button {
-        //     inset-block-start: calc(2rem * var(--scale-factor));
-        //     inset-inline-end: calc(-0.2rem * var(--scale-factor));
+        //     inset-block-start: 2rem;
+        //     inset-inline-end: -0.2rem;
         // }
 
         /* 8. Fix sidebar closed state for mobile */
@@ -813,7 +823,7 @@
         .question-container-wrapper {
             width: 95%;
             height: 40%;
-            padding: 0 calc(1rem * var(--scale-factor));
+            padding: 0 1rem;
             transform: translateY(-137%) scale(var(--scale-factor));
         }
 
@@ -826,13 +836,13 @@
         /* 12. Adjust directional pad for mobile */
         .directional-pad {
             margin-block-start: 0;
-            padding: calc(2rem * var(--scale-factor));
+            padding: 2rem;
         }
 
         /* 13. Adjust directional buttons for mobile */
         .dir-btn {
-            width: calc(6rem * var(--scale-factor));
-            height: calc(6rem * var(--scale-factor));
+            width: 6rem;
+            height: 6rem;
         }
 
         /* 15. Hide game header image on mobile */
@@ -847,22 +857,22 @@
 
 		/* Content check section mobile adjustments */
 		// .content-check {
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 		// .content-check-grid {
-		// 	gap: calc(1.5rem * var(--scale-factor));
+		// 	gap: 1.5rem;
 		// }
 
 		// .content-check-btn {
-		// 	width: calc(12rem * var(--scale-factor));
-		// 	height: calc(3rem * var(--scale-factor));
-		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// 	width: 12rem;
+		// 	height: 3rem;
+		// 	font-size: 1.2rem;
 		// }
 
 		// .content-check-text {
-		// 	font-size: calc(1.2rem * var(--scale-factor));
-		// 	line-height: calc(1.6rem * var(--scale-factor));
+		// 	font-size: 1.2rem;
+		// 	line-height: 1.6rem;
 		// }
 	}
 </style> 

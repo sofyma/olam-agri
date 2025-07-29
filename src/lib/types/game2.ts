@@ -1,6 +1,17 @@
 export interface Statement {
   id: string;
-  text: string;
+  title: string;
+  image: {
+    asset: {
+      _ref: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+  };
   isTrue: boolean;
   exploded?: boolean;
   faded?: boolean;

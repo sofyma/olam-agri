@@ -5,9 +5,18 @@ export default {
   type: 'document',
   fields: [
     {
-      name: 'text',
-      title: 'Statement Text',
+      name: 'title',
+      title: 'Statement Title',
       type: 'string',
+      validation: Rule => Rule.required()
+    },
+    {
+      name: 'image',
+      title: 'Bubble Image',
+      type: 'image',
+      options: {
+        hotspot: true
+      },
       validation: Rule => Rule.required()
     },
     {
@@ -19,12 +28,12 @@ export default {
   ],
   preview: {
     select: {
-      title: 'text',
+      title: 'title',
       subtitle: 'isTrue'
     },
     prepare({ title, subtitle }) {
       return {
-        title: title || 'No statement text',
+        title: title || 'No statement title',
         subtitle: subtitle ? 'True' : 'False'
       }
     }

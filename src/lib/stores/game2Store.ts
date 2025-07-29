@@ -49,7 +49,7 @@ const createGame2Store = () => {
         
         if (newTimeRemaining <= 0) {
           // Time's up - fade the bubble
-          console.log(`Timer expired for statement ${statementIndex}:`, statement.text);
+          console.log(`Timer expired for statement ${statementIndex}:`, statement.title);
           
           // Clear this timer to prevent multiple executions
           clearInterval(interval);
@@ -64,7 +64,7 @@ const createGame2Store = () => {
           const answer: Game2Answer = {
             _key: `${statement.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
             statementId: statement.id,
-            statement: statement.text,
+            statement: statement.title,
             isTrue: statement.isTrue,
             userClicked: false,
             isCorrect: isCorrect,
@@ -94,7 +94,7 @@ const createGame2Store = () => {
           console.log(`Total processed: ${totalProcessed}, Total statements: ${state.statements.length}`);
           console.log('Processed statements:', updatedStatements.map((s, i) => ({ 
             index: i, 
-            text: s.text.substring(0, 30) + '...', 
+            text: s.title.substring(0, 30) + '...', 
             exploded: s.exploded, 
             faded: s.faded 
           })));
@@ -179,7 +179,7 @@ const createGame2Store = () => {
       const statement = state.statements[statementIndex];
       if (!statement || statement.exploded || statement.faded) return state;
 
-      console.log(`${wasClicked ? 'Clicking' : 'Passing'} statement ${statementIndex}:`, statement.text);
+      console.log(`${wasClicked ? 'Clicking' : 'Passing'} statement ${statementIndex}:`, statement.title);
 
       if (timerIntervals.has(statementIndex)) {
         clearInterval(timerIntervals.get(statementIndex)!);
@@ -202,7 +202,7 @@ const createGame2Store = () => {
       const answer: Game2Answer = {
         _key: `${statement.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         statementId: statement.id,
-        statement: statement.text,
+        statement: statement.title,
         isTrue: statement.isTrue,
         userClicked: wasClicked,
         isCorrect,
@@ -227,7 +227,7 @@ const createGame2Store = () => {
       console.log(`Total processed: ${totalProcessed}, Total statements: ${state.statements.length}`);
       console.log('Processed statements:', updatedStatements.map((s, i) => ({ 
         index: i, 
-        text: s.text.substring(0, 30) + '...', 
+        text: s.title.substring(0, 30) + '...', 
         exploded: s.exploded, 
         faded: s.faded 
       })));
@@ -294,7 +294,7 @@ const createGame2Store = () => {
         await game2Service.loadStatements();
         const statements = game2Service.getRandomStatements(10);
         console.log(`Loaded ${statements.length} statements for Game 2`);
-        console.log('Statements:', statements.map((s, i) => ({ index: i, text: s.text.substring(0, 30) + '...', isTrue: s.isTrue })));
+        console.log('Statements:', statements.map((s, i) => ({ index: i, text: s.title.substring(0, 30) + '...', isTrue: s.isTrue })));
         
         if (statements.length === 0) {
           set({

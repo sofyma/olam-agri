@@ -112,7 +112,7 @@
         display: flex;
         flex-direction: column;
         gap: calc(3rem * var(--scale-factor));
-        padding: calc(2rem * var(--scale-factor));
+        padding: 2rem;
         max-width: calc(60rem * var(--scale-factor));
         margin: 0 auto;
     }
@@ -122,20 +122,20 @@
         justify-content: space-between;
         align-items: center;
         background-color: rgba(255, 255, 255, 0.1);
-        padding: calc(1.5rem * var(--scale-factor));
-        border-radius: calc(1rem * var(--scale-factor));
+        padding: 1.5rem;
+        border-radius: 1rem;
     }
 
     .timer, .attempts {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: calc(0.5rem * var(--scale-factor));
+        gap: 0.5rem;
     }
 
     .timer-label, .attempts-label {
         color: #fff;
-        font-size: calc(1.4rem * var(--scale-factor));
+        font-size: 1.4rem;
         font-weight: 600;
     }
 
@@ -149,47 +149,47 @@
     .instructions-section {
         text-align: center;
         background-color: rgba(255, 255, 255, 0.1);
-        padding: calc(2rem * var(--scale-factor));
-        border-radius: calc(1rem * var(--scale-factor));
+        padding: 2rem;
+        border-radius: 1rem;
     }
 
     .instructions-title {
         color: #fff;
         font-size: calc(3.2rem * var(--scale-factor));
         font-weight: 600;
-        margin-bottom: calc(1.5rem * var(--scale-factor));
+        margin-bottom: 1.5rem;
     }
 
     .instructions-text {
         color: #fff;
-        font-size: calc(2rem * var(--scale-factor));
+        font-size: 2rem;
         line-height: 1.4;
-        margin-bottom: calc(1rem * var(--scale-factor));
+        margin-bottom: 1rem;
     }
 
     .input-section {
         display: flex;
         flex-direction: column;
-        gap: calc(1.5rem * var(--scale-factor));
+        gap: 1.5rem;
     }
 
     .input-container {
         display: flex;
-        gap: calc(1rem * var(--scale-factor));
+        gap: 1rem;
     }
 
     .answer-input {
         flex: 1;
-        padding: calc(1.5rem * var(--scale-factor));
+        padding: 1.5rem;
         border: none;
-        border-radius: calc(1rem * var(--scale-factor));
-        font-size: calc(2rem * var(--scale-factor));
+        border-radius: 1rem;
+        font-size: 2rem;
         background-color: #fff;
         color: #2E2D2C;
         
         &:focus {
             outline: none;
-            box-shadow: 0 0 0 calc(0.2rem * var(--scale-factor)) #00B2E7;
+            box-shadow: 0 0 0 0.2rem #00B2E7;
         }
         
         &:disabled {
@@ -199,12 +199,12 @@
     }
 
     .submit-button {
-        padding: calc(1.5rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+        padding: 1.5rem calc(3rem * var(--scale-factor));
         background-color: #00B2E7;
         color: #fff;
         border: none;
-        border-radius: calc(1rem * var(--scale-factor));
-        font-size: calc(1.8rem * var(--scale-factor));
+        border-radius: 1rem;
+        font-size: 1.8rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -221,22 +221,22 @@
 
     .error-message {
         color: #ff6b6b;
-        font-size: calc(1.8rem * var(--scale-factor));
+        font-size: 1.8rem;
         text-align: center;
-        padding: calc(1rem * var(--scale-factor));
+        padding: 1rem;
         background-color: rgba(255, 107, 107, 0.1);
-        border-radius: calc(0.5rem * var(--scale-factor));
-        border: calc(0.1rem * var(--scale-factor)) solid #ff6b6b;
+        border-radius: 0.5rem;
+        border: 0.1rem solid #ff6b6b;
     }
 
     .help-section {
         text-align: center;
-        padding: calc(1.5rem * var(--scale-factor));
+        padding: 1.5rem;
     }
 
     .help-text {
         color: #fff;
-        font-size: calc(1.6rem * var(--scale-factor));
+        font-size: 1.6rem;
     }
 
     .help-link {
@@ -252,13 +252,13 @@
     /* Mobile responsive */
     @media (max-width: 768px) {
         .question-container {
-            padding: calc(1rem * var(--scale-factor));
-            gap: calc(2rem * var(--scale-factor));
+            padding: 1rem;
+            gap: 2rem;
         }
 
         .timer-section {
             flex-direction: column;
-            gap: calc(1rem * var(--scale-factor));
+            gap: 1rem;
         }
 
         .input-container {

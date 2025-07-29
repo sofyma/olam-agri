@@ -56,7 +56,7 @@
     font-size: calc(8rem * var(--scale-factor));
     font-weight: 600;
     line-height: normal;
-    padding-block-start: calc(1.5rem * var(--scale-factor));
+    padding-block-start: 1.5rem;
     position: relative;
     z-index: 10;
   }
@@ -93,7 +93,7 @@
     }
     &-link {
       color: #000;
-      font-size: calc(1.8rem * var(--scale-factor));
+      font-size: 1.8rem;
       font-weight: 600;
       line-height: normal;
     }
@@ -101,10 +101,10 @@
   .btn {
     align-items: center;
     background-color: #fff;
-    block-size: calc(3.2rem * var(--scale-factor));
-    border-radius: 0 calc(1.5rem * var(--scale-factor));
+    block-size: 3.2rem;
+    border-radius: 0 1.5rem;
     display: flex;
-    inline-size: calc(11.1rem * var(--scale-factor));
+    inline-size: 11.1rem;
   }
 }
 

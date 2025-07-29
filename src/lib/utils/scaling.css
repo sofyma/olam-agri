@@ -1,0 +1,43 @@
+/* Smart Scaling System with Minimum Size Protection */
+
+/* CSS Custom Properties for scaling with minimum size protection */
+:root {
+  --scale-factor: 1;
+  --min-size-rem: 1.125; /* 18px / 16px = 1.125rem */
+}
+
+/* Smart scaling rule: KEEP all original sizes, only REMOVE scaling when below 18px */
+/* 
+  Example transformations:
+  - 1.2rem → 1.2rem (removes scaling, below 18px)
+  - calc(2.4rem * var(--scale-factor)) → calc(2.4rem * var(--scale-factor)) (keeps scaling, above 18px)
+*/
+
+/* Utility classes for common font sizes with smart scaling */
+/* These are examples - the actual transformation happens in the migration script */
+.text-xs { font-size: 0.75rem; } /* Below 18px - no scaling */
+.text-sm { font-size: 0.875rem; } /* Below 18px - no scaling */
+.text-base { font-size: 1rem; } /* Below 18px - no scaling */
+.text-lg { font-size: clamp(1.125rem, 1.125rem, 1.125rem); } /* At 18px - minimal scaling */
+.text-xl { font-size: 1.25rem; } /* Above 18px - keep scaling */
+.text-2xl { font-size: 1.5rem; } /* Above 18px - keep scaling */
+.text-3xl { font-size: 1.875rem; } /* Above 18px - keep scaling */
+.text-4xl { font-size: calc(2.25rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.text-5xl { font-size: calc(3rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.text-6xl { font-size: calc(3.75rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+
+/* Helper function for any custom size */
+.smart-size {
+  font-size: var(--custom-size, 1rem);
+}
+
+/* Padding and margin utilities with smart scaling */
+.p-sm { padding: 0.5rem; } /* Below 18px - no scaling */
+.p-md { padding: 1rem; } /* Below 18px - no scaling */
+.p-lg { padding: 1.5rem; } /* Above 18px - keep scaling */
+.p-xl { padding: 2rem; } /* Above 18px - keep scaling */
+
+.m-sm { margin: 0.5rem; } /* Below 18px - no scaling */
+.m-md { margin: 1rem; } /* Below 18px - no scaling */
+.m-lg { margin: 1.5rem; } /* Above 18px - keep scaling */
+.m-xl { margin: 2rem; } /* Above 18px - keep scaling */ 

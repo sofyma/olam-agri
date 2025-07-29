@@ -152,7 +152,7 @@
       font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: calc(1.5rem * var(--scale-factor));
+      padding-block-start: 1.5rem;
     }
 
     :global(.logo path) {
@@ -176,7 +176,7 @@
 
     @media (max-width: 1024px) {
       .wrapper {
-        padding-inline: calc(2rem * var(--scale-factor));
+        padding-inline: 2rem;
       }
     }
 
@@ -195,7 +195,7 @@
 
       &-link {
         color: #000;
-        font-size: calc(1.8rem * var(--scale-factor));
+        font-size: 1.8rem;
         font-weight: 600;
         line-height: normal;
       }
@@ -204,10 +204,10 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: calc(3.2rem * var(--scale-factor));
-      border-radius: 0 calc(1.5rem * var(--scale-factor));
+      block-size: 3.2rem;
+      border-radius: 0 1.5rem;
       display: flex;
-      inline-size: calc(11.1rem * var(--scale-factor));
+      inline-size: 11.1rem;
     }
   }
 
@@ -223,12 +223,12 @@
 
   .auth-button {
     background-color: #FF7000;
-    block-size: calc(4.4rem * var(--scale-factor));
-    border-radius: 0 calc(1.7rem * var(--scale-factor));
+    block-size: 4.4rem;
+    border-radius: 0 1.7rem;
     color: #fff;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-weight: 600;
-    inline-size: calc(10.7rem * var(--scale-factor));
+    inline-size: 10.7rem;
     margin-block-start: calc(5rem * var(--scale-factor));
   }
 
@@ -277,13 +277,13 @@
 
     .auth-input {
       background-color: #E6E6E6;
-      block-size: calc(6rem * var(--scale-factor));
+      block-size: 6rem;
       border: 0;
       display: block;
-      font-size: calc(2rem * var(--scale-factor));
+      font-size: 2rem;
       font-weight: 600;
       inline-size: 100%;
-      padding-inline: calc(2rem * var(--scale-factor));
+      padding-inline: 2rem;
 
       &:focus {
         outline: 0;
@@ -308,7 +308,7 @@
 
   .paragraph {
     color: #2E2D2C;
-    font-size: calc(1.8rem * var(--scale-factor));
+    font-size: 1.8rem;
     font-weight: 600;
     line-height: normal;
     padding-block-start: calc(7rem * var(--scale-factor));

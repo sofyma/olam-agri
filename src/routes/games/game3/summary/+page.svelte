@@ -137,13 +137,13 @@
             color: #FF5BAF;
             font-size: calc(8rem * var(--scale-factor));
             font-weight: 700;
-            margin-block-start: calc(2rem * var(--scale-factor));
+            margin-block-start: 2rem;
         }
 
         .cta {
             margin-block-start: calc(4rem * var(--scale-factor));
             display: flex;
-            gap: calc(2rem * var(--scale-factor));
+            gap: 2rem;
             justify-content: center;
         }
 
@@ -154,17 +154,17 @@
             cursor: pointer;
             font-size: calc(2.2rem * var(--scale-factor));
             font-weight: 600;
-            padding: calc(1.5rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+            padding: 1.5rem calc(3rem * var(--scale-factor));
             text-decoration: none;
             transition: all 0.2s ease;
         }
     }
 
     .finish-small {
-		block-size: calc(2rem * var(--scale-factor));
+		block-size: 2rem;
 		color: #fff;
 		display: block;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
 		line-height: normal;
 		margin-block-start: calc(3rem * var(--scale-factor));
@@ -175,7 +175,7 @@
 	@media (max-width: 932px) {
 		/* Adjust game summary for mobile */
 		.game-summary {
-			padding: calc(2rem * var(--scale-factor));
+			padding: 2rem;
 		}
 
 		.game-summary .title {
@@ -184,7 +184,7 @@
 
 		.game-summary .results {
 			inline-size: calc(80rem * var(--scale-factor));
-			padding: calc(2rem * var(--scale-factor));
+			padding: 2rem;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -194,7 +194,7 @@
 
 		.game-summary .paragraph {
 			font-size: calc(3.5rem * var(--scale-factor));
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		.game-summary .total-points {
@@ -202,13 +202,13 @@
 		}
 
 		.game-summary .cta {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: calc(1.5rem * var(--scale-factor));
-			margin-block-start: calc(2rem * var(--scale-factor));
+			font-size: 1.5rem;
+			margin-block-start: 2rem;
 		}
 
 		/* Adjust Game3SummaryHero for mobile */

@@ -156,10 +156,10 @@
     .question-counter {
         color: #fff;
         display: block;
-        font-size: calc(2rem * var(--scale-factor));
+        font-size: 2rem;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
-        padding-block-end: calc(1.5rem * var(--scale-factor));
+        padding-block-end: 1.5rem;
         padding-inline-end: calc(4rem * var(--scale-factor));
         text-align: end
     }
@@ -218,12 +218,12 @@
     
     .option {
         align-items: center;
-        border-radius: calc(1.5rem * var(--scale-factor));
+        border-radius: 1.5rem;
         cursor: pointer;
         display: flex;
         font-size: calc(2.2rem * var(--scale-factor));
-        gap: calc(1rem * var(--scale-factor));
-        padding: calc(1rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor));
+        gap: 1rem;
+        padding: 1rem 1.5rem;
         transition: all 0.2s ease;
         user-select: none;
 
@@ -235,15 +235,15 @@
     
     .option-text {
         color: #2E2D2C;
-        inset-block-start: calc(.1rem * var(--scale-factor));
+        inset-block-start: .1rem;
         position: relative;
     }
 
     input[type="radio"] {
         accent-color: #2E2D2C;
-        block-size: calc(2rem * var(--scale-factor));
+        block-size: 2rem;
         cursor: pointer;
-        inline-size: calc(2rem * var(--scale-factor));
+        inline-size: 2rem;
         margin: 0;
         appearance: none;
         border: 0.2rem solid #ccc;
@@ -280,7 +280,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        gap: calc(2rem * var(--scale-factor));
+        gap: 2rem;
         justify-content: center;
     }
 

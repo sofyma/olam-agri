@@ -96,7 +96,7 @@
     /* Adjust hero position for 1440px screens */
     @media screen and (min-width: 1440px) and (max-width: 1599px) {
         .game-header-svg {
-            inset-block-start: calc(2rem * var(--scale-factor));
+            inset-block-start: 2rem;
         }
     }
 </style>

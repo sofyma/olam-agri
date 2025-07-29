@@ -153,7 +153,7 @@
 	.finish-small {
 		color: #FFF;
 		display: inline-block;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
 		line-height: normal;
 		padding-block-start: calc(2.5rem * var(--scale-factor));
@@ -182,12 +182,12 @@
 
 		/* Adjust finish content for mobile */
 		.finish-content {
-			padding: calc(2rem * var(--scale-factor));
+			padding: 2rem;
 		}
 
 		.finish-container {
 			padding-block-start: calc(3rem * var(--scale-factor));
-			padding-block-end: calc(2rem * var(--scale-factor));
+			padding-block-end: 2rem;
 		}
 
 		.finish-text p,
@@ -196,27 +196,27 @@
 		}
 
 		.finish-text ul {
-			margin-block-start: calc(2rem * var(--scale-factor));
+			margin-block-start: 2rem;
 		}
 
 		.finish-text p {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		.finish-text cite {
 			font-size: calc(2.5rem * var(--scale-factor));
 			margin-block-start: calc(2.5rem * var(--scale-factor));
-			padding: calc(1.5rem * var(--scale-factor));
+			padding: 1.5rem;
 			margin-inline: 0;
 		}
 
 		.finish-small {
-			font-size: calc(1.5rem * var(--scale-factor));
-			padding-block-start: calc(1.5rem * var(--scale-factor));
+			font-size: 1.5rem;
+			padding-block-start: 1.5rem;
 		}
 
 		.finish-buttons {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		/* Adjust small hero summary for mobile */

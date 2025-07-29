@@ -3,7 +3,18 @@ import type { Statement } from '$lib/types/game2';
 
 interface SanityStatement {
   _id: string;
-  text: string;
+  title: string;
+  image: {
+    asset: {
+      _ref: string;
+    };
+    hotspot?: {
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+  };
   isTrue: boolean;
 }
 
@@ -24,7 +35,8 @@ export class Game2Service {
     try {
       const query = `*[_type == "game2"] {
         _id,
-        text,
+        title,
+        image,
         isTrue
       } | order(_createdAt asc)`;
 
@@ -32,7 +44,8 @@ export class Game2Service {
 
       this.statements = sanityStatements.map((s: SanityStatement) => ({
         id: s._id,
-        text: s.text,
+        title: s.title,
+        image: s.image,
         isTrue: s.isTrue
       }));
 

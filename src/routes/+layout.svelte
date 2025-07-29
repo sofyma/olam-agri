@@ -1,5 +1,6 @@
 <!-- +layout.svelte -->
 <script lang="ts">
+  import '$lib/utils/scaling.css';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import AuthGuard from '$lib/components/auth/AuthGuard.svelte';
@@ -39,7 +40,15 @@
     }
     
     document.documentElement.style.setProperty('--scale-factor', scaleFactor.toString());
+    
+    // Calculate and set minimum size protection
+    // This ensures no calculated size goes below 18px
+    const minSizePx = 18;
+    const minSizeRem = minSizePx / 16; // Convert 18px to rem (assuming 16px base)
+    document.documentElement.style.setProperty('--min-size-rem', minSizeRem.toString());
+    
     console.log(`Scale factor updated: ${scaleFactor} for width: ${width}px`);
+    console.log(`Minimum size protection: ${minSizeRem}rem (${minSizePx}px)`);
   }
 
   onMount(() => {

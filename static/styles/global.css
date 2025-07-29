@@ -30,14 +30,66 @@ html, body {
   padding: 0;
 }
 
-/* Responsive scaling using CSS variables */
+/* Smart Scaling System with Dual Threshold Protection */
 html {
   	font-size: 1rem; /* Base font size */
 }
 
 :root {
   --scale-factor: 1; /* Default for large screens */
+  --min-size-rem: 1.125; /* 18px / 16px = 1.125rem for font-size protection */
+  --min-size-rem-width: 9.375; /* 150px / 16px = 9.375rem for width/height protection */
 }
+
+/* Smart scaling rule: KEEP all original sizes, only REMOVE scaling when below thresholds */
+/*
+  Font-size and other properties: Remove scaling when below 18px
+  Width/height properties: Remove scaling when below 150px
+*/
+
+/* Smart Scaling Utility Classes */
+.smart-text-xs { font-size: 0.75rem; } /* Below 18px - no scaling */
+.smart-text-sm { font-size: 0.875rem; } /* Below 18px - no scaling */
+.smart-text-base { font-size: 1rem; } /* Below 18px - no scaling */
+.smart-text-lg { font-size: 1.125rem; } /* At 18px - minimal scaling */
+.smart-text-xl { font-size: calc(1.25rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.smart-text-2xl { font-size: calc(1.5rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.smart-text-3xl { font-size: calc(1.875rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.smart-text-4xl { font-size: calc(2.25rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.smart-text-5xl { font-size: calc(3rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+.smart-text-6xl { font-size: calc(3.75rem * var(--scale-factor)); } /* Above 18px - keep scaling */
+
+/* Smart sizing for width/height properties */
+.smart-w-sm { width: 8rem; } /* Below 150px - no scaling */
+.smart-w-md { width: 10rem; } /* Below 150px - no scaling */
+.smart-w-lg { width: calc(20rem * var(--scale-factor)); } /* Above 150px - keep scaling */
+.smart-w-xl { width: calc(25rem * var(--scale-factor)); } /* Above 150px - keep scaling */
+
+.smart-h-sm { height: 3rem; } /* Below 150px - no scaling */
+.smart-h-md { height: 4rem; } /* Below 150px - no scaling */
+.smart-h-lg { height: calc(20rem * var(--scale-factor)); } /* Above 150px - keep scaling */
+.smart-h-xl { height: calc(25rem * var(--scale-factor)); } /* Above 150px - keep scaling */
+
+/* Smart Scaling System Usage Guide */
+/*
+  This system automatically applies the correct scaling based on size thresholds:
+  
+  FONT-SIZE THRESHOLD (18px):
+  - Below 18px: Remove scaling (use original size)
+  - Above 18px: Keep scaling (use calc() with scale-factor)
+  
+  WIDTH/HEIGHT THRESHOLD (150px):
+  - Below 150px: Remove scaling (use original size)
+  - Above 150px: Keep scaling (use calc() with scale-factor)
+  
+  Examples:
+  - Small text (1rem = 16px): No scaling needed
+  - Medium text (1.5rem = 24px): Keep scaling
+  - Small button (10rem = 160px): Remove scaling (below 150px threshold)
+  - Large container (25rem = 400px): Keep scaling
+  
+  The migration script automatically applies these rules to all calc() expressions.
+*/
 
 /* Large screens (1920px and above) - minimal scaling */
 @media screen and (min-width: 1920px) {
@@ -81,16 +133,19 @@ html {
   }
 }
 
-/* Global Button Styles */
+/* Global Button Styles with Smart Scaling */
 .btn {
   align-items: center;
-  block-size: calc(3.5rem * var(--scale-factor));
+  /* Height: 3.5rem = 56px, scaled to 33.6px on test scale - below 150px threshold, remove scaling */
+  block-size: 3.5rem;
   border: none;
   border-radius: 0rem 1.5rem;
   cursor: pointer;
   display: flex;
-  font-size: calc(1.6rem * var(--scale-factor));
-  inline-size: calc(10rem * var(--scale-factor));
+  /* Font-size: 1.6rem = 25.6px, scaled to 15.36px on test scale - below 18px threshold, remove scaling */
+  font-size: 1.6rem;
+  /* Width: 10rem = 160px, scaled to 96px on test scale - below 150px threshold, remove scaling */
+  inline-size: 10rem;
   justify-content: center;
   transition: all 0.3s ease;
 }

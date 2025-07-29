@@ -4,6 +4,13 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'order',
+      title: 'Question Order',
+      type: 'number',
+      validation: Rule => Rule.required().integer().positive(),
+      description: 'The order in which this question should appear (1, 2, 3, etc.)'
+    },
+    {
       name: 'question',
       title: 'Question Text',
       type: 'string',

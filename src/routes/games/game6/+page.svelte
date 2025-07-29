@@ -243,7 +243,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding: calc(2rem * var(--scale-factor));
+		padding: 2rem;
 		position: relative;
 	}
 
@@ -310,11 +310,11 @@
 
 	.option-button {
 		align-items: center;
-		border: calc(0.1rem * var(--scale-factor)) solid #00A865;
-		border-radius: calc(2rem * var(--scale-factor));
+		border: 0.1rem solid #00A865;
+		border-radius: 2rem;
 		cursor: pointer;
 		display: flex;
-		gap: calc(2rem * var(--scale-factor));
+		gap: 2rem;
 		padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		transition: all 0.3s ease;
 		width: 100%;
@@ -340,15 +340,15 @@
 	.send-button {
 		background-color: #00A865;
 		border: none;
-		border-radius: 0 calc(1.7rem * var(--scale-factor));
+		border-radius: 0 1.7rem;
 		color: #fff;
 		cursor: pointer;
 		display: block;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
 		margin-block-start: calc(6rem * var(--scale-factor));
 		margin-inline: auto;
-		padding: calc(1.5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		padding: 1.5rem calc(4rem * var(--scale-factor));
 		transition: background-color 0.3s ease;
 
 		&:hover:not(:disabled) {
@@ -382,7 +382,7 @@
 	.welcome-content {
 		display: flex;
 		flex-direction: column;
-		gap: calc(2rem * var(--scale-factor));
+		gap: 2rem;
 	}
 
 	.welcome-text {
@@ -394,14 +394,14 @@
 	.lets-go-button {
 		background-color: #00A865;
 		border: none;
-		border-radius: 0 calc(1.7rem * var(--scale-factor));
+		border-radius: 0 1.7rem;
 		color: #fff;
 		cursor: pointer;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
-		margin-block-start: calc(2rem * var(--scale-factor));
+		margin-block-start: 2rem;
 		margin-inline: auto;
-		padding: calc(0.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
+		padding: 0.5rem 2rem;
 		transition: background-color 0.3s ease;
 		width: fit-content;
 
@@ -503,7 +503,7 @@
 		}
 
 		&-copy {
-			font-size: calc(1.8rem * var(--scale-factor));
+			font-size: 1.8rem;
 		}
 	}
 
@@ -576,12 +576,12 @@
 		// /* 2. Fix sidebar horizontal scroll */
 		// .copy {
 		// 	margin-block-start: calc(4rem * var(--scale-factor));
-		// 	padding: calc(1.5rem * var(--scale-factor));
+		// 	padding: 1.5rem;
 		// }
 
 		// .copy-header {
 		// 	grid-template-columns: repeat(2, auto);
-		// 	grid-column-gap: calc(2rem * var(--scale-factor));
+		// 	grid-column-gap: 2rem;
 		// 	margin-block-start: calc(-3rem * var(--scale-factor));
 		// }
 
@@ -622,7 +622,7 @@
 		// .game-grid {
 		// 	grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 		// 	align-items: start;
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 		// }
 		
 
@@ -634,7 +634,7 @@
 		/* 7. Adjust start screen for mobile */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: calc(1rem * var(--scale-factor));
+			padding: 1rem;
 		}
 
 		/* Keep start screen width consistent when sidebar is closed */
@@ -653,7 +653,7 @@
 
 		/* Adjust game summary for mobile */
 		// .game-summary {
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 		// }
 
 		// .game-summary .title {
@@ -662,7 +662,7 @@
 
 		// .game-summary .results {
 		// 	inline-size: calc(80rem * var(--scale-factor));
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 
 		// 	.paragraph {
 		// 		padding-block-start: 0;
@@ -672,7 +672,7 @@
 
 		// .game-summary .paragraph {
 		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 		// .game-summary .total-points {
@@ -680,18 +680,18 @@
 		// }
 
 		// .game-summary .cta {
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 		// /* Adjust game ID for mobile */
 		// .game-id {
-		// 	block-size: calc(12rem * var(--scale-factor));
-		// 	inline-size: calc(8rem * var(--scale-factor));
+		// 	block-size: 12rem;
+		// 	inline-size: 8rem;
 		// }
 
 		// .game-id .text {
-		// 	font-size: calc(2rem * var(--scale-factor));
-		// 	line-height: calc(2rem * var(--scale-factor));
+		// 	font-size: 2rem;
+		// 	line-height: 2rem;
 		// }
 
 		// .game-id .number {
@@ -722,19 +722,19 @@
 
 		/* Adjust buttons for mobile */
 		// .close-button {
-		// 	inset-block-start: calc(1rem * var(--scale-factor));
-		// 	inset-inline-end: calc(2rem * var(--scale-factor));
+		// 	inset-block-start: 1rem;
+		// 	inset-inline-end: 2rem;
 		// }
 
 		// .play-button {
-		// 	inset-block-start: calc(2rem * var(--scale-factor));
-		// 	inset-inline-end: calc(-0.2rem * var(--scale-factor));
+		// 	inset-block-start: 2rem;
+		// 	inset-inline-end: -0.2rem;
 		// }
 
 		/* Adjust start button for mobile */
 		// .start {
 		// 	inset-block-start: calc(22rem * var(--scale-factor));
-		// 	inset-inline-end: calc(-2rem * var(--scale-factor));
+		// 	inset-inline-end: -2rem;
 		// }
 
 		// .start svg {
@@ -791,22 +791,22 @@
 
 		/* Content check section mobile adjustments */
 		// .content-check {
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 		// .content-check-grid {
-		// 	gap: calc(1.5rem * var(--scale-factor));
+		// 	gap: 1.5rem;
 		// }
 
 		// .content-check-btn {
-		// 	width: calc(12rem * var(--scale-factor));
-		// 	height: calc(3rem * var(--scale-factor));
-		// 	font-size: calc(1.2rem * var(--scale-factor));
+		// 	width: 12rem;
+		// 	height: 3rem;
+		// 	font-size: 1.2rem;
 		// }
 
 		// .content-check-text {
-		// 	font-size: calc(1.2rem * var(--scale-factor));
-		// 	line-height: calc(1.6rem * var(--scale-factor));
+		// 	font-size: 1.2rem;
+		// 	line-height: 1.6rem;
 		// }
 	}
 </style> 

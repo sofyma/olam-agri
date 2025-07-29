@@ -285,8 +285,8 @@
 	.timer {
 		align-items: center;
 		background: #00B2E7;
-		border-radius: calc(1rem * var(--scale-factor));
-		block-size: calc(4rem * var(--scale-factor));
+		border-radius: 1rem;
+		block-size: 4rem;
 		color: #FFF;
 		display: flex;
 		font-size: calc(12rem * var(--scale-factor));
@@ -312,7 +312,7 @@
 		font-size: calc(4.5rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		margin-block-start: calc(1.5rem * var(--scale-factor));
+		margin-block-start: 1.5rem;
 	}
 
 	.game-description {
@@ -320,7 +320,7 @@
 		font-size: calc(2.2rem * var(--scale-factor));
 		font-weight: 400;
 		line-height: normal;
-		margin-block-start: calc(1.5rem * var(--scale-factor));
+		margin-block-start: 1.5rem;
 
 		strong {
 			font-weight: 600;
@@ -336,7 +336,7 @@
 		gap: 0;
 		line-height: calc(5.9rem * var(--scale-factor));
 		list-style-position: inside;
-		margin-block-start: calc(1.5rem * var(--scale-factor));
+		margin-block-start: 1.5rem;
 
 		.highlight {
 			color: #00B2E7;
@@ -346,7 +346,7 @@
 			color: #00B2E7;
 			text-decoration: underline;
 			text-decoration-color: #00B2E7;
-			text-decoration-thickness: calc(0.2rem * var(--scale-factor));
+			text-decoration-thickness: 0.2rem;
 
 			&:hover {
 				opacity: 0.8;
@@ -358,8 +358,8 @@
 		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
-		gap: calc(2rem * var(--scale-factor));
-		margin-block-start: calc(2rem * var(--scale-factor));
+		gap: 2rem;
+		margin-block-start: 2rem;
 	}
 
 	.input-container {
@@ -371,14 +371,14 @@
 
 	.answer-input {
 		background: #FFF;
-		border: calc(0.2rem * var(--scale-factor)) solid #999;
-		border-radius: calc(0.5rem * var(--scale-factor));
+		border: 0.2rem solid #999;
+		border-radius: 0.5rem;
 		color: #999;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 400;
 		inline-size: calc(43rem * var(--scale-factor));
 		line-height: 125%;
-		padding: calc(1.5rem * var(--scale-factor));
+		padding: 1.5rem;
 
 		&::placeholder {
 			color: #999;
@@ -388,7 +388,7 @@
 
 	.result-message {
 		color: #2E2D2C;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
 		line-height: normal;
 		white-space: pre-line;
@@ -406,15 +406,15 @@
 		align-items: center;
 		background: #00B2E7;
 		border: none;
-		border-radius: 0 calc(1.7rem * var(--scale-factor));
-		block-size: calc(4.4rem * var(--scale-factor));
+		border-radius: 0 1.7rem;
+		block-size: 4.4rem;
 		color: #FFF;
 		cursor: pointer;
 		display: flex;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-style: normal;
 		font-weight: 400;
-		inline-size: calc(10.7rem * var(--scale-factor));
+		inline-size: 10.7rem;
 		justify-content: center;
 		line-height: normal;
 		text-align: center;
@@ -433,13 +433,13 @@
 	// .game-id {
 	// 	align-items: center;
 	// 	background-color: #00B2E7;
-	// 	border-radius: 0 calc(2rem * var(--scale-factor)) 0 calc(2rem * var(--scale-factor));
+	// 	border-radius: 0 2rem 0 2rem;
 	// 	block-size: calc(17rem * var(--scale-factor));
 	// 	color: #fff;
 	// 	display: flex;
 	// 	flex-direction: column;
-	// 	inline-size: calc(11rem * var(--scale-factor));
-	// 	padding: calc(1rem * var(--scale-factor));
+	// 	inline-size: 11rem;
+	// 	padding: 1rem;
 	// 	text-align: center;
 
 	// 	.text {
@@ -461,7 +461,7 @@
 	// 	font-style: normal;
 	// 	font-weight: 600;
 	// 	line-height: normal;
-	// 	padding-block-start: calc(2rem * var(--scale-factor));
+	// 	padding-block-start: 2rem;
 	// }
 
 	// .subtitle {
@@ -475,7 +475,7 @@
 	// 	color: #2E2D2C;
 	// 	font-size: calc(2.2rem * var(--scale-factor));
 	// 	line-height: normal;
-	// 	padding-block-start: calc(2rem * var(--scale-factor));
+	// 	padding-block-start: 2rem;
 
 	// 	&:first-child {
 	// 		padding-block-start: calc(2.5rem * var(--scale-factor))
@@ -490,7 +490,7 @@
 	// .copy {
 	// 	background-color: #fff;
 	// 	margin-block-start: calc(6.5rem * var(--scale-factor));
-	// 	padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+	// 	padding: 2rem 2rem calc(4rem * var(--scale-factor));
 	// 	position: relative;
 
 	// 	&-header {
@@ -552,10 +552,10 @@
 		/* Game grid and columns */
 		.game-grid {
 			grid-template-columns: 1fr 1fr;
-			gap: calc(1.2rem * var(--scale-factor));
+			gap: 1.2rem;
 			align-items: center;
-			padding: calc(1rem * var(--scale-factor));
-			padding-inline: calc(1rem * var(--scale-factor));
+			padding: 1rem;
+			padding-inline: 1rem;
 		}
 		.game-hero-image {
 			width: 80%;
@@ -569,7 +569,7 @@
 		// }
 		.game-content-column {
 			/* No width restriction, fills grid cell */
-			gap: calc(2rem * var(--scale-factor));
+			gap: 2rem;
 		}
 
 		/* Timer and game white container */
@@ -580,39 +580,39 @@
 			block-size: auto;
 			inline-size: 100%;
 			width: 90%;
-			padding: calc(3.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
+			padding: calc(3.5rem * var(--scale-factor)) 2rem;
 		}
 		.game-container-white .game-title {
 			font-size: calc(2.4rem * var(--scale-factor));
-			margin-block-start: calc(1rem * var(--scale-factor));
+			margin-block-start: 1rem;
 		}
 		.game-container-white .game-description {
-			font-size: calc(1.44rem * var(--scale-factor));
-			margin-block-start: calc(1rem * var(--scale-factor));
+			font-size: 1.44rem;
+			margin-block-start: 1rem;
 		}
 		.game-container-white .steps-list {
-			font-size: calc(1.76rem * var(--scale-factor));
+			font-size: 1.76rem;
 			line-height: calc(2.4rem * var(--scale-factor));
-			margin-block-start: calc(1rem * var(--scale-factor));
+			margin-block-start: 1rem;
 		}
 		.game-container-white .answer-input {
-			font-size: calc(1.28rem * var(--scale-factor));
+			font-size: 1.28rem;
 			/* No inline-size here, inherit from desktop */
 		}
 		.game-container-white .send-button {
-			font-size: calc(1.44rem * var(--scale-factor));
-			inline-size: calc(12rem * var(--scale-factor));
-			padding: calc(1rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+			font-size: 1.44rem;
+			inline-size: 12rem;
+			padding: 1rem calc(3rem * var(--scale-factor));
 		}
 		.game-container-white .result-message {
-			font-size: calc(1.28rem * var(--scale-factor));
-			margin-block-start: calc(1rem * var(--scale-factor));
-			padding: calc(1rem * var(--scale-factor));
-			border-radius: calc(0.5rem * var(--scale-factor));
+			font-size: 1.28rem;
+			margin-block-start: 1rem;
+			padding: 1rem;
+			border-radius: 0.5rem;
 		}
 		.input-section {
 			align-items: flex-start;
-			margin-block-start: calc(1.5rem * var(--scale-factor));
+			margin-block-start: 1.5rem;
 		}
 		.input-container {
 			inline-size: 100%;
@@ -632,7 +632,7 @@
 		/* Start screen and sidebar closed state */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: calc(1rem * var(--scale-factor));
+			padding: 1rem;
 			overflow-y: hidden;
 		}
 		.sidebar-is-closed .start-screen {

@@ -132,14 +132,14 @@
 	.btn {
 		color: #8E75F8;
 		margin-inline: 0;
-		border-radius: 0 calc(1.7rem * var(--scale-factor));
+		border-radius: 0 1.7rem;
 	}
 
 	.finish-small {
-		block-size: calc(2rem * var(--scale-factor));
+		block-size: 2rem;
 		color: #fff;
 		display: block;
-		font-size: calc(2rem * var(--scale-factor));
+		font-size: 2rem;
 		font-weight: 600;
 		line-height: normal;
 		margin-block-start: calc(3rem * var(--scale-factor));
@@ -156,7 +156,7 @@
 
 		/* Adjust game summary for mobile */
 		.game-summary {
-			padding: calc(2rem * var(--scale-factor));
+			padding: 2rem;
 		}
 
 		.game-summary .title {
@@ -165,7 +165,7 @@
 
 		.game-summary .results {
 			inline-size: calc(80rem * var(--scale-factor));
-			padding: calc(2rem * var(--scale-factor));
+			padding: 2rem;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -175,7 +175,7 @@
 
 		.game-summary .paragraph {
 			font-size: calc(3.5rem * var(--scale-factor));
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		.game-summary .total-points {
@@ -183,13 +183,13 @@
 		}
 
 		.game-summary .cta {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: calc(1.5rem * var(--scale-factor));
-			margin-block-start: calc(2rem * var(--scale-factor));
+			font-size: 1.5rem;
+			margin-block-start: 2rem;
 		}
 
 		/* Adjust Game2SummaryHero for mobile */

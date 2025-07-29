@@ -313,12 +313,12 @@
 
   .error {
     background-color: #f8d7da;
-    border-radius: calc(1rem * var(--scale-factor));
+    border-radius: 1rem;
     color: #dc3545;
-    font-size: calc(1.8rem * var(--scale-factor));
+    font-size: 1.8rem;
     font-weight: 600;
-    margin-block: calc(2rem * var(--scale-factor));
-    padding: calc(2rem * var(--scale-factor));
+    margin-block: 2rem;
+    padding: 2rem;
     text-align: center;
   }
 
@@ -350,7 +350,7 @@
       font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: calc(1.5rem * var(--scale-factor));
+      padding-block-start: 1.5rem;
     }
 
     :global(.logo path) {
@@ -389,7 +389,7 @@
 
       &-link {
         color: #000;
-        font-size: calc(1.8rem * var(--scale-factor));
+        font-size: 1.8rem;
         font-weight: 600;
         line-height: normal;
       }
@@ -398,22 +398,22 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: calc(3.2rem * var(--scale-factor));
-      border-radius: 0 calc(1.5rem * var(--scale-factor));
+      block-size: 3.2rem;
+      border-radius: 0 1.5rem;
       display: flex;
-      inline-size: calc(11.1rem * var(--scale-factor));
+      inline-size: 11.1rem;
     }
 
     @media (max-width: 1024px) {
       .wrapper {
-        padding-inline: calc(2rem * var(--scale-factor));
+        padding-inline: 2rem;
       }
     }
   }
 
   .loading {
     color: #2E2D2C;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-weight: 600;
     padding-block: calc(5rem * var(--scale-factor));
     text-align: center;
@@ -422,7 +422,7 @@
   .pagination {
     align-items: center;
     display: flex;
-    gap: calc(1rem * var(--scale-factor));
+    gap: 1rem;
     justify-content: center;
     margin-block-start: calc(3rem * var(--scale-factor));
   }
@@ -430,12 +430,12 @@
   .pagination-btn {
     background-color: #E6E6E6;
     border: none;
-    border-radius: calc(1rem * var(--scale-factor));
+    border-radius: 1rem;
     color: #2E2D2C;
     cursor: pointer;
-    font-size: calc(1.4rem * var(--scale-factor));
+    font-size: 1.4rem;
     font-weight: 600;
-    padding: calc(1rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor));
+    padding: 1rem 1.5rem;
     transition: all 0.3s ease;
 
     &:hover:not(:disabled) {
@@ -451,9 +451,9 @@
 
   .pagination-info {
     color: #2E2D2C;
-    font-size: calc(1.6rem * var(--scale-factor));
+    font-size: 1.6rem;
     font-weight: 600;
-    margin-inline: calc(2rem * var(--scale-factor));
+    margin-inline: 2rem;
   }
 
   .ranking-container {
@@ -477,7 +477,7 @@
       color: #FF7000;
       font-size: calc(3.5rem * var(--scale-factor));
       font-weight: 600;
-      padding: calc(2rem * var(--scale-factor));
+      padding: 2rem;
       text-align: left;
       vertical-align: top;
     }
@@ -497,7 +497,7 @@
       font-weight: 700;
       
       &:not(:last-child) {
-        margin-block-end: calc(0.5rem * var(--scale-factor));
+        margin-block-end: 0.5rem;
       }
     }
 
@@ -507,7 +507,7 @@
       text-align: end;
       
       &:not(:last-child) {
-        margin-block-end: calc(0.5rem * var(--scale-factor));
+        margin-block-end: 0.5rem;
       }
     }
 
@@ -598,12 +598,12 @@
   }
 
   .region-tab {
-    border-block-end: calc(0.7rem * var(--scale-factor)) solid transparent;
+    border-block-end: 0.7rem solid transparent;
     font-size: calc(2.6rem * var(--scale-factor));
     font-weight: 600;
 
     &.active {
-      border-block-end: calc(0.7rem * var(--scale-factor)) solid #FF7000;
+      border-block-end: 0.7rem solid #FF7000;
     }
   }
 
@@ -632,22 +632,22 @@
 
     svg {
       inset-block-start: 50%;
-      inset-inline-start: calc(2rem * var(--scale-factor));
+      inset-inline-start: 2rem;
       position: absolute;
       transform: translateY(-50%);
     }
   }
 
   .search-input {
-    border: calc(0.2rem * var(--scale-factor)) solid #999;
+    border: 0.2rem solid #999;
     border-radius: calc(50rem * var(--scale-factor));
     color: #999;
-    font-size: calc(1.6rem * var(--scale-factor));
+    font-size: 1.6rem;
     inline-size: 100%;
-    padding: calc(1.5rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+    padding: 1.5rem 2rem 1.5rem calc(6rem * var(--scale-factor));
 
     &:focus {
-      box-shadow: 0 0 0 calc(0.2rem * var(--scale-factor)) #FF7000;
+      box-shadow: 0 0 0 0.2rem #FF7000;
       outline: none;
     }
 
@@ -659,7 +659,7 @@
   .section-title {
     align-items: center;
     background-color: #E6E6E6;
-    block-size: calc(9rem * var(--scale-factor));
+    block-size: 9rem;
     border-radius: 0 calc(2.5rem * var(--scale-factor));
     color: #2E2D2C;
     display: flex;
@@ -670,7 +670,7 @@
     text-align: center;
 
     strong {
-      padding-inline-end: calc(1.1rem * var(--scale-factor));
+      padding-inline-end: 1.1rem;
     }
   }
 

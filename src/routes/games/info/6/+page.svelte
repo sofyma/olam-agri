@@ -40,8 +40,8 @@
 }
 
 .game6-info__indicator {
-  inline-size: calc(10.5rem * var(--scale-factor));
-  block-size: calc(10.5rem * var(--scale-factor));
+  inline-size: 10.5rem;
+  block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
   background: #00C853;
   color: #FFF;
@@ -65,7 +65,7 @@
   font-size: calc(9rem * var(--scale-factor));
   line-height: 125%;
   position: relative;
-  top: calc(0.5rem * var(--scale-factor));
+  top: 0.5rem;
 }
 
 .game6-info__main-title {
@@ -75,7 +75,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(3rem * var(--scale-factor));
+  padding-block-start: calc(6rem * var(--scale-factor));
 }
 
 .game6-info__paragraph {
@@ -91,7 +91,7 @@
 }
 
 .game6-info__paragraph:last-of-type {
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 :global(.play-section) {
@@ -106,11 +106,11 @@
     padding-block-start: 0;
   }
   .wrapper {
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
   .game6-info__indicator {
-    inline-size: calc(7rem * var(--scale-factor));
-    block-size: calc(7rem * var(--scale-factor));
+    inline-size: 7rem;
+    block-size: 7rem;
     font-size: calc(5.5rem * var(--scale-factor));
     font-weight: 600;
     position: static;

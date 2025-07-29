@@ -412,7 +412,7 @@
 
   .hero-section {
     padding-block: calc(12rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .hero-container {
@@ -424,7 +424,7 @@
     color: #FF7000;
     font-size: calc(6rem * var(--scale-factor));
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 125%;
     margin-block-end: calc(3rem * var(--scale-factor));
   }
@@ -446,7 +446,7 @@
     background-color: #E6E6E6;
     padding-block-end: calc(9rem * var(--scale-factor));
     padding-block-start: calc(8rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .map-container {
@@ -484,7 +484,7 @@
 
   .info-section {
     padding-block: calc(12rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .info-container {
@@ -517,7 +517,7 @@
 
   .info-list {
     margin-block-end: calc(3rem * var(--scale-factor));
-    padding-inline-start: calc(2rem * var(--scale-factor));
+    padding-inline-start: 2rem;
     list-style: disc;
   }
 
@@ -533,12 +533,12 @@
   .hero-tip {
     align-items: center;
     display: flex;
-    gap: calc(1rem * var(--scale-factor));
+    gap: 1rem;
     margin-block-end: calc(3rem * var(--scale-factor));
   }
 
   .tip-icon {
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
   }
 
   .tip-text {
@@ -559,7 +559,7 @@
 
     &-link {
       color: #000;
-      font-size: calc(1.8rem * var(--scale-factor));
+      font-size: 1.8rem;
       font-weight: 600;
       line-height: normal;
       text-decoration: none;
@@ -570,10 +570,10 @@
   .btn {
     align-items: center;
     background-color: #fff;
-    block-size: calc(3.2rem * var(--scale-factor));
-    border-radius: 0 calc(1.5rem * var(--scale-factor));
+    block-size: 3.2rem;
+    border-radius: 0 1.5rem;
     display: flex;
-    inline-size: calc(11.1rem * var(--scale-factor));
+    inline-size: 11.1rem;
   }
 
   .row {
@@ -585,13 +585,13 @@
   .wrapper {
     max-inline-size: calc(128rem * var(--scale-factor));
     margin-inline: auto;
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .games-section {
     background-color: #2E2D2C;
     padding-block: calc(12rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .games-container {
@@ -634,7 +634,7 @@
   .game-card {
     align-items: center;
     border-radius: 0 calc(6rem * var(--scale-factor));
-    box-shadow: 0 calc(0.4rem * var(--scale-factor)) calc(0.6rem * var(--scale-factor)) rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     height: calc(44rem * var(--scale-factor));
@@ -690,7 +690,7 @@
     background: #FFF !important;
     color: #FF7000 !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   // Game 2 - Purple
@@ -730,7 +730,7 @@
     background: #FFF !important;
     color: #8E75F8 !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   // Game 3 - Pink
@@ -770,7 +770,7 @@
     background: #FFF !important;
     color: #FF5BAF !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   // Game 4 - Blue
@@ -810,7 +810,7 @@
     background: #FFF !important;
     color: #FFD700 !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   // Game 5 - Blue
@@ -850,7 +850,7 @@
     background: #FFF !important;
     color: #00B2E7 !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   // Game 6 - Green
@@ -890,17 +890,17 @@
     background: #FFF !important;
     color: #00A865 !important;
     font-weight: 600 !important;
-    inline-size: calc(12.4rem * var(--scale-factor)) !important;
+    inline-size: 12.4rem !important;
   }
 
   .game-label {
-    border-radius: calc(2rem * var(--scale-factor));
+    border-radius: 2rem;
     display: inline-block;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-style: normal;
     font-weight: 600;
     line-height: 150%;
-    padding: calc(0.5rem * var(--scale-factor)) calc(1rem * var(--scale-factor));
+    padding: 0.5rem 1rem;
     text-align: center;
   }
 
@@ -933,17 +933,17 @@
   // }
 
   .lock-icon {
-    width: calc(2.2rem * var(--scale-factor));
-    height: calc(3rem * var(--scale-factor));
+    width: 2.2rem;
+    height: 3rem;
   }
 
   .locked-text {
     color: #FFF;
-    font-size: calc(1.6rem * var(--scale-factor));
+    font-size: 1.6rem;
     font-style: normal;
     font-weight: 600;
     line-height: 125%;
-    padding-block-start: calc(2rem * var(--scale-factor));
+    padding-block-start: 2rem;
     text-align: center;
   }
 
@@ -951,14 +951,14 @@
     align-items: center;
     background: #FF7000;
     border: none;
-    border-radius: 0 calc(1.7rem * var(--scale-factor));
+    border-radius: 0 1.7rem;
     color: #FFF;
     cursor: pointer;
     display: flex;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
-    height: calc(4.4rem * var(--scale-factor));
+    height: 4.4rem;
     inline-size: calc(19rem * var(--scale-factor));
     justify-content: center;
     line-height: normal;
@@ -978,7 +978,7 @@
 
   .hero-reward-section {
     padding-block: calc(12rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .hero-reward-container {
@@ -1022,7 +1022,7 @@
 
   .reward-image-column {
     flex-shrink: 0;
-    inline-size: calc(12rem * var(--scale-factor));
+    inline-size: 12rem;
   }
 
   .reward-image {
@@ -1040,12 +1040,12 @@
     font-style: normal;
     font-weight: 600;
     line-height: 150%;
-    margin-block-end: calc(1rem * var(--scale-factor));
+    margin-block-end: 1rem;
   }
 
   .reward-description {
     color: #000;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
@@ -1059,7 +1059,7 @@
   .brand-defender-container {
     max-inline-size: calc(98rem * var(--scale-factor));
     margin-inline: auto;
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .brand-defender-hero-image {

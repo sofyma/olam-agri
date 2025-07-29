@@ -212,7 +212,7 @@
       font-size: calc(8rem * var(--scale-factor));
       font-weight: 600;
       line-height: normal;
-      padding-block-start: calc(1.5rem * var(--scale-factor));
+      padding-block-start: 1.5rem;
     }
 
     :global(.logo path) {
@@ -236,7 +236,7 @@
 
     @media (max-width: 1024px) {
       .wrapper {
-        padding-inline: calc(2rem * var(--scale-factor));
+        padding-inline: 2rem;
       }
     }
 
@@ -255,7 +255,7 @@
 
       &-link {
         color: #000;
-        font-size: calc(1.8rem * var(--scale-factor));
+        font-size: 1.8rem;
         font-weight: 600;
         line-height: normal;
       }
@@ -264,10 +264,10 @@
     .btn {
       align-items: center;
       background-color: #fff;
-      block-size: calc(3.2rem * var(--scale-factor));
-      border-radius: 0 calc(1.5rem * var(--scale-factor));
+      block-size: 3.2rem;
+      border-radius: 0 1.5rem;
       display: flex;
-      inline-size: calc(11.1rem * var(--scale-factor));
+      inline-size: 11.1rem;
     }
   }
 
@@ -286,13 +286,13 @@
   .auth-button {
     align-items: center;
     background-color: #FF7000;
-    block-size: calc(4.4rem * var(--scale-factor));
-    border-radius: 0 calc(1.7rem * var(--scale-factor));
+    block-size: 4.4rem;
+    border-radius: 0 1.7rem;
     color: #fff;
     display: flex;
-    font-size: calc(2rem * var(--scale-factor));
+    font-size: 2rem;
     font-weight: 600;
-    inline-size: calc(10.7rem * var(--scale-factor));
+    inline-size: 10.7rem;
     justify-content: center;
     margin-block-start: calc(5rem * var(--scale-factor));
     margin-inline: auto;
@@ -322,7 +322,7 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: calc(0.5rem * var(--scale-factor));
+    gap: 0.5rem;
     margin-block-start: calc(3rem * var(--scale-factor));
 
     &:first-child {
@@ -331,19 +331,19 @@
 
     .auth-label {
       color: #2E2D2C;
-      font-size: calc(1.4rem * var(--scale-factor));
+      font-size: 1.4rem;
       font-weight: 600;
     }
 
     .auth-input {
       background-color: #E6E6E6;
-      block-size: calc(4rem * var(--scale-factor));
+      block-size: 4rem;
       border: 0;
       display: block;
-      font-size: calc(1.4rem * var(--scale-factor));
+      font-size: 1.4rem;
       font-weight: 600;
       inline-size: 100%;
-      padding-inline: calc(2rem * var(--scale-factor));
+      padding-inline: 2rem;
 
       &:focus {
         outline: 0;
@@ -356,17 +356,17 @@
 
     .email-error {
       color: #FF3000;
-      font-size: calc(1.4rem * var(--scale-factor));
+      font-size: 1.4rem;
       font-style: normal;
       font-weight: 600;
       line-height: 125%;
-      margin-top: calc(0.5rem * var(--scale-factor));
+      margin-top: 0.5rem;
     }
   }
 
   .paragraph {
     color: #2E2D2C;
-    font-size: calc(1.8rem * var(--scale-factor));
+    font-size: 1.8rem;
     font-weight: 600;
     line-height: normal;
     padding-block-start: calc(7rem * var(--scale-factor));
@@ -374,11 +374,11 @@
 
     &-1 {
       color: #2E2D2C;
-      font-size: calc(2rem * var(--scale-factor));
+      font-size: 2rem;
       font-weight: 600;
       line-height: normal;
       text-align: center;
-      padding-block-start: calc(2rem * var(--scale-factor));
+      padding-block-start: 2rem;
 
       &--1 {
         padding-block-start: calc(15rem * var(--scale-factor));

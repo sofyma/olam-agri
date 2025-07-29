@@ -4,6 +4,7 @@ import type { Question } from '$lib/types/game3';
 
 interface SanityQuestion {
   _id: string;
+  order: number;
   question: string;
   image?: {
     asset: {
@@ -37,6 +38,7 @@ export class Game3Service {
     try {
       const query = `*[_type == "game3"] {
         _id,
+        order,
         question,
         "imageAsset": image.asset->{
           _id,
@@ -45,15 +47,20 @@ export class Game3Service {
         },
         options,
         correctAnswer
-      } | order(_createdAt asc)`;
+      } | order(order asc)`;
 
       const sanityQuestions = await client.fetch(query);
 
+      console.log('Raw Sanity questions:', sanityQuestions);
+
       this.questions = sanityQuestions
-        .map((q: SanityQuestion) => {
+        .map((q: SanityQuestion, index: number) => {
           try {
+            // Use the order field if available, otherwise fall back to index + 1
+            const orderValue = q.order || (index + 1);
+            
             return {
-              id: parseInt(q._id.replace(/^[^0-9]*/, '')),
+              id: orderValue, // Use the order field as the ID
               question: q.question,
               image: q.imageAsset ? urlFor(q.imageAsset).url() : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkY1QkFGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TWF6ZSBDaGFsbGVuZ2U8L3RleHQ+Cjwvc3ZnPgo=',
               imageAlt: q.question,
@@ -65,7 +72,10 @@ export class Game3Service {
             return null;
           }
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .sort((a: Question, b: Question) => a.id - b.id); // Sort by order value
+
+      console.log('Processed questions:', this.questions);
 
       if (!this.questions.length) {
         console.warn('Warning: No questions found for Game 3');

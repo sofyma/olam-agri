@@ -20,7 +20,7 @@
     block-size: 100%;
     inline-size: 100%;
     padding-block: calc(10rem * var(--scale-factor));
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
     width: 100vw;
     position: relative;
     left: 50%;
@@ -46,7 +46,7 @@
     font-size: calc(2.4rem * var(--scale-factor));
     font-weight: 400;
     line-height: 150%;
-    padding-block-start: calc(2rem * var(--scale-factor));
+    padding-block-start: 2rem;
   }
 
   .play-image {

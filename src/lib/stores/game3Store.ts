@@ -8,6 +8,7 @@ import { getAuth } from '$lib/stores/authStore';
 interface Game3State {
   questions: Question[];
   currentQuestionIndex: number;
+  currentQuestionOrder: number; // Track the order value of current question
   score: number;
   isComplete: boolean;
   isLoading: boolean;
@@ -34,6 +35,7 @@ const createGame3Store = () => {
   const { subscribe, set, update } = writable<Game3State>({
     questions: [],
     currentQuestionIndex: 0,
+    currentQuestionOrder: 1,
     score: 0,
     isComplete: false,
     isLoading: true,
@@ -286,6 +288,7 @@ const createGame3Store = () => {
         set({
           questions,
           currentQuestionIndex: 0,
+          currentQuestionOrder: 1,
           score: 0,
           isComplete: false,
           isLoading: false,
@@ -328,6 +331,7 @@ const createGame3Store = () => {
         set({
           questions: [],
           currentQuestionIndex: 0,
+          currentQuestionOrder: 1,
           score: 0,
           isComplete: false,
           isLoading: false,
@@ -524,11 +528,21 @@ const createGame3Store = () => {
               height: checkpoint.height
             }
           });
+          
+          // Set the starting question index based on checkpoint
+          // Checkpoint 1: questions with order 1-5 (last 5 questions in array - indices 5-9)
+          // Checkpoint 2: questions with order 6-10 (first 5 questions in array - indices 0-4)
+          const startingQuestionIndex = checkpoint.id === 1 ? 5 : 0;
+          
+          console.log('Setting starting question index:', startingQuestionIndex);
+          console.log('Available questions:', state.questions.map(q => ({ id: q.id, question: q.question })));
+          
           return {
             ...state,
             ballPosition: { x: nextX, y: nextY },
             showQuestionModal: true,
             currentCheckpoint: checkpoint.id,
+            currentQuestionIndex: startingQuestionIndex,
             checkpointsReached: state.checkpointsReached + 1
           };
         }
@@ -559,7 +573,17 @@ const createGame3Store = () => {
 
     answerQuestion: (answer: string) => {
       update(state => {
+        // Get the current question by array index
         const currentQuestion = state.questions[state.currentQuestionIndex];
+        
+        console.log('Processing question at index:', state.currentQuestionIndex);
+        console.log('Available questions:', state.questions.map(q => ({ id: q.id, question: q.question })));
+        
+        if (!currentQuestion) {
+          console.error('Question not found at index:', state.currentQuestionIndex);
+          return state;
+        }
+        
         const isCorrect = currentQuestion.correctAnswer === answer;
         
         console.log('Processing Game 3 answer:', {
@@ -593,10 +617,14 @@ const createGame3Store = () => {
         }
 
         // Move to next question or close modal
-        if (state.currentQuestionIndex === 4) {
-          // All 5 questions completed
+        // Check if we've completed all 5 questions for the current checkpoint
+        const questionsPerCheckpoint = 5;
+        const startingIndex = state.currentCheckpoint === 1 ? 5 : 0;
+        const endingIndex = startingIndex + questionsPerCheckpoint - 1;
+        
+        if (state.currentQuestionIndex === endingIndex) {
+          // All 5 questions completed for this checkpoint
           newState.showQuestionModal = false;
-          newState.currentQuestionIndex = 0; // Reset for next checkpoint
           
           // Mark checkpoint as reached
           if (state.currentCheckpoint) {
@@ -606,6 +634,7 @@ const createGame3Store = () => {
           }
           newState.currentCheckpoint = null;
         } else {
+          // Move to next question
           newState.currentQuestionIndex++;
         }
 
@@ -621,6 +650,7 @@ const createGame3Store = () => {
         return {
           ...state,
           currentQuestionIndex: 0,
+          currentQuestionOrder: 1,
           score: 0,
           isComplete: false,
           ballPosition: { x: 20, y: 150 },

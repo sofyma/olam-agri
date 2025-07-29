@@ -132,10 +132,10 @@
     .question-counter {
         color: #fff;
         display: block;
-        font-size: calc(2rem * var(--scale-factor));
+        font-size: 2rem;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
-        padding-block-end: calc(1.5rem * var(--scale-factor));
+        padding-block-end: 1.5rem;
         padding-inline-end: calc(4rem * var(--scale-factor));
         text-align: end
     }
@@ -160,7 +160,7 @@
 
     .question-header {
         padding-inline: calc(6.5rem * var(--scale-factor));
-        margin-block-end: calc(2rem * var(--scale-factor));
+        margin-block-end: 2rem;
     }
 
     .question-title {
@@ -173,10 +173,9 @@
     }
     
     .question-image {
-        inline-size: 100%;
-        margin-block-end: calc(3rem * var(--scale-factor));
-        max-block-size: calc(40rem * var(--scale-factor));
-        object-fit: cover;
+        margin-block-end: 0;
+        max-block-size: 30rem;
+        margin-inline: auto;
     }
     
     .question-options {
@@ -192,12 +191,12 @@
     
     .option {
         align-items: center;
-        border-radius: calc(1.5rem * var(--scale-factor));
+        border-radius: 1.5rem;
         cursor: pointer;
         display: flex;
         font-size: calc(2.2rem * var(--scale-factor));
-        gap: calc(1rem * var(--scale-factor));
-        padding: calc(1rem * var(--scale-factor)) calc(1.5rem * var(--scale-factor));
+        gap: 1rem;
+        padding: 1rem 1.5rem;
         transition: all 0.2s ease;
         user-select: none;
 
@@ -209,15 +208,15 @@
     
     .option-text {
         color: #2E2D2C;
-        inset-block-start: calc(.1rem * var(--scale-factor));
+        inset-block-start: .1rem;
         position: relative;
     }
 
     input[type="radio"] {
         accent-color: #2E2D2C;
-        block-size: calc(2rem * var(--scale-factor));
+        block-size: 2rem;
         cursor: pointer;
-        inline-size: calc(2rem * var(--scale-factor));
+        inline-size: 2rem;
         margin: 0;
         appearance: none;
         border: 0.2rem solid #ccc;
@@ -232,7 +231,7 @@
     }
     
     .submit-button {
-        border-radius: 0 calc(1.7rem * var(--scale-factor));
+        border-radius: 0 1.7rem;
     }
 
     .submit-button:disabled {
@@ -260,7 +259,7 @@
     @media (max-width: 932px) {
         .feedback {
             block-size: calc(53rem * var(--scale-factor));
-            padding-block: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor));
+            padding-block: 2rem 2rem;
         }
     }
     
@@ -268,7 +267,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        gap: calc(2rem * var(--scale-factor));
+        gap: 2rem;
         justify-content: center;
         width: 100%;
         height: 100%;
@@ -283,8 +282,8 @@
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .question-header {
-            padding-inline: calc(2rem * var(--scale-factor));
-            margin-block-end: calc(1rem * var(--scale-factor));
+            padding-inline: 2rem;
+            margin-block-end: 1rem;
         }
 
         .question-title {
@@ -292,23 +291,24 @@
         }
 
         .question-options {
-            padding-block-start: calc(1rem * var(--scale-factor));
-            padding-inline: calc(2rem * var(--scale-factor));
+            padding-block-start: 1rem;
+            padding-inline: 2rem;
         }
 
         .question-image {
-            max-block-size: calc(15rem * var(--scale-factor));
             margin-block-end: 0;
+            max-block-size: 30rem;
+            margin-inline: auto;
         }
 
         .question-container {
-            padding-block-start: calc(2rem * var(--scale-factor));
-            padding-block-end: calc(2rem * var(--scale-factor));
+            padding-block-start: 2rem;
+            padding-block-end: 2rem;
             block-size: calc(53rem * var(--scale-factor));
         }
 
         .options {
-            margin-block-end: calc(1rem * var(--scale-factor));
+            margin-block-end: 1rem;
         }
 
         .feedback-content svg {

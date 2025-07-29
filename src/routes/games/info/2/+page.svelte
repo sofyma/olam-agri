@@ -92,8 +92,8 @@
 }
 
 .game2-info__indicator {
-  inline-size: calc(10.5rem * var(--scale-factor));
-  block-size: calc(10.5rem * var(--scale-factor));
+  inline-size: 10.5rem;
+  block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
   background: #8E75F8;
   color: #FFF;
@@ -117,7 +117,7 @@
   font-size: calc(9rem * var(--scale-factor));
   line-height: 125%;
   position: relative;
-  top: calc(0.5rem * var(--scale-factor));
+  top: 0.5rem;
 }
 
 .game2-info__main-title {
@@ -127,7 +127,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(3rem * var(--scale-factor));
+  padding-block-start: calc(6rem * var(--scale-factor));
 }
 
 .game2-info__section {
@@ -163,25 +163,25 @@
 }
 
 .game2-info__section-paragraph:first-of-type {
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 .game2-info__section-paragraph:nth-of-type(3) {
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 .game2-info__section-paragraph:nth-of-type(4) {
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 .game2-info__section-paragraph:last-of-type {
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 .game2-info__bold-text {
   font-weight: 600;
   display: inline-flex;
-  gap: calc(1.2rem * var(--scale-factor));
+  gap: 1.2rem;
 }
 
 .game2-info__logo-guidelines-image {
@@ -229,7 +229,7 @@
 
 .game2-info__divider {
   background: #999;
-  block-size: calc(0.2rem * var(--scale-factor));
+  block-size: 0.2rem;
   border: none;
   inline-size: 100%;
   margin-block: calc(8rem * var(--scale-factor));
@@ -239,7 +239,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  padding-block-start: calc(2rem * var(--scale-factor));
+  padding-block-start: 2rem;
 }
 
 .game2-info__list li {
@@ -248,7 +248,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  margin-block-end: calc(1.5rem * var(--scale-factor));
+  margin-block-end: 1.5rem;
 }
 
 @media (max-width: 932px) {
@@ -259,11 +259,11 @@
     padding-block-start: 0;
   }
   .wrapper {
-    padding-inline: calc(2rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
   .game2-info__indicator {
-    inline-size: calc(7rem * var(--scale-factor));
-    block-size: calc(7rem * var(--scale-factor));
+    inline-size: 7rem;
+    block-size: 7rem;
     font-size: calc(5.5rem * var(--scale-factor));
     font-weight: 600;
     position: static;

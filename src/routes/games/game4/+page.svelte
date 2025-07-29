@@ -439,7 +439,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding: calc(2rem * var(--scale-factor));
+		padding: 2rem;
 		position: relative;
 		touch-action: pan-y; /* Allow vertical scrolling but handle horizontal swipes */
 		user-select: none; /* Prevent text selection during swipes */
@@ -467,7 +467,7 @@
 		font-size: calc(2.2rem * var(--scale-factor));
 		font-weight: 600;
 		margin-inline-end: calc(5rem * var(--scale-factor));
-		padding-block-end: calc(0.5rem * var(--scale-factor));
+		padding-block-end: 0.5rem;
 		z-index: 10;
 	}
 
@@ -550,8 +550,8 @@
 		}
 
 		svg {
-			height: calc(4.7rem * var(--scale-factor));
-			width: calc(3.9rem * var(--scale-factor));
+			height: 4.7rem;
+			width: 3.9rem;
 		}
 
 		div {
@@ -666,7 +666,7 @@
 		}
 
 		&-copy {
-			font-size: calc(1.8rem * var(--scale-factor));
+			font-size: 1.8rem;
 		}
 	}
 
@@ -750,7 +750,7 @@
 		// .game-grid {
 		// 	grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 		// 	align-items: start;
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 		// }
 		
 
@@ -762,7 +762,7 @@
 		/* 7. Adjust start screen for mobile */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: calc(1rem * var(--scale-factor));
+			padding: 1rem;
 		}
 
 		/* Keep start screen width consistent when sidebar is closed */
@@ -781,7 +781,7 @@
 
 		/* Adjust game summary for mobile */
 		// .game-summary {
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 		// }
 
 		// .game-summary .title {
@@ -790,7 +790,7 @@
 
 		// .game-summary .results {
 		// 	inline-size: calc(80rem * var(--scale-factor));
-		// 	padding: calc(2rem * var(--scale-factor));
+		// 	padding: 2rem;
 
 		// 	.paragraph {
 		// 		padding-block-start: 0;
@@ -800,7 +800,7 @@
 
 		// .game-summary .paragraph {
 		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 		// .game-summary .total-points {
@@ -808,7 +808,7 @@
 		// }
 
 		// .game-summary .cta {
-		// 	padding-block-start: calc(2rem * var(--scale-factor));
+		// 	padding-block-start: 2rem;
 		// }
 
 
@@ -832,7 +832,7 @@
 		/* Adjust start button for mobile */
 		// .start {
 		// 	inset-block-start: calc(22rem * var(--scale-factor));
-		// 	inset-inline-end: calc(-2rem * var(--scale-factor));
+		// 	inset-inline-end: -2rem;
 		// }
 
 		// .start svg {
@@ -861,7 +861,7 @@
 
 		/* Adjust swipe button font size for mobile */
 		.swipe-button div {
-			font-size: calc(2rem * var(--scale-factor));
+			font-size: 2rem;
 		}
 
 		.swipe-button div span {

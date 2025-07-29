@@ -6,6 +6,7 @@
     import type { Statement } from '$lib/types/game2';
 	import Explosion from '$lib/components/svgs/Explosion.svelte';
 	import GameInstructions from '$lib/components/GameInstructions.svelte';
+	import { urlFor } from '$lib/sanity';
     
 	type Bubble = Statement & {
 		index: number;
@@ -233,7 +234,11 @@
 									{/if}
 								</div>
 							{:else}
-								<p class="statement-text">{bubble.text}</p>
+								<img 
+									src={bubble.image ? urlFor(bubble.image).url() : ''}
+									alt={bubble.title}
+									class="bubble-image"
+								/>
 							{/if}
 						</div>
 					</div>
@@ -254,15 +259,15 @@
 	}
 
 	.game-header {
-		padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
+		padding: 2rem calc(7rem * var(--scale-factor));
 		position: relative;
-		z-index: 10;
 		text-align: center;
+		z-index: 10;
 	}
 
 	.game-header-image {
-		margin-inline: auto;
 		margin-block-start: calc(5rem * var(--scale-factor));
+		margin-inline: auto;
 	}
 
 	.game-header-title {
@@ -276,16 +281,17 @@
 		block-size: 100vh;
 		display: flex;
 		justify-content: center;
+		overflow: hidden;
 		padding-block-start: calc(5rem * var(--scale-factor));
 		position: relative;
-		overflow: hidden;
 	}
 
 	.bubbles-container {
-		position: absolute;
-		top: 0; left: 0;
-		width: 100%; height: 100%;
+		block-size: 100%;
+		inset-block-start: 0;
+		inset-inline-start: 0;
 		pointer-events: none;
+		position: absolute;
 		z-index: 20;
 	}
 
@@ -300,21 +306,20 @@
 	}
 
 	.bubble {
-		position: absolute;
-		background-color: rgb(84, 62, 238);
+		align-items: center;
+		block-size: 15rem;
 		border-radius: 50%;
 		color: #fff;
-		width: calc(15rem * var(--scale-factor));
-		height: calc(15rem * var(--scale-factor));
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: calc(2rem * var(--scale-factor));
-		text-align: center;
 		cursor: pointer;
+		display: flex;
+		inline-size: 15rem;
+		justify-content: center;
+		padding: 2rem;
 		pointer-events: all;
-		will-change: transform, opacity;
+		position: absolute;
+		text-align: center;
 		transform: translate(-50%, -50%);
+		will-change: transform, opacity;
 
 		&.blinking {
 			animation: blink 0.4s 2;
@@ -324,47 +329,47 @@
 			animation: none;
 			background: none;
 			border: none;
+			block-size: calc(30rem * var(--scale-factor));
+			inline-size: calc(30rem * var(--scale-factor));
 			pointer-events: none;
-			width: calc(30rem * var(--scale-factor));
-			height: calc(30rem * var(--scale-factor));
 		}
 	}
 
-	.statement-text {
-		color: #fff;
-		font-size: calc(1.6rem * var(--scale-factor));
-		font-weight: 600;
-		line-height: 1.2;
+	.bubble-image {
+		block-size: 100%;
+		border-radius: 100%;
+		inline-size: 100%;
+		object-fit: cover;
 	}
 	
 	.explosion-container {
-		position: relative;
-		width: 100%;
-		height: 100%;
 		animation: pop 0.5s ease-out forwards;
+		block-size: 100%;
+		inline-size: 100%;
+		position: relative;
 
 		&.timeout {
 			opacity: 0.2;
 		}
 
 		:global(svg) {
-			width: 100%;
-			height: 100%;
+			block-size: 100%;
+			inline-size: 100%;
 		}
 	}
 
 	.feedback-icon {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: calc(5rem * var(--scale-factor));
-		height: calc(5rem * var(--scale-factor));
 		animation: feedbackPop 0.5s ease-out forwards;
+		block-size: 5rem;
+		inline-size: 5rem;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		position: absolute;
+		transform: translate(-50%, -50%);
 
 		svg {
-			width: 100%;
-			height: 100%;
+			block-size: 100%;
+			inline-size: 100%;
 		}
 	}
 
@@ -412,9 +417,9 @@
 		overflow-y: auto;
 		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
-		z-index: 9999;
-		transition: transform 0.3s ease-in-out;
 		scrollbar-width: none; /* Firefox */
+		transition: transform 0.3s ease-in-out;
+		z-index: 9999;
 		-ms-overflow-style: none; /* Internet Explorer 10+ */
 
 		&::-webkit-scrollbar {
@@ -436,9 +441,9 @@
 		border: none;
 		color: white;
 		cursor: pointer;
+		padding: 1rem;
 		position: absolute;
 		z-index: 10000;
-		padding: calc(1rem * var(--scale-factor));
 
 		&:hover {
 			opacity: 0.8;
@@ -446,37 +451,37 @@
 	}
 
 	.close-button {
-		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: calc(2rem * var(--scale-factor));
+		inset-block-start: 2rem;
+		inset-inline-end: 2rem;
 
 		svg {
-			block-size: calc(2.4rem * var(--scale-factor));
-			inline-size: calc(2.3rem * var(--scale-factor));
+			block-size: 2.4rem;
+			inline-size: 2.3rem;
 		}
 	}
 
 	.play-button {
-		inset-block-start: calc(2rem * var(--scale-factor));
-		inset-inline-end: .3rem;
+		inset-block-start: 2rem;
+		inset-inline-end: 0.3rem;
 
 		svg {
-			block-size: calc(3.3rem * var(--scale-factor));
-			inline-size: calc(2.7rem * var(--scale-factor));
+			block-size: 3.3rem;
+			inline-size: 2.7rem;
 		}
 	}
 
 	.copy {
 		background-color: #fff;
 		margin-block-start: calc(6.5rem * var(--scale-factor));
-		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		padding: 2rem 2rem calc(4rem * var(--scale-factor));
 		position: relative;
 
 		&-header {
 			align-items: end;
 			display: grid;
-			justify-content: start;
-			grid-template-columns: repeat(2, auto);
 			grid-column-gap: calc(3rem * var(--scale-factor));
+			grid-template-columns: repeat(2, auto);
+			justify-content: start;
 			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
@@ -489,7 +494,7 @@
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: calc(2rem * var(--scale-factor));
+		padding-block-start: 2rem;
 	}
 
 	.subtitle {
@@ -497,15 +502,15 @@
 		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		max-width: calc(20rem * var(--scale-factor));
-		word-wrap: break-word;
+		max-inline-size: calc(20rem * var(--scale-factor));
 		overflow-wrap: break-word;
+		word-wrap: break-word;
 	}
 
 	.paragraph {
 		color: #2E2D2C;
 		font-size: calc(2.2rem * var(--scale-factor));
-		padding-block-start: calc(2rem * var(--scale-factor));
+		padding-block-start: 2rem;
 
 		&:first-child {
 			padding-block-start: calc(2.5rem * var(--scale-factor));
@@ -513,11 +518,11 @@
 	}
 
 	.start-screen {
-		display: flex;
-		justify-content: center;
 		align-items: self-end;
 		block-size: 100vh;
+		display: flex;
 		inline-size: calc(100vw - (100vw - 66.41%));
+		justify-content: center;
 		margin-inline-start: auto;
 
 		&-content {
@@ -544,9 +549,9 @@
 	.image-button {
 		background: transparent;
 		border: none;
-		padding: 0;
-		margin: 0;
 		cursor: pointer;
+		margin: 0;
+		padding: 0;
 	}
 
 	/* Content check section */
@@ -555,22 +560,22 @@
 	}
 
 	.content-check-grid {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: calc(2rem * var(--scale-factor));
 		align-items: center;
+		display: grid;
+		gap: 2rem;
+		grid-template-columns: auto 1fr;
 	}
 
 	.content-check-btn {
-		width: calc(14.6rem * var(--scale-factor));
-		height: calc(3.4rem * var(--scale-factor));
-		border-radius: 0 calc(1.5rem * var(--scale-factor));
-		color: #fff;
 		background-color: #8E75F8;
+		block-size: 3.4rem;
 		border: none;
-		font-size: calc(1.4rem * var(--scale-factor));
-		font-weight: 600;
+		border-radius: 0 1.5rem;
+		color: #fff;
 		cursor: pointer;
+		font-size: 1.4rem;
+		font-weight: 600;
+		inline-size: 14.6rem;
 		transition: all 0.3s ease;
 
 		&:hover {
@@ -580,10 +585,10 @@
 
 	.content-check-text {
 		color: #FFF;
-		font-size: calc(1.4rem * var(--scale-factor));
+		font-size: 1.4rem;
 		font-style: normal;
 		font-weight: 400;
-		line-height: calc(2rem * var(--scale-factor));
+		line-height: 2rem;
 	}
 
 	/* Windows 125% specific styles */
@@ -634,8 +639,8 @@
 		/* 1. Fix left sidebar title and horizontal scroll */
 		.instructions {
 			inline-size: calc(100vw - 66.41%);
-			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 			overflow-x: hidden;
+			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 			scrollbar-width: none; /* Firefox */
 			-ms-overflow-style: none; /* Internet Explorer 10+ */
 		}
@@ -646,19 +651,19 @@
 
 		.title {
 			font-size: calc(4.5rem * var(--scale-factor));
-			word-wrap: break-word;
 			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 
 		/* 2. Fix sidebar horizontal scroll */
 		.copy {
 			margin-block-start: calc(4rem * var(--scale-factor));
-			padding: calc(1.5rem * var(--scale-factor));
+			padding: 1.5rem;
 		}
 
 		.copy-header {
+			grid-column-gap: 2rem;
 			grid-template-columns: repeat(2, auto);
-			grid-column-gap: calc(2rem * var(--scale-factor));
 			margin-block-start: calc(-3rem * var(--scale-factor));
 		}
 
@@ -669,7 +674,7 @@
 
 		/* 4. Fix game header for mobile */
 		.game-header {
-			padding: calc(1rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+			padding: 1rem calc(4rem * var(--scale-factor));
 		}
 
 		.game-header-title {
@@ -678,13 +683,14 @@
 
 		/* 5. Fix game area for mobile */
 		.game-area {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		/* 6. Adjust start screen for mobile */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: calc(1rem * var(--scale-factor));
+			overflow-y: hidden;
+			padding: 1rem;
 		}
 
 		/* Keep start screen width consistent when sidebar is closed */
@@ -696,20 +702,15 @@
 			transform-origin: center center;
 		}
 
-		/* Remove vertical scrolling from start screen */
-		.start-screen {
-			overflow-y: hidden;
-		}
-
 		/* 7. Adjust game ID for mobile */
 		.game-id {
-			block-size: calc(12rem * var(--scale-factor));
-			inline-size: calc(8rem * var(--scale-factor));
+			block-size: 12rem;
+			inline-size: 8rem;
 		}
 
 		// .game-id .text {
-		// 	font-size: calc(2rem * var(--scale-factor));
-		// 	line-height: calc(2rem * var(--scale-factor));
+		// 	font-size: 2rem;
+		// 	line-height: 2rem;
 		// }
 
 		// .game-id .number {
@@ -720,20 +721,20 @@
 		/* 8. Adjust subtitle for mobile */
 		.subtitle {
 			font-size: calc(2.5rem * var(--scale-factor));
-			max-width: calc(15rem * var(--scale-factor));
-			word-wrap: break-word;
+			max-inline-size: 15rem;
 			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 
 		/* 9. Adjust buttons for mobile */
 		.close-button {
-			inset-block-start: calc(1rem * var(--scale-factor));
-			inset-inline-end: calc(2rem * var(--scale-factor));
+			inset-block-start: 1rem;
+			inset-inline-end: 2rem;
 		}
 
 		.play-button {
-			inset-block-start: calc(2rem * var(--scale-factor));
-			inset-inline-end: calc(-0.2rem * var(--scale-factor));
+			inset-block-start: 2rem;
+			inset-inline-end: -0.2rem;
 		}
 
 		/* 10. Fix sidebar closed state for mobile */
@@ -743,43 +744,46 @@
 
 		/* 11. Adjust bubbles for mobile */
 		.bubble {
-			width: calc(12rem * var(--scale-factor));
-			height: calc(12rem * var(--scale-factor));
-			padding: calc(1.5rem * var(--scale-factor));
+			block-size: 12rem;
+			inline-size: 12rem;
+			padding: 1.5rem;
 
 			&.exploded {
-				width: calc(25rem * var(--scale-factor));
-				height: calc(25rem * var(--scale-factor));
+				block-size: calc(25rem * var(--scale-factor));
+				inline-size: calc(25rem * var(--scale-factor));
 			}
 		}
 
-		.statement-text {
-			font-size: calc(1.4rem * var(--scale-factor));
+		.bubble-image {
+			block-size: 100%;
+			border-radius: 100%;
+			inline-size: 100%;
+			object-fit: cover;
 		}
 
 		.feedback-icon {
-			width: calc(4rem * var(--scale-factor));
-			height: calc(4rem * var(--scale-factor));
+			block-size: 4rem;
+			inline-size: 4rem;
 		}
 
 		/* Content check section mobile adjustments */
 		.content-check {
-			padding-block-start: calc(2rem * var(--scale-factor));
+			padding-block-start: 2rem;
 		}
 
 		.content-check-grid {
-			gap: calc(1.5rem * var(--scale-factor));
+			gap: 1.5rem;
 		}
 
 		.content-check-btn {
-			width: calc(12rem * var(--scale-factor));
-			height: calc(3rem * var(--scale-factor));
-			font-size: calc(1.2rem * var(--scale-factor));
+			block-size: 3rem;
+			font-size: 1.2rem;
+			inline-size: 12rem;
 		}
 
 		.content-check-text {
-			font-size: calc(1.2rem * var(--scale-factor));
-			line-height: calc(1.6rem * var(--scale-factor));
+			font-size: 1.2rem;
+			line-height: 1.6rem;
 		}
 	}
 </style> 
