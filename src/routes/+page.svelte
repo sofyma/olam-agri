@@ -677,7 +677,6 @@
 
       .game1-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
@@ -717,7 +716,6 @@
 
       .game2-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
@@ -757,7 +755,6 @@
 
       .game3-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
@@ -797,7 +794,6 @@
 
       .game4-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
@@ -837,7 +833,6 @@
 
       .game5-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
@@ -877,7 +872,6 @@
 
       .game6-button {
         background: #2E2D2C !important;
-        color: #FF7000 !important;
       }
     }
   }
