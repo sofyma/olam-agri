@@ -10,7 +10,7 @@
   <div class="game6-info__indicator"><span class="game6-info__indicator-number">6</span></div>
   <div class="wrapper">
     <div class="content-wrapper">
-      <h1 class="game6-info__main-title">The Brand<br />in Use</h1>
+              <h1 class="game6-info__main-title">The Ultimate<br />Challenge</h1>
       <p class="game6-info__paragraph">Congratulations! You’ve completed all the learning topics.</p>
       <p class="game6-info__paragraph">Complete the last game so you can earn the last points you need to become a Brand Hero!</p>
       <PlaySection imageSrc="/images/content-play-6.png" gameLink="/games/game6" color="#00C853" />

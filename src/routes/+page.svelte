@@ -171,7 +171,7 @@
             <!-- Game 1 Card -->
             <div class="game-card game1-card" class:locked={!$game1Availability.isAvailable}>
               <div class="game-label game1-label">Topic 1</div>
-              <h3 class="game-name">The Superpower of Branding</h3>
+              <h3 class="game-name">The Importance of Brand</h3>
               
               {#if $game1Availability.isAvailable}
                 <a href="/games/info/1" class="cta-button game1-button">Let's Play!</a>
@@ -190,7 +190,7 @@
             <!-- Game 2 Card -->
             <div class="game-card game2-card" class:locked={!$game2Availability.isAvailable}>
               <div class="game-label game2-label">Topic 2</div>
-              <h3 class="game-name">Under Attack!</h3>
+              <h3 class="game-name">Our Brand Name & Logo</h3>
               
               {#if $game2Availability.isAvailable}
                 <a href="/games/info/2" class="cta-button game2-button">Let's Play!</a>
@@ -209,7 +209,7 @@
             <!-- Game 3 Card -->
             <div class="game-card game3-card" class:locked={!$game3Availability.isAvailable}>
               <div class="game-label game3-label">Topic 3</div>
-              <h3 class="game-name">Brain Over Brawn</h3>
+              <h3 class="game-name">Colors & Typography</h3>
               
               {#if $game3Availability.isAvailable}
                 <a href="/games/info/3" class="cta-button game3-button">Let's Play!</a>
@@ -231,7 +231,7 @@
             <!-- Game 4 Card -->
             <div class="game-card game4-card" class:locked={!$game4Availability.isAvailable}>
               <div class="game-label game4-label">Topic 4</div>
-              <h3 class="game-name">Choose a Side</h3>
+              <h3 class="game-name">The Brand in Use</h3>
               
               {#if $game4Availability.isAvailable}
                 <a href="/games/info/4" class="cta-button game4-button">Let's Play!</a>
@@ -250,7 +250,7 @@
             <!-- Game 5 Card -->
             <div class="game-card game5-card" class:locked={!$game5Availability.isAvailable}>
               <div class="game-label game5-label">Topic 5</div>
-              <h3 class="game-name">Only the Fastest Will Reach the Sky</h3>
+              <h3 class="game-name">The Brand Hub</h3>
               
               {#if $game5Availability.isAvailable}
                 <a href="/games/info/5" class="cta-button game5-button">Let's Play!</a>
@@ -269,7 +269,7 @@
             <!-- Game 6 Card -->
             <div class="game-card game6-card" class:locked={!$game6Availability.isAvailable}>
               <div class="game-label game6-label">Topic 6</div>
-              <h3 class="game-name">The Final Challenge</h3>
+              <h3 class="game-name">The Ultimate Challenge</h3>
               
               {#if $game6Availability.isAvailable}
                 <a href="/games/info/6" class="cta-button game6-button">Let's Play!</a>
