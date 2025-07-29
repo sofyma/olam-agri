@@ -37,7 +37,7 @@ adapter: adapter({
 ### **3. Created _redirects file**
 The `@sveltejs/adapter-netlify` automatically handles API routes and uses `_redirects` for SPA routing:
 
-**`static/_redirects`:**
+**`_redirects` (in project root):**
 ```
 /*    /index.html   200
 ```
