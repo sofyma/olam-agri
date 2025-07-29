@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { createClient } from '@sanity/client';
 
