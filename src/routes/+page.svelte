@@ -14,12 +14,12 @@
   let timeUntilGame6: number | null = null;
 
   // Reactive statement to update dates when store changes
-  $: game1Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game1');
-  $: game2Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game2');
-  $: game3Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game3');
-  $: game4Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game4');
-  $: game5Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game5');
-  $: game6Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game6');
+  $: game1Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game1');
+  $: game2Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game2');
+  $: game3Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game3');
+  $: game4Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game4');
+  $: game5Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game5');
+  $: game6Date = $gameAvailabilityStore.isLoading ? { text: '', type: 'none' } : formatAvailableDate('game6');
 
   onMount(() => {
     // Load game configs and then set up the rest
@@ -63,37 +63,51 @@
     }
   }
 
-  function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): string {
+  function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): { text: string; type: 'from' | 'until' | 'none' } {
     const config = gameAvailabilityStore.getGameConfig(gameId);
     console.log(`formatAvailableDate for ${gameId}:`, config);
     
     if (!config) {
       console.warn(`No config found for ${gameId}`);
-      return 'Coming Soon';
+      return { text: 'Coming Soon', type: 'none' };
     }
     
-    if (!config.availableUntil) {
-      console.warn(`No availableUntil date for ${gameId}`);
-      return '';
-    }
+    const now = new Date();
     
-    try {
-      const date = new Date(config.availableUntil);
-      if (isNaN(date.getTime())) {
-        console.warn(`Invalid date for ${gameId}:`, config.availableUntil);
-        return 'Coming Soon';
+    // Check if availableUntil exists and is in the future
+    if (config.availableUntil) {
+      try {
+        const untilDate = new Date(config.availableUntil);
+        if (!isNaN(untilDate.getTime()) && untilDate > now) {
+          const month = untilDate.toLocaleDateString('en-US', { month: 'short' });
+          const day = untilDate.getDate();
+          const result = `${month} ${day}`;
+          console.log(`Formatted until date for ${gameId}:`, result);
+          return { text: result, type: 'until' };
+        }
+      } catch (error) {
+        console.error('Error formatting until date for', gameId, ':', error);
       }
-      
-      const month = date.toLocaleDateString('en-US', { month: 'short' });
-      const day = date.getDate();
-      
-      const result = `${month} ${day}`;
-      console.log(`Formatted date for ${gameId}:`, result);
-      return result;
-    } catch (error) {
-      console.error('Error formatting date for', gameId, ':', error);
-      return 'Coming Soon';
     }
+    
+    // Check if availableFrom exists and is in the future
+    if (config.availableFrom) {
+      try {
+        const fromDate = new Date(config.availableFrom);
+        if (!isNaN(fromDate.getTime()) && fromDate > now) {
+          const month = fromDate.toLocaleDateString('en-US', { month: 'short' });
+          const day = fromDate.getDate();
+          const result = `${month} ${day}`;
+          console.log(`Formatted from date for ${gameId}:`, result);
+          return { text: result, type: 'from' };
+        }
+      } catch (error) {
+        console.error('Error formatting from date for', gameId, ':', error);
+      }
+    }
+    
+    console.warn(`No valid future dates for ${gameId}`);
+    return { text: '', type: 'none' };
   }
 </script>
 
@@ -209,7 +223,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game1Date}<br>until {game1Date}{/if}
+                    {#if game1Date.type === 'from'}
+                      Content available<br>from {game1Date.text}
+                    {:else}
+                      Content blocked{#if game1Date.text}<br>until {game1Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}
@@ -232,7 +250,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game2Date}<br>until {game2Date}{/if}
+                    {#if game2Date.type === 'from'}
+                      Content available<br>from {game2Date.text}
+                    {:else}
+                      Content blocked{#if game2Date.text}<br>until {game2Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}
@@ -255,7 +277,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game3Date}<br>until {game3Date}{/if}
+                    {#if game3Date.type === 'from'}
+                      Content available<br>from {game3Date.text}
+                    {:else}
+                      Content blocked{#if game3Date.text}<br>until {game3Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}
@@ -281,7 +307,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game4Date}<br>until {game4Date}{/if}
+                    {#if game4Date.type === 'from'}
+                      Content available<br>from {game4Date.text}
+                    {:else}
+                      Content blocked{#if game4Date.text}<br>until {game4Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}
@@ -304,7 +334,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game5Date}<br>until {game5Date}{/if}
+                    {#if game5Date.type === 'from'}
+                      Content available<br>from {game5Date.text}
+                    {:else}
+                      Content blocked{#if game5Date.text}<br>until {game5Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}
@@ -327,7 +361,11 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    Content blocked{#if game6Date}<br>until {game6Date}{/if}
+                    {#if game6Date.type === 'from'}
+                      Content available<br>from {game6Date.text}
+                    {:else}
+                      Content blocked{#if game6Date.text}<br>until {game6Date.text}{/if}
+                    {/if}
                   {/if}
                 </p>
               {/if}

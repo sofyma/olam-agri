@@ -24,24 +24,27 @@
     
     const gameService = Game3Service.getInstance();
     
-        onMount(async () => {
-        try {
-            // Load game configs if not already loaded
-            await gameAvailabilityStore.loadGameConfigs();
-            
+        onMount(() => {
+        // Load game configs and initialize game
+        gameAvailabilityStore.loadGameConfigs().then(async () => {
             // Check if game is available
             if (!$game3Availability.isAvailable) {
                 goto('/games/info/3');
                 return;
             }
 
-			game3Store.initialize();
+            game3Store.initialize();
             await gameService.loadQuestions();
             isLoading = false;
-        } catch (err) {
+        }).catch((err) => {
             error = err instanceof Error ? err.message : 'Failed to load game content';
             isLoading = false;
-        }
+        });
+
+        // Cleanup function to stop continuous movement
+        return () => {
+            stopContinuousMovement();
+        };
     });
     
     function startGame() {
@@ -151,9 +154,36 @@
         }
     }
 
+    let continuousMovementInterval: NodeJS.Timeout | null = null;
+    let currentDirection: 'up' | 'down' | 'left' | 'right' | null = null;
+
     function handleDirectionalPadClick(direction: 'up' | 'down' | 'left' | 'right') {
         if ($game3Store.showQuestionModal) return;
         game3Store.moveBallSmooth(direction);
+    }
+
+    function startContinuousMovement(direction: 'up' | 'down' | 'left' | 'right') {
+        if ($game3Store.showQuestionModal) return;
+        
+        // Stop any existing movement
+        stopContinuousMovement();
+        
+        currentDirection = direction;
+        
+        // Start continuous movement
+        continuousMovementInterval = setInterval(() => {
+            if (currentDirection && !$game3Store.showQuestionModal) {
+                game3Store.moveBallSmooth(currentDirection);
+            }
+        }, 150); // Adjust speed as needed
+    }
+
+    function stopContinuousMovement() {
+        if (continuousMovementInterval) {
+            clearInterval(continuousMovementInterval);
+            continuousMovementInterval = null;
+        }
+        currentDirection = null;
     }
 </script>
 
@@ -216,18 +246,50 @@
                 <img src="/images/game3-playing-screen.png" alt="Game 3 Playing Screen" class="game-header-image">
 
                 <div class="directional-pad">
-                    <button class="dir-btn up" on:click={() => handleDirectionalPadClick('up')}>
+                    <button 
+                        class="dir-btn up" 
+                        on:click={() => handleDirectionalPadClick('up')}
+                        on:mousedown={() => startContinuousMovement('up')}
+                        on:mouseup={stopContinuousMovement}
+                        on:mouseleave={stopContinuousMovement}
+                        on:touchstart={() => startContinuousMovement('up')}
+                        on:touchend={stopContinuousMovement}
+                    >
                         <img src="/images/up.png" alt="Up Arrow" class="arrow arrow-up" />
                     </button>
                     <div class="dir-row">
-                        <button class="dir-btn left" on:click={() => handleDirectionalPadClick('left')}>
+                        <button 
+                            class="dir-btn left" 
+                            on:click={() => handleDirectionalPadClick('left')}
+                            on:mousedown={() => startContinuousMovement('left')}
+                            on:mouseup={stopContinuousMovement}
+                            on:mouseleave={stopContinuousMovement}
+                            on:touchstart={() => startContinuousMovement('left')}
+                            on:touchend={stopContinuousMovement}
+                        >
                             <img src="/images/up.png" alt="Left Arrow" class="arrow arrow-left" />
                         </button>
-                        <button class="dir-btn right" on:click={() => handleDirectionalPadClick('right')}>
+                        <button 
+                            class="dir-btn right" 
+                            on:click={() => handleDirectionalPadClick('right')}
+                            on:mousedown={() => startContinuousMovement('right')}
+                            on:mouseup={stopContinuousMovement}
+                            on:mouseleave={stopContinuousMovement}
+                            on:touchstart={() => startContinuousMovement('right')}
+                            on:touchend={stopContinuousMovement}
+                        >
                             <img src="/images/up.png" alt="Right Arrow" class="arrow arrow-right" />
                         </button>
                     </div>
-                    <button class="dir-btn down" on:click={() => handleDirectionalPadClick('down')}>
+                    <button 
+                        class="dir-btn down" 
+                        on:click={() => handleDirectionalPadClick('down')}
+                        on:mousedown={() => startContinuousMovement('down')}
+                        on:mouseup={stopContinuousMovement}
+                        on:mouseleave={stopContinuousMovement}
+                        on:touchstart={() => startContinuousMovement('down')}
+                        on:touchend={stopContinuousMovement}
+                    >
                         <img src="/images/up.png" alt="Down Arrow" class="arrow arrow-down" />
                     </button>
                 </div>
