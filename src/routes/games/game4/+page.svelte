@@ -11,6 +11,7 @@
     let showInstructions = true;
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
+	let isGamePlaying = false;
 	let showResult = false;
 	let resultTimeout: NodeJS.Timeout;
 	let displayIndex = 0; // Track the displayed statement index
@@ -57,6 +58,7 @@
 		showInstructions = false;
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
+		isGamePlaying = true;
 		game4Store.start();
 		displayIndex = 0;
 	}
@@ -185,7 +187,7 @@
 	}
 </script>
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
 	
     {#if showInstructions}
 		<div class="game-panel">
@@ -410,8 +412,21 @@
 	}
 
 	.game-container {
+		background-image: url('/images/j4-start.png');
+		background-position: center right;
+		background-repeat: no-repeat;
+		background-size: calc(100% * var(--scale-factor));
 		block-size: 100vh;
 		position: relative;
+
+		@media(min-width: 1920px) {
+			background-size: 80%;
+		}
+	}
+
+	/* Hide background image when game is playing */
+	.game-container.playing {
+		background-image: none;
 	}
 
 	.game-panel {
@@ -650,6 +665,7 @@
 			block-size: auto;
 			inline-size: calc(100% * var(--scale-factor));
 			margin-inline: auto;
+			visibility: hidden;
 		}
 	}
 
@@ -660,6 +676,7 @@
 		inline-size: calc(29.5rem * var(--scale-factor));
 		margin-inline: auto;
 		text-align: center;
+		display: none;
 
 		&-title {
 			font-size: calc(3rem * var(--scale-factor));
@@ -668,6 +685,10 @@
 		&-copy {
 			font-size: 1.8rem;
 		}
+	}
+
+	.start-screen-shape {
+		display: none;
 	}
 
 

@@ -33,6 +33,7 @@ html, body {
 /* Smart Scaling System with Dual Threshold Protection */
 html {
   	font-size: 1rem; /* Base font size */
+    overflow-x: hidden;
 }
 
 :root {
