@@ -92,47 +92,8 @@ html {
   The migration script automatically applies these rules to all calc() expressions.
 */
 
-/* Large screens (1920px and above) - minimal scaling */
-@media screen and (min-width: 1920px) {
-  :root {
-    --scale-factor: 1;
-  }
-}
-
-/* Medium-large screens (1600px - 1919px) */
-@media screen and (min-width: 1600px) and (max-width: 1919px) {
-  :root {
-    --scale-factor: 0.85;
-  }
-}
-
-/* Medium screens (1440px - 1599px) */
-@media screen and (min-width: 1440px) and (max-width: 1599px) {
-  :root {
-    --scale-factor: 0.75;
-  }
-}
-
-/* Medium-small screens (1366px - 1439px) */
-@media screen and (min-width: 1366px) and (max-width: 1439px) {
-  :root {
-    --scale-factor: 0.7;
-  }
-}
-
-/* Small screens (1280px - 1365px) */
-@media screen and (min-width: 1280px) and (max-width: 1365px) {
-  :root {
-    --scale-factor: 0.65;
-  }
-}
-
-/* Very small screens (below 1280px) */
-@media screen and (max-width: 1279px) {
-  :root {
-    --scale-factor: 0.6;
-  }
-}
+/* Scale factor is now handled entirely by JavaScript in +layout.svelte */
+/* This ensures consistent behavior across all devices and prevents timing issues */
 
 /* Global Button Styles with Smart Scaling */
 .btn {

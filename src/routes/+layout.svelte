@@ -60,7 +60,7 @@
       document.documentElement.classList.add('window125');
     }
     
-    // Set initial scale factor
+    // Set initial scale factor immediately
     updateScaleFactor();
     
     // Update scale factor on window resize
@@ -71,6 +71,11 @@
       window.removeEventListener('resize', updateScaleFactor);
     };
   });
+
+  // Set scale factor immediately when script loads (before onMount)
+  if (typeof document !== 'undefined') {
+    updateScaleFactor();
+  }
 
   // Detect game route and set appropriate class
   $: {
