@@ -176,6 +176,10 @@
         margin-block-end: 0;
         max-block-size: 30rem;
         margin-inline: auto;
+
+        @media(max-width: 932px) {
+            max-block-size: 15rem;
+        }
     }
     
     .question-options {
