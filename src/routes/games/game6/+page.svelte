@@ -231,6 +231,10 @@
 	.game-container {
 		block-size: 100vh;
 		position: relative;
+
+		@media(min-width: 1920px) {
+			block-size: auto;
+		}
 	}
 
 	.game-panel {
@@ -245,6 +249,11 @@
 		justify-content: center;
 		padding: 2rem;
 		position: relative;
+
+		@media(min-width: 1920px) {
+			block-size: auto;
+			padding-block-start: 5rem;
+		}
 	}
 
 	.game6-shape-before-playing {
