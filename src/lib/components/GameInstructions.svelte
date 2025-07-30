@@ -300,7 +300,8 @@
 		}
 
 		.game-id {
-			block-size: 12rem;
+			//block-size: 12rem;
+			block-size: auto;
 			inline-size: 8rem;
 		}
 
@@ -352,10 +353,6 @@
 
 		.instructions.closed {
 			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-		}
-
-		.logo {
-			width: 70%;
 		}
 	}
 </style> 

@@ -646,9 +646,9 @@
 		padding: 0;
 
 		img {
-			width: calc(100% * var(--scale-factor));
-			max-width: calc(80rem * var(--scale-factor));
-			height: auto;
+			//max-width: calc(80rem * var(--scale-factor));
+			block-size: auto;
+			inline-size: calc(100% * var(--scale-factor));
 			margin-inline: auto;
 		}
 	}

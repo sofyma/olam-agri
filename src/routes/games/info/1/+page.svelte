@@ -93,8 +93,6 @@
 }
 
 .game1-info__section {
-  display: flex;
-  flex-direction: column;
   padding-block-end: 0;
 }
 
@@ -136,10 +134,11 @@
 }
 
 .game1-info__image {
-  inline-size: 100%;
-  max-inline-size: 100%;
+  // inline-size: 100%;
+  // max-inline-size: 100%;
   block-size: auto;
   display: block;
+  object-fit: contain;
 }
 
 .game1-info__image:first-of-type {
