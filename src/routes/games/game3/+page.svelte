@@ -21,6 +21,7 @@
     let showInstructions = true;
     let instructionsClosed = false;
     let instructionsClosedSidebar = false;
+    let isGamePlaying = false;
     
     const gameService = Game3Service.getInstance();
     
@@ -51,6 +52,7 @@
         showInstructions = false;
         instructionsClosed = true;
         instructionsClosedSidebar = true;
+        isGamePlaying = true;
         game3Store.start();
     }
 
@@ -189,7 +191,7 @@
 
 <svelte:window on:keydown={handleKeyDown} />
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
     {#if showInstructions}
         <div class="game-panel">
             <GameInstructions
@@ -210,7 +212,7 @@
             <div class="start-screen">
                 <div class="start-screen-content">
                     <button on:click={startGame} class="image-button" aria-label="Start Game">
-                        <img class="game-start-screen-image" src="/images/game3-start-screen-image.png" alt="Game 3 Start Screen">
+                        <img class="game-start-screen-image" src="/images/game3-start-screen-image.png" alt="Game 3 Start Screen" style="visibility: hidden;">
                     </button>
                 </div>
             </div>
@@ -395,6 +397,11 @@
     }
 
     .game-container {
+        background-image: url('/images/j3-start.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        background-size: calc(100% * var(--scale-factor));
+        block-size: 100vh;  
         position: relative;
         
         :global(.shape) {
@@ -402,6 +409,11 @@
             inset-inline-start: 0;
             position: absolute;
         }
+    }
+
+    /* Hide background image when game is playing */
+    .game-container.playing {
+        background-image: none;
     }
 
     .game-header {
