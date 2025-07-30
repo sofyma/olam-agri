@@ -20,6 +20,7 @@
     let showInstructions = true;
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
+	let isGamePlaying = false;
 	
 	let activeBubbles: Bubble[] = [];
 	let spawnTimeout: NodeJS.Timeout;
@@ -46,6 +47,7 @@
 		showInstructions = false;
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
+		isGamePlaying = true;
 		game2Store.start();
 		activeBubbles = [];
 		spawnBubble(0);
@@ -121,11 +123,12 @@
 	}
 
 	$: if ($game2Store.isComplete && activeBubbles.length === 0) {
+		isGamePlaying = false;
 		goto('/games/game2/summary');
 	}
 </script>
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
 	
         
     {#if showInstructions}
@@ -202,6 +205,7 @@
 							class="bubble"
 							class:blinking={bubble.state === 'blinking'}
 							class:exploded={bubble.state === 'exploded'}
+							style={bubble.image && bubble.image.asset ? `background-image: url('${urlFor(bubble.image).url()}'); background-position: center center; background-repeat: no-repeat; background-size: cover;` : ''}
 							on:click={() => handleBubbleClick(bubble.index)}
 							on:keydown={(e) => {
 								if (e.key === 'Enter' || e.key === ' ') {
@@ -234,11 +238,7 @@
 									{/if}
 								</div>
 							{:else}
-								<img 
-									src={bubble.image ? urlFor(bubble.image).url() : ''}
-									alt={bubble.title}
-									class="bubble-image"
-								/>
+								<p class="statement-text" style="visibility: hidden;">{bubble.title}</p>
 							{/if}
 						</div>
 					</div>
@@ -250,6 +250,10 @@
 
 <style lang="scss">
 	.game-container {
+		background-image: url('/images/j2-start.png');
+		background-position: top center;
+		background-repeat: no-repeat;
+		background-size: calc(100% * var(--scale-factor));
 		position: relative;
 		:global(.shape) {
 			inset-block-start: calc(-10rem * var(--scale-factor));
@@ -258,16 +262,28 @@
 		}
 	}
 
+	/* Large screen media query for game 2 background */
+	@media (min-width: 1920px) {
+		.game-container {
+			background-size: 70%;
+		}
+	}
+
+	/* Hide background image when game is playing */
+	.game-container.playing {
+		background-image: none;
+	}
+
 	.game-header {
-		padding: 2rem calc(7rem * var(--scale-factor));
+		padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
-		text-align: center;
 		z-index: 10;
+		text-align: center;
 	}
 
 	.game-header-image {
-		margin-block-start: calc(5rem * var(--scale-factor));
 		margin-inline: auto;
+		margin-block-start: calc(5rem * var(--scale-factor));
 	}
 
 	.game-header-title {
@@ -281,17 +297,16 @@
 		block-size: 100vh;
 		display: flex;
 		justify-content: center;
-		overflow: hidden;
 		padding-block-start: calc(5rem * var(--scale-factor));
 		position: relative;
+		overflow: hidden;
 	}
 
 	.bubbles-container {
-		block-size: 100%;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		pointer-events: none;
 		position: absolute;
+		top: 0; left: 0;
+		width: 100%; height: 100%;
+		pointer-events: none;
 		z-index: 20;
 	}
 
@@ -306,20 +321,21 @@
 	}
 
 	.bubble {
-		align-items: center;
-		block-size: 15rem;
+		position: absolute;
+		background-color: rgb(84, 62, 238);
 		border-radius: 50%;
 		color: #fff;
-		cursor: pointer;
+		width: calc(15rem * var(--scale-factor));
+		height: calc(15rem * var(--scale-factor));
 		display: flex;
-		inline-size: 15rem;
+		align-items: center;
 		justify-content: center;
-		padding: 2rem;
-		pointer-events: all;
-		position: absolute;
+		padding: calc(2rem * var(--scale-factor));
 		text-align: center;
-		transform: translate(-50%, -50%);
+		cursor: pointer;
+		pointer-events: all;
 		will-change: transform, opacity;
+		transform: translate(-50%, -50%);
 
 		&.blinking {
 			animation: blink 0.4s 2;
@@ -329,47 +345,47 @@
 			animation: none;
 			background: none;
 			border: none;
-			block-size: calc(30rem * var(--scale-factor));
-			inline-size: calc(30rem * var(--scale-factor));
 			pointer-events: none;
+			width: calc(30rem * var(--scale-factor));
+			height: calc(30rem * var(--scale-factor));
 		}
 	}
 
-	.bubble-image {
-		block-size: 100%;
-		border-radius: 100%;
-		inline-size: 100%;
-		object-fit: cover;
+	.statement-text {
+		color: #fff;
+		font-size: calc(1.6rem * var(--scale-factor));
+		font-weight: 600;
+		line-height: 1.2;
 	}
-	
+
 	.explosion-container {
-		animation: pop 0.5s ease-out forwards;
-		block-size: 100%;
-		inline-size: 100%;
 		position: relative;
+		width: 100%;
+		height: 100%;
+		animation: pop 0.5s ease-out forwards;
 
 		&.timeout {
 			opacity: 0.2;
 		}
 
 		:global(svg) {
-			block-size: 100%;
-			inline-size: 100%;
+			width: 100%;
+			height: 100%;
 		}
 	}
 
 	.feedback-icon {
-		animation: feedbackPop 0.5s ease-out forwards;
-		block-size: 5rem;
-		inline-size: 5rem;
-		inset-block-start: 50%;
-		inset-inline-start: 50%;
 		position: absolute;
+		top: 50%;
+		left: 50%;
 		transform: translate(-50%, -50%);
+		width: calc(5rem * var(--scale-factor));
+		height: calc(5rem * var(--scale-factor));
+		animation: feedbackPop 0.5s ease-out forwards;
 
 		svg {
-			block-size: 100%;
-			inline-size: 100%;
+			width: 100%;
+			height: 100%;
 		}
 	}
 
@@ -402,7 +418,7 @@
 	@keyframes blink {
 		50% { opacity: 0.5; }
 	}
-	
+
 	.game-panel {
 		position: relative;
 	}
@@ -417,9 +433,9 @@
 		overflow-y: auto;
 		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
-		scrollbar-width: none; /* Firefox */
-		transition: transform 0.3s ease-in-out;
 		z-index: 9999;
+		transition: transform 0.3s ease-in-out;
+		scrollbar-width: none; /* Firefox */
 		-ms-overflow-style: none; /* Internet Explorer 10+ */
 
 		&::-webkit-scrollbar {
@@ -441,9 +457,9 @@
 		border: none;
 		color: white;
 		cursor: pointer;
-		padding: 1rem;
 		position: absolute;
 		z-index: 10000;
+		padding: calc(1rem * var(--scale-factor));
 
 		&:hover {
 			opacity: 0.8;
@@ -451,42 +467,40 @@
 	}
 
 	.close-button {
-		inset-block-start: 2rem;
-		inset-inline-end: 2rem;
+		inset-block-start: calc(2rem * var(--scale-factor));
+		inset-inline-end: calc(2rem * var(--scale-factor));
 
 		svg {
-			block-size: 2.4rem;
-			inline-size: 2.3rem;
+			block-size: calc(2.4rem * var(--scale-factor));
+			inline-size: calc(2.3rem * var(--scale-factor));
 		}
 	}
 
 	.play-button {
-		inset-block-start: 2rem;
-		inset-inline-end: 0.3rem;
+		inset-block-start: calc(2rem * var(--scale-factor));
+		inset-inline-end: .3rem;
 
 		svg {
-			block-size: 3.3rem;
-			inline-size: 2.7rem;
+			block-size: calc(3.3rem * var(--scale-factor));
+			inline-size: calc(2.7rem * var(--scale-factor));
 		}
 	}
 
 	.copy {
 		background-color: #fff;
 		margin-block-start: calc(6.5rem * var(--scale-factor));
-		padding: 2rem 2rem calc(4rem * var(--scale-factor));
+		padding: calc(2rem * var(--scale-factor)) calc(2rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		position: relative;
 
 		&-header {
 			align-items: end;
 			display: grid;
-			grid-column-gap: calc(3rem * var(--scale-factor));
-			grid-template-columns: repeat(2, auto);
 			justify-content: start;
+			grid-template-columns: repeat(2, auto);
+			grid-column-gap: calc(3rem * var(--scale-factor));
 			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
-
-
 
 	.title {
 		color: #8E75F8;
@@ -494,7 +508,7 @@
 		font-style: normal;
 		font-weight: 600;
 		line-height: normal;
-		padding-block-start: 2rem;
+		padding-block-start: calc(2rem * var(--scale-factor));
 	}
 
 	.subtitle {
@@ -502,15 +516,15 @@
 		font-size: calc(3.7rem * var(--scale-factor));
 		font-weight: 600;
 		line-height: normal;
-		max-inline-size: calc(20rem * var(--scale-factor));
-		overflow-wrap: break-word;
+		max-width: calc(20rem * var(--scale-factor));
 		word-wrap: break-word;
+		overflow-wrap: break-word;
 	}
 
 	.paragraph {
 		color: #2E2D2C;
 		font-size: calc(2.2rem * var(--scale-factor));
-		padding-block-start: 2rem;
+		padding-block-start: calc(2rem * var(--scale-factor));
 
 		&:first-child {
 			padding-block-start: calc(2.5rem * var(--scale-factor));
@@ -518,11 +532,11 @@
 	}
 
 	.start-screen {
+		display: flex;
+		justify-content: center;
 		align-items: self-end;
 		block-size: 100vh;
-		display: flex;
 		inline-size: calc(100vw - (100vw - 66.41%));
-		justify-content: center;
 		margin-inline-start: auto;
 
 		&-content {
@@ -549,9 +563,9 @@
 	.image-button {
 		background: transparent;
 		border: none;
-		cursor: pointer;
-		margin: 0;
 		padding: 0;
+		margin: 0;
+		cursor: pointer;
 	}
 
 	/* Content check section */
@@ -560,22 +574,22 @@
 	}
 
 	.content-check-grid {
-		align-items: center;
 		display: grid;
-		gap: 2rem;
 		grid-template-columns: auto 1fr;
+		gap: calc(2rem * var(--scale-factor));
+		align-items: center;
 	}
 
 	.content-check-btn {
-		background-color: #8E75F8;
-		block-size: 3.4rem;
-		border: none;
-		border-radius: 0 1.5rem;
+		width: calc(14.6rem * var(--scale-factor));
+		height: calc(3.4rem * var(--scale-factor));
+		border-radius: 0 calc(1.5rem * var(--scale-factor));
 		color: #fff;
-		cursor: pointer;
-		font-size: 1.4rem;
+		background-color: #8E75F8;
+		border: none;
+		font-size: calc(1.4rem * var(--scale-factor));
 		font-weight: 600;
-		inline-size: 14.6rem;
+		cursor: pointer;
 		transition: all 0.3s ease;
 
 		&:hover {
@@ -585,62 +599,23 @@
 
 	.content-check-text {
 		color: #FFF;
-		font-size: 1.4rem;
+		font-size: calc(1.4rem * var(--scale-factor));
 		font-style: normal;
 		font-weight: 400;
-		line-height: 2rem;
+		line-height: calc(2rem * var(--scale-factor));
 	}
 
-	/* Windows 125% specific styles */
-	/*
-	:global(.window125) .game-container {
-		display: flex;
-		align-items: flex-start;
+	.game-start-screen-image {
+		visibility: hidden;
 	}
-
-	:global(.window125) .instructions {
-		position: static !important;
-		inline-size: calc(100vw - 66.41%);
-		block-size: 100vh;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .start-screen {
-		inline-size: calc(100vw - (100vw - 66.41%));
-		margin-inline-start: auto;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .game-panel {
-		display: flex;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .start-screen {
-		inline-size: 100%;
-		margin-inline-start: 0;
-	}
-
-	:global(.window125) .game-grid {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .game-grid {
-		display: grid;
-		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-	}
-	*/
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
 		/* 1. Fix left sidebar title and horizontal scroll */
 		.instructions {
 			inline-size: calc(100vw - 66.41%);
-			overflow-x: hidden;
 			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+			overflow-x: hidden;
 			scrollbar-width: none; /* Firefox */
 			-ms-overflow-style: none; /* Internet Explorer 10+ */
 		}
@@ -651,19 +626,19 @@
 
 		.title {
 			font-size: calc(4.5rem * var(--scale-factor));
-			overflow-wrap: break-word;
 			word-wrap: break-word;
+			overflow-wrap: break-word;
 		}
 
 		/* 2. Fix sidebar horizontal scroll */
 		.copy {
 			margin-block-start: calc(4rem * var(--scale-factor));
-			padding: 1.5rem;
+			padding: calc(1.5rem * var(--scale-factor));
 		}
 
 		.copy-header {
-			grid-column-gap: 2rem;
 			grid-template-columns: repeat(2, auto);
+			grid-column-gap: calc(2rem * var(--scale-factor));
 			margin-block-start: calc(-3rem * var(--scale-factor));
 		}
 
@@ -674,7 +649,7 @@
 
 		/* 4. Fix game header for mobile */
 		.game-header {
-			padding: 1rem calc(4rem * var(--scale-factor));
+			padding: calc(1rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		}
 
 		.game-header-title {
@@ -683,14 +658,13 @@
 
 		/* 5. Fix game area for mobile */
 		.game-area {
-			padding-block-start: 2rem;
+			padding-block-start: calc(2rem * var(--scale-factor));
 		}
 
 		/* 6. Adjust start screen for mobile */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
-			overflow-y: hidden;
-			padding: 1rem;
+			padding: calc(1rem * var(--scale-factor));
 		}
 
 		/* Keep start screen width consistent when sidebar is closed */
@@ -702,39 +676,34 @@
 			transform-origin: center center;
 		}
 
-		/* 7. Adjust game ID for mobile */
-		.game-id {
-			block-size: 12rem;
-			inline-size: 8rem;
+		/* Remove vertical scrolling from start screen */
+		.start-screen {
+			overflow-y: hidden;
 		}
 
-		// .game-id .text {
-		// 	font-size: 2rem;
-		// 	line-height: 2rem;
-		// }
-
-		// .game-id .number {
-		// 	font-size: calc(9rem * var(--scale-factor));
-		// 	line-height: calc(9rem * var(--scale-factor));
-		// }
+		/* 7. Adjust game ID for mobile */
+		.game-id {
+			block-size: calc(12rem * var(--scale-factor));
+			inline-size: calc(8rem * var(--scale-factor));
+		}
 
 		/* 8. Adjust subtitle for mobile */
 		.subtitle {
 			font-size: calc(2.5rem * var(--scale-factor));
-			max-inline-size: 15rem;
-			overflow-wrap: break-word;
+			max-width: calc(15rem * var(--scale-factor));
 			word-wrap: break-word;
+			overflow-wrap: break-word;
 		}
 
 		/* 9. Adjust buttons for mobile */
 		.close-button {
-			inset-block-start: 1rem;
-			inset-inline-end: 2rem;
+			inset-block-start: calc(1rem * var(--scale-factor));
+			inset-inline-end: calc(2rem * var(--scale-factor));
 		}
 
 		.play-button {
-			inset-block-start: 2rem;
-			inset-inline-end: -0.2rem;
+			inset-block-start: calc(2rem * var(--scale-factor));
+			inset-inline-end: calc(-0.2rem * var(--scale-factor));
 		}
 
 		/* 10. Fix sidebar closed state for mobile */
@@ -744,46 +713,43 @@
 
 		/* 11. Adjust bubbles for mobile */
 		.bubble {
-			block-size: 12rem;
-			inline-size: 12rem;
-			padding: 1.5rem;
+			width: calc(12rem * var(--scale-factor));
+			height: calc(12rem * var(--scale-factor));
+			padding: calc(1.5rem * var(--scale-factor));
 
 			&.exploded {
-				block-size: calc(25rem * var(--scale-factor));
-				inline-size: calc(25rem * var(--scale-factor));
+				width: calc(25rem * var(--scale-factor));
+				height: calc(25rem * var(--scale-factor));
 			}
 		}
 
-		.bubble-image {
-			block-size: 100%;
-			border-radius: 100%;
-			inline-size: 100%;
-			object-fit: cover;
+		.statement-text {
+			font-size: calc(1.4rem * var(--scale-factor));
 		}
 
 		.feedback-icon {
-			block-size: 4rem;
-			inline-size: 4rem;
+			width: calc(4rem * var(--scale-factor));
+			height: calc(4rem * var(--scale-factor));
 		}
 
 		/* Content check section mobile adjustments */
 		.content-check {
-			padding-block-start: 2rem;
+			padding-block-start: calc(2rem * var(--scale-factor));
 		}
 
 		.content-check-grid {
-			gap: 1.5rem;
+			gap: calc(1.5rem * var(--scale-factor));
 		}
 
 		.content-check-btn {
-			block-size: 3rem;
-			font-size: 1.2rem;
-			inline-size: 12rem;
+			width: calc(12rem * var(--scale-factor));
+			height: calc(3rem * var(--scale-factor));
+			font-size: calc(1.2rem * var(--scale-factor));
 		}
 
 		.content-check-text {
-			font-size: 1.2rem;
-			line-height: 1.6rem;
+			font-size: calc(1.2rem * var(--scale-factor));
+			line-height: calc(1.6rem * var(--scale-factor));
 		}
 	}
 </style> 
