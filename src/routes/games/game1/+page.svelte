@@ -23,6 +23,7 @@
 	let showInstructions = true;
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
+	let isGamePlaying = false;
     
     const gameService = Game1Service.getInstance();
     
@@ -50,6 +51,7 @@
 		showInstructions = false;
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
+		isGamePlaying = true;
 		game1Store.start();
 	}
 
@@ -89,7 +91,7 @@
     }
 </script>
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
 	<Game1Shape />
         
 	{#if showInstructions}

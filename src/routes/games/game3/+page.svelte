@@ -403,6 +403,10 @@
         background-size: calc(100% * var(--scale-factor));
         block-size: 100vh;  
         position: relative;
+
+        @media(min-width: 1920px) {
+            background-size: 80%;
+        }
         
         :global(.shape) {
             inset-block-start: calc(-10rem * var(--scale-factor));
