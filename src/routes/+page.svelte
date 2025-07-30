@@ -13,8 +13,25 @@
   let timeUntilGame5: number | null = null;
   let timeUntilGame6: number | null = null;
 
+  // Reactive statement to update dates when store changes
+  $: game1Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game1');
+  $: game2Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game2');
+  $: game3Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game3');
+  $: game4Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game4');
+  $: game5Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game5');
+  $: game6Date = $gameAvailabilityStore.isLoading ? '' : formatAvailableDate('game6');
+
   onMount(() => {
-    gameAvailabilityStore.loadGameConfigs();
+    // Load game configs and then set up the rest
+    gameAvailabilityStore.loadGameConfigs().then(() => {
+      // Initial check after data is loaded
+      timeUntilGame1 = gameAvailabilityStore.getTimeUntilAvailable('game1');
+      timeUntilGame2 = gameAvailabilityStore.getTimeUntilAvailable('game2');
+      timeUntilGame3 = gameAvailabilityStore.getTimeUntilAvailable('game3');
+      timeUntilGame4 = gameAvailabilityStore.getTimeUntilAvailable('game4');
+      timeUntilGame5 = gameAvailabilityStore.getTimeUntilAvailable('game5');
+      timeUntilGame6 = gameAvailabilityStore.getTimeUntilAvailable('game6');
+    });
     
     // Set up interval to refresh availability every minute
     const interval = setInterval(() => {
@@ -26,14 +43,6 @@
       timeUntilGame5 = gameAvailabilityStore.getTimeUntilAvailable('game5');
       timeUntilGame6 = gameAvailabilityStore.getTimeUntilAvailable('game6');
     }, 60000);
-
-    // Initial check
-    timeUntilGame1 = gameAvailabilityStore.getTimeUntilAvailable('game1');
-    timeUntilGame2 = gameAvailabilityStore.getTimeUntilAvailable('game2');
-    timeUntilGame3 = gameAvailabilityStore.getTimeUntilAvailable('game3');
-    timeUntilGame4 = gameAvailabilityStore.getTimeUntilAvailable('game4');
-    timeUntilGame5 = gameAvailabilityStore.getTimeUntilAvailable('game5');
-    timeUntilGame6 = gameAvailabilityStore.getTimeUntilAvailable('game6');
 
     return () => {
       clearInterval(interval);
@@ -56,16 +65,31 @@
 
   function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): string {
     const config = gameAvailabilityStore.getGameConfig(gameId);
-    if (!config || !config.availableUntil) return 'Coming Soon';
+    console.log(`formatAvailableDate for ${gameId}:`, config);
+    
+    if (!config) {
+      console.warn(`No config found for ${gameId}`);
+      return 'Coming Soon';
+    }
+    
+    if (!config.availableUntil) {
+      console.warn(`No availableUntil date for ${gameId}`);
+      return '';
+    }
     
     try {
       const date = new Date(config.availableUntil);
-      if (isNaN(date.getTime())) return 'Coming Soon';
+      if (isNaN(date.getTime())) {
+        console.warn(`Invalid date for ${gameId}:`, config.availableUntil);
+        return 'Coming Soon';
+      }
       
       const month = date.toLocaleDateString('en-US', { month: 'short' });
       const day = date.getDate();
       
-      return `${month} ${day}`;
+      const result = `${month} ${day}`;
+      console.log(`Formatted date for ${gameId}:`, result);
+      return result;
     } catch (error) {
       console.error('Error formatting date for', gameId, ':', error);
       return 'Coming Soon';
@@ -182,7 +206,11 @@
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game1')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game1Date}<br>until {game1Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -201,7 +229,11 @@
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game2')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game2Date}<br>until {game2Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -220,7 +252,11 @@
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game3')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game3Date}<br>until {game3Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -238,11 +274,15 @@
               {:else}
                 <div class="cta-button game4-button locked">
                   <svg class="lock-icon" width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.53 10.0109H18.92V8.17114C18.92 3.66931 15.37 0 11 0C6.63 0 3.07 3.66931 3.07 8.17114V10.0109H2.46C1.1 10.0109 0 11.1518 0 12.5496V27.268C0 28.6658 1.1 29.8067 2.46 29.8067H19.53C20.89 29.8067 21.99 28.6658 21.99 27.268V12.5496C21.99 11.1415 20.89 10.0109 19.53 10.0109ZM13.56 24.8115C13.66 25.3151 13.28 25.7879 12.78 25.7879H9.21C8.71 25.7879 8.33 25.3151 8.43 24.8115L9.48 19.3949C8.69 18.881 8.16 17.9765 8.16 16.9384C8.16 15.3247 9.43 14.0297 10.99 14.0297C12.55 14.0297 13.82 15.335 13.82 16.9384C13.82 17.9765 13.29 18.881 12.5 19.3949L13.55 24.8115H13.56ZM14.94 10.0109H7.05V8.17114C7.05 5.9305 8.82 4.11127 11 4.11127C13.18 4.11127 14.95 5.9305 14.95 8.17114V10.0109H14.94Z" fill="#00B2E7"/>
+                    <path d="M19.53 10.0109H18.92V8.17114C18.92 3.66931 15.37 0 11 0C6.63 0 3.07 3.66931 3.07 8.17114V10.0109H2.46C1.1 10.0109 0 11.1518 0 12.5496V27.268C0 28.6658 1.1 29.8067 2.46 29.8067H19.53C20.89 29.8067 21.99 28.6658 21.99 27.268V12.5496C21.99 11.1415 20.89 10.0109 19.53 10.0109ZM13.56 24.8115C13.66 25.3151 13.28 25.7879 12.78 25.7879H9.21C8.71 25.7879 8.33 25.3151 8.43 24.8115L9.48 19.3949C8.69 18.881 8.16 17.9765 8.16 16.9384C8.16 15.3247 9.43 14.0297 10.99 14.0297C12.55 14.0297 13.82 15.335 13.82 16.9384C13.82 17.9765 13.29 18.881 12.5 19.3949L13.55 24.8115H13.56ZM14.94 10.0109H7.05V8.17114C7.05 5.9305 8.82 4.11127 11 4.11127C13.18 4.11127 14.95 5.9305 14.95 8.17114V10.0109H14.94Z" fill="#FFC400"/>
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game4')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game4Date}<br>until {game4Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -261,7 +301,11 @@
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game5')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game5Date}<br>until {game5Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -280,7 +324,11 @@
                   </svg>
                 </div>
                 <p class="locked-text">
-                  Content blocked<br>until {formatAvailableDate('game6')}
+                  {#if $gameAvailabilityStore.isLoading}
+                    Loading...
+                  {:else}
+                    Content blocked{#if game6Date}<br>until {game6Date}{/if}
+                  {/if}
                 </p>
               {/if}
             </div>
@@ -782,7 +830,7 @@
     }
     
     .locked-text {
-      color: #FFF;
+      color: #2E2D2C;
     }
 
     &:hover {
