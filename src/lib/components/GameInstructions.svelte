@@ -146,6 +146,10 @@
 		position: absolute;
 		z-index: 10000;
 
+		@media(min-width: 1920px) {
+			inset-inline-end: 1.2rem;
+		}
+
 		svg {
 			block-size: 3.3rem;
 			inline-size: 2.7rem;
