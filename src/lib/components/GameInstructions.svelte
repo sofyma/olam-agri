@@ -149,6 +149,11 @@
 		svg {
 			block-size: 3.3rem;
 			inline-size: 2.7rem;
+
+			@media(max-width: 932px) {
+				block-size: 2.3rem;
+				inline-size: 1.7rem;
+			}
 		}
 
 		&:hover {
@@ -321,6 +326,7 @@
 
 		.content-check-grid {
 			gap: 1.5rem;
+			grid-template-columns: 1fr;
 		}
 
 		.content-check-btn {
@@ -341,11 +347,15 @@
 
 		.play-button {
 			inset-block-start: 2rem;
-			inset-inline-end: -0.2rem;
+			inset-inline-end: .5rem;
 		}
 
 		.instructions.closed {
 			transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
+		}
+
+		.logo {
+			width: 70%;
 		}
 	}
 </style> 

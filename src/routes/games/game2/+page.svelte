@@ -284,6 +284,10 @@
 	.game-header-image {
 		margin-inline: auto;
 		margin-block-start: calc(5rem * var(--scale-factor));
+
+		@media(max-width: 932px) {
+			inline-size: 80%;
+		}
 	}
 
 	.game-header-title {
@@ -620,6 +624,11 @@
 			-ms-overflow-style: none; /* Internet Explorer 10+ */
 		}
 
+		/* 2. Game container background size for mobile */
+		.game-container {
+			background-size: 75%;
+		}
+
 		.instructions::-webkit-scrollbar {
 			display: none; /* Chrome, Safari, Opera */
 		}
@@ -739,6 +748,7 @@
 
 		.content-check-grid {
 			gap: calc(1.5rem * var(--scale-factor));
+			grid-template-columns: 1fr;
 		}
 
 		.content-check-btn {
