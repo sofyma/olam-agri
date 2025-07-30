@@ -128,7 +128,7 @@
     {/if}
 </div>
 
-<style>
+<style lang="scss">
     .question-counter {
         color: #fff;
         display: block;
@@ -299,16 +299,13 @@
             margin-block-end: 0;
             max-block-size: 30rem;
             margin-inline: auto;
-
-            @media(max-width: 932px) {
-                max-block-size: 15rem;
-            }
         }
 
         .question-container {
             padding-block-start: 2rem;
             padding-block-end: 2rem;
-            block-size: calc(53rem * var(--scale-factor));
+            //block-size: calc(53rem * var(--scale-factor));
+            block-size: auto;
         }
 
         .options {
