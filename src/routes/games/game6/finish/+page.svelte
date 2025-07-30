@@ -78,6 +78,11 @@
 		display: grid;
 		place-content: center;
 		padding-block-start: calc(10rem * var(--scale-factor));
+
+		@media(min-width: 1920px) {
+			block-size: auto;
+			padding-block: 25rem 5rem;
+		}
 	}
 
 	/* Game 6 specific logo styling */
