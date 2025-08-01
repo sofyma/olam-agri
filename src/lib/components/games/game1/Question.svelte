@@ -8,10 +8,12 @@
     export let questionType: 'brand' | 'place' = 'brand';
     export let currentQuestionNumber: number;
     export let totalQuestions: number;
+    export let shouldAnimate = true;
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
     let isEntering = false;
+    let previousQuestionId: number | null = null;
     
     const dispatch = createEventDispatcher<{
         submit: { answer: string; isCorrect: boolean };
@@ -46,86 +48,88 @@
     $: if (question) {
         selectedAnswer = null;
         isSubmitting = false;
-        isEntering = true;
-        // Reset entering animation state
-        setTimeout(() => {
-            isEntering = false;
-        }, 50);
+        
+        // Only trigger entering animation if this is a different question
+        if (previousQuestionId && previousQuestionId !== question.id && !showFeedback && shouldAnimate) {
+            isEntering = true;
+            setTimeout(() => {
+                isEntering = false;
+            }, 50);
+        }
+        
+        previousQuestionId = question.id;
     }
 
     $: imageUrl = question?.image || '';
 </script>
 
 <span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
-<div class="question-container" class:entering={!showFeedback && isEntering}>
-    {#if !showFeedback}
-        <div class="question-header">
-            
-            <h2 class="question-title">
-                {questionType === 'brand' ? 'Guess the Brand!' : 'Guess the Place!'}
-            </h2>
+<div class="question-container" class:entering={!showFeedback && isEntering && shouldAnimate}>
+    
+    <div class="question-header">
+        
+        <h2 class="question-title">
+            {questionType === 'brand' ? 'Guess the Brand!' : 'Guess the Place!'}
+        </h2>
+    </div>
+    
+    {#if imageUrl}
+        <img 
+            src={imageUrl}
+            alt={question.imageAlt || `Question image`} 
+            class="question-image" 
+        />
+    {/if}
+    
+    <div class="question-options">
+        <div class="options">
+            {#each question.options as option}
+                <div 
+                    class="option"
+                    class:selected={selectedAnswer === option}
+                    on:click={() => handleOptionClick(option)}
+                    on:keydown={(event) => handleKeyDown(event, option)}
+                    tabindex="0"
+                    role="radio"
+                    aria-checked={selectedAnswer === option}
+                >
+                    <input
+                        type="radio"
+                        name="answer"
+                        value={option}
+                        checked={selectedAnswer === option}
+                        on:change={() => handleOptionClick(option)}
+                    />
+                    <span class="option-text">{option}</span>
+                </div>
+            {/each}
         </div>
         
-        {#if imageUrl}
-            <img 
-                src={imageUrl}
-                alt={question.imageAlt || `Question image`} 
-                class="question-image" 
-            />
-        {/if}
-        
-        <div class="question-options">
-            <div class="options">
-                {#each question.options as option}
-                    <div 
-                        class="option"
-                        class:selected={selectedAnswer === option}
-                        on:click={() => handleOptionClick(option)}
-                        on:keydown={(event) => handleKeyDown(event, option)}
-                        tabindex="0"
-                        role="radio"
-                        aria-checked={selectedAnswer === option}
-                    >
-                        <input
-                            type="radio"
-                            name="answer"
-                            value={option}
-                            checked={selectedAnswer === option}
-                            on:change={() => handleOptionClick(option)}
-                        />
-                        <span class="option-text">{option}</span>
-                    </div>
-                {/each}
-            </div>
-            
-            <button
-                class="submit-button btn btn-cta3"
-                on:click={handleSubmit}
-                disabled={!selectedAnswer || isSubmitting}
-            >
-                Send
-            </button>
+        <button
+            class="submit-button btn btn-cta3"
+            on:click={handleSubmit}
+            disabled={!selectedAnswer || isSubmitting}
+        >
+            Send
+        </button>
+    </div>
+    
+    <div class="feedback" style:display={showFeedback ? 'block' : 'none'}>
+        <div class="feedback-content">
+            {#if isCorrect}
+                <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
+                    <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                </svg>
+            {:else}
+                <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#FF3000"/>
+                    <path d="M145.68 274.32L274.32 145.68" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <path d="M145.68 145.68L274.32 274.32" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                </svg>
+            {/if}
         </div>
-    {/if}
-
-    {#if showFeedback}
-        <div class="feedback">
-            <div class="feedback-content">
-                {#if isCorrect}
-                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
-                        <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
-                    </svg>
-                {:else}
-                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#FF3000"/>
-                        <path d="M145.68 274.32L274.32 145.68" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
-                        <path d="M145.68 145.68L274.32 274.32" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
-                    </svg>
-                {/if}
-            </div>
-        </div>
-    {/if}
+    </div>
 </div>
 
 <style lang="scss">
@@ -143,7 +147,8 @@
     .question-container {
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));  
-        block-size: calc(90rem * var(--scale-factor));    
+        //block-size: calc(90rem * var(--scale-factor));    
+        block-size: auto;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
@@ -248,7 +253,8 @@
         inset: 0;
         justify-content: center;
         position: absolute;
-        block-size: calc(90rem * var(--scale-factor));
+        //block-size: calc(90rem * var(--scale-factor));
+        block-size: auto;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));

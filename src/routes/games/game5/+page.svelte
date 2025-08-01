@@ -235,10 +235,7 @@
 		position: relative;
 	}
 
-	/* Windows 125% specific styles */
-	:global(.window125) .game-container {
-		background-size: contain;
-	}
+	
 	.game-container.playing {
 		background-image: url('/images/game5-summary.png');
 	}
@@ -258,7 +255,6 @@
 		display: grid;
 		gap: calc(4rem * var(--scale-factor));
 		grid-template-columns: calc(69.6rem * var(--scale-factor)) 1fr;
-		justify-content: center;
 		justify-items: center;
 	}
 
@@ -275,35 +271,23 @@
 		max-inline-size: 100%;
 	}
 
-	.game-content-column {
-		display: flex;
-		flex-direction: column;
-		gap: calc(3rem * var(--scale-factor));
-		inline-size: calc(87rem * var(--scale-factor));
-	}
-
 	.timer {
 		align-items: center;
 		background: #00B2E7;
 		border-radius: 1rem;
-		block-size: 4rem;
+		//block-size: 4rem;
 		color: #FFF;
 		display: flex;
 		font-size: calc(12rem * var(--scale-factor));
 		font-weight: 600;
 		justify-content: flex-start;
-		line-height: normal;
+		line-height: calc(12rem * var(--scale-factor));
 	}
 
 	.game-container-white {
 		background: #FFF;
 		border-radius: 0 calc(3.5rem * var(--scale-factor));
-		block-size: calc(73.7rem * var(--scale-factor));
-		display: flex;
-		flex-direction: column;
-		gap: 0;
-		inline-size: calc(87rem * var(--scale-factor));
-		margin-block-start: calc(3rem * var(--scale-factor));
+		margin-block-start: 0;
 		padding: calc(5.5rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
 	}
 
@@ -430,79 +414,11 @@
 		}
 	}
 
-	// .game-id {
-	// 	align-items: center;
-	// 	background-color: #00B2E7;
-	// 	border-radius: 0 2rem 0 2rem;
-	// 	block-size: calc(17rem * var(--scale-factor));
-	// 	color: #fff;
-	// 	display: flex;
-	// 	flex-direction: column;
-	// 	inline-size: 11rem;
-	// 	padding: 1rem;
-	// 	text-align: center;
-
-	// 	.text {
-	// 		font-size: calc(2.8rem * var(--scale-factor));
-	// 		font-weight: 600;
-	// 		line-height: calc(2.8rem * var(--scale-factor));
-	// 	}
-
-	// 	.number {
-	// 		font-size: calc(13.7rem * var(--scale-factor));
-	// 		font-weight: 600;
-	// 		line-height: calc(13.7rem * var(--scale-factor))
-	// 	}
-	// }
-
-	// .title {
-	// 	color: #00B2E7;
-	// 	font-size: calc(6rem * var(--scale-factor));
-	// 	font-style: normal;
-	// 	font-weight: 600;
-	// 	line-height: normal;
-	// 	padding-block-start: 2rem;
-	// }
-
-	// .subtitle {
-	// 	color: #00B2E7;
-	// 	font-size: calc(3.7rem * var(--scale-factor));
-	// 	font-weight: 600;
-	// 	line-height: normal;
-	// }
-
-	// .paragraph {
-	// 	color: #2E2D2C;
-	// 	font-size: calc(2.2rem * var(--scale-factor));
-	// 	line-height: normal;
-	// 	padding-block-start: 2rem;
-
-	// 	&:first-child {
-	// 		padding-block-start: calc(2.5rem * var(--scale-factor))
-	// 	}
-	// }
 
 	.game5-initial-screen-image {
 		object-fit: cover;
 		visibility: hidden;
 	}
-
-	// .copy {
-	// 	background-color: #fff;
-	// 	margin-block-start: calc(6.5rem * var(--scale-factor));
-	// 	padding: 2rem 2rem calc(4rem * var(--scale-factor));
-	// 	position: relative;
-
-	// 	&-header {
-	// 		align-items: end;
-	// 		display: grid;
-	// 		grid-template-columns: repeat(2, auto);
-	// 		grid-column-gap: calc(3rem * var(--scale-factor));
-	// 		margin-block-start: calc(-5rem * var(--scale-factor));
-	// 	}
-	// }
-
-
 	
 	.start-screen {
 		align-items: center;
@@ -564,9 +480,7 @@
 			width: auto;
 			max-width: none;
 		}
-		// .game-hero-column {
-		// 	/* No width or max-width, let it fill the grid cell */
-		// }
+		
 		.game-content-column {
 			/* No width restriction, fills grid cell */
 			gap: 2rem;
@@ -642,8 +556,6 @@
 			transform-origin: center center;
 		}
 
-
-
 		/* Initial screen button */
 		.game5-initial-screen-button {
 			background: none;
@@ -652,7 +564,6 @@
 			cursor: pointer;
 		}
 	}
-
 </style>
 
 

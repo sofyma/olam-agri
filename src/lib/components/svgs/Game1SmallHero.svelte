@@ -85,9 +85,10 @@
     </defs>
 </svg>
 
-<style>
+<style lang="scss">
     .game-header-svg {
-        inset-block-start: calc(-10rem * var(--scale-factor));
+        //inset-block-start: calc(-10rem * var(--scale-factor));
+        inset-block-start: 0;
         inset-inline-start: calc(-10rem * var(--scale-factor));
         max-inline-size: none;
         position: relative;

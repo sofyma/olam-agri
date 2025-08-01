@@ -20,7 +20,7 @@
 
 	function handleReplay() {
 		game2Store.reset();
-		game2Store.initialize();
+		game2Store.initialize();	
 		goto('/games/game2');
 	}
 
@@ -55,7 +55,7 @@
 			<p class="paragraph">Congratulations! You destroyed {$game2Store.destroyedLies} lies (+{$game2Store.destroyedLies}) and {$game2Store.destroyedTruths} truth{$game2Store.destroyedTruths !== 1 ? 's' : ''} (−{$game2Store.destroyedTruths}). You also let {passedTruths} truth{passedTruths !== 1 ? 's' : ''} pass (+{passedTruths}) and {slippedLies} lie{slippedLies !== 1 ? 's' : ''} slip through (−{slippedLies}). This gives you a total of:</p>
 			<p class="total-points">{$game2Store.score} points</p>
 
-			<Game2SummaryHero />
+			<img src="/images/game2-summary-image.png" alt="Hero" class="game-summary-image">
 		</div>
 
         <div class="cta">
@@ -72,6 +72,13 @@
 </div>
 
 <style lang="scss">
+	.game-summary-image {
+		inset-block-end: -25rem;
+		inset-inline-end: -12rem;
+		max-inline-size: calc(26.1rem * var(--scale-factor));
+		position: absolute;
+	}
+
 	.game-container {
 		block-size: 100vh;
 		display: grid;
@@ -104,8 +111,8 @@
 		inline-size: 100%;
 		margin-block-start: calc(3.5rem * var(--scale-factor));
 		padding: calc(5rem * var(--scale-factor));
-		text-align: center;
 		position: relative;
+		text-align: center;
 	}
 
 	.paragraph {
@@ -130,9 +137,9 @@
 	}
 
 	.btn {
+		border-radius: 0 1.7rem;
 		color: #8E75F8;
 		margin-inline: 0;
-		border-radius: 0 1.7rem;
 	}
 
 	.finish-small {

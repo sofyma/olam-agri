@@ -7,6 +7,7 @@
     export let isCorrect: boolean | null = null;
     export let currentQuestionNumber: number;
     export let totalQuestions: number;
+    export let showQuestion = true;
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
@@ -52,12 +53,18 @@
         }, 50);
     }
 
+    // Ensure no animation when question is not being displayed
+    $: if (!question) {
+        isEntering = false;
+    }
+
     $: imageUrl = question?.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkY1QkFGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TWF6ZSBDaGFsbGVuZ2U8L3RleHQ+Cjwvc3ZnPgo=';
 </script>
 
 <span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
 <div class="question-container" class:entering={!showFeedback && isEntering}>
-    {#if !showFeedback}
+   
+    <div style:visibility={showQuestion ? 'visible' : 'hidden'}>
         <div class="question-header">
             <h2 class="question-title">{question.question}</h2>
         </div>
@@ -102,26 +109,25 @@
                 Send    
             </button>
         </div>
-    {/if}
-
-    {#if showFeedback}
-        <div class="feedback">
-            <div class="feedback-content">
-                {#if isCorrect}
-                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
-                        <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
-                    </svg>
-                {:else}
-                    <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M396 198C396 88.6592 307.341 0 198 0C88.6592 0 0 88.6592 0 198C0 307.341 88.6592 396 198 396C307.341 396 396 307.341 396 198Z" fill="#FF3000"/>
-                        <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
-                        <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
-                    </svg>
-                {/if}
-            </div>
+    </div>
+    
+    <div class="feedback" style:display={showFeedback ? 'flex' : 'none'}>
+        <div class="feedback-content">
+            {#if isCorrect}
+                <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
+                    <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                </svg>
+            {:else}
+                <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M396 198C396 88.6592 307.341 0 198 0C88.6592 0 0 88.6592 0 198C0 307.341 88.6592 396 198 396C307.341 396 396 307.341 396 198Z" fill="#FF3000"/>
+                    <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                </svg>
+            {/if}
         </div>
-    {/if}
+    </div>
+    
 </div>
 
 <style>
@@ -167,7 +173,7 @@
     .question-container {
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));
-        block-size: 100vh;    
+        block-size: auto;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
@@ -201,7 +207,7 @@
     .question-image {
         inline-size: 100%;
         margin-block-end: 0;
-        max-block-size: calc(36rem * var(--scale-factor));
+        max-block-size: calc(30rem * var(--scale-factor));
         object-fit: cover;
     }
     
@@ -271,9 +277,8 @@
         inset: 0;
         justify-content: center;
         position: absolute;
-        width: 100%;
-        height: 100vh;
-        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: 100%;
     }
     
     .feedback-content {
@@ -289,7 +294,7 @@
         inline-size: calc(39.6rem * var(--scale-factor));
     }
 
-    @media (width >= 1920px) {
+    /* @media (width >= 1920px) {
         .question-container {
             block-size: 90vh;
         }
@@ -297,7 +302,7 @@
         .feedback {
             height: 90vh;
         }
-    }
+    } */
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {

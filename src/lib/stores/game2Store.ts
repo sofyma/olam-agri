@@ -351,6 +351,7 @@ const createGame2Store = () => {
       stopAllTimers();
       update(state => ({
         ...state,
+        statements: state.statements.map(s => ({ ...s, timeRemaining: 3, exploded: false, faded: false, isCorrect: undefined, processedTime: undefined })),
         score: 0,
         answers: [],
         isPlaying: false,
@@ -365,6 +366,7 @@ const createGame2Store = () => {
 
     startBubbleTimer,
     stopBubbleTimer,
+    stopAllTimers,
   };
 };
 

@@ -43,8 +43,8 @@
 
   .wrapper {
     background-color: #FFF;
-    max-inline-size: calc(128rem * var(--scale-factor));
     margin-inline: auto;
+    max-inline-size: calc(128rem * var(--scale-factor));
     padding-block: calc(5rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
   }
 
@@ -56,25 +56,25 @@
 }
 
 .game3-info__indicator {
-  inline-size: 10.5rem;
+  align-items: center;
+  background: #FF3DA6;
   block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
-  background: #FF3DA6;
   color: #FFF;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
   font-size: calc(9rem * var(--scale-factor));
   font-style: normal;
   font-weight: 600;
-  line-height: 125%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
+  inline-size: 10.5rem;
   inset-block-start: calc(-5.25rem * var(--scale-factor));
   inset-inline-start: 50%;
+  justify-content: center;
+  line-height: 125%;
+  position: absolute;
+  text-align: center;
   transform: translateX(-50%);
   z-index: 10;
-  flex-direction: column;
 }
 
 .game3-info__indicator-number {
@@ -86,12 +86,12 @@
 
 .game3-info__main-title {
   color: #FF3DA6;
-  text-align: center;
   font-size: calc(7.5rem * var(--scale-factor));
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
   padding-block-start: calc(6rem * var(--scale-factor));
+  text-align: center;
 }
 
 .game3-info__section {
@@ -150,9 +150,9 @@
 }
 
 .game3-info__image {
-  inline-size: 100%;
   block-size: auto;
   display: block;
+  inline-size: 100%;
 }
 
 .game3-info__image:first-of-type {
@@ -176,8 +176,8 @@
 }
 
 .game3-info__bold-text {
-  font-weight: 600;
   display: inline-flex;
+  font-weight: 600;
   gap: 1.2rem;
 }
 
@@ -190,30 +190,30 @@
 }
 
 .game3-info__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   padding-block-start: 2rem;
 }
 
 .game3-info__list li {
+  align-items: center;
   color: #2E2D2C;
+  display: flex;
   font-size: calc(2.4rem * var(--scale-factor));
   font-style: normal;
   font-weight: 400;
-  line-height: 125%;
-  display: flex;
-  align-items: center;
   gap: 1.2rem;
+  line-height: 125%;
 }
 
 .game3-info__list-icon {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
@@ -237,16 +237,16 @@
     padding-inline: 2rem;
   }
   .game3-info__indicator {
-    inline-size: 7rem;
     block-size: 7rem;
     font-size: calc(5.5rem * var(--scale-factor));
     font-weight: 600;
-    position: static;
-    transform: none;
+    inline-size: 7rem;
     inset-block-start: auto;
     inset-inline-start: auto;
-    margin-inline: auto;
     margin-block-start: calc(5rem * var(--scale-factor));
+    margin-inline: auto;
+    position: static;
+    transform: none;
   }
   .game3-info__indicator-number {
     font-size: calc(5.5rem * var(--scale-factor));

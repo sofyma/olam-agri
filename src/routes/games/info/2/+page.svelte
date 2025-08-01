@@ -79,8 +79,8 @@
 
   .wrapper {
     background-color: #FFF;
-    max-inline-size: calc(128rem * var(--scale-factor));
     margin-inline: auto;
+    max-inline-size: calc(128rem * var(--scale-factor));
     padding-block: calc(5rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
   }
 
@@ -92,25 +92,25 @@
 }
 
 .game2-info__indicator {
-  inline-size: 10.5rem;
+  align-items: center;
+  background: #8E75F8;
   block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
-  background: #8E75F8;
   color: #FFF;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
   font-size: calc(9rem * var(--scale-factor));
   font-style: normal;
   font-weight: 600;
-  line-height: 125%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
+  inline-size: 10.5rem;
   inset-block-start: calc(-5.25rem * var(--scale-factor));
   inset-inline-start: 50%;
+  justify-content: center;
+  line-height: 125%;
+  position: absolute;
+  text-align: center;
   transform: translateX(-50%);
   z-index: 10;
-  flex-direction: column;
 }
 
 .game2-info__indicator-number {
@@ -122,12 +122,12 @@
 
 .game2-info__main-title {
   color: #8E75F8;
-  text-align: center;
   font-size: calc(7.5rem * var(--scale-factor));
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
   padding-block-start: calc(6rem * var(--scale-factor));
+  text-align: center;
 }
 
 .game2-info__section {
@@ -179,8 +179,8 @@
 }
 
 .game2-info__bold-text {
-  font-weight: 600;
   display: inline-flex;
+  font-weight: 600;
   gap: 1.2rem;
 }
 
@@ -190,11 +190,11 @@
 }
 
 .game2-info__logo-section-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: calc(3.6rem * var(--scale-factor));
-  margin-block: calc(4rem * var(--scale-factor));
   align-items: center;
+  display: grid;
+  gap: calc(3.6rem * var(--scale-factor));
+  grid-template-columns: repeat(2, 1fr);
+  margin-block: calc(4rem * var(--scale-factor));
 }
 
 .game2-info__logo-section-row:last-of-type {
@@ -237,8 +237,8 @@
 
 .game2-info__list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   padding-block-start: 2rem;
 }
 
@@ -262,16 +262,16 @@
     padding-inline: 2rem;
   }
   .game2-info__indicator {
-    inline-size: 7rem;
     block-size: 7rem;
     font-size: calc(5.5rem * var(--scale-factor));
     font-weight: 600;
-    position: static;
-    transform: none;
+    inline-size: 7rem;
     inset-block-start: auto;
     inset-inline-start: auto;
-    margin-inline: auto;
     margin-block-start: calc(5rem * var(--scale-factor));
+    margin-inline: auto;
+    position: static;
+    transform: none;
   }
   .game2-info__indicator-number {
     font-size: calc(5.5rem * var(--scale-factor));

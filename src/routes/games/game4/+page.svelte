@@ -465,7 +465,7 @@
 		display: flex;
 		gap: calc(3rem * var(--scale-factor));
 		justify-content: center;
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	.card-container {
@@ -473,8 +473,8 @@
 		display: flex;
 		flex: 0 1 auto;
 		flex-direction: column;
+		inline-size: calc(105.2rem * var(--scale-factor));
 		position: relative;
-		width: calc(105.2rem * var(--scale-factor));
 	}
 
 	.counter {
@@ -598,7 +598,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	.result-content svg {
@@ -692,50 +692,6 @@
 	}
 
 
-
-	/* Windows 125% specific styles */
-	/*
-	:global(.window125) .game-container {
-		display: flex;
-		align-items: flex-start;
-	}
-
-	:global(.window125) .instructions {
-		position: static !important;
-		inline-size: calc(100vw - 66.41%);
-		block-size: 100vh;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .start-screen {
-		inline-size: calc(100vw - (100vw - 66.41%));
-		margin-inline-start: auto;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .game-panel {
-		display: flex;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .start-screen {
-		inline-size: 100%;
-		margin-inline-start: 0;
-	}
-
-	:global(.window125) .game-grid {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .game-grid {
-		display: grid;
-		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-	}
-	*/
-
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
 
@@ -744,41 +700,6 @@
 			transform: scale(0.6);
 			transform-origin: top left;
 		}
-
-		/* 5. Fix game header SVG and shape scaling */
-		// .game-header {
-		// 	padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		// }
-
-		/* Fix game header SVG sizing */
-		// .game-header :global(svg) {
-		// 	max-width: 100%;
-		// 	width: 100%;
-		// 	height: calc(30rem * var(--scale-factor));
-		// 	inset-block-start: 0;
-		// 	inset-inline-start: 0;
-		// }
-
-		// .game-header-title {
-		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// }
-
-		// .game-header-paragraph {
-		// 	font-size: calc(2.4rem * var(--scale-factor));
-		// }
-
-		/* 6. Fix question container positioning and scaling */
-		// .game-grid {
-		// 	grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-		// 	align-items: start;
-		// 	padding: 2rem;
-		// }
-		
-
-		/* Question wrapper for mobile - reset padding */
-		// .question-wrapper {
-		// 	padding-block: 0;
-		// }
 
 		/* 7. Adjust start screen for mobile */
 		.start-screen {
@@ -800,69 +721,6 @@
 			overflow-y: hidden;
 		}
 
-		/* Adjust game summary for mobile */
-		// .game-summary {
-		// 	padding: 2rem;
-		// }
-
-		// .game-summary .title {
-		// 	font-size: calc(5rem * var(--scale-factor));
-		// }
-
-		// .game-summary .results {
-		// 	inline-size: calc(80rem * var(--scale-factor));
-		// 	padding: 2rem;
-
-		// 	.paragraph {
-		// 		padding-block-start: 0;
-		// 		margin-block-start: 0;
-		// 	}
-		// }
-
-		// .game-summary .paragraph {
-		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// 	padding-block-start: 2rem;
-		// }
-
-		// .game-summary .total-points {
-		// 	font-size: calc(6rem * var(--scale-factor));
-		// }
-
-		// .game-summary .cta {
-		// 	padding-block-start: 2rem;
-		// }
-
-
-
-		/* Adjust vision queen container for mobile */
-		// .vision-queen-container {
-		// 	inset-block-end: calc(13rem * var(--scale-factor));
-		// 	max-inline-size: 100%;
-		// }
-
-		// .vision-queen-title {
-		// 	font-size: calc(2.5rem * var(--scale-factor));
-		// }
-
-		// .vision-queen-copy {
-		// 	font-size: calc(2.2rem * var(--scale-factor));
-		// }
-
-
-
-		/* Adjust start button for mobile */
-		// .start {
-		// 	inset-block-start: calc(22rem * var(--scale-factor));
-		// 	inset-inline-end: -2rem;
-		// }
-
-		// .start svg {
-		// 	block-size: calc(30rem * var(--scale-factor));
-		// 	inline-size: calc(30rem * var(--scale-factor));
-		// }
-
-
-
 		/* Adjust small hero summary for mobile */
 		:global(.small-hero-summary) {
 			inset-block-start: calc(4rem * var(--scale-factor));
@@ -870,14 +728,6 @@
 			transform: scale(0.7);
 			display: none;
 		}
-
-		// .game1-initial-screen-button {
-		// 	background: none;
-		// 	border: none;
-		// 	padding: 0;
-		// 	cursor: pointer;
-		// }
-
 
 
 		/* Adjust swipe button font size for mobile */
@@ -911,7 +761,5 @@
 			block-size: calc(30rem * var(--scale-factor));
 			inline-size: calc(30rem * var(--scale-factor));
 		}
-
-
 	}
 </style> 

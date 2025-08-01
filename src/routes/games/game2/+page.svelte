@@ -24,6 +24,8 @@
 	
 	let activeBubbles: Bubble[] = [];
 	let spawnTimeout: NodeJS.Timeout;
+	let animationTimeouts: Map<number, NodeJS.Timeout> = new Map();
+	let explosionTimeouts: Map<number, NodeJS.Timeout> = new Map();
 	const pathOrder = [1, 2, 4, 2, 3, 1, 3, 1, 2, 4];
 
     onMount(async () => {
@@ -41,9 +43,29 @@
 
 	onDestroy(() => {
 		clearTimeout(spawnTimeout);
+		// Clear all animation timeouts
+		animationTimeouts.forEach(timeout => clearTimeout(timeout));
+		animationTimeouts.clear();
+		// Clear all explosion timeouts
+		explosionTimeouts.forEach(timeout => clearTimeout(timeout));
+		explosionTimeouts.clear();
+		// Stop all store timers
+		game2Store.stopAllTimers();
 	});
+
+	function cleanupTimers() {
+		clearTimeout(spawnTimeout);
+		animationTimeouts.forEach(timeout => clearTimeout(timeout));
+		animationTimeouts.clear();
+		explosionTimeouts.forEach(timeout => clearTimeout(timeout));
+		explosionTimeouts.clear();
+		game2Store.stopAllTimers();
+	}
     
 	function startGame() {
+		// Clean up any existing timers before starting new game
+		cleanupTimers();
+		
 		showInstructions = false;
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
@@ -91,14 +113,24 @@
 		bubble.state = 'blinking';
 		activeBubbles = [...activeBubbles];
 
-		setTimeout(() => {
+		// Clear any existing timeout for this bubble
+		if (animationTimeouts.has(bubbleIndex)) {
+			clearTimeout(animationTimeouts.get(bubbleIndex)!);
+		}
+
+		const timeout = setTimeout(() => {
 			bubble = activeBubbles.find(b => b.index === bubbleIndex);
 			// Check if it hasn't been clicked during the blink
 			if (bubble && bubble.state === 'blinking') {
 				game2Store.answerStatement(bubbleIndex, false);
 				triggerExplosion(bubbleIndex, true); // Explode with transparency
 			}
+			// Clean up the timeout reference
+			animationTimeouts.delete(bubbleIndex);
 		}, 800); // 2 blinks, 400ms each
+
+		// Store the timeout for cleanup
+		animationTimeouts.set(bubbleIndex, timeout);
 	}
 	
 	function triggerExplosion(bubbleIndex: number, isTimeout = false) {
@@ -116,14 +148,26 @@
 		bubble.isTimeout = isTimeout; // For transparent explosion
 		activeBubbles = [...activeBubbles];
 
+		// Clear any existing explosion timeout for this bubble
+		if (explosionTimeouts.has(bubbleIndex)) {
+			clearTimeout(explosionTimeouts.get(bubbleIndex)!);
+		}
+
 		// Remove after feedback animation. Increased to 1s to allow animations to play.
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			activeBubbles = activeBubbles.filter(b => b.index !== bubbleIndex);
+			// Clean up the timeout reference
+			explosionTimeouts.delete(bubbleIndex);
 		}, 1000);
+
+		// Store the timeout for cleanup
+		explosionTimeouts.set(bubbleIndex, timeout);
 	}
 
 	$: if ($game2Store.isComplete && activeBubbles.length === 0) {
 		isGamePlaying = false;
+		// Clean up any remaining timers when game completes
+		cleanupTimers();
 		goto('/games/game2/summary');
 	}
 </script>
@@ -205,7 +249,7 @@
 							class="bubble"
 							class:blinking={bubble.state === 'blinking'}
 							class:exploded={bubble.state === 'exploded'}
-							style={bubble.image && bubble.image.asset ? `background-image: url('${urlFor(bubble.image).url()}'); background-position: center center; background-repeat: no-repeat; background-size: cover;` : ''}
+							style={bubble.state !== 'exploded' && bubble.image && bubble.image.asset ? `background-image: url('${urlFor(bubble.image).url()}'); background-position: center center; background-repeat: no-repeat; background-size: cover;` : ''}
 							on:click={() => handleBubbleClick(bubble.index)}
 							on:keydown={(e) => {
 								if (e.key === 'Enter' || e.key === ' ') {
@@ -254,7 +298,9 @@
 		background-position: top center;
 		background-repeat: no-repeat;
 		background-size: calc(100% * var(--scale-factor));
+		block-size: 100vh;
 		position: relative;
+
 		:global(.shape) {
 			inset-block-start: calc(-10rem * var(--scale-factor));
 			inset-inline-start: 0;
@@ -277,13 +323,13 @@
 	.game-header {
 		padding: calc(2rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
-		z-index: 10;
 		text-align: center;
+		z-index: 10;
 	}
 
 	.game-header-image {
-		margin-inline: auto;
 		margin-block-start: calc(5rem * var(--scale-factor));
+		margin-inline: auto;
 
 		@media(max-width: 932px) {
 			inline-size: 80%;
@@ -301,16 +347,21 @@
 		block-size: 100vh;
 		display: flex;
 		justify-content: center;
+		overflow: hidden;
 		padding-block-start: calc(5rem * var(--scale-factor));
 		position: relative;
-		overflow: hidden;
 	}
 
 	.bubbles-container {
-		position: absolute;
-		top: 0; left: 0;
-		width: 100%; height: 100%;
+		block-size: 100%;
+		height: 100%;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		left: 0;
 		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
 		z-index: 20;
 	}
 
@@ -325,21 +376,23 @@
 	}
 
 	.bubble {
-		position: absolute;
+		align-items: center;
 		background-color: rgb(84, 62, 238);
+		block-size: calc(15rem * var(--scale-factor));
 		border-radius: 50%;
 		color: #fff;
-		width: calc(15rem * var(--scale-factor));
-		height: calc(15rem * var(--scale-factor));
+		cursor: pointer;
 		display: flex;
-		align-items: center;
+		height: calc(15rem * var(--scale-factor));
+		inline-size: calc(15rem * var(--scale-factor));
 		justify-content: center;
 		padding: calc(2rem * var(--scale-factor));
-		text-align: center;
-		cursor: pointer;
 		pointer-events: all;
-		will-change: transform, opacity;
+		position: absolute;
+		text-align: center;
 		transform: translate(-50%, -50%);
+		width: calc(15rem * var(--scale-factor));
+		will-change: transform, opacity;
 
 		&.blinking {
 			animation: blink 0.4s 2;
@@ -347,11 +400,14 @@
 
 		&.exploded {
 			animation: none;
-			background: none;
+			background: none !important;
+			background-image: none !important;
 			border: none;
+			block-size: calc(30rem * var(--scale-factor));
+			height: calc(30rem * var(--scale-factor));
+			inline-size: calc(30rem * var(--scale-factor));
 			pointer-events: none;
 			width: calc(30rem * var(--scale-factor));
-			height: calc(30rem * var(--scale-factor));
 		}
 	}
 
@@ -363,33 +419,33 @@
 	}
 
 	.explosion-container {
-		position: relative;
-		width: 100%;
-		height: 100%;
 		animation: pop 0.5s ease-out forwards;
+		block-size: 100%;
+		inline-size: 100%;
+		position: relative;
 
 		&.timeout {
 			opacity: 0.2;
 		}
 
 		:global(svg) {
-			width: 100%;
-			height: 100%;
+			block-size: 100%;
+			inline-size: 100%;
 		}
 	}
 
 	.feedback-icon {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: calc(5rem * var(--scale-factor));
-		height: calc(5rem * var(--scale-factor));
 		animation: feedbackPop 0.5s ease-out forwards;
+		block-size: calc(5rem * var(--scale-factor));
+		inline-size: calc(5rem * var(--scale-factor));
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		position: absolute;
+		transform: translate(-50%, -50%);
 
 		svg {
-			width: 100%;
-			height: 100%;
+			block-size: 100%;
+			inline-size: 100%;
 		}
 	}
 
@@ -437,9 +493,9 @@
 		overflow-y: auto;
 		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
-		z-index: 9999;
-		transition: transform 0.3s ease-in-out;
 		scrollbar-width: none; /* Firefox */
+		transition: transform 0.3s ease-in-out;
+		z-index: 9999;
 		-ms-overflow-style: none; /* Internet Explorer 10+ */
 
 		&::-webkit-scrollbar {

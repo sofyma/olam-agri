@@ -22,6 +22,7 @@
     let instructionsClosed = false;
     let instructionsClosedSidebar = false;
     let isGamePlaying = false;
+    let showQuestion = true;
     
     const gameService = Game3Service.getInstance();
     
@@ -114,15 +115,23 @@
         const { answer, isCorrect } = event.detail;
         
         showFeedback = true;
+        showQuestion = false; // Hide question when feedback shows
         feedbackState = {
             isCorrect,
             message: isCorrect ? 'Correct!' : 'Incorrect!'
         };
 
+        // Change the question data before the feedback disappears
         setTimeout(() => {
-            showFeedback = false;
             game3Store.answerQuestion(answer);
-        }, 2000);
+            // Show question first, then hide feedback
+            setTimeout(() => {
+                showQuestion = true; // Show question
+                setTimeout(() => {
+                    showFeedback = false; // Hide feedback after question is visible
+                }, 50);
+            }, 100);
+        }, 1000);
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -360,6 +369,7 @@
                         currentQuestionNumber={($game3Store.currentQuestionIndex % 5) + 1}
                         totalQuestions={5}
                         on:submit={handleQuestionSubmit}
+                        showQuestion={showQuestion}
                     />
                 </div>
             {/if}
@@ -401,7 +411,7 @@
         background-position: center right;
         background-repeat: no-repeat;
         background-size: calc(100% * var(--scale-factor));
-        block-size: 100vh;  
+        block-size: 100vh;
         position: relative;
 
         @media(min-width: 1920px) {
@@ -423,29 +433,31 @@
     .game-header {
         padding: 2rem calc(7rem * var(--scale-factor));
         position: relative;
-        z-index: 10;
         text-align: center;
+        z-index: 10;
     }
 
     .game-header-image {
+        inline-size: calc(100% * var(--scale-factor));
         margin-inline: auto;
-        width: calc(100% * var(--scale-factor));
-        max-width: calc(80rem * var(--scale-factor));
+        max-inline-size: calc(36.5rem * var(--scale-factor));
     }
 
     .game-area {
+        align-items: center;
+        block-size: 100vh;
         display: flex;
         justify-content: center;
-        padding-block-start: calc(5rem * var(--scale-factor));
+        padding-block-start: 0;
         position: relative;
     }
 
     .directional-pad {
+        align-items: center;
         background-color: #fff;
         border-radius: 2rem;
         display: flex;
         flex-direction: column;
-        align-items: center;
         margin-block-start: calc(10rem * var(--scale-factor));
         padding: calc(3rem * var(--scale-factor));
     }
@@ -456,26 +468,46 @@
     }
 
     .dir-btn {
-        width: 8rem;
-        height: 8rem;
+        block-size: 8rem;
+        inline-size: 8rem;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        touch-action: manipulation;
+        user-select: none;
+    }
+
+    .dir-btn img {
+        -webkit-touch-callout: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -khtml-user-drag: none;
+        -khtml-user-select: none;
+        -moz-user-drag: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-drag: none;
+        pointer-events: none;
+        user-select: none;
     }
 
     .maze-container {
-        position: relative;
+        align-items: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 2rem;
-        //margin-inline-start: -2rem;
-        inset-block-start: -2rem;
-        inset-inline-start: -4rem;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        position: relative;
     }
 
     .maze-svg {
         background: transparent;
-        width: calc(120.5rem * var(--scale-factor));
-        //height: calc(89.5rem * var(--scale-factor));
         block-size: auto;
+        inline-size: calc(120.5rem * var(--scale-factor));
     }
 
     .ball {
@@ -486,140 +518,17 @@
         position: relative;
     }
 
-    // .instructions {
-    //     background-color: #2E2D2C;
-    //     block-size: 100vh;
-    //     border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
-    //     inline-size: calc(100vw - 66.41%);
-    //     inset-block-start: 0;
-    //     inset-inline-start: 0;
-    //     overflow-y: auto;
-    //     padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
-    //     position: fixed;
-    //     z-index: 9999;
-    //     transition: transform 0.3s ease-in-out;
-    //     scrollbar-width: none; /* Firefox */
-    //     -ms-overflow-style: none; /* Internet Explorer 10+ */
-
-    //     &::-webkit-scrollbar {
-    //         display: none; /* Chrome, Safari, Opera */
-    //     }
-
-    //     &.closed {
-    //         transform: translateX(calc(-100% + 5rem * var(--scale-factor)));
-    //     }
-    // }
+    
 
     :global(.instructions .logo path) {
         fill: #fff;
     }
 
-    // .close-button,
-    // .play-button {
-    //     background: none;
-    //     border: none;
-    //     color: white;
-    //     cursor: pointer;
-    //     position: absolute;
-    //     z-index: 10000;
-    //     padding: 1rem;
-
-    //     &:hover {
-    //         opacity: 0.8;
-    //     }
-    // }
-
-    // .close-button {
-    //     inset-block-start: 2rem;
-    //     inset-inline-end: 2rem;
-
-    //     svg {
-    //         block-size: 2.4rem;
-    //         inline-size: 2.3rem;
-    //     }
-    // }
-
-    // .play-button {
-    //     inset-block-start: 2rem;
-    //     inset-inline-end: .5rem;
-
-    //     svg {
-    //         block-size: 3.3rem;
-    //         inline-size: 2.7rem;
-    //     }
-    // }
-
-    // .copy {
-    //     background-color: #fff;
-    //     margin-block-start: calc(6.5rem * var(--scale-factor));
-    //     padding: 2rem 2rem calc(4rem * var(--scale-factor));
-    //     position: relative;
-
-    //     &-header {
-    //         align-items: end;
-    //         display: grid;
-    //         justify-content: start;
-    //         grid-template-columns: repeat(2, auto);
-    //         grid-column-gap: calc(3rem * var(--scale-factor));
-    //         margin-block-start: calc(-5rem * var(--scale-factor));
-    //     }
-    // }
-
-    // .game-id {
-    //     align-items: center;
-    //     background-color: #FF5BAF;
-    //     border-radius: 0 2rem 0 2rem;
-    //     block-size: calc(17rem * var(--scale-factor));
-    //     color: #fff;
-    //     display: flex;
-    //     flex-direction: column;
-    //     inline-size: 11rem;
-    //     padding: 1rem;
-    //     text-align: center;
-
-    //     .text {
-    //         font-size: calc(2.8rem * var(--scale-factor));
-    //         font-weight: 600;
-    //         line-height: calc(2.8rem * var(--scale-factor));
-    //     }
-
-    //     .number {
-    //         font-size: calc(13.7rem * var(--scale-factor));
-    //         font-weight: 600;
-    //         line-height: calc(13.7rem * var(--scale-factor));
-    //     }
-    // }
-
-    // .title {
-    //     color: #FF5BAF;
-    //     font-size: calc(6rem * var(--scale-factor));
-    //     font-style: normal;
-    //     font-weight: 600;
-    //     line-height: normal;
-    //     padding-block-start: 2rem;
-    // }
-
-    // .subtitle {
-    //     color: #FF5BAF;
-    //     font-size: calc(3.7rem * var(--scale-factor));
-    //     font-weight: 600;
-    //     line-height: normal;
-    // }
-
-    // .paragraph {
-    //     color: #2E2D2C;
-    //     font-size: calc(2.2rem * var(--scale-factor));
-    //     padding-block-start: 2rem;
-
-    //     &:first-child {
-    //         padding-block-start: calc(2.5rem * var(--scale-factor));
-    //     }
-    // }
 
     .start-screen {
         display: flex;
-        justify-content: center;
         inline-size: calc(100vw - (100vw - 66.41%));
+        justify-content: center;
         margin-inline-start: auto;
 
         &-content {
@@ -644,17 +553,16 @@
     .image-button {
         background: transparent;
         border: none;
-        padding: 0;
-        margin: 0;
         cursor: pointer;
+        margin: 0;
+        padding: 0;
         transform: scale(var(--scale-factor));
         transform-origin: center;
     }
 
     .game-start-screen-image {
+        inline-size: calc(65.6rem * var(--scale-factor));
         margin-block-start: 0;
-        width: calc(65.6rem * var(--scale-factor));
-        //height: calc(92.8rem * var(--scale-factor));
     }
 
     .arrow {
@@ -675,157 +583,40 @@
     }
 
     .question-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
         background-color: rgba(255, 91, 175, 0.9);
+        block-size: 100vh;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        inline-size: 100vw;
+        position: fixed;
         z-index: 1000;
     }
 
     .question-container-wrapper {
-        position: absolute;
-        top: 50%;
-        right: 2rem;
-        transform: translateY(-50%);
-        z-index: 1001;
-        width: 90%;
-        max-width: calc(90rem * var(--scale-factor));
+        inline-size: 100%;
+        max-inline-size: calc(90rem * var(--scale-factor));
         padding: 0 2rem;
-        transform: translateY(-50%) scale(var(--scale-factor));
+        position: relative;
+        transform: scale(var(--scale-factor));
         transform-origin: center;
+        z-index: 2000;
     }
 
-    @media (width >= 1920px) {
-        .question-container-wrapper {
-            top: 55%;
-        }
-    }
+    // @media (width >= 1920px) {
+    //     .question-container-wrapper {
+    //         top: 55%;
+    //     }
+    // }
 
     .finish {
         stroke: transparent !important;
         stroke-width: 10 !important;
     }
 
-    /* Content check section */
-    // .content-check {
-    //     padding-block-start: calc(2.7rem * var(--scale-factor));
-    // }
-
-    // .content-check-grid {
-    //     display: grid;
-    //     grid-template-columns: auto 1fr;
-    //     gap: 2rem;
-    //     align-items: center;
-    // }
-
-    // .content-check-btn {
-    //     width: 14.6rem;
-    //     height: 3.4rem;
-    //     border-radius: 0 1.5rem;
-    //     color: #fff;
-    //     background-color: #FF5BAF;
-    //     border: none;
-    //     font-size: 1.4rem;
-    //     font-weight: 600;
-    //     cursor: pointer;
-    //     transition: all 0.3s ease;
-
-    //     &:hover {
-    //         opacity: 0.8;
-    //     }
-    // }
-
-    // 	.content-check-text {
-	// 	color: #FFF;
-	// 	font-size: 1.4rem;
-	// 	font-style: normal;
-	// 	font-weight: 400;
-	// 	line-height: 2rem;
-	// }
-
-	/* Windows 125% specific styles */
-	/*
-	:global(.window125) .game-container {
-		display: flex;
-		align-items: flex-start;
-	}
-
-	:global(.window125) .instructions {
-		position: static !important;
-		inline-size: calc(100vw - 66.41%);
-		block-size: 100vh;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .start-screen {
-		inline-size: calc(100vw - (100vw - 66.41%));
-		margin-inline-start: auto;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .game-panel {
-		display: flex;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .start-screen {
-		inline-size: 100%;
-		margin-inline-start: 0;
-	}
-
-	:global(.window125) .game-grid {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .game-grid {
-		display: grid;
-		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-	}
-	*/
+   
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
-        /* 1. Fix left sidebar title and horizontal scroll */
-        // .instructions {
-        //     inline-size: calc(100vw - 66.41%);
-        //     padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
-        //     overflow-x: hidden;
-        //     scrollbar-width: none; /* Firefox */
-        //     -ms-overflow-style: none; /* Internet Explorer 10+ */
-        // }
-
-        // .instructions::-webkit-scrollbar {
-        //     display: none; /* Chrome, Safari, Opera */
-        // }
-
-        // .title {
-        //     font-size: calc(4.5rem * var(--scale-factor));
-        //     word-wrap: break-word;
-        //     overflow-wrap: break-word;
-        // }
-
-        /* 2. Fix sidebar horizontal scroll */
-        // .copy {
-        //     margin-block-start: calc(4rem * var(--scale-factor));
-        //     padding: 1.5rem;
-        // }
-
-        // .copy-header {
-        //     grid-template-columns: repeat(2, auto);
-        //     grid-column-gap: 2rem;
-        //     margin-block-start: calc(-3rem * var(--scale-factor));
-        // }
-
-        /* 3. Keep content text size as requested */
-        // .paragraph {
-        //     font-size: calc(2.2rem * var(--scale-factor));
-        // }
-
         /* 4. Adjust start screen for mobile */
         .start-screen {
             inline-size: calc(100vw - (100vw - 66.41%));
@@ -846,45 +637,6 @@
             overflow-y: hidden;
         }
 
-        /* 5. Adjust game ID for mobile */
-        // .game-id {
-        //     block-size: 12rem;
-        //     inline-size: 8rem;
-        // }
-
-        // .game-id .text {
-        //     font-size: 2rem;
-        //     line-height: 2rem;
-        // }
-
-        // .game-id .number {
-        //     font-size: calc(9rem * var(--scale-factor));
-        //     line-height: calc(9rem * var(--scale-factor));
-        // }
-
-        /* 6. Adjust subtitle for mobile */
-        // .subtitle {
-        //     font-size: calc(2.5rem * var(--scale-factor));
-        //     word-wrap: break-word;
-        //     overflow-wrap: break-word;
-        // }
-
-        /* 7. Adjust buttons for mobile */
-        // .close-button {
-        //     inset-block-start: 1rem;
-        //     inset-inline-end: 2rem;
-        // }
-
-        // .play-button {
-        //     inset-block-start: 2rem;
-        //     inset-inline-end: -0.2rem;
-        // }
-
-        /* 8. Fix sidebar closed state for mobile */
-        // .instructions.closed {
-        //     transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-        // }
-
         /* 9. Reset image button transform and adjust SVG for mobile */
         .image-button {
             transform: none;
@@ -892,23 +644,22 @@
         }
 
         .game-start-screen-image {
+            inline-size: calc(28.8rem * var(--scale-factor));
             margin-block-start: 0;
-            width: calc(28.8rem * var(--scale-factor));
-            //height: calc(43.2rem * var(--scale-factor));
         }
 
         /* 10. Adjust question overlay for mobile */
         .question-container-wrapper {
-            width: 95%;
-            height: 40%;
+            block-size: 40%;
+            inline-size: 95%;
             padding: 0 1rem;
             transform: translateY(-137%) scale(var(--scale-factor));
         }
 
         /* 11. Adjust maze SVG for mobile */
         .maze-svg {
-            height: auto;
-            width: calc(80rem * var(--scale-factor));
+            block-size: auto;
+            inline-size: calc(80rem * var(--scale-factor));
         }
 
         /* 12. Adjust directional pad for mobile */
@@ -919,8 +670,8 @@
 
         /* 13. Adjust directional buttons for mobile */
         .dir-btn {
-            width: 6rem;
-            height: 6rem;
+            block-size: 6rem;
+            inline-size: 6rem;
         }
 
         /* 15. Hide game header image on mobile */
@@ -928,29 +679,9 @@
             display: none;
         }
 
-        		/* 16. Adjust game header padding for mobile */
-		.game-header {
-			padding-block-start: 0;
-		}
-
-		/* Content check section mobile adjustments */
-		// .content-check {
-		// 	padding-block-start: 2rem;
-		// }
-
-		// .content-check-grid {
-		// 	gap: 1.5rem;
-		// }
-
-		// .content-check-btn {
-		// 	width: 12rem;
-		// 	height: 3rem;
-		// 	font-size: 1.2rem;
-		// }
-
-		// .content-check-text {
-		// 	font-size: 1.2rem;
-		// 	line-height: 1.6rem;
-		// }
-	}
+        /* 16. Adjust game header padding for mobile */
+        .game-header {
+            padding-block-start: 0;
+        }
+    }
 </style> 

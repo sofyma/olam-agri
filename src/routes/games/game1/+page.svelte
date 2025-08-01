@@ -24,6 +24,7 @@
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
 	let isGamePlaying = false;
+    let shouldAnimateQuestion = true;
     
     const gameService = Game1Service.getInstance();
     
@@ -84,9 +85,20 @@
             message: isCorrect ? 'Correct!' : 'Incorrect!'
         };
 
+        // Disable animation during feedback
+        shouldAnimateQuestion = false;
+
+        // Change the question data before the feedback disappears
         setTimeout(() => {
-            showFeedback = false;
             game1Store.answerQuestion(answer);
+            // Hide feedback after question has been updated with a small delay
+            setTimeout(() => {
+                showFeedback = false;
+                // Re-enable animation after feedback is hidden
+                setTimeout(() => {
+                    shouldAnimateQuestion = true;
+                }, 50);
+            }, 100); // Increased delay to ensure smooth transition
         }, 1000);
     }
 </script>
@@ -96,7 +108,7 @@
         
 	{#if showInstructions}
 		<div class="game-panel">
-					<GameInstructions
+				<GameInstructions
 			gameNumber={1}
 			gameTitle="Brand Heroes"
 			gameSubtitle="The Super Power of Branding"
@@ -204,6 +216,7 @@
 							: $game1Store.currentQuestionIndex - 8}
 						totalQuestions={9}
 						on:submit={handleQuestionSubmit}
+						shouldAnimate={shouldAnimateQuestion}
 					/>
 				</div>
 			{/if}
@@ -255,15 +268,19 @@
 	}
 
 	.game-grid {
-		align-items: end;
+		// align-items: end;
+		align-items: center;
+		block-size: 100vh;
 		display: grid;
 		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 		position: relative;
 	}
 
 	.question-wrapper {
-		padding-block: calc(7rem * var(--scale-factor));
-		padding-inline: 0 calc(7rem * var(--scale-factor));
+		// padding-block: calc(7rem * var(--scale-factor));
+		// padding-inline: 0 calc(7rem * var(--scale-factor));
+		padding-block: 0;
+		padding-inline: 0;
 	}
 
 	.game-summary {
@@ -328,17 +345,6 @@
 		transform: scale(var(--scale-factor));
 		transform-origin: center center;
 	}
-
-	// .start {
-	// 	inset-block-end: calc(12rem * var(--scale-factor));
-	// 	inset-inline-end: 0;
-	// 	position: absolute;
-
-	// 	svg {
-	// 		block-size: calc(39.6rem * var(--scale-factor));
-	// 		inline-size: calc(39.6rem * var(--scale-factor));
-	// 	}
-	// }
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {

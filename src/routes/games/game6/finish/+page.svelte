@@ -107,6 +107,7 @@
 	.game6-hero-before-playing {
         inset-block-start: calc(-15rem * var(--scale-factor));
         inset-inline-start: 55%;
+		max-inline-size: calc(39.5rem * var(--scale-factor));
         transform: translateX(-55%);
 		position: absolute;
         z-index: 1;

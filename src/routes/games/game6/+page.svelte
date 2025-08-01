@@ -265,8 +265,10 @@
 	}
 
 	.game6-hero-before-playing {
+		
 		margin-block-start: calc(-7rem * var(--scale-factor));
 		margin-inline-start: calc(7rem * var(--scale-factor));
+		max-inline-size: calc(39.5rem * var(--scale-factor));
 		position: relative;
 	}
 
