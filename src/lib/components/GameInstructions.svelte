@@ -272,7 +272,7 @@
 		line-height: 2rem;
 	}
 
-	/* Mobile Media Query - Up to 932px */
+
 	@media (max-width: 932px) {
 		.instructions {
 			inline-size: calc(100vw - 66.41%);
@@ -290,6 +290,7 @@
 			font-size: calc(4.5rem * var(--scale-factor));
 			word-wrap: break-word;
 			overflow-wrap: break-word;
+			padding-block-start: 0;
 		}
 
 		.copy {
@@ -299,19 +300,19 @@
 
 		.copy-header {
 			grid-template-columns: repeat(2, auto);
-			grid-column-gap: 2rem;
-			margin-block-start: calc(-3rem * var(--scale-factor));
+			grid-column-gap: 1rem;
+			margin-block-start: -3rem;
 		}
 
 		.game-id {
 			//block-size: 12rem;
 			block-size: auto;
-			inline-size: 8rem;
+			inline-size: 5rem;
 		}
 
 		.game-id .text {
-			font-size: 2rem;
-			line-height: 2rem;
+			font-size: 1.2rem;
+			line-height: normal
 		}
 
 		.game-id .number {

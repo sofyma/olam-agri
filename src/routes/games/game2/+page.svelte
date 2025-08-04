@@ -682,7 +682,10 @@
 
 		/* 2. Game container background size for mobile */
 		.game-container {
-			background-size: 75%;
+			background-image: url('/images/j2-start-mobile.png');
+			background-position: top right;
+			background-repeat: no-repeat;
+			background-size: contain;
 		}
 
 		.instructions::-webkit-scrollbar {

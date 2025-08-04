@@ -182,12 +182,17 @@
 
 		/* Adjust finish content for mobile */
 		.finish-content {
-			padding: 2rem;
+			max-inline-size: 100%;
+			padding: 0 4rem;
 		}
 
 		.finish-container {
-			padding-block-start: calc(3rem * var(--scale-factor));
-			padding-block-end: 2rem;
+			align-items: center;
+			background-image: url('/images/Game1HeroSmallFinish.png');
+			background-position: top right;
+			background-repeat: no-repeat;
+			background-size: contain;
+			padding-block: 2rem;
 		}
 
 		.finish-text p,
@@ -196,17 +201,17 @@
 		}
 
 		.finish-text ul {
-			margin-block-start: 2rem;
+			margin-block-start: .6rem;
 		}
 
 		.finish-text p {
-			padding-block-start: 2rem;
+			padding-block-start: .6rem;
 		}
 
 		.finish-text cite {
 			font-size: calc(2.5rem * var(--scale-factor));
-			margin-block-start: calc(2.5rem * var(--scale-factor));
-			padding: 1.5rem;
+			margin-block-start: 1rem;
+			padding: 1rem;
 			margin-inline: 0;
 		}
 
@@ -216,7 +221,7 @@
 		}
 
 		.finish-buttons {
-			padding-block-start: 2rem;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust small hero summary for mobile */

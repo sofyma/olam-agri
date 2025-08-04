@@ -158,7 +158,7 @@
 				<p class="total-points">{$game1Store.brandScore} points</p>
 			</div>
 
-			<p class="paragraph" style="line-height: normal; padding-block-start: 4rem; text-align: center; color: #2E2D2C;">Let's see if you know the <br> real world so well!</p>
+			<p class="paragraph paragraph-summary" style="line-height: normal; padding-block-start: 4rem; text-align: center; color: #2E2D2C;">Let's see if you know the <br> real world so well!</p>
 
 			<div class="cta">
 				<button class="btn btn-cta2" on:click={handleContinue}>
@@ -202,6 +202,11 @@
 				{:else}
 					<p class="game-header-paragraph">For each wrong guess you will lose 1 point.</p>
 				{/if}
+				
+				<!-- Mobile question counter -->
+				<span class="mobile-question-counter">{($game1Store.currentSet === 'brands'
+					? $game1Store.currentQuestionIndex + 1
+					: $game1Store.currentQuestionIndex - 8)} of 9</span>
 			</div>
 
 			{#if currentQuestion}
@@ -217,6 +222,7 @@
 						totalQuestions={9}
 						on:submit={handleQuestionSubmit}
 						shouldAnimate={shouldAnimateQuestion}
+						hideCounter={false}
 					/>
 				</div>
 			{/if}
@@ -261,6 +267,10 @@
 		font-size: calc(2.8rem * var(--scale-factor));
 		line-height: normal;
 		padding-block-start: 1rem;
+	}
+
+	.mobile-question-counter {
+		display: none; /* Hidden by default on desktop */
 	}
 
 	.game-panel {
@@ -346,55 +356,83 @@
 		transform-origin: center center;
 	}
 
-	/* Mobile Media Query - Up to 932px */
+	
 	@media (max-width: 932px) {
-		/* Add scale system to shape SVG */
+		.game-container {
+			background-image: url('/images/j1-start-mobile.png');
+			background-position: top right;
+			background-repeat: no-repeat;
+			background-size: contain;
+		}
+
+		.game-container.playing {
+			background-image: url('/images/j1-playing-screen-mobile.png');
+			background-position: top left;
+			background-size: cover;
+		}
+
+		.game1-initial-screen-image {
+			visibility: hidden;
+		}
+		
 		:global(.shape) {
 			transform: scale(0.6);
 			transform-origin: top left;
+			display: none;
 		}
 
-		/* Fix game header SVG and shape scaling */
+		
 		.game-header {
+			display: flex;
+			flex-direction: column;
+			margin-top: auto;
 			padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
 		}
 
-		/* Fix game header SVG sizing */
 		.game-header :global(svg) {
 			max-width: 100%;
 			width: 100%;
 			height: calc(30rem * var(--scale-factor));
 			inset-block-start: 0;
 			inset-inline-start: 0;
+			display: none;	
 		}
 
 		.game-header-title {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 2.8rem;
+			line-height: 3.2rem;
 		}
 
 		.game-header-paragraph {
-			font-size: calc(2.4rem * var(--scale-factor));
+			font-size: 1.6rem;
+			padding-block-start: .5rem;
 		}
 
-		/* Fix question container positioning and scaling */
+		.mobile-question-counter {
+			display: block;
+			color: #fff;
+			font-size: 2.2rem;
+			font-weight: 600;
+			margin-block-start: 1.8rem;
+			text-align: start;
+		}
+
 		.game-grid {
-			grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-			align-items: start;
+			grid-template-columns: repeat(2, 1fr);
+			grid-column-gap: 4rem;
+			align-items: center;
 			padding: 2rem;
 		}
 
-		/* Question wrapper for mobile - reset padding */
 		.question-wrapper {
 			padding-block: 0;
 		}
 
-		/* Adjust start screen for mobile */
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 			padding: 1rem;
 		}
 
-		/* Keep start screen width consistent when sidebar is closed */
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
@@ -403,7 +441,6 @@
 			transform-origin: center center;
 		}
 
-		/* Remove vertical scrolling from start screen */
 		.start-screen {
 			overflow-y: hidden;
 		}
@@ -429,12 +466,14 @@
 		}
 
 		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
+			font-size: 3.2rem;
+			line-height: normal;
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
-			padding: 2rem;
+			inline-size: 40.3rem;
+			margin-block-start: 1rem;
+			padding: 2rem 1rem 2.5rem;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -443,16 +482,31 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
+			line-height: normal;
 			padding-block-start: 2rem;
+		}
+
+		.game-summary .paragraph-summary {
+			color: #fff !important;
+			font-size: 1.6rem;
+			font-weight: 600;
+			line-height: normal;
+			padding-block-start: 1.5rem !important;
+
+			br {
+				display: none;
+			}
 		}
 
 		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
+			padding-block-start: 1.5rem;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+			font-weight: 600;
+			padding-block-start: 1.5rem;
 		}
 	}
 

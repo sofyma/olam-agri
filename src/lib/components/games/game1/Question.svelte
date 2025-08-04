@@ -9,6 +9,7 @@
     export let currentQuestionNumber: number;
     export let totalQuestions: number;
     export let shouldAnimate = true;
+    export let hideCounter = false;
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
@@ -63,7 +64,9 @@
     $: imageUrl = question?.image || '';
 </script>
 
-<span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
+{#if !hideCounter}
+	<span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
+{/if}
 <div class="question-container" class:entering={!showFeedback && isEntering && shouldAnimate}>
     
     <div class="question-header">
@@ -77,7 +80,8 @@
         <img 
             src={imageUrl}
             alt={question.imageAlt || `Question image`} 
-            class="question-image" 
+            class="question-image"
+            class:place-image={questionType === 'place'}
         />
     {/if}
     
@@ -177,11 +181,17 @@
         text-align: start;
     }
     
-    .question-image {
-        margin-block-end: 0;
-        max-block-size: 30rem;
-        margin-inline: auto;
-    }
+            .question-image {
+            margin-block-end: 0;
+            max-block-size: 30rem;
+            margin-inline: auto;
+        }
+
+        .place-image {
+            inline-size: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
     
     .question-options {
         padding-block-start: calc(3rem * var(--scale-factor));
@@ -264,7 +274,8 @@
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .feedback {
-            block-size: calc(53rem * var(--scale-factor));
+            block-size: auto;
+            border-radius: 0 1.5rem 1.5rem 1.5rem;
             padding-block: 2rem 2rem;
         }
     }
@@ -287,7 +298,12 @@
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
+        .question-counter {
+            display: none; /* Hide counter on mobile since it's now in the parent */
+        }
+
         .question-header {
+            display: none;
             padding-inline: 2rem;
             margin-block-end: 1rem;
         }
@@ -297,25 +313,33 @@
         }
 
         .question-options {
-            padding-block-start: 1rem;
-            padding-inline: 2rem;
+            padding: 1.2rem;
+        }
+
+        .option {
+            padding: .5rem 1rem;
         }
 
         .question-image {
+            border-radius: 0 1.5rem 0 0;
             margin-block-end: 0;
-            max-block-size: 30rem;
+            max-block-size: 15rem;
             margin-inline: auto;
         }
 
         .question-container {
-            padding-block-start: 2rem;
-            padding-block-end: 2rem;
+            padding-block-start: 0;
+            padding-block-end: 0;
             //block-size: calc(53rem * var(--scale-factor));
             block-size: auto;
         }
 
         .options {
             margin-block-end: 1rem;
+        }
+
+        .submit-button {
+            font-weight: 600;
         }
 
         .feedback-content svg {

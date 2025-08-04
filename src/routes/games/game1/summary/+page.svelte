@@ -128,18 +128,26 @@
 			transform-origin: top left;
 		}
 
+		.game-container {
+			background-image: url('/images/j1-playing-screen-mobile.png');
+			background-position: top left;
+			background-size: cover;
+		}
+
 		/* Adjust game summary for mobile */
 		.game-summary {
 			padding: 2rem;
 		}
 
 		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
+			font-size: 3.2rem;
+			line-height: normal
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
-			padding: 2rem;
+			inline-size: 40.3rem;
+			margin-block-start: 1rem;
+			padding: 2rem 1rem 2.5rem;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -148,16 +156,23 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
+			line-height: normal;
 			padding-block-start: 2rem;
+
+			br {
+				display: none;
+			}
 		}
 
 		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
+			padding-block-start: 1.5rem;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+			font-weight: 600;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust small hero summary for mobile */
