@@ -3,6 +3,10 @@ import { Game4Service } from '$lib/services/game4Service';
 import { RankingService } from '$lib/services/rankingService';
 import type { Statement, Game4Answer } from '$lib/types/game4';
 
+console.log('🎯 Game4Store module loaded');
+console.log('🎯 Game4Store module loaded - SECOND LOG');
+console.log('🎯 Game4Store module loaded - THIRD LOG');
+
 interface Game4State {
   statements: Statement[];
   currentStatementIndex: number;
@@ -42,7 +46,7 @@ const createGame4Store = () => {
       set({
         statements: statements,
         currentStatementIndex: 0,
-        score: 5,
+        score: statements.length, // Start with score equal to number of questions
         isComplete: false,
         isLoading: false,
         error: null,
@@ -71,8 +75,15 @@ const createGame4Store = () => {
   };
 
   const swipeStatement = (direction: 'left' | 'right') => {
+    console.log('🎯 SWIPE STATEMENT CALLED with direction:', direction);
     update(state => {
+      console.log('🎯 Inside update function, state:', {
+        isPlaying: state.isPlaying,
+        currentIndex: state.currentStatementIndex,
+        totalStatements: state.statements.length
+      });
       if (!state.isPlaying || state.currentStatementIndex >= state.statements.length) {
+        console.log('❌ Early return - not playing or index out of bounds');
         return state;
       }
 
@@ -83,6 +94,13 @@ const createGame4Store = () => {
 
       const isCorrect = (direction === 'left' && !currentStatement.isTrue) || 
                        (direction === 'right' && currentStatement.isTrue);
+      
+      console.log('🔥 GAME4 SWIPE DEBUG 🔥:', {
+        direction,
+        isTrue: currentStatement.isTrue,
+        isCorrect,
+        title: currentStatement.title
+      });
 
       const newScore = isCorrect ? state.score : state.score - 1;
       const newCorrectSwipes = isCorrect ? state.correctSwipes + 1 : state.correctSwipes;
@@ -101,6 +119,7 @@ const createGame4Store = () => {
       const answer: Game4Answer = {
         _key: `${currentStatement.id}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         statementId: currentStatement.id,
+        title: currentStatement.title,
         image: currentStatement.image,
         isTrue: currentStatement.isTrue,
         swipedDirection: direction,
@@ -139,7 +158,7 @@ const createGame4Store = () => {
     set({
       statements: [],
       currentStatementIndex: 0,
-      score: 5,
+      score: 0, // Will be set properly when initialize() is called
       isComplete: false,
       isLoading: false,
       error: null,

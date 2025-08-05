@@ -119,6 +119,7 @@
 		block-size: 100vh;
 		display: grid;
 		place-content: center;
+		position: relative;
 	}
 
 	/* Game 4 specific logo styling */
@@ -206,17 +207,27 @@
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
-		/* Adjust game summary for mobile */
+		.game-container {
+			overflow: hidden;
+		}
+		
 		.game-summary {
-			padding: 2rem;
+			padding: 0;
 		}
 
 		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
+			font-size: 3.2rem;
+			font-weight: 600;
+			line-height: normal;
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
+			block-size: 13.6rem;
+			inline-size: 40.3rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-block-start: 1rem;
 			padding: 2rem;
 
 			.paragraph {
@@ -226,29 +237,38 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
 			padding-block-start: 2rem;
 		}
 
 		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
+		}
+
+		:global(.game4-summary-hero-left),
+		:global(.game4-summary-hero-right) {
+			block-size: auto;
+			inline-size: 13.5rem;
+			inset-block-end: -10rem !important;
+			transform: none !important;
+		}
+
+		:global(.game4-summary-hero-left) {
+			inset-inline-start: -10rem !important;
+		}
+
+		:global(.game4-summary-hero-right) {
+			inset-inline-end: -10rem !important;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: 1.5rem;
-			margin-block-start: 2rem;
-		}
-
-		/* Adjust Game4SummaryHero components for mobile */
-		:global(.game4-summary-hero-left),
-		:global(.game4-summary-hero-right) {
-			transform: scale(0.7);
-			transform-origin: center center;
+			font-size: 1.6rem;
+			margin-block-start: 1rem;
 		}
 	}
 </style> 

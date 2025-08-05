@@ -67,9 +67,13 @@
 	</div>
 
     <div class="game-summary">
+		
+
 		<h2 class="title">Correct</h2>
 
 		<div class="results">
+			<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image">
+
 			<p class="paragraph">You've earned 5 points.</p>
 			<p class="paragraph">Your registered time has been:</p>
 			<p class="total-time">{formattedTime}</p>
@@ -188,6 +192,10 @@
 		line-height: normal;
 	}
 
+	.game-hero-image {
+		display: none;
+	}
+
 	.total-time {
 		color: #00B2E7;
 		font-size: calc(8rem * var(--scale-factor));
@@ -238,12 +246,20 @@
 		}
 
 		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
+			font-size: 3.2rem;
+			font-weight: 600;
+			line-height: normal;
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
+			block-size: 13.6rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			inline-size: 40.3rem;
+			margin-block-start: 1rem;
 			padding: 2rem;
+			position: relative;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -252,22 +268,30 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
 			padding-block-start: 2rem;
+		}
+
+		.game-summary .game-hero-image {
+			inline-size: 21.6rem;
+			inset-block-start: -5rem;
+			inset-inline-start: -13rem;
+			position: absolute;
 		}
 
 		.game-summary .total-time {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: 1.5rem;
-			margin-block-start: 2rem;
+			font-size: 1.6rem;
+			font-weight: 600;
+			margin-block-start: 1rem;
 		}
 
 		/* Adjust Game5Logo components for mobile */

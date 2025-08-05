@@ -602,28 +602,34 @@
         z-index: 2000;
     }
 
-    // @media (width >= 1920px) {
-    //     .question-container-wrapper {
-    //         top: 55%;
-    //     }
-    // }
-
     .finish {
         stroke: transparent !important;
         stroke-width: 10 !important;
     }
 
    
-
-    /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
-        /* 4. Adjust start screen for mobile */
+        .game-container {
+            background-image: url('/images/j3-start-mobile.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 14.5rem 1fr;
+            grid-column-gap: 3rem;
+            padding-inline: 6rem 3.5rem;
+        }
+
+       
         .start-screen {
             inline-size: calc(100vw - (100vw - 66.41%));
             padding: 1rem;
         }
 
-        /* Keep start screen width consistent when sidebar is closed */
+        
         .sidebar-is-closed .start-screen {
             inline-size: calc(100vw - (100vw - 66.41%));
         }
@@ -632,12 +638,12 @@
             transform-origin: center center;
         }
 
-        /* Remove vertical scrolling from start screen */
+       
         .start-screen {
             overflow-y: hidden;
         }
 
-        /* 9. Reset image button transform and adjust SVG for mobile */
+      
         .image-button {
             transform: none;
             transform-origin: unset;
@@ -648,40 +654,53 @@
             margin-block-start: 0;
         }
 
-        /* 10. Adjust question overlay for mobile */
+       
         .question-container-wrapper {
-            block-size: 40%;
-            inline-size: 95%;
-            padding: 0 1rem;
-            transform: translateY(-137%) scale(var(--scale-factor));
+            block-size: 100%;
+            inline-size: 100%;
+            inset-block-start: 0;
+            inset-inline-start: 0;
+            max-inline-size: 100%;
+            padding-block: .8rem;
+            padding-inline: 3.5rem 1.5rem;
+            position: absolute;
+            transform: none;
+            transform-origin: unset;
         }
 
-        /* 11. Adjust maze SVG for mobile */
+        
         .maze-svg {
             block-size: auto;
             inline-size: calc(80rem * var(--scale-factor));
         }
 
-        /* 12. Adjust directional pad for mobile */
+       
         .directional-pad {
+            block-size: 14.5rem;
+            display: flex;
+            inline-size: 14.5rem;
+            justify-content: center;
             margin-block-start: 0;
-            padding: 2rem;
+            padding: 0;
         }
 
-        /* 13. Adjust directional buttons for mobile */
+        .dir-row {
+            gap: 4rem;
+        }
+
+        
         .dir-btn {
-            block-size: 6rem;
-            inline-size: 6rem;
+            block-size: 4rem;
+            inline-size: 4rem;
         }
 
-        /* 15. Hide game header image on mobile */
         .game-header-image {
-            display: none;
+            inline-size: 100%;
+            max-inline-size: 14rem;
         }
 
-        /* 16. Adjust game header padding for mobile */
         .game-header {
-            padding-block-start: 0;
+            padding: 0;
         }
     }
 </style> 

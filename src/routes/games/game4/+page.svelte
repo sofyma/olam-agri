@@ -15,6 +15,7 @@
 	let showResult = false;
 	let resultTimeout: NodeJS.Timeout;
 	let displayIndex = 0; // Track the displayed statement index
+	let lastAnsweredIndex = -1; // Track the index of the last answered statement
 	
 	// Touch/swipe variables
 	let touchStartX = 0;
@@ -72,7 +73,23 @@
 		}
 		
 		// Process the swipe
-		game4Store.swipeStatement(direction);
+		console.log('🔄 About to call game4Store.swipeStatement with direction:', direction);
+		console.log('🔄 Store state:', {
+			isPlaying: $game4Store.isPlaying,
+			currentIndex: $game4Store.currentStatementIndex,
+			totalStatements: $game4Store.statements.length
+		});
+		try {
+			// Store the index of the statement being answered
+			lastAnsweredIndex = $game4Store.currentStatementIndex;
+			game4Store.swipeStatement(direction);
+			console.log('✅ game4Store.swipeStatement called successfully');
+		} catch (error) {
+			console.error('❌ Error calling game4Store.swipeStatement:', error);
+		}
+		
+		// Update the display index immediately to show the new question
+		displayIndex = $game4Store.currentStatementIndex;
 		
 		// Show result feedback
 		showResult = true;
@@ -93,9 +110,6 @@
 		// Show result for 1 second then continue
 		resultTimeout = setTimeout(() => {
 			showResult = false;
-			
-			// Update the display index after feedback disappears
-			displayIndex = $game4Store.currentStatementIndex;
 			
 			console.log('After feedback:', {
 				displayIndex,
@@ -322,7 +336,7 @@
 							{#if showResult}
 								<div class="result-panel">
 									<div class="result-content">
-										{#if $game4Store.statements[displayIndex]?.isCorrect}
+										{#if $game4Store.statements[lastAnsweredIndex]?.isCorrect}
 											<svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
 											<path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
@@ -339,7 +353,7 @@
 							{/if}
 							
 							<div class="statement-header">
-								<h2 class="statement-title">This layout is..</h2>
+								<h2 class="statement-title">{$game4Store.statements[displayIndex].title}</h2>
 							</div>
 							
 							<img 
@@ -694,34 +708,64 @@
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
-
-		/* 4. Add scale system to shape SVG */
 		:global(.shape) {
 			transform: scale(0.6);
 			transform-origin: top left;
 		}
 
-		/* 7. Adjust start screen for mobile */
+
+		.game-content {
+			gap: 2.5rem;
+		}
+
+		.game-area {
+			padding: 0;
+		}
+
+		.counter {
+			display: none;
+		}
+
+
+		.game-container {
+			background-image: url('/images/j4-start-mobile.png');
+			background-position: center right;
+			background-repeat: no-repeat;
+			background-size: contain;
+			overflow: hidden;
+		}
+
+		.card-container {
+			inline-size: 34.7rem;
+		}
+
+		.game4-hero-correct,
+		.game4-hero-incorrect {
+			max-inline-size: 9.8rem;
+		}
+
+		
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 			padding: 1rem;
 		}
 
-		/* Keep start screen width consistent when sidebar is closed */
+		
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
 
 		.start-screen-content {
+			block-size: auto;
 			transform-origin: center center;
 		}
 
-		/* Remove vertical scrolling from start screen */
+		
 		.start-screen {
 			overflow-y: hidden;
 		}
 
-		/* Adjust small hero summary for mobile */
+	
 		:global(.small-hero-summary) {
 			inset-block-start: calc(4rem * var(--scale-factor));
 			inset-inline-start: calc(6rem * var(--scale-factor));
@@ -729,34 +773,51 @@
 			display: none;
 		}
 
-
-		/* Adjust swipe button font size for mobile */
+		
 		.swipe-button div {
-			font-size: 2rem;
+			font-size: 1.8rem;
+			inline-size: 9.1rem;
+			line-height: 2.4rem;
+			padding-block-start: .7rem;
+		}
+
+		.swipe-button svg {
+			block-size: 2.6rem;
+			inline-size: 2.1rem;	
 		}
 
 		.swipe-button div span {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 2.1rem;
+			font-weight: 600;
 		}
 
-		/* Adjust statement card padding for mobile */
+
 		.statement-card {
-			padding-block: calc(3rem * var(--scale-factor)) calc(3rem * var(--scale-factor));
+			border-radius: 0 2rem;
+			padding-block: 0;
 			min-block-size: 0;
 		}
 
-		/* Adjust statement image margin for mobile */
+		.statement-title {
+			font-size: 2.4rem;
+			font-weight: 600;
+			line-height: normal;
+		}
+
+
 		.statement-image {
+			border-radius: 0 0 0 2rem;
 			margin-block-end: 0;
-			max-block-size: calc(26rem * var(--scale-factor));
+			max-block-size: 22.1rem;
 		}
 
-		/* Adjust statement header margin for mobile */
+		
 		.statement-header {
-			margin-block-end: calc(3rem * var(--scale-factor));
+			margin-block-end: 0;
+			padding-block: 0.5rem;
 		}
 
-		/* Adjust feedback icons size for mobile */
+
 		.result-content svg {
 			block-size: calc(30rem * var(--scale-factor));
 			inline-size: calc(30rem * var(--scale-factor));

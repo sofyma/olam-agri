@@ -130,7 +130,7 @@
     
 </div>
 
-<style>
+<style lang="scss">
     :root {
         --scale-factor: 1;
     }
@@ -294,29 +294,59 @@
         inline-size: calc(39.6rem * var(--scale-factor));
     }
 
-    /* @media (width >= 1920px) {
-        .question-container {
-            block-size: 90vh;
-        }
-        
-        .feedback {
-            height: 90vh;
-        }
-    } */
-
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .question-container {
-            block-size: auto;
+            block-size: 100%;
+            max-inline-size: 100%;
+            padding-block: 1.5rem .6rem;
+            padding-inline: 2rem;
+        }
+
+        .question-header {
+            margin-block-end: .5rem;
+        }
+
+        .question-header,
+        .question-options {
+            padding: 0;
+        }
+
+       .question-title {
+            font-size: 2.1rem;
+            font-weight: 600;
+            line-height: 2.5rem;
+       }
+
+        .question-counter {
+            display: none;
         }
         
         .question-image {
-            max-block-size: calc(26rem * var(--scale-factor));
+            max-block-size: 9.5rem;
+            margin-block-end: 0;
+            inline-size: auto;
+        }
+
+        .options {
             margin-block-end: 0;
         }
+
+        .option {
+            font-size: 1.6rem;
+            padding: .5rem 1rem;
+        }
         
-        .feedback {
-            height: 50rem;
+        // .feedback {
+        //     height: 50rem;
+        // }
+
+        .submit-button {
+            font-size: 2rem;
+            font-weight: 600;
+            inset-block-end: .6rem;
+            inset-inline-end: .6rem;
+            position: absolute;
         }
     }
 </style> 

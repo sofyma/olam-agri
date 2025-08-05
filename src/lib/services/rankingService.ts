@@ -881,6 +881,7 @@ export class RankingService {
               answers: answers.map((answer, index) => ({
                 _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
                 statementId: answer.statementId,
+                title: answer.title,
                 image: answer.image,
                 isTrue: answer.isTrue,
                 swipedDirection: answer.swipedDirection,
@@ -909,6 +910,7 @@ export class RankingService {
               answers: answers.map((answer, index) => ({
                 _key: `answer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${index}`,
                 statementId: answer.statementId,
+                title: answer.title,
                 image: answer.image,
                 isTrue: answer.isTrue,
                 swipedDirection: answer.swipedDirection,

@@ -71,7 +71,7 @@
 	}
 </script>
 
-<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar}>
+<div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={!showInstructions}>
 	
     	{#if showInstructions}
 		<div class="game-panel">
@@ -139,7 +139,7 @@
                     </div>
                 </div>
 
-				<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing">
+				<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
             </div>
         </div>
     {:else if $game6Store.isLoading}
@@ -218,7 +218,7 @@
 							</button>
 						</div>
 
-						<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing">
+						<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
 					</div>
 				</div>
 			{/if}
@@ -430,12 +430,6 @@
 		fill: #fff;
 	}
 
-
-
-
-
-
-
 	.start-screen {
 		display: flex;
 		inline-size: calc(100vw - (100vw - 66.41%));
@@ -518,137 +512,103 @@
 		}
 	}
 
-
-
-	/* Windows 125% specific styles */
-	/*
-	:global(.window125) .game-container {
-		display: flex;
-		align-items: flex-start;
-	}
-
-	:global(.window125) .instructions {
-		position: static !important;
-		inline-size: calc(100vw - 66.41%);
-		block-size: 100vh;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .start-screen {
-		inline-size: calc(100vw - (100vw - 66.41%));
-		margin-inline-start: auto;
-		flex-shrink: 0;
-	}
-
-	:global(.window125) .game-panel {
-		display: flex;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .start-screen {
-		inline-size: 100%;
-		margin-inline-start: 0;
-	}
-
-	:global(.window125) .game-grid {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-	}
-
-	:global(.window125) .sidebar-is-closed .game-grid {
-		display: grid;
-		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-	}
-	*/
-
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
-		/* 1. Fix left sidebar title and horizontal scroll */
-		// .instructions {
-		// 	inline-size: calc(100vw - 66.41%);
-		// 	padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
-		// 	overflow-x: hidden;
-		// 	scrollbar-width: none; /* Firefox */
-		// 	-ms-overflow-style: none; /* Internet Explorer 10+ */
-		// }
+		.game-container {
+			background-image: url('/images/j6-start-mobile.png');
+			background-position: center right;
+			background-repeat: no-repeat;
+			background-size: contain;
+		}
 
-		// .instructions::-webkit-scrollbar {
-		// 	display: none; /* Chrome, Safari, Opera */
-		// }
+		.game-container.playing {
+			background-image: none;
+		}
 
-		// .title {
-		// 	font-size: calc(4.5rem * var(--scale-factor));
-		// 	word-wrap: break-word;
-		// 	overflow-wrap: break-word;
-		// }
+		.game-area {
+			align-items: flex-end;
+			padding-block: 0;
+			padding-inline: 1rem;
+		}
 
-		// /* 2. Fix sidebar horizontal scroll */
-		// .copy {
-		// 	margin-block-start: calc(4rem * var(--scale-factor));
-		// 	padding: 1.5rem;
-		// }
+		.explanation {
+			display: none;
+		}
 
-		// .copy-header {
-		// 	grid-template-columns: repeat(2, auto);
-		// 	grid-column-gap: 2rem;
-		// 	margin-block-start: calc(-3rem * var(--scale-factor));
-		// }
+		.welcome-container {
+			inline-size: 70%;
+			position: relative;
+		}
 
-		// /* 3. Keep content text size as requested */
-		// .paragraph {
-		// 	font-size: calc(2.2rem * var(--scale-factor));
-		// }
+		.question-container {
+			inline-size: 70%;
+			max-inline-size: 100%;
+			position: relative;
+		}
 
-		/* 4. Add scale system to shape SVG */
+		.welcome-card {
+			max-inline-size: 100%;
+			padding: 3rem 2.5rem;
+			text-align: start;
+		}
+
+		.question-card {
+			max-inline-size: 100%;
+			padding: 3rem 2.5rem;
+			text-align: start;
+		}
+
+		.question-header {
+			margin-block-end: 1.3rem;
+		}
+
+		.question-title {
+			font-size: 1.8rem;
+			font-weight: 600;
+			line-height: normal;
+		}
+
+		.game-content {
+			justify-content: flex-end;
+		}
+
+		.welcome-content {
+			display: block;
+		}
+
+		.welcome-text {
+			font-size: 1.8rem;
+			font-weight: 600;
+			line-height: normal;
+			padding-block-start: 1rem;
+
+			&:first-child {
+				padding-block-start: 0;
+			}
+		}
+
+		.lets-go-button {
+			font-size: 1.6rem;
+			font-weight: 600;
+		}
+		
 		:global(.shape) {
 			transform: scale(0.6);
 			transform-origin: top left;
 		}
 
-		/* 5. Fix game header SVG and shape scaling */
-		// .game-header {
-		// 	padding: 0 calc(4rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		// }
-
-		// /* Fix game header SVG sizing */
-		// .game-header :global(svg) {
-		// 	max-width: 100%;
-		// 	width: 100%;
-		// 	height: calc(30rem * var(--scale-factor));
-		// 	inset-block-start: 0;
-		// 	inset-inline-start: 0;
-		// }
-
-		// .game-header-title {
-		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// }
-
-		// .game-header-paragraph {
-		// 	font-size: calc(2.4rem * var(--scale-factor));
-		// }
-
-		// /* 6. Fix question container positioning and scaling */
-		// .game-grid {
-		// 	grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
-		// 	align-items: start;
-		// 	padding: 2rem;
-		// }
 		
-
-		/* Question wrapper for mobile - reset padding */
-		// .question-wrapper {
-		// 	padding-block: 0;
-		// }
-
-		/* 7. Adjust start screen for mobile */
 		.start-screen {
-			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: 1rem;
+			display: block;
+			inline-size: 100%;
+			padding: 0;
 		}
 
-		/* Keep start screen width consistent when sidebar is closed */
+		.start-screen-shape {
+			display: none;
+		}
+
+		
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
@@ -657,108 +617,12 @@
 			transform-origin: center center;
 		}
 
-		/* Remove vertical scrolling from start screen */
+		
 		.start-screen {
 			overflow-y: hidden;
 		}
 
-		/* Adjust game summary for mobile */
-		// .game-summary {
-		// 	padding: 2rem;
-		// }
-
-		// .game-summary .title {
-		// 	font-size: calc(5rem * var(--scale-factor));
-		// }
-
-		// .game-summary .results {
-		// 	inline-size: calc(80rem * var(--scale-factor));
-		// 	padding: 2rem;
-
-		// 	.paragraph {
-		// 		padding-block-start: 0;
-		// 		margin-block-start: 0;
-		// 	}
-		// }
-
-		// .game-summary .paragraph {
-		// 	font-size: calc(3.5rem * var(--scale-factor));
-		// 	padding-block-start: 2rem;
-		// }
-
-		// .game-summary .total-points {
-		// 	font-size: calc(6rem * var(--scale-factor));
-		// }
-
-		// .game-summary .cta {
-		// 	padding-block-start: 2rem;
-		// }
-
-		// /* Adjust game ID for mobile */
-		// .game-id {
-		// 	block-size: 12rem;
-		// 	inline-size: 8rem;
-		// }
-
-		// .game-id .text {
-		// 	font-size: 2rem;
-		// 	line-height: 2rem;
-		// }
-
-		// .game-id .number {
-		// 	font-size: calc(9rem * var(--scale-factor));
-		// 	line-height: calc(9rem * var(--scale-factor));
-		// }
-
-		/* Adjust subtitle for mobile */
-		// .subtitle {
-		// 	font-size: calc(2.5rem * var(--scale-factor));
-		// 	word-wrap: break-word;
-		// 	overflow-wrap: break-word;
-		// }
-
-		/* Adjust vision queen container for mobile */
-		// .vision-queen-container {
-		// 	inset-block-end: calc(13rem * var(--scale-factor));
-		// 	max-inline-size: 100%;
-		// }
-
-		// .vision-queen-title {
-		// 	font-size: calc(2.5rem * var(--scale-factor));
-		// }
-
-		// .vision-queen-copy {
-		// 	font-size: calc(2.2rem * var(--scale-factor));
-		// }
-
-		/* Adjust buttons for mobile */
-		// .close-button {
-		// 	inset-block-start: 1rem;
-		// 	inset-inline-end: 2rem;
-		// }
-
-		// .play-button {
-		// 	inset-block-start: 2rem;
-		// 	inset-inline-end: -0.2rem;
-		// }
-
-		/* Adjust start button for mobile */
-		// .start {
-		// 	inset-block-start: calc(22rem * var(--scale-factor));
-		// 	inset-inline-end: -2rem;
-		// }
-
-		// .start svg {
-		// 	block-size: calc(30rem * var(--scale-factor));
-		// 	inline-size: calc(30rem * var(--scale-factor));
-		// }
-
-		/* Fix sidebar closed state for mobile */
-		// .instructions.closed {
-		// 	transform: translateX(calc(-100% + 4rem * var(--scale-factor)));
-		// }
-
-		/* Adjust small hero summary for mobile */
+		
 		:global(.small-hero-summary) {
 			inset-block-start: calc(4rem * var(--scale-factor));
 			inset-inline-start: calc(6rem * var(--scale-factor));
@@ -766,58 +630,66 @@
 			display: none;
 		}
 
-		// .game1-initial-screen-button {
-		// 	background: none;
-		// 	border: none;
-		// 	padding: 0;
-		// 	cursor: pointer;
-		// }
-
-		/* Adjust image button position for mobile */
+	
 		.image-button {
 			position: relative;
 			inset-inline-start: 6rem;
+
+			img {
+				visibility: hidden;
+			}
 		}
 
-		/* Adjust start screen content for mobile */
 		.start-screen-content {
 			overflow: hidden;
 		}
 
-		/* Adjust image button max-width for mobile */
 		.image-button img {
 			max-width: calc(60rem * var(--scale-factor));
 		}
 
-		/* Adjust subtitle position for mobile */
-		// .subtitle {
-		// 	position: relative;
-		// 	inset-block-start: 1rem;
-		// }
-
-		/* Hide game6 hero before playing on mobile */
-		.game6-hero-before-playing {
-			display: none;
+		.game6-shape-before-playing {
+			inset-block-start: 0;
+			inset-inline-start: 50%;
+			position: absolute;
+			transform: translate(-50%, 0);
+			z-index: -1;
 		}
 
-		/* Content check section mobile adjustments */
-		// .content-check {
-		// 	padding-block-start: 2rem;
-		// }
+		.game6-hero-before-playing-mobile {
+			display: block;
+			inset-block-start: 50%;
+			inset-inline-start: -20rem;
+			max-inline-size: 25.5rem;
+			margin: 0;
+			position: absolute;
+			transform: translateY(-50%);
+			z-index: -1;
+		}
 
-		// .content-check-grid {
-		// 	gap: 1.5rem;
-		// }
+		.option-button {
+			padding-inline: .8rem;
 
-		// .content-check-btn {
-		// 	width: 12rem;
-		// 	height: 3rem;
-		// 	font-size: 1.2rem;
-		// }
+			&.selected {
+				.option-text {
+					color: #fff;
+				}
+			}
+		}
 
-		// .content-check-text {
-		// 	font-size: 1.2rem;
-		// 	line-height: 1.6rem;
-		// }
+		.option-text {
+			font-size: 1.6rem;
+			font-weight: 600;
+			line-height: 2.2rem;
+		}
+
+		.send-button {
+			block-size: 3.8rem;
+			inline-size: 11rem;
+			font-size: 2rem;
+			font-weight: 600;
+			margin-block-start: 2.8rem;
+			padding: 0;
+		}
 	}
 </style> 

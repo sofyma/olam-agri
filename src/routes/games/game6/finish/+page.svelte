@@ -177,9 +177,14 @@
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
+			block-size: 13.6rem;
+			display: flex;
+			flex-direction: column;
+			inline-size: 40.3rem;
+			justify-content: center;
+			margin-block-start: 0;
 			padding: 2rem;
-
+			
 			.paragraph {
 				padding-block-start: 0;
 				margin-block-start: 0;
@@ -187,27 +192,38 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
+			font-weight: 600;
+			line-height: normal;
 			padding-block-start: 2rem;
 		}
 
 		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: 1.5rem;
-			margin-block-start: 2rem;
+			font-size: 1.6rem;
+			font-weight: 600;
+			margin-block-start: 1rem;
 		}
 
-		/* Hide game6 hero on mobile */
-		.game6-hero-before-playing {
+		.game6-shape-before-playing {
 			display: none;
+		}
+
+		.game6-hero-before-playing {
+			max-inline-size: 25.5rem;
+			inset-block-start: -7rem;
+			inset-inline-start: -10rem;
+			position: absolute;
+			transform: none;
+			z-index: -1;
 		}
 	}
 </style> 

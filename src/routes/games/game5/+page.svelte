@@ -175,10 +175,15 @@
 		<div class="game-grid">
 			<div class="game-hero-column">
 				<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image">
+				<!-- Mobile timer positioned under hero image -->
+				<div class="mobile-timer">
+					{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
+				</div>
 			</div>
 			
 			<div class="game-content-column">
-				<div class="timer">
+				<!-- Desktop timer -->
+				<div class="desktop-timer">
 					{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
 				</div>
 				
@@ -205,7 +210,7 @@
 								type="text"
 							/>
 							{#if feedbackMessage}
-								<div class="result-message {isCorrectAnswer ? 'correct' : 'incorrect'}">
+								<div class="result-message-desktop {isCorrectAnswer ? 'correct' : 'incorrect'}">
 									{feedbackMessage}
 								</div>
 							{/if}
@@ -218,6 +223,11 @@
 						>
 							Send
 						</button>
+						{#if feedbackMessage}
+							<div class="result-message-mobile {isCorrectAnswer ? 'correct' : 'incorrect'}">
+								{feedbackMessage}
+							</div>
+						{/if}
 					</div>
 				</div>
 			</div>
@@ -271,7 +281,7 @@
 		max-inline-size: 100%;
 	}
 
-	.timer {
+	.desktop-timer {
 		align-items: center;
 		background: #00B2E7;
 		border-radius: 1rem;
@@ -282,6 +292,10 @@
 		font-weight: 600;
 		justify-content: flex-start;
 		line-height: calc(12rem * var(--scale-factor));
+	}
+
+	.mobile-timer {
+		display: none; /* Hidden by default on desktop */
 	}
 
 	.game-container-white {
@@ -370,7 +384,7 @@
 		}
 	}
 
-	.result-message {
+	.result-message-desktop {
 		color: #2E2D2C;
 		font-size: 2rem;
 		font-weight: 600;
@@ -384,6 +398,10 @@
 		&.incorrect {
 			color: #DC3545;
 		}
+	}
+
+	.result-message-mobile {
+		display: none; /* Hidden by default on desktop */
 	}
 
 	.send-button {
@@ -461,102 +479,146 @@
 	}
 
 
-
-	/* Unite all mobile overrides into a single media query */
 	@media (max-width: 932px) {
-
-		/* Game grid and columns */
 		.game-grid {
-			grid-template-columns: 1fr 1fr;
-			gap: 1.2rem;
-			align-items: center;
-			padding: 1rem;
-			padding-inline: 1rem;
+			grid-template-columns: 21.6rem 1fr;
+			grid-column-gap: 2rem;
+			justify-items: unset;
+			padding-inline: 1.5rem;
 		}
+
 		.game-hero-image {
-			width: 80%;
+			inline-size: 21.6rem;
 		}
+
 		.game-hero-column {
-			width: auto;
-			max-width: none;
+			flex-direction: column;
+			inline-size: auto;
+			max-inline-size: none;
 		}
 		
 		.game-content-column {
-			/* No width restriction, fills grid cell */
 			gap: 2rem;
 		}
 
-		/* Timer and game white container */
-		.timer {
-			font-size: calc(6.4rem * var(--scale-factor));
+		
+		.desktop-timer {
+			display: none; 
 		}
+
+		.mobile-timer {
+			color: #fff;
+			display: block;
+			font-size: 5rem;
+			font-weight: 600;
+			line-height: normal;
+			padding-block-start: 1.5rem;
+		}
+
 		.game-container-white {
 			block-size: auto;
 			inline-size: 100%;
-			width: 90%;
-			padding: calc(3.5rem * var(--scale-factor)) 2rem;
-		}
-		.game-container-white .game-title {
-			font-size: calc(2.4rem * var(--scale-factor));
-			margin-block-start: 1rem;
-		}
-		.game-container-white .game-description {
-			font-size: 1.44rem;
-			margin-block-start: 1rem;
-		}
-		.game-container-white .steps-list {
-			font-size: 1.76rem;
-			line-height: calc(2.4rem * var(--scale-factor));
-			margin-block-start: 1rem;
-		}
-		.game-container-white .answer-input {
-			font-size: 1.28rem;
-			/* No inline-size here, inherit from desktop */
-		}
-		.game-container-white .send-button {
-			font-size: 1.44rem;
-			inline-size: 12rem;
-			padding: 1rem calc(3rem * var(--scale-factor));
-		}
-		.game-container-white .result-message {
-			font-size: 1.28rem;
-			margin-block-start: 1rem;
-			padding: 1rem;
-			border-radius: 0.5rem;
-		}
-		.input-section {
-			align-items: flex-start;
-			margin-block-start: 1.5rem;
-		}
-		.input-container {
-			inline-size: 100%;
+			padding: 1.2rem;
 		}
 
-		/* Background images for mobile */
-		.game-container {
-			background-size: calc(100% * var(--scale-factor)) auto;
+		.game-container-white .game-title {
+			font-size: 2.1rem;
+			font-weight: 600;
+			line-height: normal;
+			margin-block-start: 0;
 		}
+
+		.game-container-white .game-description {
+			font-size: 1.5rem;
+			line-height: normal;
+			margin-block-start: 0;
+		}
+
+		.game-container-white .steps-list {
+			font-size: 1.6rem;
+			line-height: normal;
+			margin-block-start: .9rem;
+		}
+
+		.game-container-white .answer-input {
+			block-size: 3.8rem;
+			font-size: 1.6rem;
+			inline-size: 100%;
+			padding-block: 0;
+		}
+
+		.game-container-white .send-button {
+			align-self: flex-start;
+			block-size: 3.8rem;
+			font-size: 2rem;
+			font-weight: 600;
+			inline-size: 10rem;
+		}
+
+		.game-container-white .result-message-desktop {
+			display: none; /* Hide desktop message on mobile */
+		}
+
+		.game-container-white .result-message-mobile {
+			display: block; /* Show mobile message */
+			font-size: 1.5rem;
+			margin-block-start: -1.5rem;
+			white-space: normal;
+			color: #2E2D2C;
+			font-weight: 600;
+			line-height: normal;
+
+			&.correct {
+				color: #28A745;
+			}
+
+			&.incorrect {
+				color: #DC3545;
+			}
+		}
+
+		.input-section {
+			margin-block-start: 1.5rem;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		.input-container {
+			inline-size: 100%;
+			gap: 1.8rem;
+			flex: 1;
+			min-inline-size: 0;
+		}
+
+		.result-message-mobile {
+			flex-basis: 100%;
+			margin-block-start: 1rem;
+			margin-inline-start: 0;
+		}
+
+		.game-container {
+			background-size: contain;
+		}
+
 		.game-panel {
 			background-size: calc(100% * var(--scale-factor)) auto;
 		}
-		.game-container.playing {
-			background-size: calc(100% * var(--scale-factor)) auto;
-		}
-
-		/* Start screen and sidebar closed state */
+	
 		.start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 			padding: 1rem;
 			overflow-y: hidden;
 		}
+
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
+
 		.start-screen-content {
 			transform-origin: center center;
 		}
 
-		/* Initial screen button */
 		.game5-initial-screen-button {
 			background: none;
 			border: none;

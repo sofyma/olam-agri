@@ -1,5 +1,6 @@
 export interface Statement {
   id: string;
+  title: string;
   image: string;
   isTrue: boolean;
   swiped?: boolean;
@@ -24,6 +25,7 @@ export interface Game4State {
 export interface Game4Answer {
   _key: string;
   statementId: string;
+  title: string;
   image: string;
   isTrue: boolean;
   swipedDirection: 'left' | 'right';

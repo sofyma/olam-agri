@@ -5,6 +5,13 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'title',
+      title: 'Question Title',
+      type: 'string',
+      description: 'The title/question text to display above the image (e.g., "This layout is...")',
+      validation: Rule => Rule.required()
+    },
+    {
       name: 'image',
       title: 'Statement Image',
       type: 'image',
@@ -29,15 +36,15 @@ export default {
   ],
   preview: {
     select: {
-      title: 'isTrue',
+      title: 'title',
       media: 'image',
-      subtitle: 'isActive'
+      subtitle: 'isTrue'
     },
     prepare({ title, media, subtitle }) {
       return {
-        title: title ? 'True' : 'False',
+        title: title || 'Untitled',
         media: media,
-        subtitle: subtitle ? 'Active' : 'Inactive'
+        subtitle: subtitle ? 'True' : 'False'
       }
     }
   }

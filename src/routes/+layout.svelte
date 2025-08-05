@@ -47,8 +47,7 @@
     const minSizeRem = minSizePx / 16; // Convert 18px to rem (assuming 16px base)
     document.documentElement.style.setProperty('--min-size-rem', minSizeRem.toString());
     
-    console.log(`Scale factor updated: ${scaleFactor} for width: ${width}px`);
-    console.log(`Minimum size protection: ${minSizeRem}rem (${minSizePx}px)`);
+
   }
 
   onMount(() => {

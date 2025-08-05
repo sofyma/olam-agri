@@ -320,6 +320,12 @@
 			line-height: calc(9rem * var(--scale-factor));
 		}
 
+		.game-instruction-copy {
+			p {
+				padding-block-start: 1rem;
+			}
+		}
+
 		.subtitle {
 			font-size: calc(2.5rem * var(--scale-factor));
 			word-wrap: break-word;

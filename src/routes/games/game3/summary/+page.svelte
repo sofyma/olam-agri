@@ -173,18 +173,19 @@
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
-		/* Adjust game summary for mobile */
 		.game-summary {
 			padding: 2rem;
 		}
 
 		.game-summary .title {
-			font-size: calc(5rem * var(--scale-factor));
+			font-size: 3.2rem;
+            font-weight: 600;
+            line-height: normal
 		}
 
 		.game-summary .results {
-			inline-size: calc(80rem * var(--scale-factor));
-			padding: 2rem;
+			inline-size: 40.3rem;
+			padding: 2rem 1rem 1.5rem;
 
 			.paragraph {
 				padding-block-start: 0;
@@ -193,28 +194,34 @@
 		}
 
 		.game-summary .paragraph {
-			font-size: calc(3.5rem * var(--scale-factor));
+			font-size: 1.8rem;
 			padding-block-start: 2rem;
 		}
 
 		.game-summary .total-points {
-			font-size: calc(6rem * var(--scale-factor));
+			font-size: 2.7rem;
+            margin-block-start: 0;
+            padding-block-start: 0.5rem;
 		}
 
 		.game-summary .cta {
-			padding-block-start: 2rem;
+            margin-block-start: 0;
+			padding-block-start: 1.5rem;
 		}
 
 		/* Adjust finish small text for mobile */
 		.finish-small {
-			font-size: 1.5rem;
-			margin-block-start: 2rem;
+            block-size: auto;
+			font-size: 1.6rem;
+			margin-block-start: 1rem;
 		}
 
 		/* Adjust Game3SummaryHero for mobile */
 		:global(.game3-summary-hero) {
-			transform: scale(0.7);
-			transform-origin: center center;
+            block-size: auto;
+			inline-size: 16.7rem;
+            inset-block-end: -6rem !important;
+            inset-inline-end: -12rem !important;
 		}
 	}
 </style> 
