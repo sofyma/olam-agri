@@ -227,9 +227,9 @@
 </div>
 
 <style lang="scss">
-
 	.game-container {
 		block-size: 100vh;
+		overflow: hidden;
 		position: relative;
 
 		@media(min-width: 1920px) {
@@ -265,7 +265,6 @@
 	}
 
 	.game6-hero-before-playing {
-		
 		margin-block-start: calc(-7rem * var(--scale-factor));
 		margin-inline-start: calc(7rem * var(--scale-factor));
 		max-inline-size: calc(39.5rem * var(--scale-factor));
@@ -294,11 +293,6 @@
 		position: relative;
 		width: 100%;
 		box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
-	}
-
-	/* Windows 125% specific styles */
-	:global(.window125) .question-card {
-		padding-block-end: calc(8rem * var(--scale-factor));
 	}
 
 	.question-header {
@@ -441,6 +435,7 @@
 		&-shape {
 			inset-block-start: 0;
 			inset-inline-end: 0;
+			max-inline-size: 80rem;
 			position: absolute;
 		}
 

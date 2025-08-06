@@ -74,10 +74,37 @@
 		game1Store.continueToPlaces();
 	}
 
-	$: currentQuestion = $game1Store.questions[$game1Store.currentQuestionIndex];
+	// Simple reactive statement
+	$: if ($game1Store.questions.length > 0) {
+		console.log('🔍 REACTIVE STATEMENT TRIGGERED:', {
+			showFeedback,
+			storeIndex: $game1Store.currentQuestionIndex,
+			questionId: $game1Store.questions[$game1Store.currentQuestionIndex]?.id
+		});
+		
+		// Only update currentQuestion if feedback is not showing
+		if (!showFeedback) {
+			currentQuestion = $game1Store.questions[$game1Store.currentQuestionIndex];
+			console.log('🔍 QUESTION UPDATED:', {
+				storeIndex: $game1Store.currentQuestionIndex,
+				questionId: currentQuestion?.id,
+				options: currentQuestion?.options,
+				totalQuestions: $game1Store.questions.length
+			});
+		} else {
+			console.log('🔍 SKIPPING QUESTION UPDATE - feedback is showing');
+		}
+	}
     
     function handleQuestionSubmit(event: CustomEvent<{ answer: string; isCorrect: boolean }>) {
         const { answer, isCorrect } = event.detail;
+        
+        console.log('🔍 QUESTION SUBMIT DEBUG:', {
+            answer,
+            isCorrect,
+            currentStoreIndex: $game1Store.currentQuestionIndex,
+            showFeedback: false
+        });
         
         showFeedback = true;
         feedbackState = {
@@ -88,17 +115,37 @@
         // Disable animation during feedback
         shouldAnimateQuestion = false;
 
-        // Change the question data before the feedback disappears
+        console.log('🔍 FEEDBACK SHOWN:', {
+            showFeedback: true,
+            currentStoreIndex: $game1Store.currentQuestionIndex
+        });
+
+        // Show feedback for 1 second, then update the store first, then hide feedback
         setTimeout(() => {
+            console.log('🔍 BEFORE UPDATING QUESTION:', {
+                currentStoreIndex: $game1Store.currentQuestionIndex
+            });
+            
             game1Store.answerQuestion(answer);
-            // Hide feedback after question has been updated with a small delay
+            
+            console.log('🔍 AFTER ANSWER QUESTION:', {
+                storeIndex: $game1Store.currentQuestionIndex
+            });
+            
+            // Hide feedback after store update
             setTimeout(() => {
+                console.log('🔍 HIDING FEEDBACK:', {
+                    showFeedback: false,
+                    currentStoreIndex: $game1Store.currentQuestionIndex
+                });
+                
                 showFeedback = false;
+                
                 // Re-enable animation after feedback is hidden
                 setTimeout(() => {
                     shouldAnimateQuestion = true;
-                }, 50);
-            }, 100); // Increased delay to ensure smooth transition
+                }, 100);
+            }, 800); // Even longer delay to ensure proper height calculation, especially for brand-to-place transition
         }, 1000);
     }
 </script>
@@ -191,7 +238,7 @@
 
 		<div class="game-grid">
 			<div class="game-header">
-				<Game1SmallHero />
+				<img class="game-header-svg" src="/images/j1-playing-mascot.png" alt="Brand Heroes" />
 				
 				<h2 class="game-header-title">
 					{$game1Store.currentSet === 'brands' ? 'Do You Recognise These Brands?' : 'Do You Recognise These Places?'}
@@ -202,6 +249,11 @@
 				{:else}
 					<p class="game-header-paragraph">For each wrong guess you will lose 1 point.</p>
 				{/if}
+				
+				<!-- Desktop question counter -->
+				<span class="desktop-question-counter">{($game1Store.currentSet === 'brands'
+					? $game1Store.currentQuestionIndex + 1
+					: $game1Store.currentQuestionIndex - 8)} of 9</span>
 				
 				<!-- Mobile question counter -->
 				<span class="mobile-question-counter">{($game1Store.currentSet === 'brands'
@@ -222,7 +274,7 @@
 						totalQuestions={9}
 						on:submit={handleQuestionSubmit}
 						shouldAnimate={shouldAnimateQuestion}
-						hideCounter={false}
+						hideCounter={true}
 					/>
 				</div>
 			{/if}
@@ -233,6 +285,7 @@
 <style lang="scss">
     .game-container {
 		background-color: #FF7000;
+		overflow: hidden;
 		position: relative;
 
 		:global(.shape) {	
@@ -250,7 +303,7 @@
     }
 
 	.game-header {
-		padding: 0 calc(7rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
+		padding: 0 calc(7rem * var(--scale-factor));
 		position: relative;
 	}
 
@@ -269,6 +322,14 @@
 		padding-block-start: 1rem;
 	}
 
+	.desktop-question-counter {
+		color: #fff;
+		display: block;
+		font-size: calc(4.2rem * var(--scale-factor));
+		padding-block-start: 1.5rem;
+		font-weight: 600;
+	}
+
 	.mobile-question-counter {
 		display: none; /* Hidden by default on desktop */
 	}
@@ -278,7 +339,6 @@
 	}
 
 	.game-grid {
-		// align-items: end;
 		align-items: center;
 		block-size: 100vh;
 		display: grid;
@@ -287,8 +347,6 @@
 	}
 
 	.question-wrapper {
-		// padding-block: calc(7rem * var(--scale-factor));
-		// padding-inline: 0 calc(7rem * var(--scale-factor));
 		padding-block: 0;
 		padding-inline: 0;
 	}
@@ -365,6 +423,10 @@
 			background-size: contain;
 		}
 
+		.game-header-svg {
+			display: none;
+		}
+
 		.game-container.playing {
 			background-image: url('/images/j1-playing-screen-mobile.png');
 			background-position: top left;
@@ -406,6 +468,10 @@
 		.game-header-paragraph {
 			font-size: 1.6rem;
 			padding-block-start: .5rem;
+		}
+
+		.desktop-question-counter {
+			display: none; /* Hide desktop counter on mobile */
 		}
 
 		.mobile-question-counter {

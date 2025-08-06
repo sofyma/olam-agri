@@ -32,10 +32,12 @@
     </defs>
 </svg>
     
-<style>
+<style lang="scss">
     .game3-summary-hero {
-        inset-block-end: -20rem;
-        inset-inline-end: -27rem;
+        block-size: auto;
+        inline-size: 27.2rem;
+        inset-block-end: -10rem;
+        inset-inline-end: -15rem;
         position: absolute;
     }
 </style>

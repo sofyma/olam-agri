@@ -240,8 +240,9 @@
 		background-color: #00B2E7;
 		background-image: url('/images/j5-start.png');
 		background-position: center bottom;
-		background-size: 100% auto;
+		background-size: 90%;
 		background-repeat: no-repeat;
+		overflow: hidden;
 		position: relative;
 	}
 

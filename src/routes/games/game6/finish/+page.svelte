@@ -105,12 +105,16 @@
 	}
 
 	.game6-hero-before-playing {
-        inset-block-start: calc(-15rem * var(--scale-factor));
+        inset-block-start: 0;
         inset-inline-start: 55%;
-		max-inline-size: calc(39.5rem * var(--scale-factor));
+		max-inline-size: 26rem;
         transform: translateX(-55%);
 		position: absolute;
         z-index: 1;
+
+		@media(max-width: 1366px) {
+			inset-block-start: -5rem;
+		}
 	}
 
 	.results {
@@ -218,11 +222,13 @@
 		}
 
 		.game6-hero-before-playing {
+			display: block;
+			inset-block-start: 50%;
+			inset-inline-start: -9rem;
 			max-inline-size: 25.5rem;
-			inset-block-start: -7rem;
-			inset-inline-start: -10rem;
+			margin: 0;
 			position: absolute;
-			transform: none;
+			transform: translateY(-50%);
 			z-index: -1;
 		}
 	}

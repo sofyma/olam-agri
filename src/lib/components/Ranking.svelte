@@ -131,7 +131,7 @@
       <h1 class="header-title">Brand Heroes</h1>
     </div>
 
-    <img class="header-heroes" src="/images/oa-site-small-header-heroes.png" alt="Brand Heroes">
+    <img class="header-heroes" src="/images/site-large-heroes.png" alt="Brand Heroes">
   </header>
   
   <main class="content">
@@ -302,6 +302,10 @@
     margin-block-start: calc(-15rem * var(--scale-factor));
     position: relative;
     z-index: 1;
+
+    @media(max-width: 932px) {
+      margin-block-start: 0;
+    }
 
     .wrapper {
       background-color: #FFF;

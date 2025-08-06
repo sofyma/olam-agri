@@ -73,9 +73,10 @@
 
 <style lang="scss">
 	.game-summary-image {
-		inset-block-end: -25rem;
-		inset-inline-end: -12rem;
-		max-inline-size: calc(26.1rem * var(--scale-factor));
+		inline-size: 16rem;
+		inset-block-end: -12rem;
+		inset-inline-end: -10rem;
+		max-inline-size: 100%;
 		position: absolute;
 	}
 
@@ -161,12 +162,12 @@
 			transform-origin: top center;
 		}
 
-		.game-container {
-			background-image: url('/images/j2-summary-mobile.png');
-			background-position: top center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
+		// .game-container {
+		// 	background-image: url('/images/j2-summary-mobile.png');
+		// 	background-position: top center;
+		// 	background-repeat: no-repeat;
+		// 	background-size: cover;
+		// }
 
 		/* Adjust game summary for mobile */
 		.game-summary {
@@ -196,7 +197,9 @@
 		}
 
 		.game-summary-image {
-			display: none;
+			inline-size: 12rem;
+			inset-block-end: -8rem;
+			inset-inline-end: -8rem;
 		}
 
 		.game-summary .total-points {
@@ -205,6 +208,7 @@
 		}
 
 		.game-summary .cta {
+			font-weight: 600;
 			padding-block-start: 1.5rem;
 		}
 

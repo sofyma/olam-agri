@@ -412,6 +412,7 @@
         background-repeat: no-repeat;
         background-size: calc(100% * var(--scale-factor));
         block-size: 100vh;
+        overflow: hidden;
         position: relative;
 
         @media(min-width: 1920px) {
