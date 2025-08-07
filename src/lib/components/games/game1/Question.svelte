@@ -82,7 +82,7 @@
 	<span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
 {/if}
 
-<div class="question-wrapper" style="height: {questionContainerHeight > 0 ? questionContainerHeight + 'px' : 'auto'};">
+<div class="question-wrapper" style="--dynamic-height: {questionContainerHeight > 0 ? questionContainerHeight + 'px' : 'auto'};">
 	<!-- Question is always in DOM, but hidden during feedback -->
 	<div class="question-container" 
 		 class:entering={isEntering && shouldAnimate} 
@@ -140,7 +140,7 @@
 	
 	<!-- Feedback overlay -->
 	{#if showFeedback}
-		<div class="feedback-overlay" style="height: {questionContainerHeight}px;">
+		<div class="feedback-overlay" style="--dynamic-height: {questionContainerHeight}px;">
 			<div class="feedback">
 				<div class="feedback-content">
 					{#if isCorrect}
@@ -177,6 +177,14 @@
         position: relative;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
+        height: auto; /* Default for mobile */
+    }
+
+    /* Desktop only - apply dynamic height */
+    @media (min-width: 1024px) {
+        .question-wrapper {
+            height: var(--dynamic-height, auto);
+        }
     }
 
     .question-container {
@@ -301,6 +309,14 @@
         z-index: 10;
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));
+        height: auto; /* Default for mobile */
+    }
+
+    /* Desktop only - apply dynamic height to feedback overlay */
+    @media (min-width: 1024px) {
+        .feedback-overlay {
+            height: var(--dynamic-height, auto);
+        }
     }
 
     .feedback {

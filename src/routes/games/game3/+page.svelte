@@ -672,7 +672,7 @@
         
         .maze-svg {
             block-size: auto;
-            inline-size: calc(80rem * var(--scale-factor));
+            inline-size: calc(70rem * var(--scale-factor));
         }
 
        

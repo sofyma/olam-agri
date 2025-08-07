@@ -12,7 +12,7 @@
 </svg>
 
 <style>
-    @media(max-width: 932px) {
+    @media(max-width: 600px) {
         .logo {
             inline-size: 70%;
         }
