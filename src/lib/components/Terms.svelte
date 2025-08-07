@@ -78,6 +78,10 @@
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
+    @media(max-width: 932px) {
+      block-size: 53.5rem;
+    }
+
     &-heroes {
       position: absolute;
       inset-block-end: 0;
