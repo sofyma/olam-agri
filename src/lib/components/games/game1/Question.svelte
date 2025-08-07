@@ -316,12 +316,14 @@
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         box-sizing: border-box;
         height: 100%;
+        min-height: 100%;
     }
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .feedback {
             block-size: auto;
+            min-block-size: 100%;
             border-radius: 0 1.5rem 1.5rem 1.5rem;
             padding-block: 2rem 2rem;
         }
@@ -334,7 +336,7 @@
         gap: 2rem;
         justify-content: center;
         inline-size: 100%;
-        block-size: 100%;
+        min-block-size: 100%;
         box-sizing: border-box;
     }
 

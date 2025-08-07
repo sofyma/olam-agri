@@ -193,6 +193,7 @@
 			background-position: top right;
 			background-repeat: no-repeat;
 			background-size: contain;
+			min-block-size: auto;
 			padding-block: .5rem;
 		}
 
