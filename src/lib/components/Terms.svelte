@@ -185,6 +185,7 @@
     max-inline-size: calc(80rem * var(--scale-factor));
     margin-inline: auto;
     padding-block-start: calc(5rem * var(--scale-factor));
+    padding-inline: 2rem;
   }
 
   .terms-subtitle {

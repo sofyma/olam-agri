@@ -88,7 +88,7 @@
       <h1 class="header-title">Brand Heroes</h1>
     </div>
 
-    <img class="header-heroes" src="/images/site-large-heroes.png" alt="Brand Heroes">
+    <img class="header-heroes" src="/images/oa-site-small-header-heroes.png" alt="Brand Heroes">
   </header>
   
   <main class="content">
@@ -138,6 +138,10 @@
     block-size: calc(53.5rem * var(--scale-factor));
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
+
+    @media(max-width: 932px) {
+      block-size: 53.5rem;
+    }
 
     &-heroes {
       position: absolute;

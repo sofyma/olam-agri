@@ -25,12 +25,12 @@ html.game-6 {
 html, body {
   min-height: 100vh;
   margin: 0;
-  overflow-x: hidden;
   padding: 0;
 }
 
 html {
   	font-size: 1rem;
+    overflow-x: hidden;
 }
 
 :root {
