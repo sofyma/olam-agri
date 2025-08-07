@@ -120,8 +120,6 @@ html.game-5 .btn-cta3:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #FF7000;
-    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;    
@@ -132,6 +130,37 @@ html.game-5 .btn-cta3:hover {
     text-align: center;
     padding: 2rem;
     line-height: 1.4;
+  }
+
+  /* Game-specific background colors and text colors */
+  html.game-1 body::before {
+    background: #FF7000;
+    color: #fff;
+  }
+
+  html.game-2 body::before {
+    background: #8E75F8;
+    color: #fff;
+  }
+
+  html.game-3 body::before {
+    background: #FF5BAF;
+    color: #fff;
+  }
+
+  html.game-4 body::before {
+    background: #FFC400;
+    color: #000;
+  }
+
+  html.game-5 body::before {
+    background: #00B2E7;
+    color: #fff;
+  }
+
+  html.game-6 body::before {
+    background: #00A865;
+    color: #fff;
   }
   
   html.game-1 body > *:not(style):not(script),
