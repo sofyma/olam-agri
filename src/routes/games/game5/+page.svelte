@@ -242,7 +242,7 @@
 		background-position: center bottom;
 		background-size: 90%;
 		background-repeat: no-repeat;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		overflow: hidden;
 		position: relative;
 	}
@@ -263,7 +263,7 @@
 
 	.game-grid {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: grid;
 		gap: calc(4rem * var(--scale-factor));
 		grid-template-columns: calc(69.6rem * var(--scale-factor)) 1fr;
@@ -442,7 +442,7 @@
 	
 	.start-screen {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: flex;
 		justify-content: center;
 		inline-size: calc(100vw - (100vw - 66.41%));
@@ -471,7 +471,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-height: 100vh;
+		min-height: var(--full-height, 100vh);
 		color: #fff;
 		font-size: calc(2.4rem * var(--scale-factor));
 	}

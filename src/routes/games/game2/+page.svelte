@@ -485,7 +485,7 @@
 
 	.instructions {
 		background-color: #2E2D2C;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
 		inline-size: calc(100vw - 66.41%);
 		inset-block-start: 0;
@@ -595,7 +595,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: self-end;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		inline-size: calc(100vw - (100vw - 66.41%));
 		margin-inline-start: auto;
 
@@ -613,7 +613,7 @@
 	.loading,
 	.error {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		color: #fff;
 		display: flex;
 		font-size: calc(3rem * var(--scale-factor));

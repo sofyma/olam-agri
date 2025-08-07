@@ -228,7 +228,7 @@
 
 <style lang="scss">
 	.game-container {
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		overflow: hidden;
 		position: relative;
 
@@ -238,12 +238,12 @@
 	}
 
 	.game-panel {
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 	}
 
 	.game-area {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -441,7 +441,7 @@
 
 		&-content {
 			align-items: center;
-			block-size: 100vh;
+			block-size: var(--full-height, 100vh);
 			display: flex;
 			justify-content: center;
 			position: relative;
@@ -466,7 +466,7 @@
 	.loading,
 	.error {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		color: #fff;
 		display: flex;
 		font-size: calc(3rem * var(--scale-factor));

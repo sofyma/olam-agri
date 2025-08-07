@@ -544,7 +544,7 @@
     .loading,
     .error {
         align-items: center;
-        block-size: 100vh;
+        block-size: var(--full-height, 100vh);
         color: #fff;
         display: flex;
         font-size: calc(3rem * var(--scale-factor));
@@ -585,7 +585,7 @@
 
     .question-overlay {
         background-color: rgba(255, 91, 175, 0.9);
-        block-size: 100vh;
+        block-size: var(--full-height, 100vh);
         inset-block-start: 0;
         inset-inline-start: 0;
         inline-size: 100vw;

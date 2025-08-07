@@ -430,7 +430,7 @@
 		background-position: center right;
 		background-repeat: no-repeat;
 		background-size: calc(100% * var(--scale-factor));
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		position: relative;
 
 		@media(min-width: 1920px) {
@@ -444,7 +444,7 @@
 	}
 
 	.game-panel {
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 	}
 
 	.game4-shape {
@@ -464,7 +464,7 @@
 
 	.game-area {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -646,7 +646,7 @@
 
 		&-content {
 			align-items: center;
-			block-size: 100vh;
+			block-size: var(--full-height, 100vh);
 			display: flex;
 			justify-content: center;
 			position: relative;
@@ -660,7 +660,7 @@
 	.loading,
 	.error {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		color: #fff;
 		display: flex;
 		font-size: calc(3rem * var(--scale-factor));

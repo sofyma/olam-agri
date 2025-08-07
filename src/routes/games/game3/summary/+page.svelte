@@ -97,7 +97,7 @@
     .game-container {
         background-color: #FF5BAF;
         position: relative;
-        min-height: 100vh;
+        min-height: var(--full-height, 100vh);
     }
 
     .game-summary {
@@ -106,7 +106,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-block-size: 100vh;
+        min-block-size: var(--full-height, 100vh);
         position: relative;
         text-align: center;
         z-index: 1;
