@@ -188,6 +188,15 @@
 }
 
 @media (max-width: 932px) {
+
+  .game1-info__section-paragraph:first-of-type {
+    padding-block-start: 0;
+  }
+
+  .game1-info__section-paragraph:nth-of-type(3) {
+    padding-block-start: 0;
+  }
+
   .content {
     margin-block-start: 0;
   }
