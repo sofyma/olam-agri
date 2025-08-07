@@ -333,7 +333,7 @@
   }
 
   .header {
-    background-image: url('/images/oa-site-small-header-background.jpg');
+    background-image: url('/images/hero-rankings-1.png');
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;

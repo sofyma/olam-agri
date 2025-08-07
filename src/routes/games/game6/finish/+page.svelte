@@ -224,12 +224,11 @@
 		.game6-hero-before-playing {
 			display: block;
 			inset-block-start: 50%;
-			inset-inline-start: -9rem;
-			max-inline-size: 25.5rem;
+			inset-inline: auto -7rem;
+			max-inline-size: 13.9rem;
 			margin: 0;
 			position: absolute;
 			transform: translateY(-50%);
-			z-index: -1;
 		}
 	}
 </style> 

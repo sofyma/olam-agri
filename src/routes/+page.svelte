@@ -467,6 +467,10 @@
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
+    @media(max-width: 600px) {
+      background-image: url('/images/olam-agri-game-gome-hero-small.jpg');
+    }
+
     :global(.logo path) {
       fill: #FFF;
     }

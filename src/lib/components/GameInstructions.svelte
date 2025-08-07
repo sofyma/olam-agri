@@ -56,35 +56,40 @@
 		</button>
 	{/if}
 
-	<svelte:component this={LogoComponent} />
-
-	<h1 class="title">{gameTitle}</h1>
+	<!-- Fixed header section -->
+	<div class="instructions-header">
+		<svelte:component this={LogoComponent} />
+		<h1 class="title">{gameTitle}</h1>
+	</div>
 		
-	<div class="copy">
-		<div class="copy-header">
-			<div class="game-id">
-				<span class="text">Game</span>
-				<span class="number">{gameNumber}</span>
+	<!-- Scrollable content section -->
+	<div class="instructions-content">
+		<div class="copy">
+			<div class="copy-header">
+				<div class="game-id">
+					<span class="text">Game</span>
+					<span class="number">{gameNumber}</span>
+				</div>
+
+				<h2 class="subtitle">{@html gameSubtitle}</h2>
 			</div>
 
-			<h2 class="subtitle">{@html gameSubtitle}</h2>
+			<div class="game-instruction-copy">
+				{#each paragraphs as paragraph}
+					<p>{paragraph}</p>
+				{/each}
+			</div>
 		</div>
 
-		<div class="game-instruction-copy">
-			{#each paragraphs as paragraph}
-				<p>{paragraph}</p>
-			{/each}
-		</div>
-	</div>
-
-	<div class="content-check">
-		<div class="content-check-grid">
-			<button class="content-check-btn" on:click={handleInfoClick}>
-				Check content
-			</button>
-			<div class="content-check-text">
-				Have you read the related content?<br>
-				You'll do better in the game if you check it first!
+		<div class="content-check">
+			<div class="content-check-grid">
+				<button class="content-check-btn" on:click={handleInfoClick}>
+					Check content
+				</button>
+				<div class="content-check-text">
+					Have you read the related content?<br>
+					You'll do better in the game if you check it first!
+				</div>
 			</div>
 		</div>
 	</div>
@@ -98,21 +103,26 @@
 		inline-size: calc(100vw - 66.41%);
 		inset-block-start: 0;
 		inset-inline-start: 0;
-		overflow-y: auto;
-		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 		position: fixed;
 		z-index: 9999;
 		transition: transform 0.3s ease-in-out;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-
-		&::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
-		}
+		display: flex;
+		flex-direction: column;
 
 		&.closed {
 			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
 		}
+	}
+
+	.instructions-header {
+		flex-shrink: 0;
+		padding: calc(5rem * var(--scale-factor)) calc(6rem * var(--scale-factor)) 0;
+	}
+
+	.instructions-content {
+		flex: 1;
+		overflow-y: auto;
+		padding: 0 calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
 	}
 
 	.close-button {
@@ -164,8 +174,6 @@
 			opacity: 0.8;
 		}
 	}
-
-
 
 	.title {
 		color: var(--primary-color, #FF7000);
@@ -272,18 +280,18 @@
 		line-height: 2rem;
 	}
 
-
 	@media (max-width: 932px) {
 		.instructions {
 			inline-size: calc(100vw - 66.41%);
-			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 			overflow-x: hidden;
-			scrollbar-width: none; /* Firefox */
-			-ms-overflow-style: none; /* Internet Explorer 10+ */
 		}
 
-		.instructions::-webkit-scrollbar {
-			display: none; /* Chrome, Safari, Opera */
+		.instructions-header {
+			padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor)) 0;
+		}
+
+		.instructions-content {
+			padding: 0 calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
 		}
 
 		.title {
@@ -327,7 +335,7 @@
 		}
 
 		.subtitle {
-			font-size: calc(2.5rem * var(--scale-factor));
+			font-size: calc(2.4rem * var(--scale-factor));
 			word-wrap: break-word;
 			overflow-wrap: break-word;
 		}

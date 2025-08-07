@@ -242,6 +242,7 @@
 		background-position: center bottom;
 		background-size: 90%;
 		background-repeat: no-repeat;
+		block-size: 100vh;
 		overflow: hidden;
 		position: relative;
 	}
