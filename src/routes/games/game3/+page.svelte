@@ -411,7 +411,7 @@
         background-position: center right;
         background-repeat: no-repeat;
         background-size: calc(100% * var(--scale-factor));
-        block-size: 100vh;
+        block-size: var(--full-height, 100vh);
         overflow: hidden;
         position: relative;
 
@@ -446,7 +446,7 @@
 
     .game-area {
         align-items: center;
-        block-size: 100vh;
+        block-size: var(--full-height, 100vh);
         display: flex;
         justify-content: center;
         padding-block-start: 0;

@@ -25,17 +25,19 @@ html.game-6 {
 html, body {
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
   padding: 0;
 }
 
 html {
   	font-size: 1rem;
-    overflow-x: hidden;
 }
 
 :root {
   --scale-factor: 1;
   --min-size-rem: 1.125;
+  --full-height: 100dvh; /* Modern browsers with dynamic viewport */
+  --full-height-fallback: 100vh; /* Fallback for older browsers */
 }
 
 .btn {
@@ -114,7 +116,7 @@ html.game-5 .btn-cta3:hover {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: var(--full-height);
     display: flex;
     align-items: center;
     justify-content: center;    

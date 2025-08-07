@@ -340,7 +340,7 @@
 
 	.game-grid {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: grid;
 		grid-template-columns: calc(55rem * var(--scale-factor)) 1fr;
 		position: relative;
@@ -357,7 +357,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		min-block-size: 100vh;
+		min-block-size: var(--full-height, 100vh);
 		position: relative;
 		text-align: center;
 		z-index: 1;
@@ -398,7 +398,7 @@
 	
 	.start-screen {
 		align-items: center;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: flex;
 		justify-content: center;
 		inline-size: calc(100vw - (100vw - 66.41%));
