@@ -432,20 +432,10 @@
   }
 
   .pagination-btn {
-    background-color: #E6E6E6;
-    border: none;
-    border-radius: 1rem;
-    color: #2E2D2C;
+    color: #999;
     cursor: pointer;
-    font-size: 1.4rem;
-    font-weight: 600;
-    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
     transition: all 0.3s ease;
-
-    &:hover:not(:disabled) {
-      background-color: #FF7000;
-      color: white;
-    }
 
     &:disabled {
       cursor: not-allowed;
@@ -454,9 +444,8 @@
   }
 
   .pagination-info {
-    color: #2E2D2C;
+    color: #999;
     font-size: 1.6rem;
-    font-weight: 600;
     margin-inline: 2rem;
   }
 
@@ -471,10 +460,11 @@
     margin-inline: auto;
   }
 
-    .ranking-table {
+  .ranking-table {
     border-collapse: collapse;
     inline-size: 100%;
     overflow: hidden;
+    white-space: nowrap;
 
     th, td {
       border-bottom: 0.1rem solid #ccc;
@@ -680,5 +670,9 @@
 
   .table-container {
     margin-block-end: calc(3rem * var(--scale-factor));
+
+    @media(max-width: 932px) {
+      overflow-x: auto;
+    }
   }
 </style> 
