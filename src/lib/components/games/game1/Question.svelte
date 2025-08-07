@@ -415,7 +415,7 @@
         }
     }
 
-    @media(max-width: 300px) {
+    @media(max-height: 300px) {
         .question-image {
             max-block-size: 8rem;
         }
