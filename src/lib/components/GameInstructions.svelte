@@ -328,6 +328,10 @@
 			line-height: calc(9rem * var(--scale-factor));
 		}
 
+		.instructions-header :global(.logo) {
+			inline-size: 70%;
+		}
+
 		.game-instruction-copy {
 			p {
 				padding-block-start: 1rem;
