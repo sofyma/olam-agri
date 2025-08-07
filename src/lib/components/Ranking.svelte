@@ -131,7 +131,7 @@
       <h1 class="header-title">Brand Heroes</h1>
     </div>
 
-    <img class="header-heroes" src="/images/site-large-heroes.png" alt="Brand Heroes">
+    <img class="header-heroes" src="/images/oa-site-small-header-heroes.png" alt="Brand Heroes">
   </header>
   
   <main class="content">
@@ -333,13 +333,17 @@
   }
 
   .header {
-    background-image: url('/images/hero-rankings-1.png');
+    background-image: url('/images/oa-site-small-header-background.jpg');
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
     block-size: calc(53.5rem * var(--scale-factor));
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
+
+    @media(max-width: 932px) {
+      block-size: 53.5rem;
+    }
 
     &-heroes {
       inset-block-end: 0;

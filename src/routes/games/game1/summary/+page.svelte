@@ -112,6 +112,7 @@
 	}
 
 	.cta {
+		font-weight: 600;
 		padding-block-start: calc(7rem * var(--scale-factor));
 	}
 

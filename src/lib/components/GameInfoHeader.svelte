@@ -113,10 +113,6 @@
 }
 
 @media (max-width: 932px) {
-  .logo-link {
-    inline-size: 80%;
-  }
-  
   .wrapper {
     padding-inline: 2rem;
   }

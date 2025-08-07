@@ -217,11 +217,11 @@
 		}
 
 		/* Adjust Game3SummaryHero for mobile */
-		:global(.game3-summary-hero) {
-            block-size: auto;
-			inline-size: 16.7rem;
-            inset-block-end: -6rem !important;
-            inset-inline-end: -12rem !important;
-		}
+		// :global(.game3-summary-hero) {
+        //     block-size: auto;
+		// 	inline-size: 16.7rem;
+        //     inset-block-end: -6rem !important;
+        //     inset-inline-end: -12rem !important;
+		// }
 	}
 </style> 

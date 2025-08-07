@@ -161,6 +161,7 @@
 
 	.finish-buttons {
 		display: flex;
+		font-weight: 600;
 		gap: calc(3rem * var(--scale-factor));
 		padding-block-start: calc(4rem * var(--scale-factor));
 	}

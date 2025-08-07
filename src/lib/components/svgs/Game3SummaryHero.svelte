@@ -39,5 +39,12 @@
         inset-block-end: -10rem;
         inset-inline-end: -15rem;
         position: absolute;
+
+        @media(max-width: 932px) {
+            block-size: auto;
+			inline-size: 16.7rem;
+            inset-block-end: -6rem;
+            inset-inline-end: -12rem;
+        }
     }
 </style>
