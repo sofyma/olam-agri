@@ -1,25 +1,31 @@
 html.game-1 {
   background-color: #FF7000;
+  overflow: hidden;
 }
 
 html.game-2 {
   background-color: #8E75F8; 
+  overflow: hidden;
 }
 
 html.game-3 {
   background-color: #FF5BAF;
+  overflow: hidden;
 }
 
 html.game-4 {
   background-color: #FFC400;
+  overflow: hidden;
 }
 
 html.game-5 {
   background-color: #00B2E7;
+  overflow: hidden;
 }
 
 html.game-6 {
   background-color: #00A865;
+  overflow: hidden;
 }
 
 html, body {
