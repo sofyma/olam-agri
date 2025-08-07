@@ -135,7 +135,7 @@
 		background-position: center bottom;
 		background-size: 100% auto;
 		background-repeat: no-repeat;
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: grid;
 		place-content: center;
 		position: relative;

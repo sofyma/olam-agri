@@ -81,7 +81,7 @@
 <style lang="scss">
     .finish-container {
         background-color: #2E2D2C;
-        min-height: 100vh;
+        min-height: var(--full-height, 100vh);
         display: flex;
         align-items: center;
         justify-content: center;

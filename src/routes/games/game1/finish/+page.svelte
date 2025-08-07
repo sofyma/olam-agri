@@ -88,7 +88,7 @@
 		background-color: #FF7000;
 		display: flex;
 		justify-content: center;
-		min-block-size: 100vh;
+		min-block-size: var(--full-height, 100vh);
 		overflow: hidden;
 		position: relative;
 		padding-block-start: calc(10rem * var(--scale-factor));
@@ -193,7 +193,7 @@
 			background-position: top right;
 			background-repeat: no-repeat;
 			background-size: contain;
-			padding-block: 2rem;
+			padding-block: .5rem;
 		}
 
 		.finish-text p,

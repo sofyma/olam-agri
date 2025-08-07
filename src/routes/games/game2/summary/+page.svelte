@@ -81,7 +81,7 @@
 	}
 
 	.game-container {
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: grid;
 		place-content: center;
 

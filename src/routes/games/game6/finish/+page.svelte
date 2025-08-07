@@ -74,7 +74,7 @@
 
 <style lang="scss">
 	.game-container {
-		block-size: 100vh;
+		block-size: var(--full-height, 100vh);
 		display: grid;
 		place-content: center;
 		padding-block-start: calc(10rem * var(--scale-factor));
