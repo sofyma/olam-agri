@@ -82,15 +82,14 @@
 		</div>
 
 		<div class="content-check">
-			<div class="content-check-grid">
-				<button class="content-check-btn" on:click={handleInfoClick}>
-					Check content
-				</button>
-				<div class="content-check-text">
-					Have you read the related content?<br>
-					You'll do better in the game if you check it first!
-				</div>
+			<div class="content-check-text">
+				Have you read the related content?<br>
+				You'll do better in the game if you check it first!
 			</div>
+
+			<button class="content-check-btn" on:click={handleInfoClick}>
+				Check content
+			</button>
 		</div>
 	</div>
 </div>
@@ -100,14 +99,14 @@
 		background-color: var(--bg-color, #2E2D2C);
 		block-size: var(--full-height, 100vh);
 		border-radius: 0 calc(6rem * var(--scale-factor)) 0 0;
+		display: flex;
+		flex-direction: column;
 		inline-size: calc(100vw - 66.41%);
 		inset-block-start: 0;
 		inset-inline-start: 0;
 		position: fixed;
-		z-index: 9999;
 		transition: transform 0.3s ease-in-out;
-		display: flex;
-		flex-direction: column;
+		z-index: 9999;
 
 		&.closed {
 			transform: translateX(calc(-100% + calc(5rem * var(--scale-factor))));
@@ -212,9 +211,9 @@
 		&-header {
 			align-items: end;
 			display: grid;
-			justify-content: start;
-			grid-template-columns: repeat(2, auto);
 			grid-column-gap: calc(3rem * var(--scale-factor));
+			grid-template-columns: repeat(2, auto);
+			justify-content: start;
 			margin-block-start: calc(-5rem * var(--scale-factor));
 		}
 	}
@@ -222,8 +221,8 @@
 	.game-id {
 		align-items: center;
 		background-color: var(--primary-color, #FF7000);
-		border-radius: 0 2rem 0 2rem;
 		block-size: calc(17rem * var(--scale-factor));
+		border-radius: 0 2rem 0 2rem;
 		color: var(--game-id-text-color, #fff);
 		display: flex;
 		flex-direction: column;
@@ -245,26 +244,20 @@
 	}
 
 	.content-check {
-		padding-block-start: calc(2.7rem * var(--scale-factor));
-	}
-
-	.content-check-grid {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 2rem;
-		align-items: center;
+		padding-block-start: calc(1.5rem * var(--scale-factor));
 	}
 
 	.content-check-btn {
-		width: 14.6rem;
-		height: 3.4rem;
+		background-color: var(--primary-color, #FF7000);
+		block-size: 3.4rem;
+		border: none;
 		border-radius: 0 1.5rem;
 		color: var(--content-check-btn-text-color, #fff);
-		background-color: var(--primary-color, #FF7000);
-		border: none;
+		cursor: pointer;
 		font-size: 1.4rem;
 		font-weight: 600;
-		cursor: pointer;
+		inline-size: 14.6rem;
+		margin-block-start: calc(1rem * var(--scale-factor));
 		transition: all 0.3s ease;
 
 		&:hover {
@@ -296,9 +289,10 @@
 
 		.title {
 			font-size: calc(4.5rem * var(--scale-factor));
-			word-wrap: break-word;
+			line-height: normal;
 			overflow-wrap: break-word;
 			padding-block-start: 0;
+			word-wrap: break-word;
 		}
 
 		.copy {
@@ -307,20 +301,19 @@
 		}
 
 		.copy-header {
-			grid-template-columns: repeat(2, auto);
 			grid-column-gap: 1rem;
+			grid-template-columns: repeat(2, auto);
 			margin-block-start: -3rem;
 		}
 
 		.game-id {
-			//block-size: 12rem;
 			block-size: auto;
 			inline-size: 5rem;
 		}
 
 		.game-id .text {
 			font-size: 1.2rem;
-			line-height: normal
+			line-height: normal;
 		}
 
 		.game-id .number {
@@ -340,23 +333,19 @@
 
 		.subtitle {
 			font-size: calc(2.4rem * var(--scale-factor));
-			word-wrap: break-word;
+			line-height: normal;
 			overflow-wrap: break-word;
+			word-wrap: break-word;
 		}
 
 		.content-check {
 			padding-block-start: 2rem;
 		}
 
-		.content-check-grid {
-			gap: 1.5rem;
-			grid-template-columns: 1fr;
-		}
-
 		.content-check-btn {
-			width: 12rem;
-			height: 3rem;
+			block-size: 3rem;
 			font-size: 1.2rem;
+			inline-size: 12rem;
 		}
 
 		.content-check-text {

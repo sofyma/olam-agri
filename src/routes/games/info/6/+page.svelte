@@ -13,7 +13,7 @@
               <h1 class="game6-info__main-title">The Ultimate<br />Challenge</h1>
       <p class="game6-info__paragraph">Congratulations! You’ve completed all the learning topics.</p>
       <p class="game6-info__paragraph">Complete the last game so you can earn the last points you need to become a Brand Hero!</p>
-      <PlaySection imageSrc="/images/content-play-6.png" gameLink="/games/game6" color="#00C853" />
+      <PlaySection imageSrc="/images/content-play-6.png" gameLink="/games/game6" color="#00A865" />
     </div>
   </div>
 </main>
@@ -41,7 +41,7 @@
 
 .game6-info__indicator {
   align-items: center;
-  background: #00C853;
+  background: #00A865;
   block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
   color: #FFF;
@@ -69,12 +69,12 @@
 }
 
 .game6-info__main-title {
-  color: #00C853;
+  color: #00A865;
   font-size: calc(7.5rem * var(--scale-factor));
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 

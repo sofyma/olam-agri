@@ -28,23 +28,16 @@ export default {
       initialValue: true
     },
     {
-      name: 'availableFrom',
-      title: 'Available From',
+      name: 'lockedUntil',
+      title: 'Locked Until',
       type: 'datetime',
-      description: 'Game will be unlocked after this date',
-      validation: Rule => Rule.required()
-    },
-    {
-      name: 'availableUntil',
-      title: 'Available Until',
-      type: 'datetime',
-      description: 'Game will be locked after this date (optional)'
+      description: 'Game will be locked until this date (optional)'
     }
   ],
   preview: {
     select: {
       title: 'gameId',
-      subtitle: 'availableFrom',
+      subtitle: 'lockedUntil',
       media: 'isActive'
     },
     prepare({ title, subtitle, media }) {
@@ -59,7 +52,7 @@ export default {
       
       return {
         title: gameTitles[title] || title || 'Unknown Game',
-        subtitle: subtitle ? `Available from: ${new Date(subtitle).toLocaleDateString()}` : 'No date set',
+        subtitle: subtitle ? `Locked until: ${new Date(subtitle).toLocaleDateString()}` : 'No lock date set',
         media: media ? 'Active' : 'Inactive'
       }
     }

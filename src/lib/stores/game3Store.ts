@@ -62,7 +62,7 @@ const createGame3Store = () => {
     ],
     exit: {
       x: 1200,
-      y: 890,
+      y: 870, // Updated to match new finish line Y position
       width: 20,
       height: 20
     },
@@ -315,7 +315,7 @@ const createGame3Store = () => {
           ],
           exit: {
             x: 1200,
-            y: 890,
+            y: 870, // Updated to match new finish line Y position
             width: 20,
             height: 20
           },
@@ -358,7 +358,7 @@ const createGame3Store = () => {
           ],
           exit: {
             x: 1200,
-            y: 890,
+            y: 870, // Updated to match new finish line Y position
             width: 20,
             height: 20
           },
@@ -438,7 +438,7 @@ const createGame3Store = () => {
         }
 
         // Check exit collision - detect when ball hits the finish line
-        const finishLineY = 890.71;
+        const finishLineY = 870; // Moved up from 890.71 to stop ball earlier
         const finishLineX1 = 1141.28;
         const finishLineX2 = 1200.39;
         
@@ -447,7 +447,7 @@ const createGame3Store = () => {
           console.log('Game 3 completed! Ball hit finish line');
           return {
             ...state,
-            ballPosition: { x: newX, y: newY },
+            ballPosition: { x: newX, y: finishLineY }, // Keep ball at finish line Y position
             isComplete: true,
             score: state.score + 1
           };
@@ -548,7 +548,8 @@ const createGame3Store = () => {
         }
 
         // Check exit collision - detect when ball hits the finish line
-        const finishLineY = 890.71;
+        // Modified to stop ball before it reaches the edge of the image
+        const finishLineY = 870; // Moved up from 890.71 to stop ball earlier
         const finishLineX1 = 1141.28;
         const finishLineX2 = 1200.39;
         
@@ -557,7 +558,7 @@ const createGame3Store = () => {
           console.log('Game 3 completed! Ball hit finish line');
           return {
             ...state,
-            ballPosition: { x: nextX, y: nextY },
+            ballPosition: { x: nextX, y: finishLineY }, // Keep ball at finish line Y position
             isComplete: true,
             score: state.score + 1
           };

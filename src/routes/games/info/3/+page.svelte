@@ -14,10 +14,11 @@
       <section class="game3-info__section">
         <p class="game3-info__section-paragraph">Our colours and typography are key to how we express who we are.</p>
         <h2 class="game3-info__section-title">Our Colours</h2>
-        <p class="game3-info__section-paragraph"><span class="game3-info__bold-text">We lead with orange,</span> it reflects our spirit. It's bold, warm and vibrant.<br />Alongside this, we have a bright, eye-catching colour palette that makes us stand out from the rest!</p>
-        <img class="game3-info__image" src="/images/content-3_1.png" alt="Our Colours">
+        <p class="game3-info__section-paragraph"><span class="game3-info__bold-text">We lead with orange, it reflects our spirit.</span> It's bold, warm and vibrant.</p>
+        <p class="game3-info__section-paragraph" style="padding-block-start: 2rem;">Alongside this, we have a bright, eye-catching colour palette that makes us stand out from the rest!</p>
+        <img style="max-inline-size: calc(98rem * var(--scale-factor))" class="game3-info__image" src="/images/content-3_1.jpg" alt="Our Colours">
         <p class="game3-info__section-paragraph game3-info__section-paragraph--bold">Find our colour codes in our brand guidelines</p>
-        <img class="game3-info__image game3-info__image--second" src="/images/content-3_2.png" alt="Brand guidelines">
+        <img style="max-inline-size: calc(98rem * var(--scale-factor))" class="game3-info__image game3-info__image--second" src="/images/content-3_2.jpg" alt="Brand guidelines">
         <hr class="game3-info__divider" />
         <h2 class="game3-info__section-title">Our Typography</h2>
         <p class="game3-info__section-paragraph"><span class="game3-info__bold-text">We use Gilroy font.</span> Clean, modern and highly legible.</p>
@@ -29,7 +30,7 @@
         <p class="game3-info__section-paragraph game3-info__section-paragraph--bold">Please download them only from the <a href="https://olamagri.workvivo.com/" target="_blank" class="game3-info__brand-hub-link">Brand Hub</a>.</p>
         <img class="game3-info__image" src="/images/content-3_3_1.png" alt="Typography guidelines">
       </section>
-      <PlaySection imageSrc="/images/content-play-3.png" gameLink="/games/game3" color="#FF3DA6" />
+      <PlaySection imageSrc="/images/content-play-3.png" gameLink="/games/game3" color="#FF5BAF" />
     </div>
   </div>
 </main>
@@ -57,7 +58,7 @@
 
 .game3-info__indicator {
   align-items: center;
-  background: #FF3DA6;
+  background: #FF5BAF;
   block-size: 10.5rem;
   border-radius: 0 calc(2.5rem * var(--scale-factor));
   color: #FFF;
@@ -85,12 +86,12 @@
 }
 
 .game3-info__main-title {
-  color: #FF3DA6;
+  color: #FF5BAF;
   font-size: calc(7.5rem * var(--scale-factor));
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 
@@ -101,7 +102,7 @@
 }
 
 .game3-info__section-title {
-  color: #FF3DA6;
+  color: #FF5BAF;
   font-size: calc(4rem * var(--scale-factor));
   font-style: normal;
   font-weight: 600;

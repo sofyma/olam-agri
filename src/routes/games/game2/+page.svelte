@@ -80,7 +80,7 @@
 
 		const statement = $game2Store.statements[index];
 		const path = pathOrder[index] || (index % 4) + 1;
-		const animationDuration = 5000; // 5 seconds for demo
+		const animationDuration = 8000; // 8 seconds - slowed down from 5 seconds
 
 		activeBubbles = [
 			...activeBubbles,
@@ -93,7 +93,7 @@
 			}
 		];
 
-		const nextDelay = Math.max(1000, 2000 - (index * 100));
+		const nextDelay = Math.max(2000, 3500 - (index * 150)); // Increased delays: 2-3.5 seconds instead of 1-2 seconds
 		spawnTimeout = setTimeout(() => spawnBubble(index + 1), nextDelay);
 	}
 
@@ -369,10 +369,10 @@
 		position: absolute;
 		will-change: transform;
 		
-		&.path-1 { animation: path1 var(--duration) linear forwards; }
-		&.path-2 { animation: path2 var(--duration) linear forwards; }
-		&.path-3 { animation: path3 var(--duration) linear forwards; }
-		&.path-4 { animation: path4 var(--duration) linear forwards; }
+		&.path-1 { animation: path1 var(--duration) ease-out forwards; }
+		&.path-2 { animation: path2 var(--duration) ease-out forwards; }
+		&.path-3 { animation: path3 var(--duration) ease-out forwards; }
+		&.path-4 { animation: path4 var(--duration) ease-out forwards; }
 	}
 
 	.bubble {
@@ -461,19 +461,19 @@
 
 	@keyframes path1 {
 		from { top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
-		to { top: 10%; left: 15%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.2; }
+		to { top: 10%; left: 15%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.4; }
 	}
 	@keyframes path2 {
 		from { top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
-		to { top: 10%; left: 85%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.2; }
+		to { top: 10%; left: 85%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.4; }
 	}
 	@keyframes path3 {
 		from { top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
-		to { top: 70%; left: 85%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.2; }
+		to { top: 70%; left: 85%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.4; }
 	}
 	@keyframes path4 {
 		from { top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
-		to { top: 70%; left: 15%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.2; }
+		to { top: 70%; left: 15%; transform: translate(-50%, -50%) scale(2.5); opacity: 0.4; }
 	}
 	@keyframes blink {
 		50% { opacity: 0.5; }

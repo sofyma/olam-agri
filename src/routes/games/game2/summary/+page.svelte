@@ -52,7 +52,10 @@
 		<h2 class="title">This is your final score:</h2>
 
 		<div class="results">
-			<p class="paragraph">Congratulations! You destroyed {$game2Store.destroyedLies} lies (+{$game2Store.destroyedLies}) and {$game2Store.destroyedTruths} truth{$game2Store.destroyedTruths !== 1 ? 's' : ''} (−{$game2Store.destroyedTruths}). You also let {passedTruths} truth{passedTruths !== 1 ? 's' : ''} pass (+{passedTruths}) and {slippedLies} lie{slippedLies !== 1 ? 's' : ''} slip through (−{slippedLies}). This gives you a total of:</p>
+			<p class="paragraph">
+				You destroyed {$game2Store.destroyedLies} lies and {$game2Store.destroyedTruths} truth{$game2Store.destroyedTruths !== 1 ? 's' : ''}, and you let {passedTruths} truth{passedTruths !== 1 ? 's' : ''} and {slippedLies} lie{slippedLies !== 1 ? 's' : ''} pass. <br>
+				This gives you a total of:
+			</p>
 			<p class="total-points">{$game2Store.score} points</p>
 
 			<img src="/images/game2-summary-image.png" alt="Hero" class="game-summary-image">
@@ -94,7 +97,7 @@
 	}
 
 	.game-summary {
-		max-inline-size: calc(90rem * var(--scale-factor));
+		max-inline-size: calc(100rem * var(--scale-factor));
 		position: relative;
 		z-index: 1;
 	}

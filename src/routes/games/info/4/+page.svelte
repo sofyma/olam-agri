@@ -16,7 +16,7 @@
         <p class="game4-info__section-paragraph">That's why it's essential to stay aligned, using the right elements in the right way, both internally and externally.</p>
         <h2 class="game4-info__section-title">How we sound matters</h2>
         <p class="game4-info__section-paragraph">Make it easy for our audience to take in valuable information.</p>
-        <img class="game4-info__image" src="/images/content-4_1.png" alt="How we sound matters">
+        <img class="game4-info__image" src="/images/content-4_1.jpg" alt="How we sound matters">
         <hr class="game4-info__divider" />
         <h2 class="game4-info__section-title">Use the official templates</h2>
         <p class="game4-info__section-paragraph">Always start from the available ones:</p>
@@ -25,10 +25,10 @@
           <li><span class="game4-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Stationery</li>
           <li><span class="game4-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Marketing collaterals…</li>
         </ul>
-        <img class="game4-info__image" src="/images/content-4_2.png" alt="Official templates">
+        <img class="game4-info__image" src="/images/content-4_2.jpg" alt="Official templates">
         <hr class="game4-info__divider" />
         <h2 class="game4-info__section-title">When designing, simple rules to keep in mind</h2>
-        <img class="game4-info__image" src="/images/content-4_3.png" alt="Design rules">
+        <img class="game4-info__image" src="/images/content-4_3.jpg" alt="Design rules">
         <hr class="game4-info__divider" />
         <h2 class="game4-info__section-title">Enhance designs with brand-aligned visual elements</h2>
         
@@ -39,13 +39,13 @@
               <p class="game4-info__element-description">Use with images of people, products, and places, as well as applying only colour.</p>
             </div>
             <div class="game4-info__element-image">
-              <img src="/images/content-4_4.png" alt="Curved Device">
+              <img src="/images/content-4_4.jpg" alt="Curved Device">
             </div>
           </div>
           
           <div class="game4-info__element-row">
             <div class="game4-info__element-image">
-              <img src="/images/content-4_5.png" alt="Leaf Device">
+              <img src="/images/content-4_5.jpg" alt="Leaf Device">
             </div>
             <div class="game4-info__element-text">
               <p class="game4-info__element-title">Leaf Device</p>
@@ -59,7 +59,7 @@
               <p class="game4-info__element-description">Use when devices feel limiting or for bold impact with the image.</p>
             </div>
             <div class="game4-info__element-image">
-              <img src="/images/content-4_6.png" alt="Full Bleed Imagery">
+              <img src="/images/content-4_6.jpg" alt="Full Bleed Imagery">
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 

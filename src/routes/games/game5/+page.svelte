@@ -18,6 +18,11 @@
     let isCorrectAnswer = false;
     let attempts = 0;
     
+    // Animation state variables
+    let heroAnimationComplete = false;
+    let timerStarted = false;
+    let contentVisible = false;
+    
     const gameService = Game5Service.getInstance();
     
     onMount(async () => {
@@ -43,6 +48,10 @@
 				instructionsClosed = true;
 				instructionsClosedSidebar = true;
 				game5Store.start(); // This will now resume from saved state
+				// Skip animation for resumed games
+				heroAnimationComplete = true;
+				timerStarted = true;
+				contentVisible = true;
 			} else {
 				console.log('Game 5 Page: No saved timer state, showing instructions');
 			}
@@ -63,6 +72,19 @@
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
 		game5Store.start();
+		
+		// Start animation sequence
+		setTimeout(() => {
+			heroAnimationComplete = true;
+			// Start timer after hero animation
+			setTimeout(() => {
+				timerStarted = true;
+				// Show content after timer starts
+				setTimeout(() => {
+					contentVisible = true;
+				}, 500); // 0.5s delay after timer
+			}, 300); // 0.3s delay after hero animation
+		}, 100); // Small delay to ensure DOM is ready
 	}
 
 
@@ -131,7 +153,7 @@
 				paragraphs={[
 					"Caution!",
 					"This is a time-sensitive challenge. Use the light signal to call Rocket Girl and start the game.",
-					"If you manage to complete the game you'll earn 1 point, but you'll have to be very fast because the time you take will be used as a tiebreaker if there's a draw with other participants at the end of the campaign.",
+					"If you complete the game, you'll earn 5 points. However, you need to be very fast, because the time you take will be used as a tiebreaker in case of a draw with other participants at the end of the competition.",
 					"In the next screen, read carefully all the steps before doing anything!",
 					"Are you ready? 3, 2, 1..."
 				]}
@@ -174,20 +196,20 @@
 
 		<div class="game-grid">
 			<div class="game-hero-column">
-				<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image">
+				<img src="/images/heroe-5-1.png" alt="Game 5 Hero" class="game-hero-image" class:hero-animated={heroAnimationComplete}>
 				<!-- Mobile timer positioned under hero image -->
-				<div class="mobile-timer">
+				<div class="mobile-timer" class:visible={timerStarted}>
 					{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
 				</div>
 			</div>
 			
 			<div class="game-content-column">
 				<!-- Desktop timer -->
-				<div class="desktop-timer">
+				<div class="desktop-timer" class:visible={timerStarted}>
 					{$game5Store.timeSpent ? formatTime($game5Store.timeSpent) : '00:00'}
 				</div>
 				
-				<div class="game-container-white">
+				<div class="game-container-white" class:visible={contentVisible}>
 					<h2 class="game-title">Follow the steps to find the answer</h2>
 					<p class="game-description"><strong>Important:</strong> Read carefully all the steps before doing anything!</p>
 					
@@ -281,6 +303,12 @@
 		block-size: auto;
 		inline-size: 100%;
 		max-inline-size: 100%;
+		transform: translate(-100%, 100%); /* Start from bottom-left corner */
+		transition: transform 1.5s ease-out;
+		
+		&.hero-animated {
+			transform: translate(0, 0); /* Fly to final position */
+		}
 	}
 
 	.desktop-timer {
@@ -294,10 +322,26 @@
 		font-weight: 600;
 		justify-content: flex-start;
 		line-height: calc(12rem * var(--scale-factor));
+		opacity: 0;
+		transform: translateY(-20px);
+		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+		
+		&.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.mobile-timer {
 		display: none; /* Hidden by default on desktop */
+		opacity: 0;
+		transform: translateY(-20px);
+		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+		
+		&.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.game-container-white {
@@ -305,6 +349,14 @@
 		border-radius: 0 calc(3.5rem * var(--scale-factor));
 		margin-block-start: 0;
 		padding: calc(5.5rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+		
+		&.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.game-title {
@@ -335,8 +387,10 @@
 		font-weight: 600;
 		gap: 0;
 		line-height: calc(5.9rem * var(--scale-factor));
-		list-style-position: inside;
+		list-style: decimal;
+		list-style-position: outside;
 		margin-block-start: 1.5rem;
+		padding-inline-start: calc(2rem * var(--scale-factor));
 
 		.highlight {
 			color: #00B2E7;
@@ -491,6 +545,12 @@
 
 		.game-hero-image {
 			inline-size: 21.6rem;
+			transform: translate(-100%, 100%); /* Start from bottom-left corner */
+			transition: transform 1.5s ease-out;
+			
+			&.hero-animated {
+				transform: translate(0, 0); /* Fly to final position */
+			}
 		}
 
 		.game-hero-column {
@@ -515,6 +575,14 @@
 			font-weight: 600;
 			line-height: normal;
 			padding-block-start: 1.5rem;
+			opacity: 0;
+			transform: translateY(-20px);
+			transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+			
+			&.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 
 		.game-container-white {
@@ -540,6 +608,9 @@
 			font-size: 1.6rem;
 			line-height: normal;
 			margin-block-start: .9rem;
+			list-style: decimal;
+			list-style-position: outside;
+			padding-inline-start: 1.5rem;
 		}
 
 		.game-container-white .answer-input {

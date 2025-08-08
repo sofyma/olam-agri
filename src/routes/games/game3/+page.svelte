@@ -124,14 +124,12 @@
         // Change the question data before the feedback disappears
         setTimeout(() => {
             game3Store.answerQuestion(answer);
-            // Show question first, then hide feedback
+            // Hide feedback after store update (much faster timing)
             setTimeout(() => {
+                showFeedback = false; // Hide feedback
                 showQuestion = true; // Show question
-                setTimeout(() => {
-                    showFeedback = false; // Hide feedback after question is visible
-                }, 50);
-            }, 100);
-        }, 1000);
+            }, 200); // Much faster feedback - reduced from 400ms to 200ms
+        }, 500); // Reduced initial feedback time from 1000ms to 500ms
     }
 
     function handleKeyDown(event: KeyboardEvent) {

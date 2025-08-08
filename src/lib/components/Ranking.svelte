@@ -7,11 +7,16 @@
   import { getRegions } from '$lib/utils/countryRegions';
   import { authStore } from '$lib/stores/authStore';
   
+  // Extended type for search results with global position
+  interface SearchResultEntry extends RegionRankingEntry {
+    globalPosition: number;
+  }
+  
   let topHeroes: TopBrandHeroesEntry[] = [];
   let availableRegions: string[] = [];
   let selectedRegion: string = '';
   let regionRankings: RegionRankingEntry[] = [];
-  let searchResults: RegionRankingEntry[] = [];
+  let searchResults: SearchResultEntry[] = [];
   let allRankings: RegionRankingEntry[] = [];
   let searchQuery = '';
   let currentPage = 1;
@@ -60,6 +65,9 @@
 
   async function loadSearchResults(page: number = 1) {
     try {
+      // Create global ranking sorted by total score (descending)
+      const globalRanking = allRankings.sort((a, b) => b.totalScore - a.totalScore);
+      
       // Filter rankings based on search query
       let filteredRankings = allRankings;
       
@@ -71,15 +79,27 @@
         );
       }
       
-      // Sort by total score (descending)
+      // Sort filtered results by total score (descending)
       const sortedRankings = filteredRankings.sort((a, b) => b.totalScore - a.totalScore);
+      
+      // Add global position to each result
+      const resultsWithGlobalPosition = sortedRankings.map(ranking => {
+        const globalPosition = globalRanking.findIndex(globalRanking => 
+          globalRanking.user._id === ranking.user._id
+        ) + 1; // +1 because findIndex returns 0-based index
+        
+        return {
+          ...ranking,
+          globalPosition
+        };
+      });
       
       // Pagination: 5 users per page
       const usersPerPage = 5;
       const startIndex = (page - 1) * usersPerPage;
       const endIndex = startIndex + usersPerPage;
       
-      searchResults = sortedRankings.slice(startIndex, endIndex);
+      searchResults = resultsWithGlobalPosition.slice(startIndex, endIndex);
       totalPages = Math.ceil(sortedRankings.length / usersPerPage);
       currentPage = page;
     } catch (err) {
@@ -160,7 +180,16 @@
                 <tbody>
                   {#each topHeroes as entry, i}
                     <tr>
-                      <td style="text-align: end;">{entry.region}</td>
+                      <td style="text-align: end;">
+                        {#if entry.region === 'Africa & Middle East'}
+                          <div class="two-line-region">
+                            <span class="line-1">Africa &</span>
+                            <span class="line-2">Middle East</span>
+                          </div>
+                        {:else}
+                          {entry.region}
+                        {/if}
+                      </td>
                       <td style="color: #2E2D2C;">
                         {#each entry.topPlayers as player, j}
                           <div class="player-name">
@@ -201,7 +230,16 @@
             
             {#if selectedRegion}
               <div class="region-content">
-                <h4 class="region-title">{selectedRegion}</h4>
+                <h4 class="region-title">
+                  {#if selectedRegion === 'Africa & Middle East'}
+                    <div class="two-line-region">
+                      <span class="line-1">Africa &</span>
+                      <span class="line-2">Middle East</span>
+                    </div>
+                  {:else}
+                    {selectedRegion}
+                  {/if}
+                </h4>
                 
                 <div class="table-container">
                   <table class="ranking-table region-table">
@@ -214,7 +252,7 @@
                     </thead>
                     <tbody>
                       {#each regionRankings as entry, i}
-                        <tr class:border-after={i === 1} class:top-two={i < 2} class:next-three={i >= 2 && i < 5}>
+                        <tr class:border-after={i === 2} class:top-three={i < 3} class:next-two={i >= 3 && i < 5}>
                           <td class="position" style="text-align: end;">{i + 1}</td>
                           <td class="player-name" style="color: #2E2D2C;">{entry.user.displayName}</td>
                           <td class="points" style="text-align: end;">{entry.totalScore}</td>
@@ -258,7 +296,7 @@
                   <tbody>
                     {#each searchResults as entry, i}
                       <tr>
-                        <td style="text-align: end;">{(currentPage - 1) * 5 + i + 1}</td>
+                        <td style="text-align: end;">{entry.globalPosition}</td>
                         <td style="color: #2E2D2C;">{entry.user.displayName}</td>
                         <td style="text-align: end;">{entry.totalScore}</td>
                       </tr>
@@ -509,7 +547,8 @@
       }
     }
 
-    .points, .position {
+    .points, 
+    .position {
       color: #FF7000;
       font-weight: 700;
       text-align: center;
@@ -545,13 +584,13 @@
         border-bottom: none;
       }
 
-      // Add border after first 2 users (separator line)
+      // Add border after first 3 users (separator line)
       tr.border-after td {
         border-bottom: 0.1rem solid #E6E6E6 !important;
       }
 
-      // Make next three users (positions 3-5) have regular font weight
-      tr.next-three {
+      // Make next two users (positions 4-5) have regular font weight
+      tr.next-two {
         .position, .player-name, .points {
           font-weight: 400;
         }
@@ -620,6 +659,26 @@
     margin-block-end: calc(5.5rem * var(--scale-factor));
   }
 
+  .two-line-region {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: center;
+
+    .line-1 {
+      display: block;
+    }
+
+    .line-2 {
+      display: block;
+    }
+  }
+
+  /* Special styling for Top Brand Heroes table - right align the two-line region */
+  .top-heroes-table .two-line-region {
+    text-align: end;
+  }
+
   .search-container {
     display: flex;
     margin-block-end: calc(3rem * var(--scale-factor));
@@ -637,12 +696,12 @@
   }
 
   .search-input {
-    border: 0.2rem solid #999;
+    border: .2rem solid #999;
     border-radius: calc(50rem * var(--scale-factor));
     color: #999;
     font-size: 1.6rem;
     inline-size: 100%;
-    padding: 1.5rem 2rem 1.5rem calc(6rem * var(--scale-factor));
+    padding: 1.5rem 2rem 1.5rem 6rem;
 
     &:focus {
       box-shadow: 0 0 0 0.2rem #FF7000;

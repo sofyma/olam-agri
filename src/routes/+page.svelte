@@ -63,7 +63,7 @@
     }
   }
 
-  function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): { text: string; type: 'from' | 'until' | 'none' } {
+  function formatAvailableDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): { text: string; type: 'locked' | 'disabled' | 'none' } {
     const config = gameAvailabilityStore.getGameConfig(gameId);
     console.log(`formatAvailableDate for ${gameId}:`, config);
     
@@ -74,35 +74,24 @@
     
     const now = new Date();
     
-    // Check if availableUntil exists and is in the future
-    if (config.availableUntil) {
-      try {
-        const untilDate = new Date(config.availableUntil);
-        if (!isNaN(untilDate.getTime()) && untilDate > now) {
-          const month = untilDate.toLocaleDateString('en-US', { month: 'short' });
-          const day = untilDate.getDate();
-          const result = `${month} ${day}`;
-          console.log(`Formatted until date for ${gameId}:`, result);
-          return { text: result, type: 'until' };
-        }
-      } catch (error) {
-        console.error('Error formatting until date for', gameId, ':', error);
-      }
+    // Check if game is disabled via toggle
+    if (!config.isActive) {
+      return { text: '', type: 'disabled' };
     }
     
-    // Check if availableFrom exists and is in the future
-    if (config.availableFrom) {
+    // Check if lockedUntil exists and is in the future
+    if (config.lockedUntil) {
       try {
-        const fromDate = new Date(config.availableFrom);
-        if (!isNaN(fromDate.getTime()) && fromDate > now) {
-          const month = fromDate.toLocaleDateString('en-US', { month: 'short' });
-          const day = fromDate.getDate();
+        const lockedUntil = new Date(config.lockedUntil);
+        if (!isNaN(lockedUntil.getTime()) && lockedUntil > now) {
+          const month = lockedUntil.toLocaleDateString('en-US', { month: 'short' });
+          const day = lockedUntil.getDate();
           const result = `${month} ${day}`;
-          console.log(`Formatted from date for ${gameId}:`, result);
-          return { text: result, type: 'from' };
+          console.log(`Formatted locked until date for ${gameId}:`, result);
+          return { text: result, type: 'locked' };
         }
       } catch (error) {
-        console.error('Error formatting from date for', gameId, ':', error);
+        console.error('Error formatting locked until date for', gameId, ':', error);
       }
     }
     
@@ -139,6 +128,8 @@
           </nav>
         </div>
       </div>
+
+      <h1 class="header-title">Brand Heroes</h1>
     </div>
   </header>
   
@@ -156,7 +147,7 @@
     <section class="map-section">
       <div class="map-container">
         <h2 class="map-title">We're Looking for the 3 Brand Heroes of Each Region</h2>
-        <p class="map-paragraph"><strong>The 12 top players</strong> from Olam Agri's world will earn the title and become Brand Heroes</p>
+        <p class="map-paragraph"><strong>The 12 top players</strong> from Olam Agri's world will earn the title and become Brand Heroes.</p>
         <p class="map-paragraph"><strong>Are you ready to claim your place?</strong></p>
         <img class="map-image" src="/images/site-map.png" alt="Site Map">
       </div>
@@ -166,7 +157,7 @@
     <section class="info-section">
       <div class="info-container">
         <h2 class="info-title">Heroes Are Made, Not Born.<br>Show Us What You've Got!</h2>
-        <p class="info-paragraph">Every Tuesday for 6 weeks, a new Brand Heroes post will be published on The Loop. This post will take you to the Brand Heroes site, where you'll find:</p>
+        <p class="info-paragraph"><strong>Every Tuesday for 6 weeks</strong>, a new Brand Heroes post will be published on The Loop. This post will take you to the Brand Heroes site, where you'll find:</p>
         <ul class="info-list">
           <li class="info-list-item">
             <strong>A new brand-related micro-content</strong><br>
@@ -174,7 +165,7 @@
           </li>
           <li class="info-list-item">
             <strong>A new game unlocked</strong><br>
-            Put your knowledge to the test and see how well you can apply what you've learned
+            Put your knowledge to the test and see how well you can apply what you've learned.
           </li>
         </ul>
         <p class="info-paragraph orange">Learn about our brand, play to climb the ranks and win the final prize!</p>
@@ -196,7 +187,7 @@
             In this epic quest, you will find heroes like yourself, who will help you achieve your mission, but you will also find villains who will get in the way and try to make you fail.
           </p>
           <p class="games-paragraph">
-            You will meet <strong>Vision Queen</strong> and her super-sight powers. You will have to stop the attacks of <strong>Mr Confusion</strong>. You will also meet <strong>Dr Genius, Rocket Girl</strong> and many more characters that populate the Olam Agri's world.
+            You will meet <strong>Vision Queen</strong> and her super-sight powers. You will have to stop the attacks of <strong>Mr Confusion</strong>. You will also meet <strong>Dr Genius, Rocket Girl</strong> and many more characters that populate Olam Agri's world.
           </p>
           <p class="games-paragraph bold">
             Are you up to the test?
@@ -223,10 +214,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game1Date.type === 'from'}
-                      Content available<br>from {game1Date.text}
+                    {#if game1Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game1Date.type === 'locked'}
+                      Content blocked<br>until {game1Date.text}
                     {:else}
-                      Content blocked{#if game1Date.text}<br>until {game1Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -250,10 +243,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game2Date.type === 'from'}
-                      Content available<br>from {game2Date.text}
+                    {#if game2Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game2Date.type === 'locked'}
+                      Content blocked<br>until {game2Date.text}
                     {:else}
-                      Content blocked{#if game2Date.text}<br>until {game2Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -277,10 +272,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game3Date.type === 'from'}
-                      Content available<br>from {game3Date.text}
+                    {#if game3Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game3Date.type === 'locked'}
+                      Content blocked<br>until {game3Date.text}
                     {:else}
-                      Content blocked{#if game3Date.text}<br>until {game3Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -307,10 +304,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game4Date.type === 'from'}
-                      Content available<br>from {game4Date.text}
+                    {#if game4Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game4Date.type === 'locked'}
+                      Content blocked<br>until {game4Date.text}
                     {:else}
-                      Content blocked{#if game4Date.text}<br>until {game4Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -334,10 +333,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game5Date.type === 'from'}
-                      Content available<br>from {game5Date.text}
+                    {#if game5Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game5Date.type === 'locked'}
+                      Content blocked<br>until {game5Date.text}
                     {:else}
-                      Content blocked{#if game5Date.text}<br>until {game5Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -361,10 +362,12 @@
                   {#if $gameAvailabilityStore.isLoading}
                     Loading...
                   {:else}
-                    {#if game6Date.type === 'from'}
-                      Content available<br>from {game6Date.text}
+                    {#if game6Date.type === 'disabled'}
+                      Content blocked
+                    {:else if game6Date.type === 'locked'}
+                      Content blocked<br>until {game6Date.text}
                     {:else}
-                      Content blocked{#if game6Date.text}<br>until {game6Date.text}{/if}
+                      Content blocked
                     {/if}
                   {/if}
                 </p>
@@ -380,7 +383,7 @@
       <div class="hero-reward-container">
         <h2 class="hero-reward-title">The Hero's Reward</h2>
         <p class="hero-reward-paragraph">True heroes don't fight for fame or fortune, they fight for justice and the common good. Even so, they receive the affection and recognition of society, and often must accept gestures of respect and admiration.</p>
-        <p class="hero-reward-paragraph">This is why the top 3 winners in each region will receive:</p>
+        <p class="hero-reward-paragraph">This is why the <strong>top 3 winners in each region will receive:</strong></p>
         
         <div class="rewards-grid">
           <!-- First Row -->
@@ -422,6 +425,11 @@
     <!-- Sixth Section - Brand Defender -->
     <section class="brand-defender-section">
       <img src="/images/group-126.png" alt="Brand Defender" class="brand-defender-hero-image">
+
+      <div class="brand-defender-container-mobile">
+        <img src="/images/site-reward-background.jpg" alt="Brand Defender" class="site-reward-background">
+        <img src="/images/olam-agri-brand-hero.png" alt="Brand Defender" class="olam-agri-brand-hero">
+      </div>
       
       <div class="brand-defender-container">
         <h2 class="brand-defender-title">But wait, there's more!</h2>
@@ -459,16 +467,26 @@
   }
 
   .header {
-    background-image: url('/images/home-hero.jpg');
+    background-image: url('/images/oa-site-small-header-background.jpg');
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: calc(88.2rem * var(--scale-factor));
+    block-size: calc(53.5rem * var(--scale-factor));
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
-    @media(max-width: 600px) {
-      background-image: url('/images/olam-agri-game-gome-hero-small.jpg');
+    @media(max-width: 932px) {
+      block-size: 53.5rem;
+    }
+
+    &-title {
+      color: #FFF;
+      font-size: calc(8rem * var(--scale-factor));
+      font-weight: 600;
+      line-height: normal;
+      padding-block-start: 1.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     :global(.logo path) {
@@ -488,13 +506,42 @@
     .wrapper {
       max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
-      padding-inline: 0;
     }
 
-    @media (max-width: 932px) {
+    @media (max-width: 1024px) {
       .wrapper {
         padding-inline: 2rem;
       }
+    }
+
+    .row {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .navigation {
+      &-list {
+        align-items: center;
+        display: flex;
+        gap: calc(3rem * var(--scale-factor));
+      }
+
+      &-link {
+        color: #000;
+        font-size: 1.8rem;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+
+    .btn {
+      align-items: center;
+      background-color: #fff;
+      block-size: 3.2rem;
+      border-radius: 0 1.5rem;
+      display: flex;
+      inline-size: 11.1rem;
     }
   }
 
@@ -1041,7 +1088,7 @@
     display: flex;
     font-size: 2rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     height: 4.4rem;
     inline-size: calc(19rem * var(--scale-factor));
     justify-content: center;
@@ -1123,16 +1170,16 @@
     font-size: calc(2.4rem * var(--scale-factor));
     font-style: normal;
     font-weight: 600;
-    line-height: 150%;
+    line-height: normal;
     margin-block-end: 1rem;
   }
 
   .reward-description {
     color: #000;
-    font-size: 2rem;
+    font-size: calc(2.4rem * var(--scale-factor));
     font-style: normal;
     font-weight: 400;
-    line-height: 150%;
+    line-height: normal;
   }
 
   .brand-defender-section {
@@ -1149,7 +1196,35 @@
   .brand-defender-hero-image {
     inline-size: 100%;
     height: auto;
+
+    @media(max-width: 932px) {
+      display: none;
+    }
   }
+
+ .brand-defender-container-mobile {
+  padding-block-start: .1rem;
+  position: relative;
+
+  @media(min-width: 933px) {
+    display: none;
+  }
+ }
+
+ .site-reward-background {
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  position: absolute;
+ }
+
+ .olam-agri-brand-hero {
+  inline-size: 60%;
+  height: auto;
+  margin-block-start: calc(6rem * var(--scale-factor));
+  margin-inline: auto;
+  position: relative;
+ }
 
   .brand-defender-title {
     color: #FF7000;
@@ -1157,7 +1232,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: 125%;
-    padding-block-start: calc(17.5rem * var(--scale-factor));
+    padding-block-start: calc(10rem * var(--scale-factor));
   }
 
   .brand-defender-content {
@@ -1205,9 +1280,11 @@
   @media (max-width: 932px) {
     .logo-link {
       inline-size: 80%;
-    }
+      }
 
-    .hero-section {
+
+
+  .hero-section {
       padding-inline: 2rem;
     }
 

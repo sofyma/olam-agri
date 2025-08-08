@@ -4,8 +4,7 @@ export interface GameConfig {
   _id: string;
   gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6';
   isActive: boolean;
-  availableFrom: string;
-  availableUntil?: string;
+  lockedUntil?: string;
 }
 
 export class GameAvailabilityService {
@@ -27,8 +26,7 @@ export class GameAvailabilityService {
         _id,
         gameId,
         isActive,
-        availableFrom,
-        availableUntil
+        lockedUntil
       }`;
       
       const configs = await client.fetch(query);
@@ -59,17 +57,11 @@ export class GameAvailabilityService {
     }
 
     const now = new Date();
-    const availableFrom = new Date(config.availableFrom);
     
-    // Check if current time is after availableFrom
-    if (now < availableFrom) {
-      return false;
-    }
-
-    // Check if current time is before availableUntil (if set)
-    if (config.availableUntil) {
-      const availableUntil = new Date(config.availableUntil);
-      if (now > availableUntil) {
+    // Check if current time is before lockedUntil (if set)
+    if (config.lockedUntil) {
+      const lockedUntil = new Date(config.lockedUntil);
+      if (now < lockedUntil) {
         return false;
       }
     }
@@ -81,20 +73,28 @@ export class GameAvailabilityService {
     return this.gameConfigs.get(gameId) || null;
   }
 
-  public getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
+  public getLockedUntilDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
     const config = this.gameConfigs.get(gameId);
-    return config ? new Date(config.availableFrom) : null;
+    return config?.lockedUntil ? new Date(config.lockedUntil) : null;
   }
 
   public getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): number | null {
     const config = this.gameConfigs.get(gameId);
-    if (!config || config.isActive) return null;
+    if (!config) return null;
 
     const now = new Date();
-    const availableFrom = new Date(config.availableFrom);
-    const timeDiff = availableFrom.getTime() - now.getTime();
     
-    return timeDiff > 0 ? timeDiff : null;
+    // If game is not active, return null (no countdown)
+    if (!config.isActive) return null;
+    
+    // If lockedUntil is set and in the future, return time until unlock
+    if (config.lockedUntil) {
+      const lockedUntil = new Date(config.lockedUntil);
+      const timeDiff = lockedUntil.getTime() - now.getTime();
+      return timeDiff > 0 ? timeDiff : null;
+    }
+    
+    return null;
   }
 
   public getAllGameConfigs(): GameConfig[] {

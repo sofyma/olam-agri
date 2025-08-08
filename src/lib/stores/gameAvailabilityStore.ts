@@ -50,8 +50,8 @@ const createGameAvailabilityStore = () => {
       return service.getGameConfig(gameId);
     },
 
-    getAvailableFromDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
-      return service.getAvailableFromDate(gameId);
+    getLockedUntilDate(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): Date | null {
+      return service.getLockedUntilDate(gameId);
     },
 
     getTimeUntilAvailable(gameId: 'game1' | 'game2' | 'game3' | 'game4' | 'game5' | 'game6'): number | null {

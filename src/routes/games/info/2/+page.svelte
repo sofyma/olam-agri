@@ -14,13 +14,13 @@
       <section class="game2-info__section">
         <h2 class="game2-info__section-title">Our name and logo are the face of our brand</h2>
         <p class="game2-info__section-paragraph">Let's use them right</p>
-        <img class="game2-info__image--first" src="/images/content-2_1.png" alt="Our name and logo are the face of our brand">
+        <img style="max-inline-size: calc(33.2rem * var(--scale-factor))" class="game2-info__image--first" src="/images/content-2_1.jpg" alt="Our name and logo are the face of our brand">
         <hr class="game2-info__divider" />
         <h2 class="game2-info__section-title">Our Name</h2>
         <p class="game2-info__section-paragraph game2-info__section-paragraph--bold">We are Olam Agri.</p>
         <p class="game2-info__section-paragraph"><span class="game2-info__bold-text">Not "Olam" →</span> Olam Agri is a distinct entity. Following the completion of transaction to become majority owned by SALIC, we will no longer be part of Olam Group. It's critical to ensure we enforce our identity and only use Olam Agri branded materials. We shouldn't use any materials with 'Olam'.</p>
         <p class="game2-info__section-paragraph"><span class="game2-info__bold-text">Not "Olam Global Agri" or "OGA" →</span> Those are legally entity names and its abbreviation. Use the legally entity name only at legal documents.</p>
-        <img class="game2-info__logo-guidelines-image" src="/images/content-2_2.png" alt="Our Name">
+        <img style="max-inline-size: calc(82.4rem * var(--scale-factor))" class="game2-info__logo-guidelines-image" src="/images/content-2_2.jpg" alt="Our Name">
         <hr class="game2-info__divider" />
         <h2 class="game2-info__section-title">Our Logo</h2>
         <p class="game2-info__section-paragraph"><span class="game2-info__bold-text">It's our most prized asset.</span> Use it correctly:</p>
@@ -35,12 +35,12 @@
             <p class="game2-info__section-paragraph game2-info__section-paragraph--bold">Use only the versions from the <a href="https://olamagri.workvivo.com/" target="_blank" class="game2-info__brand-hub-link">Brand Hub</a> - no edits, no distortions.</p>
           </div>
           <div class="game2-info__logo-section-column">
-            <img class="game2-info__logo-section-image" src="/images/content-2_3.png" alt="Apply the right version">
+            <img style="max-inline-size: calc(45.6rem * var(--scale-factor))" class="game2-info__logo-section-image" src="/images/content-2_3.jpg" alt="Apply the right version">
           </div>
         </div>
         <div class="game2-info__logo-section-row">
           <div class="game2-info__logo-section-column">
-            <img class="game2-info__logo-section-image" src="/images/content-2_4.png" alt="Never use just the symbol alone">
+            <img style="max-inline-size: calc(30.6rem * var(--scale-factor))" class="game2-info__logo-section-image" src="/images/content-2_4.jpg" alt="Never use just the symbol alone">
           </div>
           <div class="game2-info__logo-section-column">
             <p class="game2-info__section-paragraph game2-info__section-paragraph--bold">2. Never use just the symbol alone</p>
@@ -53,12 +53,12 @@
             <p class="game2-info__section-paragraph">Leave clear space around it, at least the height of the "O" in the logo.</p>
           </div>
           <div class="game2-info__logo-section-column">
-            <img class="game2-info__logo-section-image" src="/images/content-2_5.png" alt="Give it space">
+            <img style="max-inline-size: calc(40.6rem * var(--scale-factor))" class="game2-info__logo-section-image" src="/images/content-2_5.jpg" alt="Give it space">
           </div>
         </div>
         <div class="game2-info__logo-section-row">
           <div class="game2-info__logo-section-column">
-            <img class="game2-info__logo-section-image" src="/images/content-2_6.png" alt="Place it top left">
+            <img style="max-inline-size: calc(47.1rem * var(--scale-factor))" class="game2-info__logo-section-image" src="/images/content-2_6.jpg" alt="Place it top left">
           </div>
           <div class="game2-info__logo-section-column">
             <p class="game2-info__section-paragraph game2-info__section-paragraph--bold">4. Place it top left</p>
@@ -126,7 +126,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 

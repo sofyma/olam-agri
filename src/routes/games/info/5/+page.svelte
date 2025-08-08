@@ -14,7 +14,7 @@
       <section class="game5-info__section">
         <p class="game5-info__section-paragraph game5-info__section-paragraph--bold">The Brand Hub is the place to go for all things brand-related.</p>
         <p class="game5-info__section-paragraph">Access it anytime via <a href="https://olamagri.workvivo.com/" target="_blank" class="game5-info__brand-hub-link">The Loop</a>.</p>
-        <img class="game5-info__image" src="/images/content-5_1.png" alt="Brand Hub">
+        <img class="game5-info__image" src="/images/content-5_1.jpg" alt="Brand Hub">
         <hr class="game5-info__divider" />
         <h2 class="game5-info__section-title">Inside you'll find</h2>
         <ul class="game5-info__list">
@@ -24,7 +24,7 @@
           <li><span class="game5-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Corporate collaterals like factsheet and presentation</li>
           <li><span class="game5-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Marketing collaterals like posters, ads, roller banners, etc.</li>
         </ul>
-        <img class="game5-info__image" src="/images/content-5_2.png" alt="Brand Hub content">
+        <img class="game5-info__image" src="/images/content-5_2.jpg" alt="Brand Hub content">
         <hr class="game5-info__divider" />
         <h2 class="game5-info__section-title">No design skills? We've got you covered</h2>
         <p class="game5-info__section-paragraph">All templates are plug & play — ready to use, no need to start from scratch.</p>
@@ -91,7 +91,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 

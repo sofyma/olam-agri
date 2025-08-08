@@ -107,13 +107,15 @@
         <div class="column">
           <nav class="navigation">
             <ul class="navigation-list">
-              <li class="navigation-item">
-                <a class="navigation-link" href="/terms">Terms</a>
-              </li>
+              {#if $authStore.isAuthenticated}
+                <li class="navigation-item">
+                  <a class="navigation-link" href="/terms">Terms</a>
+                </li>
 
-              <li class="navigation-item">
-                <a class="navigation-link btn" href="/ranking">Ranking</a>
-              </li>
+                <li class="navigation-item">
+                  <a class="navigation-link btn" href="/ranking">Ranking</a>
+                </li>
+              {/if}
             </ul>
           </nav>
         </div>

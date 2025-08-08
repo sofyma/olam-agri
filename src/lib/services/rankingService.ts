@@ -292,10 +292,10 @@ export class RankingService {
         return durationDiff;
       });
       
-      // Take top 2 from this region
-      const topPlayers = sortedPlayers.slice(0, 2);
+      // Take top 3 from this region
+      const topPlayers = sortedPlayers.slice(0, 3);
       
-      // Calculate region total score (sum of top 2 players)
+      // Calculate region total score (sum of top 3 players)
       const regionTotalScore = topPlayers.reduce((sum, player) => sum + player.totalScore, 0);
       
       groupedRegions.push({

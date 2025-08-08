@@ -14,7 +14,7 @@
       <section class="game1-info__section">
         <h2 class="game1-info__section-title">What's a brand?</h2>
         <p class="game1-info__section-paragraph">It's not just a logo or a name. It's everything people see, hear and feel about a company.</p>
-        <img class="game1-info__image" src="/images/content-1_1.png" alt="What's a brand?">
+        <img class="game1-info__image" src="/images/content-1_1.jpg" alt="What's a brand?" style="max-inline-size: calc(83.3rem * var(--scale-factor))">
         <p class="game1-info__section-paragraph game1-info__section-paragraph--bold">It's what makes people remember it, trust it… and choose it.</p>
         <hr class="game1-info__divider" />
         <h2 class="game1-info__section-title">Why is a brand important?</h2>
@@ -25,7 +25,7 @@
           <li><span class="game1-info__list-icon"> <svg width="1.8rem" height="1.6rem" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.870117 8.02218L6.76012 13.6945L16.3301 1.49805" stroke="#2E2D2C" stroke-width="2.5" stroke-miterlimit="10"/></svg> </span>Grow the business</li>
         </ul>
         <p class="game1-info__section-paragraph game1-info__section-paragraph--bold">That's why it's key to apply a brand correctly and consistently, both internally and externally</p>
-        <img class="game1-info__image" src="/images/content-1_2.png" alt="Brand application">
+        <img class="game1-info__image" src="/images/content-1_2.jpg" alt="Brand application" style="max-inline-size: calc(40.9rem * var(--scale-factor))">
       </section>
       <PlaySection imageSrc="/images/content-play-1.png" gameLink="/games/game1" color="#FF7000" />
     </div>
@@ -88,7 +88,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 125%;
-  padding-block-start: calc(6rem * var(--scale-factor));
+  padding-block-start: 6rem;
   text-align: center;
 }
 
