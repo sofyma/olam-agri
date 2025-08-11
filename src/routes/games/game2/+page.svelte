@@ -169,11 +169,11 @@
 		// Clean up any remaining timers when game completes
 		cleanupTimers();
 		
-		// Add a small delay to prevent the double results screen glitch
-		// This allows the store state to fully settle before navigation
+		// Add a longer delay to prevent the double results screen glitch
+		// This allows the store state to fully settle and prevents content flash
 		setTimeout(() => {
 			goto('/games/game2/summary');
-		}, 100);
+		}, 500);
 	}
 </script>
 
@@ -219,6 +219,12 @@
             <h2>Game Setup Required</h2>
             <p>{$game2Store.error}</p>
             <p>Please add some Game 2 statements in your Sanity Studio to play this game.</p>
+        </div>
+    {:else if $game2Store.isComplete}
+        <!-- Game is complete, show loading state before redirect -->
+        <div class="game-complete-loading">
+            <div class="loading-spinner"></div>
+            <p>Preparing your results...</p>
         </div>
     {:else}
 		<GameInstructions
@@ -616,13 +622,30 @@
 	}
 
 	.loading,
-	.error {
+	.error,
+	.game-complete-loading {
 		align-items: center;
 		block-size: var(--full-height, 100vh);
 		color: #fff;
 		display: flex;
+		flex-direction: column;
 		font-size: calc(3rem * var(--scale-factor));
 		justify-content: center;
+		gap: calc(2rem * var(--scale-factor));
+	}
+
+	.loading-spinner {
+		width: calc(4rem * var(--scale-factor));
+		height: calc(4rem * var(--scale-factor));
+		border: calc(0.3rem * var(--scale-factor)) solid rgba(255, 255, 255, 0.3);
+		border-top: calc(0.3rem * var(--scale-factor)) solid #fff;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
 	}
 
 	.image-button {
@@ -794,6 +817,20 @@
 				width: calc(25rem * var(--scale-factor));
 				height: calc(25rem * var(--scale-factor));
 			}
+		}
+
+		/* 12. Adjust loading states for mobile */
+		.loading,
+		.error,
+		.game-complete-loading {
+			font-size: calc(2.5rem * var(--scale-factor));
+			gap: calc(1.5rem * var(--scale-factor));
+		}
+
+		.loading-spinner {
+			width: calc(3rem * var(--scale-factor));
+			height: calc(3rem * var(--scale-factor));
+			border-width: calc(0.25rem * var(--scale-factor));
 		}
 
 		.statement-text {
