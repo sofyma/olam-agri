@@ -56,7 +56,7 @@
 
 		<div class="results">
 			<p class="paragraph">Thank you for participating, you've earned</p>
-			<p class="total-points">{$game6Store.score} points</p>
+			<p class="total-points">{$game6Store.score} {$game6Store.score === 1 ? 'point' : 'points'}</p>
 		</div>
 
         <div class="cta">

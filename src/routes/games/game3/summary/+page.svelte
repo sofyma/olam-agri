@@ -48,7 +48,7 @@
 
         <div class="results">
             <p class="paragraph">You escaped the maze and answered {correctAnswersCount} questions correctly. This gives you a total of:</p>
-            <p class="total-points">{finalScore} points</p>
+            <p class="total-points">{finalScore} {finalScore === 1 ? 'point' : 'points'}</p>
             <Game3SummaryHero />      
         </div>
 

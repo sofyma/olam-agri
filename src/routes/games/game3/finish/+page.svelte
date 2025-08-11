@@ -51,7 +51,7 @@
         <div class="results">
             <div class="score-section">
                 <h2 class="subtitle">Your Final Score</h2>
-                <div class="final-score">{finalScore} points</div>
+                <div class="final-score">{finalScore} {finalScore === 1 ? 'point' : 'points'}</div>
                 <p class="score-description">out of 11 possible points</p>
             </div>
             

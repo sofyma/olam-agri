@@ -42,7 +42,7 @@
 
 		<div class="results">
 			<p class="paragraph">You missed {missedPlaces} places, so your<br>score is:</p>
-			<p class="total-points">{totalScore} points</p>
+			<p class="total-points">{totalScore} {totalScore === 1 ? 'point' : 'points'}</p>
 		</div>
 
         <div class="cta">

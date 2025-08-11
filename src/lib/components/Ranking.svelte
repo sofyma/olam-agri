@@ -7,9 +7,9 @@
   import { getRegions } from '$lib/utils/countryRegions';
   import { authStore } from '$lib/stores/authStore';
   
-  // Extended type for search results with global position
+  // Extended type for search results with regional position
   interface SearchResultEntry extends RegionRankingEntry {
-    globalPosition: number;
+    regionalPosition: number;
   }
   
   let topHeroes: TopBrandHeroesEntry[] = [];
@@ -72,9 +72,14 @@
       let filteredRankings = allRankings;
       
       if (searchQuery.trim()) {
-        filteredRankings = allRankings.filter(ranking => 
+        // First, filter by the currently selected region to match "Ranking by Region" display
+        const regionFilteredRankings = allRankings.filter(ranking => 
+          ranking.user.region === selectedRegion
+        );
+        
+        // Then filter by search query within that region
+        filteredRankings = regionFilteredRankings.filter(ranking => 
           ranking.user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          ranking.user.region?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           ranking.user.country?.toLowerCase().includes(searchQuery.toLowerCase())
         );
       }
@@ -82,15 +87,23 @@
       // Sort filtered results by total score (descending)
       const sortedRankings = filteredRankings.sort((a, b) => b.totalScore - a.totalScore);
       
-      // Add global position to each result
-      const resultsWithGlobalPosition = sortedRankings.map(ranking => {
-        const globalPosition = globalRanking.findIndex(globalRanking => 
-          globalRanking.user._id === ranking.user._id
-        ) + 1; // +1 because findIndex returns 0-based index
+      // Add regional position to each result (to match "Ranking by Region" display)
+      const resultsWithRegionalPosition = sortedRankings.map(ranking => {
+        // Get the user's region
+        const userRegion = ranking.user.region;
+        
+        // Find all users in the same region
+        const regionUsers = allRankings.filter(r => r.user.region === userRegion);
+        
+        // Sort region users by total score (descending)
+        const sortedRegionUsers = regionUsers.sort((a, b) => b.totalScore - a.totalScore);
+        
+        // Find the user's position within their region
+        const regionalPosition = sortedRegionUsers.findIndex(r => r.user._id === ranking.user._id) + 1;
         
         return {
           ...ranking,
-          globalPosition
+          regionalPosition
         };
       });
       
@@ -99,7 +112,7 @@
       const startIndex = (page - 1) * usersPerPage;
       const endIndex = startIndex + usersPerPage;
       
-      searchResults = resultsWithGlobalPosition.slice(startIndex, endIndex);
+      searchResults = resultsWithRegionalPosition.slice(startIndex, endIndex);
       totalPages = Math.ceil(sortedRankings.length / usersPerPage);
       currentPage = page;
     } catch (err) {
@@ -296,7 +309,7 @@
                   <tbody>
                     {#each searchResults as entry, i}
                       <tr>
-                        <td style="text-align: end;">{entry.globalPosition}</td>
+                        <td style="text-align: end;">{entry.regionalPosition}</td>
                         <td style="color: #2E2D2C;">{entry.user.displayName}</td>
                         <td style="text-align: end;">{entry.totalScore}</td>
                       </tr>

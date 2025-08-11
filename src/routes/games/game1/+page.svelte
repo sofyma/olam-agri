@@ -24,7 +24,7 @@
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
 	let isGamePlaying = false;
-    let shouldAnimateQuestion = true;
+    // No animation needed
     
     const gameService = Game1Service.getInstance();
     
@@ -113,7 +113,7 @@
         };
 
         // Disable animation during feedback
-        shouldAnimateQuestion = false;
+        		// No animation needed
 
         console.log('🔍 FEEDBACK SHOWN:', {
             showFeedback: true,
@@ -141,10 +141,10 @@
                 
                 showFeedback = false;
                 
-                // Re-enable animation after feedback is hidden
+                // Small delay to ensure smooth question transition
                 setTimeout(() => {
-                    shouldAnimateQuestion = true;
-                }, 100);
+                    // No additional action needed
+                }, 150);
             }, 800); // Even longer delay to ensure proper height calculation, especially for brand-to-place transition
         }, 1000);
     }
@@ -202,7 +202,7 @@
 
 			<div class="results">
 				<p class="paragraph">You've identified {$game1Store.brandScore} brands so, for now, you've earned</p>
-				<p class="total-points">{$game1Store.brandScore} points</p>
+				<p class="total-points">{$game1Store.brandScore} {$game1Store.brandScore === 1 ? 'point' : 'points'}</p>
 			</div>
 
 			<p class="paragraph paragraph-summary" style="line-height: normal; padding-block-start: 4rem; text-align: center; color: #2E2D2C;">Let's see if you know the <br> real world so well!</p>
@@ -273,7 +273,7 @@
 							: $game1Store.currentQuestionIndex - 8}
 						totalQuestions={9}
 						on:submit={handleQuestionSubmit}
-						shouldAnimate={shouldAnimateQuestion}
+		
 						hideCounter={true}
 					/>
 				</div>

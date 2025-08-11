@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onDestroy } from 'svelte';
     import type { Question } from '$lib/types/game1';
     
     export let question: Question;
@@ -8,15 +8,16 @@
     export let questionType: 'brand' | 'place' = 'brand';
     export let currentQuestionNumber: number;
     export let totalQuestions: number;
-    export let shouldAnimate = true;
-    export let hideCounter = false;
+    // No animation needed
+    export let hideCounter = false; 
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
-    let isEntering = false;
+    // No animation state needed
     let previousQuestionId: number | null = null;
     let questionContainerHeight = 0;
     let questionContainerRef: HTMLElement | undefined;
+    let resizeObserver: ResizeObserver | undefined;
     
     const dispatch = createEventDispatcher<{
         submit: { answer: string; isCorrect: boolean };
@@ -49,43 +50,85 @@
 
     // Reset state when question changes
     $: if (question && !showFeedback) {
-        selectedAnswer = null;
-        isSubmitting = false;
-        
-        // Only trigger entering animation if this is a different question
-        if (previousQuestionId && previousQuestionId !== question.id && shouldAnimate) {
-            isEntering = true;
-            setTimeout(() => {
-                isEntering = false;
-            }, 20); // Faster animation
-        }
-        
-        previousQuestionId = question.id;
-        
-        // Measure the height of the question container with longer delay for proper rendering
+        // Small delay to ensure smooth transition from feedback
+        setTimeout(() => {
+            selectedAnswer = null;
+            isSubmitting = false;
+            
+            // No animation needed - just update the question smoothly
+            if (previousQuestionId && previousQuestionId !== question.id) {
+                // Question changed - no animation needed
+            }
+            
+            previousQuestionId = question.id;
+            
+            // Measure the height of the question container with multiple attempts for proper rendering
+            measureQuestionHeight();
+        }, 50); // Small delay to prevent blinking
+    }
+
+    // Function to measure question height with minimal delay for proper rendering
+    function measureQuestionHeight() {
+        // Small delay to ensure DOM is fully rendered
         setTimeout(() => {
             if (questionContainerRef) {
-                questionContainerHeight = questionContainerRef.offsetHeight;
-                console.log('🔍 HEIGHT MEASURED:', {
-                    height: questionContainerHeight,
-                    questionId: question.id,
-                    questionType: questionType
-                });
+                const height = questionContainerRef.offsetHeight;
+                if (height > 0) {
+                    questionContainerHeight = height;
+                    console.log('🔍 HEIGHT MEASURED:', {
+                        height: questionContainerHeight,
+                        questionId: question?.id,
+                        questionType: questionType
+                    });
+                }
             }
-        }, 100); // Longer delay to ensure question is fully rendered
+        }, 100); // Slightly longer delay to ensure smooth rendering
+
+        // Set up resize observer for dynamic content changes
+        setupResizeObserver();
+    }
+
+    // Set up resize observer to handle dynamic content changes
+    function setupResizeObserver() {
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+
+        if (questionContainerRef) {
+            resizeObserver = new ResizeObserver((entries) => {
+                for (const entry of entries) {
+                    const newHeight = entry.contentRect.height;
+                    if (newHeight > questionContainerHeight) {
+                        questionContainerHeight = newHeight;
+                        console.log('🔍 HEIGHT UPDATED (resize observer):', {
+                            height: questionContainerHeight,
+                            questionId: question?.id,
+                            questionType: questionType
+                        });
+                    }
+                }
+            });
+            resizeObserver.observe(questionContainerRef);
+        }
     }
 
     $: imageUrl = question?.image || '';
+
+    // Cleanup resize observer when component is destroyed
+    onDestroy(() => {
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+    });
 </script>
 
 {#if !hideCounter}
 	<span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
 {/if}
 
-<div class="question-wrapper" style="--dynamic-height: {questionContainerHeight > 0 ? (questionContainerHeight / 10) + 'rem' : 'auto'};">
-	<!-- Question is always in DOM, but hidden during feedback -->
-	<div class="question-container" 
-		 class:entering={isEntering && shouldAnimate} 
+<div class="question-wrapper" style="--dynamic-height: {questionContainerHeight > 0 ? Math.max((questionContainerHeight / 10), 45) + 'rem' : 'auto'};">
+	<!-- Question container - always in DOM but hidden during feedback -->
+	<div class="question-container"
 		 class:hidden={showFeedback}
 		 bind:this={questionContainerRef}>
 		<div class="question-header">
@@ -140,7 +183,7 @@
 	
 	<!-- Feedback overlay -->
 	{#if showFeedback}
-		<div class="feedback-overlay" style="--dynamic-height: {(questionContainerHeight / 10)}rem;">
+		<div class="feedback-overlay" style="--dynamic-height: {questionContainerHeight > 0 ? Math.max((questionContainerHeight / 10), 45) + 'rem' : 'auto'};">
 			<div class="feedback">
 				<div class="feedback-content">
 					{#if isCorrect}
@@ -184,6 +227,7 @@
     @media (min-width: 1024px) {
         .question-wrapper {
             height: var(--dynamic-height, auto);
+            min-height: 45rem; /* Fallback minimum height for desktop */
         }
     }
 
@@ -192,23 +236,26 @@
         border-radius: 0 calc(3.5rem * var(--scale-factor));  
         //block-size: calc(90rem * var(--scale-factor));    
         block-size: auto;
+        min-block-size: 45rem; /* Fallback minimum height */
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         position: relative;
         transform: scale(1) translateY(0);
-        transition: all 0.1s ease; // Faster transition
+        /* Smooth content changes to prevent blinking */
+        transition: opacity 0.15s ease-out;
     }
 
+
+    
+    /* Hide question container during feedback to prevent blinking */
     .question-container.hidden {
         opacity: 0;
         pointer-events: none;
-    }
-    
-    .question-container.entering {
-        opacity: 0;
-        transform: scale(0.95) translateY(1rem);
+        visibility: hidden;
+        /* Smooth transition to prevent blinking */
+        transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
     }
 
     .question-header {
@@ -310,12 +357,17 @@
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));
         height: auto; /* Default for mobile */
+        min-height: 45rem; /* Fallback minimum height */
+        /* Smooth appearance to prevent blinking */
+        opacity: 1;
+        transition: opacity 0.15s ease-out;
     }
 
     /* Desktop only - apply dynamic height to feedback overlay */
     @media (min-width: 1024px) {
         .feedback-overlay {
             height: var(--dynamic-height, auto);
+            min-height: 45rem; /* Fallback minimum height for desktop */
         }
     }
 
@@ -333,6 +385,7 @@
         box-sizing: border-box;
         height: 100%;
         min-height: 100%;
+        min-block-size: 45rem; /* Fallback minimum height */
     }
 
     /* Mobile Media Query - Up to 932px */

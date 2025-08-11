@@ -100,10 +100,10 @@
 					</button>
 				</div>
 
-				<div class="explanation">
+				<!-- <div class="explanation">
 					<h2 class="explanation-title">Mystic Man</h2>
 					<p class="explanation-copy">Reader of thoughts, keeper of secrets, master of what's to come. Nothing escapes his mind.</p>
-				</div>
+				</div> -->
 			</div>
 		</div>
 
@@ -458,9 +458,9 @@
 			transform: translateX(50%);
 		}
 
-		.explanation {
-			inset-inline-start: calc(10rem * var(--scale-factor));
-		}
+		// .explanation {
+		// 	inset-inline-start: calc(10rem * var(--scale-factor));
+		// }
 	}
 
 	.loading,
@@ -488,24 +488,24 @@
 		}
 	}
 
-	.explanation {
-		color: #000;
-		font-weight: 600;
-		line-height: normal;
-		inline-size: calc(23.5rem * var(--scale-factor));
-		inset-block-end: calc(5rem * var(--scale-factor));
-		inset-inline-start: calc(5rem * var(--scale-factor));
-		margin-inline: auto;
-		position: absolute;
+	// .explanation {
+	// 	color: #000;
+	// 	font-weight: 600;
+	// 	line-height: normal;
+	// 	inline-size: calc(23.5rem * var(--scale-factor));
+	// 	inset-block-end: calc(5rem * var(--scale-factor));
+	// 	inset-inline-start: calc(5rem * var(--scale-factor));
+	// 	margin-inline: auto;
+	// 	position: absolute;
 
-		&-title {
-			font-size: calc(3rem * var(--scale-factor));
-		}
+	// 	&-title {
+	// 		font-size: calc(3rem * var(--scale-factor));
+	// 	}
 
-		&-copy {
-			font-size: 1.8rem;
-		}
-	}
+	// 	&-copy {
+	// 		font-size: 1.8rem;
+	// 	}
+	// }
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
@@ -526,9 +526,9 @@
 			padding-inline: 1rem;
 		}
 
-		.explanation {
-			display: none;
-		}
+		// .explanation {
+		// 	display: none;
+		// }
 
 		.welcome-container {
 			inline-size: 70%;

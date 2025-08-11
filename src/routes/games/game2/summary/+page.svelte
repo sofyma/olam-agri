@@ -56,7 +56,7 @@
 				You destroyed {$game2Store.destroyedLies} lies and {$game2Store.destroyedTruths} truth{$game2Store.destroyedTruths !== 1 ? 's' : ''}, and you let {passedTruths} truth{passedTruths !== 1 ? 's' : ''} and {slippedLies} lie{slippedLies !== 1 ? 's' : ''} pass. <br>
 				This gives you a total of:
 			</p>
-			<p class="total-points">{$game2Store.score} points</p>
+			<p class="total-points">{$game2Store.score} {$game2Store.score === 1 ? 'point' : 'points'}</p>
 
 			<img src="/images/game2-summary-image.png" alt="Hero" class="game-summary-image">
 		</div>

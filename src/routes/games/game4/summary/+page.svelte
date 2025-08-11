@@ -65,7 +65,7 @@
 		<div class="results">
 			<p class="paragraph">You made {$game4Store.incorrectSwipes} wrong choices.</p>
 			<p class="paragraph">This means that you earn:</p>
-			<p class="total-points">{$game4Store.score} points</p>
+			<p class="total-points">{$game4Store.score} {$game4Store.score === 1 ? 'point' : 'points'}</p>
 
 			<Game4SummaryHeroLeft />
 			<Game4SummaryHeroRight />
