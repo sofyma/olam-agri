@@ -390,7 +390,7 @@
 		list-style: decimal;
 		list-style-position: outside;
 		margin-block-start: 1.5rem;
-		padding-inline-start: calc(2rem * var(--scale-factor));
+		padding-inline-start: calc(3rem * var(--scale-factor));
 
 		.highlight {
 			color: #00B2E7;

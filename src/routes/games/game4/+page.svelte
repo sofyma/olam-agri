@@ -203,29 +203,28 @@
 
 <div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
 	
+	<!-- GameInstructions sidebar - always visible with same text -->
+	<GameInstructions 
+		gameNumber={4}
+		gameTitle="Brand Heroes"
+		gameSubtitle="Choose<br>a Side"
+		infoRoute="/games/info/4"
+		bind:instructionsClosed
+		primaryColor="#FFC400"
+		backgroundColor="#2E2D2C"
+		logoColor="#fff"
+		gameIdTextColor="#2E2D2C"
+		contentCheckBtnTextColor="#2E2D2C"
+		paragraphs={[
+			"All heroes face the battle between good and evil, with great power comes great responsibility!",
+			"Now it's your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.",
+			"You'll start with 5 points, but lose 1 for every wrong decision.",
+			"Ready for the challenge! Swipe left for incorrect statements and right for correct ones."
+		]}
+	/>
+
     {#if showInstructions}
 		<div class="game-panel">
-			<GameInstructions 
-				gameNumber={4}
-				gameTitle="Brand Heroes"
-				gameSubtitle="Choose<br>a Side"
-				infoRoute="/games/info/4"
-				bind:instructionsClosed
-				primaryColor="#FFC400"
-				backgroundColor="#2E2D2C"
-				logoColor="#fff"
-				gameIdTextColor="#2E2D2C"
-				contentCheckBtnTextColor="#2E2D2C"
-				paragraphs={[
-					"All heroes face the battle between good and evil, with great power comes great responsibility!",
-					"Now it's your turn: decide if each statement about layouts, templates, tone of voice, and brand design is right or wrong.",
-					"You'll start with 5 points, but lose 1 for every wrong decision.",
-					"Ready for the challenge? Hit Start!"
-				]}
-			>
-
-			</GameInstructions>
-
 			<div class="start-screen">
 				<img src="/images/game4-start-screen-shape.png" alt="Start Game" class="start-screen-shape" />
 
@@ -251,24 +250,6 @@
             <p>Please add some Game 4 statements in your Sanity Studio to play this game.</p>
         </div>
     {:else}
-		<GameInstructions 
-			gameNumber={4}
-			gameTitle="Brand Heroes"
-			gameSubtitle="The Layout<br>Challenge"
-			infoRoute="/games/info/4"
-			bind:instructionsClosed
-			primaryColor="#FFC400"
-			backgroundColor="#2E2D2C"
-			logoColor="#fff"
-			gameIdTextColor="#2E2D2C"
-			contentCheckBtnTextColor="#2E2D2C"
-			paragraphs={[
-				"Test your knowledge of good layout design! Swipe left for incorrect layouts and right for correct ones.",
-				"Each correct answer earns you 1 point. Wrong answers cost you 1 point.",
-				"Can you spot the good layouts from the bad ones?"
-			]}
-		/>
-
 		<div class="game-area" 
 			role="button"
 			aria-label="Game swipe area"

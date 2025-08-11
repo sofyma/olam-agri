@@ -122,6 +122,11 @@
 		flex: 1;
 		overflow-y: auto;
 		padding: 0 calc(6rem * var(--scale-factor)) calc(9rem * var(--scale-factor));
+		
+		/* Hide scrollbar when sidebar is closed */
+		.instructions.closed & {
+			overflow-y: hidden;
+		}
 	}
 
 	.close-button {
@@ -285,6 +290,11 @@
 
 		.instructions-content {
 			padding: 0 calc(4rem * var(--scale-factor)) calc(6rem * var(--scale-factor));
+			
+			/* Hide scrollbar when sidebar is closed on mobile */
+			.instructions.closed & {
+				overflow-y: hidden;
+			}
 		}
 
 		.title {

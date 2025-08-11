@@ -168,7 +168,12 @@
 		isGamePlaying = false;
 		// Clean up any remaining timers when game completes
 		cleanupTimers();
-		goto('/games/game2/summary');
+		
+		// Add a small delay to prevent the double results screen glitch
+		// This allows the store state to fully settle before navigation
+		setTimeout(() => {
+			goto('/games/game2/summary');
+		}, 100);
 	}
 </script>
 
