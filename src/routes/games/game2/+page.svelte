@@ -217,6 +217,7 @@
             <p>{$game2Store.error}</p>
             <p>Please add some Game 2 statements in your Sanity Studio to play this game.</p>
         </div>
+    {:else}
 
 		<GameInstructions
 			gameNumber={2}
