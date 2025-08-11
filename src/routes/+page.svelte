@@ -467,16 +467,17 @@
   }
 
   .header {
-    background-image: url('/images/oa-site-small-header-background.jpg');
+    background-image: url('/images/site-large-header-complete.jpg');
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
-    block-size: calc(53.5rem * var(--scale-factor));
+    block-size: calc(88rem * var(--scale-factor));
     padding-block-start: calc(7rem * var(--scale-factor));
     position: relative;
 
     @media(max-width: 932px) {
-      block-size: 53.5rem;
+      background-image: url('/images/oa-site-small-header-complete.jpg');
+      block-size: 55.3rem;
     }
 
     &-title {

@@ -191,10 +191,11 @@
 
     .question-header {
         padding-inline: calc(6.5rem * var(--scale-factor));
-        margin-block-end: calc(3rem * var(--scale-factor));
+        margin-block-end: 0;
     }
 
     .question-title {
+        block-size: calc(20rem * var(--scale-factor));
         color: #FF5BAF;
         font-size: calc(4.6rem * var(--scale-factor));
         font-weight: 600;
@@ -213,7 +214,7 @@
     
     .question-options {
         padding-block-start: calc(4rem * var(--scale-factor));
-        padding-inline: calc(9rem * var(--scale-factor));
+        padding-inline: calc(4rem * var(--scale-factor));
     }
 
     .options {
@@ -243,6 +244,7 @@
         color: #2E2D2C;
         inset-block-start: .1rem;
         position: relative;
+        white-space: nowrap;
     }
 
     input[type="radio"] {
@@ -313,6 +315,7 @@
         }
 
        .question-title {
+            block-size: auto;
             font-size: 2.1rem;
             font-weight: 600;
             line-height: 2.5rem;
@@ -335,6 +338,10 @@
         .option {
             font-size: 1.6rem;
             padding: .5rem 1rem;
+        }
+
+        .option-text {
+            white-space: normal;
         }
         
         // .feedback {
