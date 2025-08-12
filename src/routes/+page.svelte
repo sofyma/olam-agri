@@ -720,11 +720,11 @@
     justify-content: space-between;
   }
 
-  .wrapper {
-    max-inline-size: calc(128rem * var(--scale-factor));
-    margin-inline: auto;
-    padding-inline: 2rem;
-  }
+  // .wrapper {
+  //   max-inline-size: calc(128rem * var(--scale-factor));
+  //   margin-inline: auto;
+  //   padding-inline: 2rem;
+  // }
 
   .games-section {
     background-color: #2E2D2C;
@@ -1280,7 +1280,7 @@
   /* Mobile Media Query - Up to 932px */
   @media (max-width: 932px) {
     .logo-link {
-      inline-size: 80%;
+      inline-size: 100%;
       }
 
 
