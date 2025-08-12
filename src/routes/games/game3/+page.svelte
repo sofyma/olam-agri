@@ -254,11 +254,9 @@
             />
 
             <div class="start-screen">
-                <div class="start-screen-content">
-                    <button on:click={startGame} class="image-button" aria-label="Start Game">
-                        <img class="game-start-screen-image" src="/images/game3-start-screen-image.png" alt="Game 3 Start Screen" style="visibility: hidden;">
-                    </button>
-                </div>
+                <button on:click={startGame} class="image-button" aria-label="Start Game">
+                    <img class="game-start-screen-image" src="/images/game3-start-screen-image.png" alt="Game 3 Start Screen" style="visibility: hidden;">
+                </button>
             </div>
         </div>
 
@@ -492,6 +490,10 @@
         position: relative;
     }
 
+    .start-screen {
+        block-size: var(--full-height, 100vh);
+    }
+
     .directional-pad {
         align-items: center;
         background-color: #fff;
@@ -562,26 +564,25 @@
     }
     
     .game-panel {
+        block-size: var(--full-height, 100vh);
         position: relative;
     }
-
-    
 
     :global(.instructions .logo path) {
         fill: #fff;
     }
 
 
-    .start-screen {
-        display: flex;
-        inline-size: calc(100vw - (100vw - 66.41%));
-        justify-content: center;
-        margin-inline-start: auto;
+    // .start-screen {
+    //     display: flex;
+    //     inline-size: calc(100vw - (100vw - 66.41%));
+    //     justify-content: center;
+    //     margin-inline-start: auto;
 
-        &-content {
-            position: relative;
-        }
-    }
+    //     &-content {
+    //         position: relative;
+    //     }
+    // }
 
     .sidebar-is-closed .start-screen {
         inline-size: 100%;
@@ -599,12 +600,14 @@
 
     .image-button {
         background: transparent;
+        block-size: var(--full-height, 100vh);
         border: none;
         cursor: pointer;
+        inline-size: 100%;
         margin: 0;
         padding: 0;
-        transform: scale(var(--scale-factor));
-        transform-origin: center;
+        // transform: scale(var(--scale-factor));
+        // transform-origin: center;
     }
 
     .game-start-screen-image {
@@ -671,30 +674,30 @@
         }
 
        
-        .start-screen {
-            inline-size: calc(100vw - (100vw - 66.41%));
-            padding: 1rem;
-        }
+        // .start-screen {
+        //     inline-size: calc(100vw - (100vw - 66.41%));
+        //     padding: 1rem;
+        // }
 
         
         .sidebar-is-closed .start-screen {
             inline-size: calc(100vw - (100vw - 66.41%));
         }
 
-        .start-screen-content {
-            transform-origin: center center;
-        }
+        // .start-screen-content {
+        //     transform-origin: center center;
+        // }
 
        
-        .start-screen {
-            overflow-y: hidden;
-        }
+        // .start-screen {
+        //     overflow-y: hidden;
+        // }
 
       
-        .image-button {
-            transform: none;
-            transform-origin: unset;
-        }
+        // .image-button {
+        //     transform: none;
+        //     transform-origin: unset;
+        // }
 
         .game-start-screen-image {
             inline-size: calc(28.8rem * var(--scale-factor));
