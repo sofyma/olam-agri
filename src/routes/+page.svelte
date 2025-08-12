@@ -173,7 +173,7 @@
           <span class="tip-icon">💡</span>
           <p class="tip-text"><strong>Hero Tip:</strong> Set a reminder for Tuesdays!</p>
         </div>
-        <button class="cta-button" style="inline-size: 19rem;">Add to calendar</button>
+        <a href="/assets/Brand_Heroes_Challenge.ics" class="cta-button" style="inline-size: 19rem;">Add to calendar</a>
       </div>
     </section>
 
