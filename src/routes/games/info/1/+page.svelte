@@ -136,6 +136,7 @@
 .game1-info__image {
   block-size: auto;
   display: block;
+  inline-size: 100%;
   object-fit: contain;
 }
 

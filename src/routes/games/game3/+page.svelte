@@ -46,6 +46,11 @@
         // Cleanup function to stop continuous movement
         return () => {
             stopContinuousMovement();
+            // Additional cleanup for mobile touch events
+            if (continuousMovementInterval) {
+                clearInterval(continuousMovementInterval);
+                continuousMovementInterval = null;
+            }
         };
     });
     
@@ -165,6 +170,7 @@
 
     let continuousMovementInterval: NodeJS.Timeout | null = null;
     let currentDirection: 'up' | 'down' | 'left' | 'right' | null = null;
+    let isTouchActive = false; // Track if touch is currently active
 
     function handleDirectionalPadClick(direction: 'up' | 'down' | 'left' | 'right') {
         if ($game3Store.showQuestionModal) return;
@@ -179,12 +185,15 @@
         
         currentDirection = direction;
         
-        // Start continuous movement
+        // Start continuous movement with better mobile handling
         continuousMovementInterval = setInterval(() => {
             if (currentDirection && !$game3Store.showQuestionModal) {
                 game3Store.moveBallSmooth(currentDirection);
+            } else {
+                // Safety check - stop if conditions are not met
+                stopContinuousMovement();
             }
-        }, 150); // Adjust speed as needed
+        }, 200); // Slightly slower for better mobile control
     }
 
     function stopContinuousMovement() {
@@ -193,6 +202,34 @@
             continuousMovementInterval = null;
         }
         currentDirection = null;
+        isTouchActive = false; // Reset touch flag
+    }
+
+    // Mobile-specific touch event handlers to prevent conflicts
+    function handleTouchStart(event: TouchEvent, direction: 'up' | 'down' | 'left' | 'right') {
+        if ($game3Store.showQuestionModal || isTouchActive) return;
+        
+        // Prevent default to avoid conflicts with click events
+        event.preventDefault();
+        
+        // Mark touch as active
+        isTouchActive = true;
+        
+        // Start continuous movement for mobile
+        startContinuousMovement(direction);
+    }
+
+    function handleTouchEnd(event: TouchEvent) {
+        if ($game3Store.showQuestionModal) return;
+        
+        // Prevent default to avoid conflicts
+        event.preventDefault();
+        
+        // Mark touch as inactive
+        isTouchActive = false;
+        
+        // Stop continuous movement
+        stopContinuousMovement();
     }
 </script>
 
@@ -261,8 +298,9 @@
                         on:mousedown={() => startContinuousMovement('up')}
                         on:mouseup={stopContinuousMovement}
                         on:mouseleave={stopContinuousMovement}
-                        on:touchstart={() => startContinuousMovement('up')}
-                        on:touchend={stopContinuousMovement}
+                        on:touchstart={(e) => handleTouchStart(e, 'up')}
+                        on:touchend={(e) => handleTouchEnd(e)}
+                        on:touchcancel={(e) => handleTouchEnd(e)}
                     >
                         <img src="/images/up.png" alt="Up Arrow" class="arrow arrow-up" />
                     </button>
@@ -273,8 +311,9 @@
                             on:mousedown={() => startContinuousMovement('left')}
                             on:mouseup={stopContinuousMovement}
                             on:mouseleave={stopContinuousMovement}
-                            on:touchstart={() => startContinuousMovement('left')}
-                            on:touchend={stopContinuousMovement}
+                            on:touchstart={(e) => handleTouchStart(e, 'left')}
+                            on:touchend={(e) => handleTouchEnd(e)}
+                            on:touchcancel={(e) => handleTouchEnd(e)}
                         >
                             <img src="/images/up.png" alt="Left Arrow" class="arrow arrow-left" />
                         </button>
@@ -284,8 +323,9 @@
                             on:mousedown={() => startContinuousMovement('right')}
                             on:mouseup={stopContinuousMovement}
                             on:mouseleave={stopContinuousMovement}
-                            on:touchstart={() => startContinuousMovement('right')}
-                            on:touchend={stopContinuousMovement}
+                            on:touchstart={(e) => handleTouchStart(e, 'right')}
+                            on:touchend={(e) => handleTouchEnd(e)}
+                            on:touchcancel={(e) => handleTouchEnd(e)}
                         >
                             <img src="/images/up.png" alt="Right Arrow" class="arrow arrow-right" />
                         </button>
@@ -296,8 +336,9 @@
                         on:mousedown={() => startContinuousMovement('down')}
                         on:mouseup={stopContinuousMovement}
                         on:mouseleave={stopContinuousMovement}
-                        on:touchstart={() => startContinuousMovement('down')}
-                        on:touchend={stopContinuousMovement}
+                        on:touchstart={(e) => handleTouchStart(e, 'down')}
+                        on:touchend={(e) => handleTouchEnd(e)}
+                        on:touchcancel={(e) => handleTouchEnd(e)}
                     >
                         <img src="/images/up.png" alt="Down Arrow" class="arrow arrow-down" />
                     </button>
@@ -476,6 +517,13 @@
         -moz-user-select: none;
         -ms-user-select: none;
         touch-action: manipulation;
+        user-select: none;
+        /* Prevent touch event conflicts on mobile */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;
     }
 
@@ -691,6 +739,11 @@
         .dir-btn {
             block-size: 4rem;
             inline-size: 4rem;
+            /* Enhanced mobile touch handling */
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            /* Prevent accidental touches */
+            min-height: 44px; /* iOS recommended minimum touch target */
         }
 
         .game-header-image {

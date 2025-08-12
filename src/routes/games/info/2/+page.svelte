@@ -186,6 +186,7 @@
 
 .game2-info__logo-guidelines-image {
   display: block;
+  inline-size: 100%;
   margin-block-start: calc(6.3rem * var(--scale-factor));
 }
 
@@ -210,6 +211,7 @@
 .game2-info__logo-section-image {
   block-size: auto;
   display: block;
+  inline-size: 100%;
   margin-inline: auto;
 }
 

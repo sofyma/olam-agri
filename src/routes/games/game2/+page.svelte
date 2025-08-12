@@ -605,8 +605,8 @@
 
 		&-content {
 			position: relative;
-			transform: scale(var(--scale-factor));
-			transform-origin: center center;
+			// transform: scale(var(--scale-factor));
+			// transform-origin: center center;
 		}
 	}
 
@@ -744,9 +744,9 @@
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
 
-		.start-screen-content {
-			transform-origin: center center;
-		}
+		// .start-screen-content {
+		// 	transform-origin: center center;
+		// }
 
 		/* Remove vertical scrolling from start screen */
 		.start-screen {

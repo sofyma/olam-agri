@@ -648,6 +648,7 @@
   }
 
   .region-tab {
+    color: #2E2D2C;
     border-block-end: 0.7rem solid transparent;
     font-size: calc(2.6rem * var(--scale-factor));
     font-weight: 600;

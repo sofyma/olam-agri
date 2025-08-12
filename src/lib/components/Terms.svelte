@@ -1,7 +1,6 @@
 <!-- Terms.svelte -->
 <script lang="ts">
   import Game1Logo from './svgs/Game1Logo.svelte';
-  import { authStore } from '$lib/stores/authStore';
 </script>
 
 <div class="container">
@@ -9,13 +8,9 @@
     <div class="wrapper">
       <div class="row">
         <div class="column">
-          {#if $authStore.isAuthenticated}
-            <a href="/" class="logo-link">
-              <Game1Logo />
-            </a>
-          {:else}
+          <a href="/" class="logo-link">
             <Game1Logo />
-          {/if}
+          </a>
         </div>
 
         <div class="column">
@@ -115,6 +110,8 @@
     .wrapper {
       max-inline-size: calc(142rem * var(--scale-factor));
       margin-inline: auto;
+      position: relative;
+      z-index: 10;
     }
 
     @media (max-width: 1024px) {
