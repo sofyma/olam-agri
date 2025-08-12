@@ -127,6 +127,120 @@
 		.instructions.closed & {
 			overflow-y: hidden;
 		}
+
+		/* Cross-browser scrollbar styling - White background with hidden thumbs */
+		
+		/* Webkit browsers (Chrome, Safari, Edge) */
+		&::-webkit-scrollbar {
+			width: 8px;
+			background: transparent !important;
+			// background: white !important;
+			// background-color: white !important;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent !important;
+			background-color: transparent !important;
+			border-radius: 4px;
+			border: none;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: white !important;
+			background-color: white !important;
+			border-radius: 4px;
+			border: 2px solid rgba(0, 0, 0, 0.1);
+			min-height: 40px;
+			//box-shadow: inset 0 0 0 0 white !important;
+		}
+
+		
+
+		// &::-webkit-scrollbar-corner {
+		// 	background: white !important;
+		// 	background-color: white !important;
+		// }
+
+		/* Firefox */
+		// scrollbar-width: thin;
+		// scrollbar-color: rgba(0, 0, 0, 0.2) white;
+
+		/* IE and Edge (legacy) */
+		-ms-overflow-style: none;
+
+		/* macOS specific overrides */
+		&::-webkit-scrollbar-track-piece {
+			background: transparent !important;
+			background-color: transparent !important;
+		}
+
+		/* Additional macOS Chrome overrides */
+		&::-webkit-scrollbar-button {
+			background: transparent !important;
+			background-color: transparent !important;
+		}
+
+		&::-webkit-scrollbar-track-piece:start {
+			background: transparent !important;
+			background-color: transparent !important;
+		}
+
+		&::-webkit-scrollbar-track-piece:end {
+			background: transparent !important;
+			background-color: transparent !important;
+		}
+
+		/* Hide scrollbar arrow buttons on Windows */
+		&::-webkit-scrollbar-button:start {
+			display: none !important;
+		}
+
+		&::-webkit-scrollbar-button:end {
+			display: none !important;
+		}
+
+		&::-webkit-scrollbar-button:single-button:start {
+			display: none !important;
+		}
+
+		&::-webkit-scrollbar-button:single-button:end {
+			display: none !important;
+		}
+
+		&::-webkit-scrollbar-button:double-button:start {
+			display: none !important;
+		}
+
+		&::-webkit-scrollbar-button:double-button:end {
+			display: none !important;
+		}
+
+		/* Force white background on all states */
+		&::-webkit-scrollbar-track:hover {
+			background: white !important;
+			background-color: white !important;
+		}
+
+		&::-webkit-scrollbar-track:active {
+			background: white !important;
+			background-color: white !important;
+		}
+
+		&::-webkit-scrollbar-track:focus {
+			background: white !important;
+			background-color: white !important;
+		}
+
+		/* Ensure track pieces stay white */
+		&::-webkit-scrollbar-track-piece:hover {
+			background: white !important;
+			background-color: white !important;
+		}
+
+		&::-webkit-scrollbar-track-piece:active {
+			background: white !important;
+			background-color: white !important;
+		}
 	}
 
 	.close-button {
@@ -294,6 +408,111 @@
 			/* Hide scrollbar when sidebar is closed on mobile */
 			.instructions.closed & {
 				overflow-y: hidden;
+			}
+
+			/* Cross-browser scrollbar styling for mobile - White background with hidden thumbs */
+			
+			/* Webkit browsers (Chrome, Safari, Edge) */
+			&::-webkit-scrollbar {
+				width: 6px; /* Slightly thinner on mobile */
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: transparent !important;
+				background-color: transparent !important;
+				border-radius: 3px;
+				border: none;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background: red !important;
+				background-color: red !important;
+				border-radius: 3px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				min-height: 30px;
+			}
+
+			/* Firefox */
+			scrollbar-width: thin;
+			scrollbar-color: rgba(0, 0, 0, 0.2) white;
+
+			/* IE and Edge (legacy) */
+			-ms-overflow-style: none;
+
+			/* macOS specific overrides */
+			&::-webkit-scrollbar-track-piece {
+				background: white !important;
+				background-color: white !important;
+			}
+
+			/* Additional macOS Chrome overrides */
+			&::-webkit-scrollbar-button {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track-piece:start {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track-piece:end {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			/* Hide scrollbar arrow buttons on Windows */
+			&::-webkit-scrollbar-button:start {
+				display: none !important;
+			}
+
+			&::-webkit-scrollbar-button:end {
+				display: none !important;
+			}
+
+			&::-webkit-scrollbar-button:single-button:start {
+				display: none !important;
+			}
+
+			&::-webkit-scrollbar-button:single-button:end {
+				display: none !important;
+			}
+
+			&::-webkit-scrollbar-button:double-button:start {
+				display: none !important;
+			}
+
+			&::-webkit-scrollbar-button:double-button:end {
+				display: none !important;
+			}
+
+			/* Force transparent background on all states */
+			&::-webkit-scrollbar-track:hover {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track:active {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track:focus {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			/* Ensure track pieces stay transparent */
+			&::-webkit-scrollbar-track-piece:hover {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			&::-webkit-scrollbar-track-piece:active {
+				background: transparent !important;
+				background-color: transparent !important;
 			}
 		}
 

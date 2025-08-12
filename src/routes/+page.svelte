@@ -180,7 +180,7 @@
     <!-- Fourth Section - Games -->
     <section class="games-section">
       <div class="games-container">
-        <h2 class="games-title">The Adventure Starts Here!</h2>
+        <h2 class="games-title">The Adventure Starts Here!</h2> 
         
         <div class="games-description">
           <p class="games-paragraph">
