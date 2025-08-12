@@ -245,6 +245,10 @@
         transform: scale(1) translateY(0);
         /* Smooth content changes to prevent blinking */
         transition: opacity 0.15s ease-out;
+
+        @media(max-width: 932px) {
+            min-block-size: 0;
+        }
     }
 
 
@@ -371,6 +375,15 @@
         }
     }
 
+    /* Mobile - ensure feedback overlay matches question container height */
+    @media (max-width: 932px) {
+        .feedback-overlay {
+            height: 100%;
+            min-height: 0;
+            /* Use 100% height to properly center content */
+        }
+    }
+
     .feedback {
         align-items: center;
         background-color: #fff;
@@ -386,15 +399,26 @@
         height: 100%;
         min-height: 100%;
         min-block-size: 45rem; /* Fallback minimum height */
+
+        @media(max-width: 932px) {
+            min-block-size: 0;
+            height: 100%;
+            min-height: 100%;
+            /* Use full height on mobile to properly center content */
+        }
     }
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .feedback {
             block-size: auto;
-            min-block-size: 100%;
+            // min-block-size: 100%;
             border-radius: 0 1.5rem 1.5rem 1.5rem;
             padding-block: 2rem 2rem;
+            /* Ensure proper centering on mobile */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
     
@@ -407,6 +431,14 @@
         inline-size: 100%;
         min-block-size: 100%;
         box-sizing: border-box;
+
+        @media(max-width: 932px) {
+            min-block-size: 100%;
+            /* Use full height on mobile for proper centering */
+            /* Ensure content is properly centered */
+            justify-content: center;
+            align-items: center;
+        }
     }
 
     .feedback-content svg {
@@ -443,7 +475,7 @@
         .question-image {
             border-radius: 0 1.5rem 0 0;
             margin-block-end: 0;
-            max-block-size: 15rem;
+            max-block-size: 12rem;
             margin-inline: auto;
         }
 
