@@ -226,18 +226,7 @@
     {#if showInstructions}
 		<div class="game-panel">
 			<div class="start-screen">
-				<img src="/images/game4-start-screen-shape.png" alt="Start Game" class="start-screen-shape" />
-
-				<div class="start-screen-content">
-					<button on:click={startGame} class="image-button" aria-label="Start Game">
-						<img src="/images/game4-start-screen.png" alt="Start Game" />
-
-						<div class="explanation">
-							<h2 class="explanation-title">Mr Evil and Mr Good</h2>
-							<p class="explanation-copy">Two sides of the same mind. One guides you with wisdom, the other tempts you into mistakes.</p>
-						</div>
-					</button>
-				</div>
+				<button on:click={startGame} class="image-button" aria-label="Start Game"></button>
 			</div>
 		</div>
 
@@ -410,13 +399,10 @@
 		background-image: url('/images/j4-start.png');
 		background-position: center right;
 		background-repeat: no-repeat;
-		background-size: calc(100% * var(--scale-factor));
+		background-size: contain;
 		block-size: var(--full-height, 100vh);
+		overflow: hidden;
 		position: relative;
-
-		@media(min-width: 1920px) {
-			background-size: 80%;
-		}
 	}
 
 	/* Hide background image when game is playing */
@@ -613,25 +599,27 @@
 
 
 	.start-screen {
-		display: flex;
-		inline-size: calc(100vw - (100vw - 66.41%));
-		justify-content: center;
-		margin-inline-start: auto;
-		position: relative;
+		block-size: var(--full-height, 100vh);
+		inline-size: 100%;
+		// display: flex;
+		// inline-size: calc(100vw - (100vw - 66.41%));
+		// justify-content: center;
+		// margin-inline-start: auto;
+		// position: relative;
 
-		&-shape {
-			inset-block-end: 0;
-			inset-inline-end: 0;
-			position: absolute;
-		}
+		// &-shape {
+		// 	inset-block-end: 0;
+		// 	inset-inline-end: 0;
+		// 	position: absolute;
+		// }
 
-		&-content {
-			align-items: center;
-			block-size: var(--full-height, 100vh);
-			display: flex;
-			justify-content: center;
-			position: relative;
-		}
+		// &-content {
+		// 	align-items: center;
+		// 	block-size: var(--full-height, 100vh);
+		// 	display: flex;
+		// 	justify-content: center;
+		// 	position: relative;
+		// }
 	}
 
 	.sidebar-is-closed .start-screen {
@@ -650,41 +638,35 @@
 
 	.image-button {
 		background: transparent;
+		block-size: var(--full-height, 100vh);
 		border: none;
 		cursor: pointer;
+		inline-size: 100%;
 		margin: 0;
 		padding: 0;
-
-		img {
-			//max-width: calc(80rem * var(--scale-factor));
-			block-size: auto;
-			inline-size: calc(100% * var(--scale-factor));
-			margin-inline: auto;
-			visibility: hidden;
-		}
 	}
 
-	.explanation {
-		color: #000;
-		font-weight: 600;
-		line-height: normal;
-		inline-size: calc(29.5rem * var(--scale-factor));
-		margin-inline: auto;
-		text-align: center;
-		display: none;
+	// .explanation {
+	// 	color: #000;
+	// 	font-weight: 600;
+	// 	line-height: normal;
+	// 	inline-size: calc(29.5rem * var(--scale-factor));
+	// 	margin-inline: auto;
+	// 	text-align: center;
+	// 	display: none;
 
-		&-title {
-			font-size: calc(3rem * var(--scale-factor));
-		}
+	// 	&-title {
+	// 		font-size: calc(3rem * var(--scale-factor));
+	// 	}
 
-		&-copy {
-			font-size: 1.8rem;
-		}
-	}
+	// 	&-copy {
+	// 		font-size: 1.8rem;
+	// 	}
+	// }
 
-	.start-screen-shape {
-		display: none;
-	}
+	// .start-screen-shape {
+	// 	display: none;
+	// }
 
 
 	/* Mobile Media Query - Up to 932px */
@@ -726,25 +708,25 @@
 		}
 
 		
-		.start-screen {
-			inline-size: calc(100vw - (100vw - 66.41%));
-			padding: 1rem;
-		}
+		// .start-screen {
+		// 	inline-size: calc(100vw - (100vw - 66.41%));
+		// 	padding: 1rem;
+		// }
 
 		
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
 
-		.start-screen-content {
-			block-size: auto;
-			transform-origin: center center;
-		}
+		// .start-screen-content {
+		// 	block-size: auto;
+		// 	transform-origin: center center;
+		// }
 
 		
-		.start-screen {
-			overflow-y: hidden;
-		}
+		// .start-screen {
+		// 	overflow-y: hidden;
+		// }
 
 	
 		:global(.small-hero-summary) {
