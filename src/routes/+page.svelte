@@ -98,6 +98,39 @@
     console.warn(`No valid future dates for ${gameId}`);
     return { text: '', type: 'none' };
   }
+
+  function addToCalendar() {
+    const icsContent = `BEGIN:VCALENDAR
+PRODID:-//Brand Heroes//Calendar//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:c489cbc1-8627-45dd-8808-37108895e4b6@brandheroes
+DTSTAMP:20250811T135942Z
+SUMMARY:Brand Heroes Challenge - It's time to play!
+DESCRIPTION:A new Brand Heroes game has just unlocked!\n\nJump into The Loop, find today's Brand Heroes post, and access this week's game to put your brand knowledge to the test.\n\nRemember: Complete all games by October 21st at 11:59 PM CEST to make sure your score counts for the challenge!
+LOCATION:https://olamagri.workvivo.com/
+RRULE:FREQ=WEEKLY;BYDAY=TU;UNTIL=20251014T215959Z
+DTSTART;VALUE=DATE:20250909
+DTEND;VALUE=DATE:20250910
+END:VEVENT
+END:VCALENDAR`;
+
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      const dataUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(icsContent)}`;
+      window.location.href = dataUrl;
+      return;
+    }
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Brand_Heroes_Challenge.ics';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 <div class="container">
@@ -177,43 +210,7 @@
       </div>
     </section>
 
-    <script>
-      function addToCalendar() {
-        // ICS content for the Brand Heroes Challenge event
-        const icsContent = `BEGIN:VCALENDAR
-PRODID:-//Brand Heroes//Calendar//EN
-VERSION:2.0
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-BEGIN:VEVENT
-UID:c489cbc1-8627-45dd-8808-37108895e4b6@brandheroes
-DTSTAMP:20250811T135942Z
-SUMMARY:Brand Heroes Challenge - It's time to play!
-DESCRIPTION:A new Brand Heroes game has just unlocked!\n\nJump into The Loop, find today's Brand Heroes post, and access this week's game to put your brand knowledge to the test.\n\nRemember: Complete all games by October 21st at 11:59 PM CEST to make sure your score counts for the challenge!
-LOCATION:https://olamagri.workvivo.com/
-RRULE:FREQ=WEEKLY;BYDAY=TU;UNTIL=20251014T215959Z
-DTSTART;VALUE=DATE:20250909
-DTEND;VALUE=DATE:20250910
-END:VEVENT
-END:VCALENDAR`;
-
-        // Try to open directly first (works well on mobile)
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-          const dataUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(icsContent)}`;
-          window.location.href = dataUrl;
-          return;
-        }
-
-        // Desktop: create downloadable file
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'Brand_Heroes_Challenge.ics';
-        link.click();
-        URL.revokeObjectURL(url);
-      }
-    </script>
+    
 
     <!-- Fourth Section - Games -->
     <section class="games-section">
