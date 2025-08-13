@@ -499,10 +499,4 @@
             inline-size: calc(24.948rem * var(--scale-factor));
         }
     }
-
-    @media(max-height: 300px) {
-        .question-image {
-            max-block-size: 8rem;
-        }
-    }
 </style> 
