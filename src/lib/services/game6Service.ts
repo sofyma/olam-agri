@@ -18,7 +18,6 @@ export class Game6Service {
       // First, let's see all game6 documents without filters
       const allQuery = `*[_type == "game6"] { _id, isActive, question, optionA, optionB }`;
       const allResults = await client.fetch(allQuery);
-      console.log('All game6 documents (without filters):', allResults);
       
       const query = `
         *[_type == "game6" && isActive == true] {
@@ -31,8 +30,6 @@ export class Game6Service {
       
       const results = await client.fetch(query);
       
-      console.log('Raw results from Sanity (with isActive filter):', results);
-      
       if (!results || results.length === 0) {
         throw new Error('No game6 questions found. Please add some questions in your Sanity Studio.');
       }
@@ -44,8 +41,6 @@ export class Game6Service {
         optionA: item.optionA,
         optionB: item.optionB
       }));
-
-      console.log('Converted questions:', questions);
 
       // Ensure we have between 5 to 10 questions for the game
       // If we have fewer than 5, repeat some questions to make 5 total
@@ -70,10 +65,73 @@ export class Game6Service {
         });
       }
 
-      console.log('Final questions:', finalQuestions);
       return finalQuestions;
     } catch (error) {
       console.error('Error fetching game6 questions:', error);
+      throw error;
+    }
+  }
+
+  async getStartQuestion(): Promise<any> {
+    try {
+      const query = `
+        *[_type == "game6" && isStartQuestion == true && isActive == true] {
+          _id,
+          questionId,
+          questionText,
+          answers[] {
+            answerText,
+            nextQuestion,
+            isEndGame,
+            endGameMessage
+          },
+          isStartQuestion,
+          isActive,
+          order
+        } | order(order asc) [0]
+      `;
+      
+      const result = await client.fetch(query);
+      
+      if (!result) {
+        throw new Error('No start question found. Please mark a question as "Is Start Question" in your Sanity Studio.');
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Error fetching start question:', error);
+      throw error;
+    }
+  }
+
+  async getQuestion(questionId: string): Promise<any> {
+    try {
+      const query = `
+        *[_id == $questionId && isActive == true] {
+          _id,
+          questionId,
+          questionText,
+          answers[] {
+            answerText,
+            nextQuestion,
+            isEndGame,
+            endGameMessage
+          },
+          isStartQuestion,
+          isActive,
+          order
+        } [0]
+      `;
+      
+      const result = await client.fetch(query, { questionId });
+      
+      if (!result) {
+        throw new Error(`Question with ID ${questionId} not found or not active.`);
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Error fetching question:', error);
       throw error;
     }
   }

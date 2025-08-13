@@ -1,3 +1,24 @@
+export interface Answer {
+  answerText: string;
+  nextQuestion?: {
+    _id: string;
+    questionId: string;
+    questionText: string;
+  };
+  isEndGame?: boolean;
+  endGameMessage?: string;
+}
+
+export interface BranchingQuestion {
+  _id: string;
+  questionId: string;
+  questionText: string;
+  answers: Answer[];
+  isStartQuestion: boolean;
+  isActive: boolean;
+  order: number;
+}
+
 export interface Question {
   id: string;
   question: string;

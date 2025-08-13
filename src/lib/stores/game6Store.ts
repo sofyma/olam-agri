@@ -67,6 +67,28 @@ const createGame6Store = () => {
     }));
   };
 
+  const getStartQuestion = async () => {
+    try {
+      const game6Service = Game6Service.getInstance();
+      const startQuestion = await game6Service.getStartQuestion();
+      return startQuestion;
+    } catch (error) {
+      console.error('Failed to get start question:', error);
+      return null;
+    }
+  };
+
+  const getQuestion = async (questionId: string) => {
+    try {
+      const game6Service = Game6Service.getInstance();
+      const question = await game6Service.getQuestion(questionId);
+      return question;
+    } catch (error) {
+      console.error('Failed to get question:', error);
+      return null;
+    }
+  };
+
   const answerQuestion = (selectedOption: 'A' | 'B') => {
     update(state => {
       if (!state.isPlaying || state.currentQuestionIndex >= state.questions.length) {
@@ -169,6 +191,8 @@ const createGame6Store = () => {
     subscribe,
     initialize,
     start,
+    getStartQuestion,
+    getQuestion,
     answerQuestion,
     reset,
     saveResult

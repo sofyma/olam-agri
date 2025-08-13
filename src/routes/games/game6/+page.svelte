@@ -11,23 +11,14 @@
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
 	let showWelcome = false;
-	let selectedAnswer: 'A' | 'B' | null = null;
+	let selectedAnswer: string | null = null;
+	let currentQuestion: any = null;
+	let gameEnded = false;
+	let endGameMessage = '';
 
     // Reactive statement to handle navigation when game is complete
-    $: if ($game6Store.isComplete && $game6Store.isPlaying) {
-        console.log('Game complete detected, saving result and navigating to finish...');
-        
-        // Save the game result if user is authenticated
-        if ($authStore.user) {
-            game6Store.saveResult($authStore.user._id).catch(error => {
-                console.error('Failed to save game result:', error);
-            });
-        }
-        
-        // Add a small delay to ensure all state updates are processed
-        setTimeout(() => {
-            goto('/games/game6/finish');
-        }, 500);
+    $: if (gameEnded && !showInstructions && !showWelcome) {
+        console.log('Game ended, showing end message...');
     }
 
     onMount(async () => {
@@ -52,21 +43,96 @@
 		showWelcome = true;
 	}
 
-	function startQuestions() {
+	async function startQuestions() {
 		showWelcome = false;
 		instructionsClosed = true;
 		instructionsClosedSidebar = true;
-		game6Store.start();
+		await game6Store.start();
+		
+		// Get the start question
+		await loadStartQuestion();
 	}
 
-	function selectAnswer(option: 'A' | 'B') {
-		selectedAnswer = option;
+	async function loadStartQuestion() {
+		try {
+			// Fetch the start question from Sanity
+			const startQuestion = await game6Store.getStartQuestion();
+			
+			if (startQuestion) {
+				currentQuestion = startQuestion;
+				selectedAnswer = null;
+				gameEnded = false;
+			} else {
+				// Handle case where no start question exists
+				console.warn('No start question found in Sanity');
+				gameEnded = true;
+				endGameMessage = 'Game setup incomplete. Please add questions in Sanity Studio first.';
+			}
+		} catch (error) {
+			console.error('Failed to load start question:', error);
+			// Handle error gracefully
+			gameEnded = true;
+			endGameMessage = 'Unable to load game. Please try again later.';
+		}
 	}
 
-	function submitAnswer() {
-		if (selectedAnswer && $game6Store.isPlaying) {
-			game6Store.answerQuestion(selectedAnswer);
-			selectedAnswer = null;
+	function selectAnswer(answerText: string) {
+		selectedAnswer = answerText;
+	}
+
+	async function submitAnswer() {
+		if (!selectedAnswer || !currentQuestion) return;
+
+		// Find the selected answer object
+		const selectedAnswerObj = currentQuestion.answers.find((a: any) => a.answerText === selectedAnswer);
+		
+		if (!selectedAnswerObj) return;
+
+		// Check if this answer ends the game
+		if (selectedAnswerObj.isEndGame) {
+			gameEnded = true;
+			endGameMessage = selectedAnswerObj.endGameMessage || 'Thank you for completing the game!';
+			
+			// Save the game result if user is authenticated
+			if ($authStore.user) {
+				game6Store.saveResult($authStore.user._id).catch(error => {
+					console.error('Failed to save game result:', error);
+				});
+			}
+			return;
+		}
+
+		// Load the next question
+		if (selectedAnswerObj.nextQuestion && selectedAnswerObj.nextQuestion._ref) {
+			try {
+				const nextQuestion = await game6Store.getQuestion(selectedAnswerObj.nextQuestion._ref);
+				if (nextQuestion) {
+					currentQuestion = nextQuestion;
+					selectedAnswer = null;
+				} else {
+					// Handle case where next question doesn't exist
+					console.warn('Next question not found, ending game');
+					gameEnded = true;
+					endGameMessage = 'Game setup incomplete. Please contact an administrator.';
+				}
+			} catch (error) {
+				console.error('Failed to load next question:', error);
+				// Handle error gracefully
+				gameEnded = true;
+				endGameMessage = 'Unable to load next question. Please try again later.';
+			}
+		} else {
+			// Handle case where nextQuestion is not properly set
+			console.warn('No next question reference found, ending game');
+			gameEnded = true;
+			endGameMessage = 'Game setup incomplete. Please contact an administrator.';
+		}
+	}
+
+	function handleKeyDown(event: KeyboardEvent, answerText: string) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			selectAnswer(answerText);
 		}
 	}
 </script>
@@ -99,11 +165,6 @@
 						<img src="/images/game6-start-screen.png" alt="Start Game" />
 					</button>
 				</div>
-
-				<!-- <div class="explanation">
-					<h2 class="explanation-title">Mystic Man</h2>
-					<p class="explanation-copy">Reader of thoughts, keeper of secrets, master of what's to come. Nothing escapes his mind.</p>
-				</div> -->
 			</div>
 		</div>
 
@@ -150,7 +211,45 @@
             <p>{$game6Store.error}</p>
             <p>Please add some Game 6 questions in your Sanity Studio to play this game.</p>
         </div>
-    {:else}
+    {:else if gameEnded}
+		<GameInstructions 
+			gameNumber={6}
+			gameTitle="Brand Heroes"
+			gameSubtitle="Game Complete"
+			infoRoute="/games/info/6"
+			bind:instructionsClosed
+			primaryColor="#00A865"
+			backgroundColor="#2E2D2C"
+			paragraphs={[
+				"Thank you for completing the Brand Heroes Challenge!",
+				"Your insights will help us improve the brand experience for everyone at Olam Agri."
+			]}
+		/>
+
+		<div class="game-area">
+			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
+
+			<div class="game-content">
+				<div class="question-container">
+					<div class="question-card">
+						<div class="question-header">
+							<h2 class="question-title">Game Complete!</h2>
+						</div>
+						
+						<div class="end-message">
+							<p>{endGameMessage}</p>
+						</div>
+						
+						<button class="lets-go-button" on:click={() => goto('/games/game6/finish')}>
+							Continue
+						</button>
+					</div>
+
+					<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
+				</div>
+			</div>
+		</div>
+    {:else if currentQuestion}
 		<GameInstructions 
 			gameNumber={6}
 			gameTitle="Brand Heroes"
@@ -169,59 +268,50 @@
 		<div class="game-area">
 			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
 
-			{#if $game6Store.isPlaying && $game6Store.questions[$game6Store.currentQuestionIndex]}
-				<div class="game-content">
-					<div class="question-container">
-						<div class="question-card">
-							<div class="question-header">
-								<h2 class="question-title">{$game6Store.questions[$game6Store.currentQuestionIndex].question}</h2>
+			<div class="game-content">
+				<div class="question-container">
+					<div class="question-card">
+						<div class="question-header">
+							<h2 class="question-title">{currentQuestion.questionText}</h2>
+						</div>
+						
+						<div class="question-options">
+							<div class="options">
+								{#each currentQuestion.answers as answer}
+									<div 
+										class="option"
+										class:selected={selectedAnswer === answer.answerText}
+										on:click={() => selectAnswer(answer.answerText)}
+										on:keydown={(event) => handleKeyDown(event, answer.answerText)}
+										tabindex="0"
+										role="radio"
+										aria-checked={selectedAnswer === answer.answerText}
+									>
+										<input
+											type="radio"
+											name="answer"
+											value={answer.answerText}
+											checked={selectedAnswer === answer.answerText}
+											on:change={() => selectAnswer(answer.answerText)}
+										/>
+										<span class="option-text">{answer.answerText}</span>
+									</div>
+								{/each}
 							</div>
 							
-							<div class="options-container">
-								<button 
-									class="option-button option-a" 
-									class:selected={selectedAnswer === 'A'}
-									on:click={() => selectAnswer('A')}
-									on:keydown={(e) => {
-										if (e.key === 'a' || e.key === 'A' || e.key === '1') {
-											e.preventDefault();
-											selectAnswer('A');
-										}
-									}}
-								>
-									
-									<span class="option-text">{$game6Store.questions[$game6Store.currentQuestionIndex].optionA}</span>
-								</button>
-								
-								<button 
-									class="option-button option-b" 
-									class:selected={selectedAnswer === 'B'}
-									on:click={() => selectAnswer('B')}
-									on:keydown={(e) => {
-										if (e.key === 'b' || e.key === 'B' || e.key === '2') {
-											e.preventDefault();
-											selectAnswer('B');
-										}
-									}}
-								>
-									
-									<span class="option-text">{$game6Store.questions[$game6Store.currentQuestionIndex].optionB}</span>
-								</button>
-							</div>
-							
-							<button 
-								class="send-button" 
-								disabled={!selectedAnswer}
+							<button
+								class="submit-button"
 								on:click={submitAnswer}
+								disabled={!selectedAnswer}
 							>
 								Send
 							</button>
 						</div>
-
-						<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
 					</div>
+
+					<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
 				</div>
-			{/if}
+			</div>
 		</div>
     {/if}
 </div>
@@ -307,62 +397,107 @@
 		line-height: normal;
 	}
 
-	.options-container {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		column-gap: calc(4rem * var(--scale-factor));
+	.question-options {
+		display: flex;
+		flex-direction: column;
+		gap: calc(2rem * var(--scale-factor));
+		align-items: center;
 	}
 
-	.option-button {
+	.options {
+		display: flex;
+		flex-direction: column;
+		gap: calc(1.5rem * var(--scale-factor));
+		width: 100%;
+		max-width: calc(60rem * var(--scale-factor));
+	}
+
+	.option {
 		align-items: center;
-		border: 0.1rem solid #00A865;
-		border-radius: 2rem;
+		border-radius: 1.5rem;
 		cursor: pointer;
 		display: flex;
-		gap: 2rem;
-		padding: calc(3rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
-		transition: all 0.3s ease;
-		width: 100%;
+		font-size: calc(2.2rem * var(--scale-factor));
+		gap: 1rem;
+		padding-block: 1rem;
+		padding-inline: 1.5rem;
+		transition: all 0.2s ease;
+		user-select: none;
+
+		&:focus,
+		&:hover {
+			background-color: #E6E6E6;
+		}
 	}
 
 	.option-text {
 		color: #2E2D2C;
-		font-size: calc(2.4rem * var(--scale-factor));
-		font-weight: 500;
-		line-height: 1.4;
+		inset-block-start: .1rem;
+		position: relative;
 	}
 
-	.option-button.selected {
-		background-color: #00A865;
-		border-color: #00A865;
-		color: #2E2D2C;
+	input[type="radio"] {
+		accent-color: #2E2D2C;
+		block-size: 2rem;
+		cursor: pointer;
+		inline-size: 2rem;
+		margin-block: 0;
+		margin-inline: 0;
+		appearance: none;
+		border: 0.2rem solid #ccc;
+		border-radius: 50%;
+		background-color: white;
+		position: relative;
 
-		.option-text {
-			color: #2E2D2C;
+		&:checked {
+			background-color: #2E2D2C;
+			border-color: #2E2D2C;
 		}
 	}
 
-	.send-button {
-		background-color: #00A865;
-		border: none;
-		border-radius: 0 1.7rem;
-		color: #fff;
+	.submit-button {
+		background-color: rgb(0, 168, 101);
+		color: rgb(255, 255, 255);
 		cursor: pointer;
 		display: block;
 		font-size: 2rem;
 		font-weight: 600;
 		margin-block-start: calc(6rem * var(--scale-factor));
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+		border-radius: 0px 1.7rem;
 		margin-inline: auto;
 		padding: 1.5rem calc(4rem * var(--scale-factor));
-		transition: background-color 0.3s ease;
+		transition: background-color 0.3s;
+	}
 
-		&:hover:not(:disabled) {
-			background-color: #008F56;
+	.end-message {
+		text-align: center;
+		margin-block-end: calc(3rem * var(--scale-factor));
+
+		p {
+			color: #2E2D2C;
+			font-size: calc(1.8rem * var(--scale-factor));
+			line-height: 1.5;
+			margin: 0;
 		}
+	}
 
-		&:disabled {
-			background-color: #ccc;
-			cursor: not-allowed;
+	.lets-go-button {
+		background-color: #00A865;
+		border: none;
+		border-radius: calc(2.5rem * var(--scale-factor));
+		color: white;
+		cursor: pointer;
+		font-size: calc(1.8rem * var(--scale-factor));
+		font-weight: 600;
+		padding: calc(1.5rem * var(--scale-factor)) calc(4rem * var(--scale-factor));
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: #008f56;
 		}
 	}
 
@@ -415,15 +550,6 @@
 		}
 	}
 
-	.game-panel {
-		position: relative;
-	}
-
-	/* Game 6 specific logo styling */
-	:global(.instructions .logo path) {
-		fill: #fff;
-	}
-
 	.start-screen {
 		display: flex;
 		inline-size: calc(100vw - (100vw - 66.41%));
@@ -457,10 +583,6 @@
 			inset-inline-end: 50%;
 			transform: translateX(50%);
 		}
-
-		// .explanation {
-		// 	inset-inline-start: calc(10rem * var(--scale-factor));
-		// }
 	}
 
 	.loading,
@@ -471,6 +593,11 @@
 		display: flex;
 		font-size: calc(3rem * var(--scale-factor));
 		justify-content: center;
+	}
+
+	/* Game 6 specific logo styling */
+	:global(.instructions .logo path) {
+		fill: #fff;
 	}
 
 	.image-button {
@@ -487,25 +614,6 @@
 			margin-inline: auto;
 		}
 	}
-
-	// .explanation {
-	// 	color: #000;
-	// 	font-weight: 600;
-	// 	line-height: normal;
-	// 	inline-size: calc(23.5rem * var(--scale-factor));
-	// 	inset-block-end: calc(5rem * var(--scale-factor));
-	// 	inset-inline-start: calc(5rem * var(--scale-factor));
-	// 	margin-inline: auto;
-	// 	position: absolute;
-
-	// 	&-title {
-	// 		font-size: calc(3rem * var(--scale-factor));
-	// 	}
-
-	// 	&-copy {
-	// 		font-size: 1.8rem;
-	// 	}
-	// }
 
 	/* Mobile Media Query - Up to 932px */
 	@media (max-width: 932px) {
@@ -525,10 +633,6 @@
 			padding-block: 0;
 			padding-inline: 1rem;
 		}
-
-		// .explanation {
-		// 	display: none;
-		// }
 
 		.welcome-container {
 			inline-size: 70%;
@@ -592,7 +696,6 @@
 			transform-origin: top left;
 		}
 
-		
 		.start-screen {
 			display: block;
 			inline-size: 100%;
@@ -603,7 +706,6 @@
 			display: none;
 		}
 
-		
 		.sidebar-is-closed .start-screen {
 			inline-size: calc(100vw - (100vw - 66.41%));
 		}
@@ -612,12 +714,10 @@
 			transform-origin: center center;
 		}
 
-		
 		.start-screen {
 			overflow-y: hidden;
 		}
 
-		
 		:global(.small-hero-summary) {
 			inset-block-start: calc(4rem * var(--scale-factor));
 			inset-inline-start: calc(6rem * var(--scale-factor));
@@ -625,7 +725,6 @@
 			display: none;
 		}
 
-	
 		.image-button {
 			position: relative;
 			inset-inline-start: 6rem;
@@ -662,7 +761,7 @@
 			z-index: -1;
 		}
 
-		.option-button {
+		.option {
 			padding-inline: .8rem;
 
 			&.selected {
@@ -678,7 +777,7 @@
 			line-height: 2.2rem;
 		}
 
-		.send-button {
+		.submit-button {
 			block-size: 3.8rem;
 			inline-size: 11rem;
 			font-size: 2rem;
