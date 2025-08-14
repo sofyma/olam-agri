@@ -95,11 +95,17 @@
 
     $: currentQuestion = $game3Store.questions[$game3Store.currentQuestionIndex] || null;
     
+    // Only update currentQuestion when the index actually changes, not on every store update
+    let stableCurrentQuestion = currentQuestion;
+    $: if ($game3Store.currentQuestionIndex !== undefined) {
+        stableCurrentQuestion = $game3Store.questions[$game3Store.currentQuestionIndex] || null;
+    }
+    
     // Debug logging for current question
     $: if ($game3Store.showQuestionModal) {
         console.log('Current question debug:', {
             currentQuestionOrder: $game3Store.currentQuestionOrder,
-            currentQuestion,
+            stableCurrentQuestion,
             availableQuestions: $game3Store.questions.map(q => ({ id: q.id, question: q.question })),
             showQuestionModal: $game3Store.showQuestionModal
         });
@@ -109,7 +115,7 @@
     $: if ($game3Store.showQuestionModal) {
         console.log('Question modal should show:', {
             showQuestionModal: $game3Store.showQuestionModal,
-            currentQuestion,
+            stableCurrentQuestion,
             currentQuestionIndex: $game3Store.currentQuestionIndex,
             questionsLength: $game3Store.questions.length,
             checkpointsReached: $game3Store.checkpointsReached
@@ -126,15 +132,16 @@
             message: isCorrect ? 'Correct!' : 'Incorrect!'
         };
 
-        // Change the question data before the feedback disappears
+        // Show feedback for a longer duration before moving to next question
         setTimeout(() => {
-            game3Store.answerQuestion(answer);
-            // Hide feedback after store update (much faster timing)
+            showFeedback = false; // Hide feedback
+            
+            // Only update the store and move to next question after feedback is hidden
             setTimeout(() => {
-                showFeedback = false; // Hide feedback
-                showQuestion = true; // Show question
-            }, 200); // Much faster feedback - reduced from 400ms to 200ms
-        }, 500); // Reduced initial feedback time from 1000ms to 500ms
+                game3Store.answerQuestion(answer);
+                showQuestion = true; // Show next question
+            }, 100); // Small delay to ensure smooth transition
+        }, 1500); // Show feedback for 1.5 seconds
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -396,11 +403,11 @@
             </div>
 
             <!-- Question Modal Overlay - moved outside maze-container to cover entire game-container -->
-            {#if $game3Store.showQuestionModal && currentQuestion}
+            {#if $game3Store.showQuestionModal && stableCurrentQuestion}
                 <div class="question-overlay"></div>
                 <div class="question-container-wrapper">
                     <Question
-                        question={currentQuestion}
+                        question={stableCurrentQuestion}
                         showFeedback={showFeedback}
                         isCorrect={feedbackState.isCorrect}
                         currentQuestionNumber={($game3Store.currentQuestionIndex % 5) + 1}

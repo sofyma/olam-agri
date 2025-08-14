@@ -12,17 +12,22 @@
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
     let isEntering = false;
-    let questionKey = 0; // Unique key for each question
     
     const dispatch = createEventDispatcher<{
         submit: { answer: string; isCorrect: boolean };
     }>();
     
     const handleSubmit = () => {
-        if (!selectedAnswer || isSubmitting) return;
+        console.log('Submit clicked, selectedAnswer:', selectedAnswer, 'isSubmitting:', isSubmitting);
+        if (!selectedAnswer || isSubmitting) {
+            console.log('Submit blocked - no answer or already submitting');
+            return;
+        }
         
         isSubmitting = true;
         const isAnswerCorrect = selectedAnswer === question.correctAnswer;
+        
+        console.log('Submitting answer:', selectedAnswer, 'isCorrect:', isAnswerCorrect);
         
         dispatch('submit', {
             answer: selectedAnswer,
@@ -34,7 +39,7 @@
         if (!isSubmitting) {
             // Simply update the selected answer - Svelte will handle the UI updates
             selectedAnswer = option;
-            console.log('Option clicked:', option, 'selectedAnswer set to:', selectedAnswer, 'questionKey:', questionKey);
+            console.log('Option clicked:', option, 'selectedAnswer set to:', selectedAnswer, 'currentQuestionNumber:', currentQuestionNumber);
         }
     };
 
@@ -45,20 +50,36 @@
         }
     };
 
-    // Reset state when question changes
-    $: if (question) {
+    // Reset state when the question number changes
+    $: if (currentQuestionNumber !== previousQuestionNumber) {
+        console.log('Question number changed from', previousQuestionNumber, 'to', currentQuestionNumber);
+        
         selectedAnswer = null;
         isSubmitting = false;
         isEntering = true;
-        questionKey++; // Generate new unique key for radio button names
         
-        console.log('Question changed, new key:', questionKey, 'selectedAnswer reset to:', selectedAnswer);
+        console.log('Question changed, selectedAnswer reset to:', selectedAnswer);
         
         // Reset entering animation state
         setTimeout(() => {
             isEntering = false;
         }, 50);
+        
+        // Update the previous question number
+        previousQuestionNumber = currentQuestionNumber;
     }
+    
+    // Initialize previousQuestionNumber
+    let previousQuestionNumber = currentQuestionNumber;
+    
+    // Debug logging for question number changes
+    $: console.log('Question component state:', {
+        currentQuestionNumber,
+        previousQuestionNumber,
+        selectedAnswer,
+        questionId: question?.id,
+        questionText: question?.question
+    });
 
     // Ensure no animation when question is not being displayed
     $: if (!question) {
@@ -106,10 +127,12 @@
                     >
                         <input
                             type="radio"
-                            name={`answer-${questionKey}-${currentQuestionNumber}`}
+                            name={`answer-${question.id || currentQuestionNumber}`}
                             value={option}
                             checked={selectedAnswer === option}
                             on:change={() => handleOptionClick(option)}
+                            data-question-number={currentQuestionNumber}
+                            data-question-id={question.id}
                         />
                         <span class="option-text">{option}</span>
                     </div>
@@ -255,6 +278,10 @@
 
         &:focus,
         &:hover {
+            background-color: #E6E6E6;
+        }
+        
+        &.selected {
             background-color: #E6E6E6;
         }
     }
