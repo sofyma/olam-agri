@@ -304,6 +304,10 @@
 			position: absolute;
 			max-inline-size: calc(103.5rem * var(--scale-factor));
 		}
+
+		&.playing {
+			background-image: none;
+		}
     }
 
 	.game-header {
