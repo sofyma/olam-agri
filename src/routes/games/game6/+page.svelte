@@ -367,7 +367,7 @@
 		flex-direction: column;
 		gap: calc(1.5rem * var(--scale-factor));
 		inline-size: 100%;
-		max-inline-size: calc(57rem * var(--scale-factor));
+		max-inline-size: calc(70rem * var(--scale-factor));
 
 		@media(max-width: 932px) {
 			gap: 0;
@@ -382,7 +382,7 @@
 		grid-template-columns: 2rem 1fr;
 		font-size: calc(2.2rem * var(--scale-factor));
 		grid-column-gap: 1rem;
-		margin-block: 1rem;
+		padding-block: 1rem;
 		padding-inline: 1.5rem;
 		transition: all 0.2s ease;
 		user-select: none;
@@ -393,7 +393,7 @@
 		}
 
 		@media(max-width: 932px) {
-			margin-block: .5rem;
+			padding-block: .5rem;
 
 			.option-text {
 				grid-column: 2;
