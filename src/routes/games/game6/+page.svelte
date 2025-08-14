@@ -382,7 +382,7 @@
 		grid-template-columns: 2rem 1fr;
 		font-size: calc(2.2rem * var(--scale-factor));
 		grid-column-gap: 1rem;
-		padding-block: 1rem;
+		margin-block: 1rem;
 		padding-inline: 1.5rem;
 		transition: all 0.2s ease;
 		user-select: none;
@@ -393,7 +393,7 @@
 		}
 
 		@media(max-width: 932px) {
-			padding-block: .5rem;
+			margin-block: .5rem;
 
 			.option-text {
 				grid-column: 2;
