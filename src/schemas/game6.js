@@ -1,7 +1,7 @@
 // @ts-nocheck
 export default {
   name: 'game6',
-  title: 'Game 6: The Mind Reader - Branching Questions',
+  title: 'Game 6: The Mind Reader',
   type: 'document',
   fields: [
     {

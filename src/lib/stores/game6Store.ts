@@ -159,14 +159,21 @@ const createGame6Store = () => {
     });
   };
 
+  const markComplete = () => {
+    update(state => ({
+      ...state,
+      isComplete: true
+    }));
+  };
+
   const saveResult = async (userId: string) => {
     let currentState: Game6State;
     subscribe(state => {
       currentState = state;
     })();
     
-    if (!currentState!.isComplete || !currentState!.startTime) {
-      console.error('Cannot save result: game not complete or no start time');
+    if (!currentState!.startTime) {
+      console.error('Cannot save result: no start time');
       return;
     }
 
@@ -195,6 +202,7 @@ const createGame6Store = () => {
     getQuestion,
     answerQuestion,
     reset,
+    markComplete,
     saveResult
   };
 };

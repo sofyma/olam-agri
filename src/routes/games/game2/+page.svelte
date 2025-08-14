@@ -238,7 +238,7 @@
 		<div class="game-area">
 			<div class="game-header">
 				<h2 class="game-header-title">Click on the lies to destroy them!</h2>
-				<img src="/images/game2-playing-screen.png" alt="Game 2 Playing Screen" class="game-header-image">
+				<img src="/images/game2-playing-screen.png" alt="Game 2 Playing Screen" class="game-header-image" style="visibility: hidden;">
 			</div>
 
 			<div class="bubbles-container">
@@ -297,10 +297,10 @@
 
 <style lang="scss">
 	.game-container {
-		background-image: url('/images/j2-start.png');
-		background-position: top center;
+		background-image: url('/images/j2-intro-all.jpg');
+		background-position: top right;
 		background-repeat: no-repeat;
-		background-size: calc(100% * var(--scale-factor));
+		background-size: contain;
 		block-size: var(--full-height, 100vh);
 		position: relative;
 
@@ -312,16 +312,22 @@
 	}
 
 	/* Large screen media query for game 2 background */
-	@media (min-width: 1920px) {
-		.game-container {
-			background-size: 70%;
-		}
-	}
+	// @media (min-width: 1920px) {
+	// 	.game-container {
+	// 		background-size: 70%;
+	// 	}
+	// }
 
 	/* Hide background image when game starts (not just when playing) */
-	.game-container.playing,
 	.game-container.game-started {
 		background-image: none;
+	}
+
+	.game-container.playing {
+		background-image: url('/images/j2-game-all.jpg');
+		background-position: center center;
+		background-size: contain;
+		background-repeat: no-repeat;
 	}
 
 	.game-header {

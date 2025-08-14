@@ -7,19 +7,14 @@
     import type { Question } from '$lib/types/game6';
 	import GameInstructions from '$lib/components/GameInstructions.svelte';
     
-    let showInstructions = true;
+    	let showInstructions = true;
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
 	let showWelcome = false;
 	let selectedAnswer: string | null = null;
 	let currentQuestion: any = null;
-	let gameEnded = false;
-	let endGameMessage = '';
 
-    // Reactive statement to handle navigation when game is complete
-    $: if (gameEnded && !showInstructions && !showWelcome) {
-        console.log('Game ended, showing end message...');
-    }
+
 
     onMount(async () => {
         // Load game configs first to ensure availability is up to date
@@ -61,18 +56,15 @@
 			if (startQuestion) {
 				currentQuestion = startQuestion;
 				selectedAnswer = null;
-				gameEnded = false;
 			} else {
 				// Handle case where no start question exists
 				console.warn('No start question found in Sanity');
-				gameEnded = true;
-				endGameMessage = 'Game setup incomplete. Please add questions in Sanity Studio first.';
+				goto('/games/info/6');
 			}
 		} catch (error) {
 			console.error('Failed to load start question:', error);
 			// Handle error gracefully
-			gameEnded = true;
-			endGameMessage = 'Unable to load game. Please try again later.';
+			goto('/games/info/6');
 		}
 	}
 
@@ -90,15 +82,18 @@
 
 		// Check if this answer ends the game
 		if (selectedAnswerObj.isEndGame) {
-			gameEnded = true;
-			endGameMessage = selectedAnswerObj.endGameMessage || 'Thank you for completing the game!';
+			// Mark the game as complete
+			game6Store.markComplete();
 			
 			// Save the game result if user is authenticated
 			if ($authStore.user) {
-				game6Store.saveResult($authStore.user._id).catch(error => {
+				await game6Store.saveResult($authStore.user._id).catch(error => {
 					console.error('Failed to save game result:', error);
 				});
 			}
+			
+			// Redirect directly to finish route
+			goto('/games/game6/finish');
 			return;
 		}
 
@@ -112,20 +107,20 @@
 				} else {
 					// Handle case where next question doesn't exist
 					console.warn('Next question not found, ending game');
-					gameEnded = true;
-					endGameMessage = 'Game setup incomplete. Please contact an administrator.';
+					game6Store.markComplete();
+					goto('/games/game6/finish');
 				}
 			} catch (error) {
 				console.error('Failed to load next question:', error);
 				// Handle error gracefully
-				gameEnded = true;
-				endGameMessage = 'Unable to load next question. Please try again later.';
+				game6Store.markComplete();
+				goto('/games/game6/finish');
 			}
 		} else {
 			// Handle case where nextQuestion is not properly set
 			console.warn('No next question reference found, ending game');
-			gameEnded = true;
-			endGameMessage = 'Game setup incomplete. Please contact an administrator.';
+			game6Store.markComplete();
+			goto('/games/game6/finish');
 		}
 	}
 
@@ -211,44 +206,7 @@
             <p>{$game6Store.error}</p>
             <p>Please add some Game 6 questions in your Sanity Studio to play this game.</p>
         </div>
-    {:else if gameEnded}
-		<GameInstructions 
-			gameNumber={6}
-			gameTitle="Brand Heroes"
-			gameSubtitle="Game Complete"
-			infoRoute="/games/info/6"
-			bind:instructionsClosed
-			primaryColor="#00A865"
-			backgroundColor="#2E2D2C"
-			paragraphs={[
-				"Thank you for completing the Brand Heroes Challenge!",
-				"Your insights will help us improve the brand experience for everyone at Olam Agri."
-			]}
-		/>
 
-		<div class="game-area">
-			<img src="/images/game6-shape-before-playing.png" alt="" class="game6-shape-before-playing">
-
-			<div class="game-content">
-				<div class="question-container">
-					<div class="question-card">
-						<div class="question-header">
-							<h2 class="question-title">Game Complete!</h2>
-						</div>
-						
-						<div class="end-message">
-							<p>{endGameMessage}</p>
-						</div>
-						
-						<button class="lets-go-button" on:click={() => goto('/games/game6/finish')}>
-							Continue
-						</button>
-					</div>
-
-					<img src="/images/game6-hero-before-playing.png" alt="" class="game6-hero-before-playing game6-hero-before-playing-mobile">
-				</div>
-			</div>
-		</div>
     {:else if currentQuestion}
 		<GameInstructions 
 			gameNumber={6}
@@ -410,15 +368,20 @@
 		gap: calc(1.5rem * var(--scale-factor));
 		width: 100%;
 		max-width: calc(60rem * var(--scale-factor));
+
+		@media(max-width: 932px) {
+			gap: 0;
+		}
 	}
 
 	.option {
-		align-items: center;
+		align-items: start;
 		border-radius: 1.5rem;
 		cursor: pointer;
-		display: flex;
+		display: grid;
+		grid-template-columns: 2rem 1fr;
 		font-size: calc(2.2rem * var(--scale-factor));
-		gap: 1rem;
+		grid-column-gap: 1rem;
 		padding-block: 1rem;
 		padding-inline: 1.5rem;
 		transition: all 0.2s ease;
@@ -427,6 +390,14 @@
 		&:focus,
 		&:hover {
 			background-color: #E6E6E6;
+		}
+
+		@media(max-width: 932px) {
+			padding-block: .5rem;
+
+			.option-text {
+				grid-column: 2;
+			}
 		}
 	}
 
@@ -448,6 +419,11 @@
 		border-radius: 50%;
 		background-color: white;
 		position: relative;
+		inset-block-start: .3rem;
+
+		@media(max-width: 932px) {
+			inset-block-start: .2rem;
+		}
 
 		&:checked {
 			background-color: #2E2D2C;
@@ -473,17 +449,7 @@
 		transition: background-color 0.3s;
 	}
 
-	.end-message {
-		text-align: center;
-		margin-block-end: calc(3rem * var(--scale-factor));
 
-		p {
-			color: #2E2D2C;
-			font-size: calc(1.8rem * var(--scale-factor));
-			line-height: 1.5;
-			margin: 0;
-		}
-	}
 
 	.lets-go-button {
 		background-color: #00A865;
@@ -653,12 +619,12 @@
 
 		.question-card {
 			max-inline-size: 100%;
-			padding: 3rem 2.5rem;
+			padding: 2rem 2.5rem;
 			text-align: start;
 		}
 
 		.question-header {
-			margin-block-end: 1.3rem;
+			margin-block-end: 1rem;
 		}
 
 		.question-title {
@@ -766,7 +732,7 @@
 
 			&.selected {
 				.option-text {
-					color: #fff;
+					color: #2E2D2C;
 				}
 			}
 		}
@@ -782,7 +748,7 @@
 			inline-size: 11rem;
 			font-size: 2rem;
 			font-weight: 600;
-			margin-block-start: 2.8rem;
+			margin-block-start: 0;
 			padding: 0;
 		}
 	}

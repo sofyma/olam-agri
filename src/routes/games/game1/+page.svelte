@@ -151,7 +151,7 @@
 </script>
 
 <div class="game-container" class:sidebar-is-closed={instructionsClosedSidebar} class:playing={isGamePlaying}>
-	<Game1Shape />
+	<!-- <Game1Shape /> -->
         
 	{#if showInstructions}
 		<div class="game-panel">
@@ -173,7 +173,7 @@
 			<div class="start-screen">
 				<div class="start-screen-content">
 					<button on:click={startGame} class="game1-initial-screen-button">
-						<img src="/images/game1-initial-screen-image.png" alt="Game 1 Start Screen" class="game1-initial-screen-image">
+						<img src="/images/game1-initial-screen-image.png" alt="Game 1 Start Screen" class="game1-initial-screen-image" style="visibility: hidden;">
 					</button>
 				</div>
 			</div>
@@ -285,6 +285,10 @@
 <style lang="scss">
     .game-container {
 		background-color: #FF7000;
+		background-image: url('/images/j1-intro-all.jpg');
+		background-position: top right;
+		background-repeat: no-repeat;
+		background-size: contain;
 		overflow: hidden;
 		position: relative;
 

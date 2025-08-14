@@ -444,10 +444,10 @@
     }
 
     .game-container {
-        background-image: url('/images/j3-start.png');
+        background-image: url('/images/j3-intro-all.jpg');
         background-position: center right;
         background-repeat: no-repeat;
-        background-size: calc(100% * var(--scale-factor));
+        background-size: contain;
         block-size: var(--full-height, 100vh);
         overflow: hidden;
         position: relative;

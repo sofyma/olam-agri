@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onDestroy } from 'svelte';
     import type { Question } from '$lib/types/game3';
     
     export let question: Question;
@@ -31,7 +31,22 @@
 
     const handleOptionClick = (option: string) => {
         if (!isSubmitting) {
+            // Clear any previously selected radio buttons
+            const radioButtons = document.querySelectorAll(`input[name="answer-${question.id || currentQuestionNumber}"]`);
+            radioButtons.forEach((radio) => {
+                if (radio instanceof HTMLInputElement) {
+                    radio.checked = false;
+                }
+            });
+            
+            // Set the new selection
             selectedAnswer = option;
+            
+            // Update the DOM to reflect the selection
+            const selectedRadio = document.querySelector(`input[name="answer-${question.id || currentQuestionNumber}"][value="${option}"]`) as HTMLInputElement;
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+            }
         }
     };
 
@@ -47,6 +62,15 @@
         selectedAnswer = null;
         isSubmitting = false;
         isEntering = true;
+        
+        // Force reset all radio buttons to unchecked state
+        const radioButtons = document.querySelectorAll(`input[name="answer-${question.id || currentQuestionNumber}"]`);
+        radioButtons.forEach((radio) => {
+            if (radio instanceof HTMLInputElement) {
+                radio.checked = false;
+            }
+        });
+        
         // Reset entering animation state
         setTimeout(() => {
             isEntering = false;
@@ -56,7 +80,20 @@
     // Ensure no animation when question is not being displayed
     $: if (!question) {
         isEntering = false;
+        // Clear any lingering radio button selections
+        selectedAnswer = null;
     }
+    
+    // Cleanup function to reset radio buttons when component unmounts
+    onDestroy(() => {
+        // Reset all radio buttons when component is destroyed
+        const radioButtons = document.querySelectorAll(`input[name="answer-${question?.id || currentQuestionNumber}"]`);
+        radioButtons.forEach((radio) => {
+            if (radio instanceof HTMLInputElement) {
+                radio.checked = false;
+            }
+        });
+    });
 
     $: imageUrl = question?.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkY1QkFGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TWF6ZSBDaGFsbGVuZ2U8L3RleHQ+Cjwvc3ZnPgo=';
 </script>
@@ -85,13 +122,17 @@
                         class:selected={selectedAnswer === option}
                         on:click={() => handleOptionClick(option)}
                         on:keydown={(event) => handleKeyDown(event, option)}
+                        on:touchstart={(event) => {
+                            event.preventDefault();
+                            handleOptionClick(option);
+                        }}
                         tabindex="0"
                         role="radio"
                         aria-checked={selectedAnswer === option}
                     >
                         <input
                             type="radio"
-                            name="answer"
+                            name={`answer-${question.id || currentQuestionNumber}`}
                             value={option}
                             checked={selectedAnswer === option}
                             on:change={() => handleOptionClick(option)}
@@ -233,6 +274,10 @@
         padding: 1rem 1.5rem;
         transition: all 0.2s ease;
         user-select: none;
+        /* Mobile touch improvements */
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        touch-action: manipulation;
 
         &:focus,
         &:hover {
@@ -258,6 +303,10 @@
         border-radius: 50%;
         background-color: white;
         position: relative;
+        /* Mobile touch improvements */
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        touch-action: manipulation;
 
         &:checked {
             background-color: #2E2D2C;
