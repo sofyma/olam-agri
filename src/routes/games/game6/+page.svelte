@@ -313,7 +313,7 @@
 	}
 
 	.game6-hero-before-playing {
-		margin-block-start: calc(-7rem * var(--scale-factor));
+		margin-block-start: calc(-5rem * var(--scale-factor));
 		margin-inline-start: calc(7rem * var(--scale-factor));
 		max-inline-size: calc(39.5rem * var(--scale-factor));
 		position: relative;
@@ -337,14 +337,14 @@
 	.question-card {
 		background-color: #fff;
 		border-radius: 0 calc(3rem * var(--scale-factor));
-		padding: calc(6rem * var(--scale-factor)) calc(7rem * var(--scale-factor)) calc(13rem * var(--scale-factor));
+		padding: calc(3rem * var(--scale-factor)) calc(7rem * var(--scale-factor)) calc(7rem * var(--scale-factor));
 		position: relative;
 		width: 100%;
 		box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
 	}
 
 	.question-header {
-		margin-block-end: calc(4rem * var(--scale-factor));
+		margin-block-end: calc(2rem * var(--scale-factor));
 		text-align: center;
 	}
 
@@ -366,8 +366,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: calc(1.5rem * var(--scale-factor));
-		width: 100%;
-		max-width: calc(60rem * var(--scale-factor));
+		inline-size: 100%;
+		max-inline-size: calc(57rem * var(--scale-factor));
 
 		@media(max-width: 932px) {
 			gap: 0;
@@ -438,7 +438,7 @@
 		display: block;
 		font-size: 2rem;
 		font-weight: 600;
-		margin-block-start: calc(6rem * var(--scale-factor));
+		margin-block-start: calc(1rem * var(--scale-factor));
 		border-width: initial;
 		border-style: none;
 		border-color: initial;
