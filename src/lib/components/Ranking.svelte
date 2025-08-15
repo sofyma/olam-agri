@@ -30,6 +30,7 @@
       
       // Load top brand heroes (top 2 from each region)
       topHeroes = await rankingService.getTopBrandHeroes();
+      console.log('Top heroes loaded:', topHeroes);
       
       // Load available regions
       availableRegions = getRegions();
@@ -38,10 +39,12 @@
       if (availableRegions.length > 0) {
         selectedRegion = availableRegions[0];
         regionRankings = await rankingService.getRankingsByRegion(selectedRegion, 5);
+        console.log('Region rankings loaded for', selectedRegion, ':', regionRankings);
       }
       
       // Load all rankings for search
       allRankings = await rankingService.getAllRankings();
+      console.log('All rankings loaded:', allRankings);
       
       // Load initial search results
       await loadSearchResults();
@@ -254,90 +257,106 @@
                   {/if}
                 </h4>
                 
-                <div class="table-container">
-                  <table class="ranking-table region-table">
-                    <thead>
-                      <tr>
-                        <th style="text-align: end;">Position</th>
-                        <th style="color: #2E2D2C;">Name</th>
-                        <th style="text-align: end;">Points</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {#each regionRankings as entry, i}
-                        <tr class:border-after={i === 2} class:top-three={i < 3} class:next-two={i >= 3 && i < 5}>
-                          <td class="position" style="text-align: end;">{i + 1}</td>
-                          <td class="player-name" style="color: #2E2D2C;">{entry.user.displayName}</td>
-                          <td class="points" style="text-align: end;">{entry.totalScore}</td>
-                        </tr>
-                      {/each}
-                    </tbody>
-                  </table>
+                <!-- Search Input -->
+                <div class="search-container">
+                  <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.0308 16.7676L0.99998 25.7984" stroke="#999999" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="16.4048" cy="9.59521" r="8.59521" stroke="#999999" stroke-width="2"/>
+                  </svg>
+                    
+                  <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search"
+                    bind:value={searchQuery}
+                    on:input={handleSearch}
+                  />
+                  
+                  {#if searchQuery.trim()}
+                    <button 
+                      class="clear-search-btn" 
+                      on:click={() => {
+                        searchQuery = '';
+                        handleSearch();
+                      }}
+                      type="button"
+                      aria-label="Clear search"
+                    >
+                      ✕
+                    </button>
+                  {/if}
                 </div>
-              </div>
-            {/if}
-          </div>
-
-          <!-- SEARCH RESULTS SECTION -->
-          <div class="ranking-section">
-            <!-- Search Input -->
-            <div class="search-container">
-              <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.0308 16.7676L0.99998 25.7984" stroke="#999999" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="16.4048" cy="9.59521" r="8.59521" stroke="#999999" stroke-width="2"/>
-              </svg>
                 
-              <input 
-                type="text" 
-                class="search-input" 
-                placeholder="Search"
-                bind:value={searchQuery}
-                on:input={handleSearch}
-              />
-            </div>
-            
-            {#if searchQuery.trim()}
-              <div class="table-container">
-                <table class="ranking-table search-table">
-                  <thead>
-                    <tr>
-                      <th style="text-align: end;">Position</th>
-                      <th style="color: #2E2D2C;">Name</th>
-                      <th style="text-align: end;">Points</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {#each searchResults as entry, i}
-                      <tr>
-                        <td style="text-align: end;">{entry.regionalPosition}</td>
-                        <td style="color: #2E2D2C;">{entry.user.displayName}</td>
-                        <td style="text-align: end;">{entry.totalScore}</td>
-                      </tr>
-                    {/each}
-                  </tbody>
-                </table>
-              </div>
-            {/if}
-
-            <!-- Pagination -->
-            {#if searchQuery.trim() && totalPages > 1}
-              <div class="pagination">
-                <button class="pagination-btn" on:click={() => goToPage(1)} disabled={currentPage === 1}>
-                  &lt;&lt;
-                </button>
-                <button class="pagination-btn" on:click={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
-                  &lt;
-                </button>
-                <span class="pagination-info">page {currentPage}/{totalPages}</span>
-                <button class="pagination-btn" on:click={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>
-                  &gt;
-                </button>
-                <button class="pagination-btn" on:click={() => goToPage(totalPages)} disabled={currentPage === totalPages}>
-                  &gt;&gt;
-                </button>
+                {#if !searchQuery.trim()}
+                  <div class="table-container">
+                    <table class="ranking-table region-table">
+                      <thead>
+                        <tr>
+                          <th style="text-align: end;">Position</th>
+                          <th style="color: #2E2D2C;">Name</th>
+                          <th style="text-align: end;">Points</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {#each regionRankings as entry, i}
+                          <tr class:border-after={i === 2} class:top-three={i < 3} class:next-two={i >= 3 && i < 5}>
+                            <td class="position" style="text-align: end;">{i + 1}</td>
+                            <td class="player-name" style="color: #2E2D2C;">{entry.user.displayName}</td>
+                            <td class="points" style="text-align: end;">{entry.totalScore}</td>
+                          </tr>
+                        {/each}
+                      </tbody>
+                    </table>
+                  </div>
+                {/if}
+                
+                {#if searchQuery.trim()}
+                  <div class="table-container">
+                    <table class="ranking-table search-table">
+                      <thead>
+                        <tr>
+                          <th style="text-align: end;">Position</th>
+                          <th style="color: #2E2D2C;">Name</th>
+                          <th style="text-align: end;">Points</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {#each searchResults as entry, i}
+                          <tr>
+                            <td style="text-align: end;">{entry.regionalPosition}</td>
+                            <td style="color: #2E2D2C;">{entry.user.displayName}</td>
+                            <td style="text-align: end;">{entry.totalScore}</td>
+                          </tr>
+                        {/each}
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <!-- Pagination -->
+                  {#if totalPages > 1}
+                    <div class="pagination">
+                      <button class="pagination-btn" on:click={() => goToPage(1)} disabled={currentPage === 1}>
+                        &lt;&lt;
+                      </button>
+                      <button class="pagination-btn" on:click={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
+                        &lt;
+                      </button>
+                      <span class="pagination-info">page {currentPage}/{totalPages}</span>
+                      <button class="pagination-btn" on:click={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>
+                        &gt;
+                      </button>
+                      <button class="pagination-btn" on:click={() => goToPage(totalPages)} disabled={currentPage === totalPages}>
+                        &gt;&gt;
+                      </button>
+                    </div>
+                  {/if}
+                {/if}
               </div>
             {/if}
           </div>
+
+
+
         {/if}
       </div>
     </div>
@@ -724,6 +743,30 @@
 
     &::placeholder {
       color: #999;
+    }
+  }
+
+  .clear-search-btn {
+    background-color: #999;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: bold;
+    height: 2.4rem;
+    inset-block-start: 50%;
+    inset-inline-end: 1.5rem;
+    position: absolute;
+    transform: translateY(-50%);
+    width: 2.4rem;
+
+    &:hover {
+      background-color: #666;
+    }
+
+    &:active {
+      background-color: #444;
     }
   }
 

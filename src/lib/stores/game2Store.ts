@@ -56,7 +56,7 @@ const createGame2Store = () => {
           timerIntervals.delete(statementIndex);
           
           const isCorrect = statement.isTrue; // If true statement passes through, it's correct
-          const newScore = isCorrect ? state.score + 1 : state.score - 1;
+          const newScore = isCorrect ? state.score + 1 : Math.max(0, state.score - 1);
 
           const updatedStatements = [...state.statements];
           updatedStatements[statementIndex] = { ...statement, faded: true, isCorrect, timeRemaining: 0, processedTime: Date.now() };
@@ -195,7 +195,7 @@ const createGame2Store = () => {
         isCorrect = statement.isTrue === true;
       }
       
-      const newScore = isCorrect ? state.score + 1 : state.score - 1;
+      const newScore = isCorrect ? state.score + 1 : Math.max(0, state.score - 1);
       
       console.log(`Statement ${statementIndex} ${wasClicked ? 'clicked' : 'passed'}. isTrue: ${statement.isTrue}, isCorrect: ${isCorrect}, newScore: ${newScore}`);
       

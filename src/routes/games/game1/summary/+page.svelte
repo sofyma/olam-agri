@@ -41,7 +41,7 @@
 		<h2 class="title">This is your final score:</h2>
 
 		<div class="results">
-			<p class="paragraph">You missed {missedPlaces} places, so your<br>score is:</p>
+			<p class="paragraph">You missed {missedPlaces} {missedPlaces === 1 ? 'place' : 'places'}, so your<br>score is:</p>
 			<p class="total-points">{totalScore} {totalScore === 1 ? 'point' : 'points'}</p>
 		</div>
 

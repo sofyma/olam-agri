@@ -348,6 +348,10 @@
                         <img src="/images/up.png" alt="Down Arrow" class="arrow arrow-down" />
                     </button>
                 </div>
+                
+                <div class="keyboard-instruction">
+                    You can also use your keyboard arrows!
+                </div>
             </div>
 
             
@@ -511,6 +515,16 @@
         padding: calc(3rem * var(--scale-factor));
     }
 
+    .keyboard-instruction {
+        color: #FFF;
+        text-align: center;
+        font-size: 1.6rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 2rem;
+        padding-block-start: 1rem;
+    }
+
     .dir-row {
         display: flex;
         gap: calc(9rem * var(--scale-factor));
@@ -651,11 +665,11 @@
 
     .question-container-wrapper {
         inline-size: 100%;
-        max-inline-size: calc(90rem * var(--scale-factor));
+        max-inline-size: calc(105.2rem * var(--scale-factor));
         padding: 0 2rem;
         position: relative;
-        transform: scale(var(--scale-factor));
-        transform-origin: center;
+        // transform: scale(var(--scale-factor));
+        // transform-origin: center;
         z-index: 2000;
     }
 

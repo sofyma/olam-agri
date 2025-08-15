@@ -80,7 +80,7 @@
 
 		const statement = $game2Store.statements[index];
 		const path = pathOrder[index] || (index % 4) + 1;
-		const animationDuration = 8000; // 8 seconds - slowed down from 5 seconds
+		const animationDuration = 12000; // 12 seconds - further slowed down for better visibility
 
 		activeBubbles = [
 			...activeBubbles,
@@ -93,7 +93,7 @@
 			}
 		];
 
-		const nextDelay = Math.max(2000, 3500 - (index * 150)); // Increased delays: 2-3.5 seconds instead of 1-2 seconds
+		const nextDelay = Math.max(3000, 4500 - (index * 200)); // Further increased delays: 3-4.5 seconds for better spacing
 		spawnTimeout = setTimeout(() => spawnBubble(index + 1), nextDelay);
 	}
 
@@ -191,7 +191,7 @@
 						"Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.",
 						"Stop the lies about our brand name and logo, but let the truths pass through.",
 						"Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.",
-						"Think fast! You've only 5 seconds to decide on each one."
+						"Take your time! You have about 12 seconds to decide on each one."
 					]}
 				/>
 
@@ -231,7 +231,7 @@
 				"Our arch-enemy, Mr Confusion, is attacking us! He's really smart, he mixes lies with truths to confuse us.",
 				"Stop the lies about our brand name and logo, but let the truths pass through.",
 				"Each lie you stop earns you 1 point, but if you destroy a truth, you'll lose 1 point.",
-				"Think fast! You've only 5 seconds to decide on each one."
+				"Take your time! You have about 12 seconds to decide on each one."
 			]}
 		/>
 
@@ -435,7 +435,7 @@
 		position: relative;
 
 		&.timeout {
-			opacity: 0.2;
+			opacity: 0.6; // Increased from 0.2 to make correct/incorrect symbols more visible
 		}
 
 		:global(svg) {

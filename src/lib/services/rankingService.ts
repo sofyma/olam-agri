@@ -242,6 +242,22 @@ export class RankingService {
           });
         }
         
+        // Game 6 duration with precision logging
+        let game6Duration = 0;
+        if (r.game6?.startedAt && r.game6?.completedAt) {
+          const game6DurationData = this.calculateDuration(r.game6.startedAt, r.game6.completedAt);
+          game6Duration = game6DurationData.durationMs;
+          totalDuration += game6Duration;
+          
+          // Debug logging for precision verification
+          console.log(`Game 6 Duration for ${r.user.displayName}:`, {
+            start: r.game6.startedAt,
+            end: r.game6.completedAt,
+            durationMs: game6Duration,
+            durationSec: game6DurationData.durationSec.toFixed(3)
+          });
+        }
+        
         return {
           user: r.user,
           totalScore,
@@ -356,6 +372,23 @@ export class RankingService {
         const game5Score = r.game5?.score || 0;
         const game6Score = r.game6?.score || 0;
         const totalScore = game1Score + game2Score + game3Score + game4Score + game5Score + game6Score;
+        
+        // Debug logging for score calculation in getAllRankings
+        console.log(`getAllRankings - Score calculation for ${r.user?.displayName}:`, {
+          game1Score,
+          game2Score,
+          game3Score,
+          game4Score,
+          game5Score,
+          game6Score,
+          totalScore,
+          game1Data: r.game1,
+          game2Data: r.game2,
+          game3Data: r.game3,
+          game4Data: r.game4,
+          game5Data: r.game5,
+          game6Data: r.game6
+        });
         const lastPlayed = r.game4?.completedAt || r.game3?.completedAt || r.game2?.completedAt || r.game1?.completedAt || '';
         
         // Calculate earliest start time across all games for tiebreak
@@ -391,6 +424,11 @@ export class RankingService {
         }
         if (r.game5?.startedAt && r.game5?.completedAt) {
           totalDuration += this.calculateDuration(r.game5.startedAt, r.game5.completedAt).durationMs;
+        }
+        
+        // Game 6 duration calculation
+        if (r.game6?.startedAt && r.game6?.completedAt) {
+          totalDuration += this.calculateDuration(r.game6.startedAt, r.game6.completedAt).durationMs;
         }
         
         return {

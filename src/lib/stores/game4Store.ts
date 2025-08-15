@@ -102,7 +102,7 @@ const createGame4Store = () => {
         title: currentStatement.title
       });
 
-      const newScore = isCorrect ? state.score : state.score - 1;
+      const newScore = isCorrect ? state.score : Math.max(0, state.score - 1);
       const newCorrectSwipes = isCorrect ? state.correctSwipes + 1 : state.correctSwipes;
       const newIncorrectSwipes = isCorrect ? state.incorrectSwipes : state.incorrectSwipes + 1;
 

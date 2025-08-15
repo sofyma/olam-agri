@@ -107,13 +107,13 @@ const createGame1Store = () => {
         gameRecorderService.recordAnswer(currentQuestion, answer, isCorrect, state.currentSet);
         
         // Only add points for correct brand answers
-        // Only subtract points for incorrect place answers
+        // Only subtract points for incorrect place answers (but not below 0)
         if (state.currentSet === 'brands') {
           if (isCorrect) {
             newState.brandScore += 1;
           }
         } else if (!isCorrect) { // places section
-          newState.placeScore -= 1;
+          newState.placeScore = Math.max(0, newState.placeScore - 1);
         }
 
         // Move to next question or switch sets
@@ -125,11 +125,26 @@ const createGame1Store = () => {
           const { brandAnswers, placeAnswers, startTime } = gameRecorderService.getAnswers();
           const auth = getAuth();
           
+          // Calculate the total score for Game 1
+          const totalScore = newState.brandScore + newState.placeScore;
+          
           console.log('Game completed, auth state:', auth);
           console.log('User object:', auth.user);
+          console.log('Game 1 final scores:', {
+            brandScore: newState.brandScore,
+            placeScore: newState.placeScore,
+            totalScore: totalScore
+          });
           
           if (auth.user && auth.user._id) {
             console.log('Saving game result with user ID:', auth.user._id);
+            console.log('Game 1 final state before saving:', {
+              brandScore: newState.brandScore,
+              placeScore: newState.placeScore,
+              totalScore: totalScore,
+              brandAnswers: brandAnswers.length,
+              placeAnswers: placeAnswers.length
+            });
             const rankingService = RankingService.getInstance();
             rankingService.saveGameResult(
               auth.user._id,
