@@ -22,7 +22,6 @@
     let instructionsClosed = false;
     let instructionsClosedSidebar = false;
     let isGamePlaying = false;
-    let showQuestion = true;
     
     const gameService = Game3Service.getInstance();
     
@@ -126,7 +125,7 @@
         const { answer, isCorrect } = event.detail;
         
         showFeedback = true;
-        showQuestion = false; // Hide question when feedback shows
+
         feedbackState = {
             isCorrect,
             message: isCorrect ? 'Correct!' : 'Incorrect!'
@@ -138,8 +137,7 @@
             
             // Only update the store and move to next question after feedback is hidden
             setTimeout(() => {
-                game3Store.answerQuestion(answer);
-                showQuestion = true; // Show next question
+                        game3Store.answerQuestion(answer);
             }, 100); // Small delay to ensure smooth transition
         }, 1500); // Show feedback for 1.5 seconds
     }
@@ -412,12 +410,12 @@
                 <div class="question-container-wrapper">
                     <Question
                         question={stableCurrentQuestion}
+                        nextQuestion={$game3Store.questions[($game3Store.currentQuestionIndex + 1) % $game3Store.questions.length]}
                         showFeedback={showFeedback}
                         isCorrect={feedbackState.isCorrect}
                         currentQuestionNumber={($game3Store.currentQuestionIndex % 5) + 1}
                         totalQuestions={5}
                         on:submit={handleQuestionSubmit}
-                        showQuestion={showQuestion}
                     />
                 </div>
             {/if}
@@ -668,8 +666,8 @@
         max-inline-size: calc(105.2rem * var(--scale-factor));
         padding: 0 2rem;
         position: relative;
-        transform: scale(var(--scale-factor));
-        transform-origin: center;
+        // transform: scale(var(--scale-factor));
+        // transform-origin: center;
         z-index: 2000;
     }
 

@@ -3,15 +3,14 @@
     import type { Question } from '$lib/types/game3';
     
     export let question: Question;
+    export let nextQuestion: Question | undefined = undefined;
     export let showFeedback = false;
     export let isCorrect: boolean | null = null;
     export let currentQuestionNumber: number;
     export let totalQuestions: number;
-    export let showQuestion = true;
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
-    let isEntering = false;
     
     const dispatch = createEventDispatcher<{
         submit: { answer: string; isCorrect: boolean };
@@ -50,58 +49,47 @@
         }
     };
 
-    // Reset state when the question number changes
-    $: if (currentQuestionNumber !== previousQuestionNumber) {
-        console.log('Question number changed from', previousQuestionNumber, 'to', currentQuestionNumber);
-        
-        selectedAnswer = null;
-        isSubmitting = false;
-        isEntering = true;
-        
-        console.log('Question changed, selectedAnswer reset to:', selectedAnswer);
-        
-        // Reset entering animation state
+    // Reset state when question changes
+    $: if (question && !showFeedback) {
+        // Small delay to ensure smooth transition from feedback
         setTimeout(() => {
-            isEntering = false;
-        }, 50);
-        
-        // Update the previous question number
-        previousQuestionNumber = currentQuestionNumber;
-    }
-    
-    // Initialize previousQuestionNumber
-    let previousQuestionNumber = currentQuestionNumber;
-    
-    // Debug logging for question number changes
-    $: console.log('Question component state:', {
-        currentQuestionNumber,
-        previousQuestionNumber,
-        selectedAnswer,
-        questionId: question?.id,
-        questionText: question?.question
-    });
-
-    // Ensure no animation when question is not being displayed
-    $: if (!question) {
-        isEntering = false;
-        // Clear any lingering radio button selections
-        selectedAnswer = null;
+            selectedAnswer = null;
+            isSubmitting = false;
+        }, 50); // Small delay to prevent blinking
     }
     
 
 
-    $: imageUrl = question?.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkY1QkFGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TWF6ZSBDaGFsbGVuZ2U8L3RleHQ+Cjwvc3ZnPgo=';
+    $: imageUrl = question?.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDgwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjRkY1QkFGIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TWF6ZSBDaGFsbGVuZ2U8L3RleHQ+Cjwvc3ZnPgo=';
+    
+    // Simple preloading logic for next question only
+    $: if (nextQuestion?.image && nextQuestion.image !== question?.image) {
+        const img = new Image();
+        img.onload = () => {
+            console.log('🖼️ Preloaded next image:', nextQuestion.image);
+        };
+        img.onerror = () => {
+            console.warn('⚠️ Failed to preload next image:', nextQuestion.image);
+        };
+        img.src = nextQuestion.image;
+    }
 </script>
 
 <span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
-<div class="question-container" class:entering={!showFeedback && isEntering}>
+
+<!-- Hidden preload image for next question -->
+{#if nextQuestion?.image}
+	<img src={nextQuestion.image} alt="" class="preload-image" />
+{/if}
+
+<div class="question-container">
    
-    <div style:visibility={showQuestion ? 'visible' : 'hidden'}>
+    {#if !showFeedback}
         <div class="question-header">
             <h2 class="question-title">{question.question}</h2>
         </div>
         
-        {#if imageUrl}
+        {#if imageUrl && question?.id}
             <img 
                 src={imageUrl}
                 alt={question.imageAlt || `Question image`} 
@@ -147,24 +135,26 @@
                 Send    
             </button>
         </div>
-    </div>
+    {/if}
     
-    <div class="feedback" style:display={showFeedback ? 'flex' : 'none'}>
-        <div class="feedback-content">
-            {#if isCorrect}
-                <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
-                    <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
-                </svg>
-            {:else}
-                <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M396 198C396 88.6592 307.341 0 198 0C88.6592 0 0 88.6592 0 198C0 307.341 88.6592 396 198 396C307.341 396 396 307.341 396 198Z" fill="#FF3000"/>
-                    <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
-                    <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
-                </svg>
-            {/if}
+    {#if showFeedback}
+        <div class="feedback">
+            <div class="feedback-content">
+                {#if isCorrect}
+                    <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M420 210C420 94.0202 325.98 0 210 0C94.0202 0 0 94.0202 0 210C0 325.98 94.0202 420 210 420C325.98 420 420 325.98 420 210Z" fill="#00A865"/>
+                        <path d="M110.77 221.12L169.51 279.86L309.23 140.14" stroke="white" stroke-width="50" stroke-miterlimit="10" stroke-linecap="round"/>
+                    </svg>
+                {:else}
+                    <svg width="396" height="396" viewBox="0 0 396 396" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M396 198C396 88.6592 307.341 0 198 0C88.6592 0 0 88.6592 0 198C0 307.341 88.6592 396 198 396C307.341 396 396 307.341 396 198Z" fill="#FF3000"/>
+                        <path d="M137.509 258.232L258.492 137.249" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                        <path d="M137.509 137.249L258.492 258.232" stroke="white" stroke-width="62.174" stroke-miterlimit="10" stroke-linecap="round"/>
+                    </svg>
+                {/if}
+            </div>
         </div>
-    </div>
+    {/if}
     
 </div>
 
@@ -207,24 +197,27 @@
         padding-inline-end: calc(4rem * var(--scale-factor));
         text-align: end
     }
+    
+    .preload-image {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        z-index: -1;
+    }
 
     .question-container {
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));
-        block-size: auto;
+        block-size: 85dvh;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         position: relative;
-        transform: scale(1) translateY(0);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-sizing: border-box;
-    }
-    
-    .question-container.entering {
-        opacity: 0;
-        transform: scale(0.95) translateY(1rem);
     }
 
     .question-header {
@@ -233,7 +226,6 @@
     }
 
     .question-title {
-        block-size: calc(20rem * var(--scale-factor));
         color: #FF5BAF;
         font-size: calc(4.6rem * var(--scale-factor));
         font-weight: 600;
@@ -393,10 +385,6 @@
         .option-text {
             white-space: normal;
         }
-        
-        // .feedback {
-        //     height: 50rem;
-        // }
 
         .submit-button {
             font-size: 2rem;

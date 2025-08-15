@@ -76,6 +76,22 @@ const createGame3Store = () => {
 
   const gameRecorderService = GameRecorderService.getInstance();
 
+  // Preload images for all questions
+  const preloadImages = (questions: Question[]) => {
+    questions.forEach((question, index) => {
+      if (question.image) {
+        const img = new Image();
+        img.onload = () => {
+          console.log(`🖼️ Game 3 preloaded image ${index + 1}:`, question.image);
+        };
+        img.onerror = () => {
+          console.warn(`⚠️ Game 3 failed to preload image ${index + 1}:`, question.image);
+        };
+        img.src = question.image;
+      }
+    });
+  };
+
   // Parse walls from SVG data
   const parseWalls = (): Wall[] => {
     const wallPaths = [
@@ -276,6 +292,9 @@ const createGame3Store = () => {
         const questions = game3Service.getQuestions();
         
         console.log('Loaded Game 3 questions:', questions);
+        
+        // Preload all question images
+        preloadImages(questions);
 
         const auth = getAuth();
         if (auth.user) {
@@ -428,6 +447,44 @@ const createGame3Store = () => {
         );
 
         if (checkpoint) {
+          // Preload the next question image before showing modal
+          const nextQuestionIndex = (state.currentQuestionIndex + 1) % state.questions.length;
+          const nextQuestion = state.questions[nextQuestionIndex];
+          if (nextQuestion?.image) {
+            const img = new Image();
+            img.onload = () => {
+              console.log('🖼️ Game 3 preloaded next question image before modal:', nextQuestion.image);
+              // Only show modal after image is loaded
+              setTimeout(() => {
+                update(state => ({
+                  ...state,
+                  showQuestionModal: true
+                }));
+              }, 100); // Small delay to ensure image is fully cached
+            };
+            img.onerror = () => {
+              console.warn('⚠️ Game 3 failed to preload next question image:', nextQuestion.image);
+              // Show modal even if preload fails
+              setTimeout(() => {
+                update(state => ({
+                  ...state,
+                  showQuestionModal: true
+                }));
+              }, 100);
+            };
+            img.src = nextQuestion.image;
+            
+            // Return state without showing modal yet
+            return {
+              ...state,
+              ballPosition: { x: newX, y: newY },
+              showQuestionModal: false, // Don't show modal yet
+              currentCheckpoint: checkpoint.id,
+              checkpointsReached: state.checkpointsReached + 1
+            };
+          }
+          
+          // If no image to preload, show modal immediately
           return {
             ...state,
             ballPosition: { x: newX, y: newY },
@@ -537,6 +594,44 @@ const createGame3Store = () => {
           console.log('Setting starting question index:', startingQuestionIndex);
           console.log('Available questions:', state.questions.map(q => ({ id: q.id, question: q.question })));
           
+          // Preload the first question image before showing modal
+          const firstQuestion = state.questions[startingQuestionIndex];
+          if (firstQuestion?.image) {
+            const img = new Image();
+            img.onload = () => {
+              console.log('🖼️ Game 3 preloaded first question image before modal:', firstQuestion.image);
+              // Only show modal after image is loaded
+              setTimeout(() => {
+                update(state => ({
+                  ...state,
+                  showQuestionModal: true
+                }));
+              }, 100); // Small delay to ensure image is fully cached
+            };
+            img.onerror = () => {
+              console.warn('⚠️ Game 3 failed to preload first question image:', firstQuestion.image);
+              // Show modal even if preload fails
+              setTimeout(() => {
+                update(state => ({
+                  ...state,
+                  showQuestionModal: true
+                }));
+              }, 100);
+            };
+            img.src = firstQuestion.image;
+            
+            // Return state without showing modal yet
+            return {
+              ...state,
+              ballPosition: { x: nextX, y: nextY },
+              showQuestionModal: false, // Don't show modal yet
+              currentCheckpoint: checkpoint.id,
+              currentQuestionIndex: startingQuestionIndex,
+              checkpointsReached: state.checkpointsReached + 1
+            };
+          }
+          
+          // If no image to preload, show modal immediately
           return {
             ...state,
             ballPosition: { x: nextX, y: nextY },

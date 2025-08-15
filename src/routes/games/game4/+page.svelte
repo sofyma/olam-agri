@@ -512,10 +512,11 @@
 	}
 
 	.statement-image {
-		inline-size: 100%;
+		inline-size: 90%;
 		margin-block-end: calc(4rem * var(--scale-factor));
-		max-block-size: calc(60rem * var(--scale-factor));
-		object-fit: cover;
+		// max-block-size: calc(60rem * var(--scale-factor));
+		// object-fit: cover;
+		margin-inline: auto;
 		user-select: none;
 		-webkit-user-drag: none;
 		-khtml-user-drag: none;

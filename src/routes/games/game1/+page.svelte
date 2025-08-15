@@ -24,7 +24,7 @@
 	let instructionsClosed = false;
 	let instructionsClosedSidebar = false;
 	let isGamePlaying = false;
-    // No animation needed
+
     
     const gameService = Game1Service.getInstance();
     
@@ -112,40 +112,21 @@
             message: isCorrect ? 'Correct!' : 'Incorrect!'
         };
 
-        // Disable animation during feedback
-        		// No animation needed
+
 
         console.log('🔍 FEEDBACK SHOWN:', {
             showFeedback: true,
             currentStoreIndex: $game1Store.currentQuestionIndex
         });
 
-        // Show feedback for 1 second, then update the store first, then hide feedback
+        // Show feedback for 1 second, then update the store and hide feedback
         setTimeout(() => {
-            console.log('🔍 BEFORE UPDATING QUESTION:', {
-                currentStoreIndex: $game1Store.currentQuestionIndex
-            });
-            
             game1Store.answerQuestion(answer);
-            
-            console.log('🔍 AFTER ANSWER QUESTION:', {
-                storeIndex: $game1Store.currentQuestionIndex
-            });
             
             // Hide feedback after store update
             setTimeout(() => {
-                console.log('🔍 HIDING FEEDBACK:', {
-                    showFeedback: false,
-                    currentStoreIndex: $game1Store.currentQuestionIndex
-                });
-                
                 showFeedback = false;
-                
-                // Small delay to ensure smooth question transition
-                setTimeout(() => {
-                    // No additional action needed
-                }, 150);
-            }, 800); // Even longer delay to ensure proper height calculation, especially for brand-to-place transition
+            }, 800);
         }, 1000);
     }
 </script>
@@ -262,9 +243,10 @@
 			</div>
 
 			{#if currentQuestion}
-				<div class="question-wrapper">
+				<div class="question-wrapper" style="block-size: 85dvh;">
 					<Question
 						question={currentQuestion}
+						nextQuestion={$game1Store.questions[$game1Store.currentQuestionIndex + 1]}
 						showFeedback={showFeedback}
 						isCorrect={feedbackState.isCorrect}
 						questionType={$game1Store.currentSet === 'brands' ? 'brand' : 'place'}

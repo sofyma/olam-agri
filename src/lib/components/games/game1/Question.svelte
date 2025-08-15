@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { createEventDispatcher, onDestroy } from 'svelte';
+    import { createEventDispatcher } from 'svelte';
     import type { Question } from '$lib/types/game1';
     
     export let question: Question;
+    export let nextQuestion: Question | undefined = undefined;
     export let showFeedback = false;
     export let isCorrect: boolean | null = null;
     export let questionType: 'brand' | 'place' = 'brand';
@@ -13,11 +14,7 @@
     
     let selectedAnswer: string | null = null;
     let isSubmitting = false;
-    // No animation state needed
-    let previousQuestionId: number | null = null;
-    let questionContainerHeight = 0;
-    let questionContainerRef: HTMLElement | undefined;
-    let resizeObserver: ResizeObserver | undefined;
+
     
     const dispatch = createEventDispatcher<{
         submit: { answer: string; isCorrect: boolean };
@@ -54,83 +51,41 @@
         setTimeout(() => {
             selectedAnswer = null;
             isSubmitting = false;
-            
-            // No animation needed - just update the question smoothly
-            if (previousQuestionId && previousQuestionId !== question.id) {
-                // Question changed - no animation needed
-            }
-            
-            previousQuestionId = question.id;
-            
-            // Measure the height of the question container with multiple attempts for proper rendering
-            measureQuestionHeight();
         }, 50); // Small delay to prevent blinking
     }
 
-    // Function to measure question height with minimal delay for proper rendering
-    function measureQuestionHeight() {
-        // Small delay to ensure DOM is fully rendered
-        setTimeout(() => {
-            if (questionContainerRef) {
-                const height = questionContainerRef.offsetHeight;
-                if (height > 0) {
-                    questionContainerHeight = height;
-                    console.log('🔍 HEIGHT MEASURED:', {
-                        height: questionContainerHeight,
-                        questionId: question?.id,
-                        questionType: questionType
-                    });
-                }
-            }
-        }, 100); // Slightly longer delay to ensure smooth rendering
-
-        // Set up resize observer for dynamic content changes
-        setupResizeObserver();
-    }
-
-    // Set up resize observer to handle dynamic content changes
-    function setupResizeObserver() {
-        if (resizeObserver) {
-            resizeObserver.disconnect();
-        }
-
-        if (questionContainerRef) {
-            resizeObserver = new ResizeObserver((entries) => {
-                for (const entry of entries) {
-                    const newHeight = entry.contentRect.height;
-                    if (newHeight > questionContainerHeight) {
-                        questionContainerHeight = newHeight;
-                        console.log('🔍 HEIGHT UPDATED (resize observer):', {
-                            height: questionContainerHeight,
-                            questionId: question?.id,
-                            questionType: questionType
-                        });
-                    }
-                }
-            });
-            resizeObserver.observe(questionContainerRef);
-        }
-    }
-
     $: imageUrl = question?.image || '';
-
-    // Cleanup resize observer when component is destroyed
-    onDestroy(() => {
-        if (resizeObserver) {
-            resizeObserver.disconnect();
-        }
-    });
+    
+    // Simple preloading logic for next question only
+    $: if (nextQuestion?.image && nextQuestion.image !== imageUrl) {
+        const img = new Image();
+        img.onload = () => {
+            console.log('🖼️ Preloaded next image:', nextQuestion.image);
+        };
+        img.onerror = () => {
+            console.warn('⚠️ Failed to preload next image:', nextQuestion.image);
+        };
+        img.src = nextQuestion.image;
+    }
 </script>
 
 {#if !hideCounter}
 	<span class="question-counter">{currentQuestionNumber} of {totalQuestions}</span>
 {/if}
 
-<div class="question-wrapper" style="--dynamic-height: {questionContainerHeight > 0 ? Math.max((questionContainerHeight / 10), 45) + 'rem' : 'auto'};">
+<!-- Hidden preload image for next question -->
+{#if nextQuestion?.image}
+	<img src={nextQuestion.image} alt="" class="preload-image" />
+{/if}
+
+
+
+<div class="question-wrapper" style="block-size: 100%;">
 	<!-- Question container - always in DOM but hidden during feedback -->
+
+    {#if !showFeedback}
 	<div class="question-container"
-		 class:hidden={showFeedback}
-		 bind:this={questionContainerRef}>
+		 class:hidden={showFeedback}>
 		<div class="question-header">
 			
 			<h2 class="question-title">
@@ -180,10 +135,11 @@
 			</button>
 		</div>
 	</div>
+	{/if}
 	
 	<!-- Feedback overlay -->
 	{#if showFeedback}
-		<div class="feedback-overlay" style="--dynamic-height: {questionContainerHeight > 0 ? Math.max((questionContainerHeight / 10), 45) + 'rem' : 'auto'};">
+		<div class="feedback-overlay">
 			<div class="feedback">
 				<div class="feedback-content">
 					{#if isCorrect}
@@ -215,6 +171,16 @@
         padding-inline-end: calc(4rem * var(--scale-factor));
         text-align: end
     }
+    
+    .preload-image {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        z-index: -1;
+    }
 
     .question-wrapper {
         position: relative;
@@ -223,32 +189,19 @@
         height: auto; /* Default for mobile */
     }
 
-    /* Desktop only - apply dynamic height */
-    @media (min-width: 1024px) {
-        .question-wrapper {
-            height: var(--dynamic-height, auto);
-            min-height: 45rem; /* Fallback minimum height for desktop */
-        }
-    }
+
 
     .question-container {
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));  
-        //block-size: calc(90rem * var(--scale-factor));    
-        block-size: auto;
-        min-block-size: 45rem; /* Fallback minimum height */
+        block-size: 100%;
         max-inline-size: calc(105.2rem * var(--scale-factor));
         margin-inline: auto;
         opacity: 1;
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         position: relative;
-        transform: scale(1) translateY(0);
         /* Smooth content changes to prevent blinking */
         transition: opacity 0.15s ease-out;
-
-        @media(max-width: 932px) {
-            min-block-size: 0;
-        }
     }
 
 
@@ -280,6 +233,9 @@
             margin-block-end: 0;
             max-block-size: 30rem;
             margin-inline: auto;
+            /* Optimize image loading */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .place-image {
@@ -360,27 +316,16 @@
         z-index: 10;
         background-color: #fff;
         border-radius: 0 calc(3.5rem * var(--scale-factor));
-        height: auto; /* Default for mobile */
-        min-height: 45rem; /* Fallback minimum height */
+        height: 100%;
         /* Smooth appearance to prevent blinking */
         opacity: 1;
         transition: opacity 0.15s ease-out;
-    }
-
-    /* Desktop only - apply dynamic height to feedback overlay */
-    @media (min-width: 1024px) {
-        .feedback-overlay {
-            height: var(--dynamic-height, auto);
-            min-height: 45rem; /* Fallback minimum height for desktop */
-        }
-    }
-
-    /* Mobile - ensure feedback overlay matches question container height */
-    @media (max-width: 932px) {
-        .feedback-overlay {
+        
+        /* Mobile adjustments */
+        @media (max-width: 932px) {
             height: 100%;
-            min-height: 0;
-            /* Use 100% height to properly center content */
+            min-height: 100%;
+            border-radius: 0 calc(3.5rem * var(--scale-factor));
         }
     }
 
@@ -397,28 +342,26 @@
         padding-block: calc(4rem * var(--scale-factor)) calc(5rem * var(--scale-factor));
         box-sizing: border-box;
         height: 100%;
-        min-height: 100%;
-        min-block-size: 45rem; /* Fallback minimum height */
-
-        @media(max-width: 932px) {
-            min-block-size: 0;
-            height: 100%;
-            min-height: 100%;
-            /* Use full height on mobile to properly center content */
-        }
     }
 
     /* Mobile Media Query - Up to 932px */
     @media (max-width: 932px) {
         .feedback {
-            block-size: auto;
-            // min-block-size: 100%;
-            border-radius: 0 1.5rem 1.5rem 1.5rem;
+            block-size: 100%;
+            border-radius: 0 calc(3.5rem * var(--scale-factor));
             padding-block: 2rem 2rem;
             /* Ensure proper centering on mobile */
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100%;
+            min-height: 100%;
+            /* Force full height and proper centering */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
     }
     
@@ -429,13 +372,13 @@
         gap: 2rem;
         justify-content: center;
         inline-size: 100%;
-        min-block-size: 100%;
+        height: 100%;
         box-sizing: border-box;
-
-        @media(max-width: 932px) {
-            min-block-size: 100%;
-            /* Use full height on mobile for proper centering */
-            /* Ensure content is properly centered */
+        
+        /* Mobile centering */
+        @media (max-width: 932px) {
+            height: 100%;
+            min-height: 100%;
             justify-content: center;
             align-items: center;
         }
@@ -463,13 +406,17 @@
         }
 
         .question-options {
+            block-size: calc(100% - 12rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             padding-block: 1.2rem;
-        padding-inline: 1.2rem;
+            padding-inline: 1.2rem;
         }
 
         .option {
             padding-block: .5rem;
-        padding-inline: 1rem;
+            padding-inline: 1rem;
         }
 
         .question-image {
@@ -482,8 +429,7 @@
         .question-container {
             padding-block-start: 0;
             padding-block-end: 0;
-            //block-size: calc(53rem * var(--scale-factor));
-            block-size: auto;
+            //block-size: auto;
         }
 
         .options {
@@ -497,6 +443,9 @@
         .feedback-content svg {
             block-size: calc(24.948rem * var(--scale-factor));
             inline-size: calc(24.948rem * var(--scale-factor));
+            /* Ensure SVG is centered on mobile */
+            margin: 0 auto;
+            display: block;
         }
     }
 </style> 
