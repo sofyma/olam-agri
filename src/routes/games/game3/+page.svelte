@@ -668,8 +668,8 @@
         max-inline-size: calc(105.2rem * var(--scale-factor));
         padding: 0 2rem;
         position: relative;
-        // transform: scale(var(--scale-factor));
-        // transform-origin: center;
+        transform: scale(var(--scale-factor));
+        transform-origin: center;
         z-index: 2000;
     }
 
