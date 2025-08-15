@@ -521,6 +521,10 @@
         font-weight: 600;
         line-height: 2rem;
         padding-block-start: 1rem;
+
+        @media(max-width: 932px) {
+            display: none;
+        }
     }
 
     .dir-row {
